@@ -1,0 +1,26 @@
+Package: mrvalidation
+Type: Package
+Title: madrat data preparation for validation purposes
+Version: 1.33.4
+Date: 2019-07-14
+Author: Lavinia Baumstark, Anastasis Giannousakis, Jan Philipp Dietrich, Ulrich
+    Kreidenweis, Benjamin Bodirsky, Isabelle Weindl, Mishko Stevanovic, Xiaoxi Wang, Ewerton Araujo, Florian Humpenoeder, Kristine Karstens
+Maintainer: Jan Philipp Dietrich <dietrich@pik-potsdam.de>
+Description: Package contains routines to prepare data for validation exercises.
+Depends:
+    R(>= 2.10.0),
+    magclass(>= 3.17),
+    madrat(>= 1.31),
+    moinput(>= 8.156)
+Imports:
+    reshape2,
+    utils,
+    magpiesets,
+    readxl,
+    raster,
+    stringr,
+    luscale
+License: LGPL-3 | file LICENSE
+LazyData: no
+RoxygenNote: 6.1.1
+ValidationKey: 24133394
