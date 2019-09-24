@@ -143,4 +143,6 @@ fullVALIDATION <- function(rev=0.1) {
   #PriceIndex
   calcOutput(type="ValidPriceIndex", datasource="FAO", baseyear="y2010", round=TRUE, aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
   
+  #SDG
+  calcOutput(type="ValidSDG1", datasource = "James", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
 }
