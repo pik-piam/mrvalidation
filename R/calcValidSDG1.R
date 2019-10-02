@@ -1,10 +1,10 @@
 #' calcValidSDG1
 #' 
-#' Returns historical SDG1 INDICATOR_POVERTY 
+#' Returns historical SDG1 INDICATOR_POVERTY  IN USD05/cap/yr 
 #' 
-#' @param datasource Currently only "James" available
-#' @return list of magpie object with data and weight
-#' @author Edna Molina Bacca
+#' @param datasource Currently only  available for the "James" source
+#' @return List of magpie object with data and population
+#' @author Edna J. Molina Bacca
 #' @import magpiesets 
 #' @importFrom magclass getNames
 #' 
@@ -13,7 +13,7 @@ calcValidSDG1 <- function(datasource="James") {
   if(datasource=="James"){
     a <- readSource(type="James",subtype="IHME_USD05_PPP_pc")
     pop_weights  <- readSource("WDI",subtype = "SP.POP.TOTL") + 10^-10
-    com_years<-intersect(getYears(a),getYears(pop_weights))
+     
     
     a<-a[,com_years,]
     pop_weights<-pop_weights[,com_years,]
@@ -28,9 +28,6 @@ calcValidSDG1 <- function(datasource="James") {
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
     
     
-    
-    
-    
   } else stop("No data exist for the given datasource!")
   
   return(list(x=out,
@@ -39,3 +36,4 @@ calcValidSDG1 <- function(datasource="James") {
               description="")
   )
 }
+
