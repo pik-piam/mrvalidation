@@ -173,7 +173,7 @@ calcValidEmissions <- function(datasource="CEDS") {
   } else if (datasource=="EDGAR_LU") {
     
     co2 <- readSource("EDGAR_LU",subtype="CO2")*44/12 #convert from C to CO2
-    getNames(co2)<-"Emissions|CO2|Land|+|Land Use Change (Mt CO2/yr)"
+    getNames(co2)<-"Emissions|CO2|Land|+|Land-use Change (Mt CO2/yr)"
     n2o <- readSource("EDGAR_LU",subtype="N2O")*44/28 # convert from N to N2O
     getNames(n2o)<-"Emissions|N2O|Land|+|Agriculture (Mt N2O/yr)"
     ch4 <- readSource("EDGAR_LU",subtype="CH4")
