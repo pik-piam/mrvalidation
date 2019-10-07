@@ -52,8 +52,9 @@ calcValidSDG12 <- function(datasource="FAO") {
     indicatorname<-"SDG|SDG12|Food waste"
     unit<-"kcal/cap/day"
     #Reads available food
-    AvFood<-readSource("FAO",subtype="Fbs")
-    AvFood<-AvFood[,,"food_supply_kcal/cap/day"]
+    AvFood<-calcOutput("FAOharmonized")
+    AvFood<-speed_aggregate(AvFood,rel=aggregation,from = "FAOaggregatedItem_fromWebsite", to="k",dim = 3.1, partrel = TRUE)
+    AvFood<-AvFood[,,"food_supply_kcal"]
     AvFood<-dimSums(AvFood,dim=3)
     #Calculate expected intake. Source is Lutz2014. Average for male,female,ages.ssp1 (historical trend)
     intake<-calcIntake()
