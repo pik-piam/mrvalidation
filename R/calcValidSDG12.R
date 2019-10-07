@@ -51,10 +51,8 @@ calcValidSDG12 <- function(datasource="FAO") {
     
     indicatorname<-"SDG|SDG12|Food waste"
     unit<-"kcal/cap/day"
-    #Reads available food
-    AvFood<-calcOutput("FAOharmonized")
-    AvFood<-speed_aggregate(AvFood,rel=aggregation,from = "FAOaggregatedItem_fromWebsite", to="k",dim = 3.1, partrel = TRUE)
-    AvFood<-AvFood[,,"food_supply_kcal"]
+    #Reads food supply including household waste
+    AvFood<-calcOutput(type="FoodSupplyPast",aggregate=FALSE)
     AvFood<-dimSums(AvFood,dim=3)
     #Calculate expected intake. Source is Lutz2014. Average for male,female,ages.ssp1 (historical trend)
     intake<-calcIntake()
@@ -63,7 +61,7 @@ calcValidSDG12 <- function(datasource="FAO") {
     com_years<-intersect(getYears(AvFood),getYears(intake))
     out<-AvFood[,com_years,]-intake
     #if the country doesn't have Supply data the value calculated would be less than 0
-    out[out<0]<-0
+    out[AvFood==0]<-0
     getNames(out)<-paste0(indicatorname," (",unit,")")
     out<- add_dimension(out, dim=3.1, add="scenario", nm="historical")
     out<- add_dimension(out, dim=3.2, add="model", nm=datasource)
