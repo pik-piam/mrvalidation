@@ -65,7 +65,7 @@ calcValidEmissions <- function(datasource="CEDS") {
     
     out<-calcOutput("EmisNitrogenPast",method=datasource,aggregate = FALSE)
     out<-add_columns(out,addnm="n2o_n",dim = 3.2)
-    out[,,"n2o_n"]<-dimSums(out[,,c("n2o_n_direct","n2o_n_indirect")])
+    out[,,"n2o_n"]<-dimSums(out[,,c("n2o_n_direct","n2o_n_indirect")],dim=3.2)
     out<-out[,,c("n2o_n_direct","n2o_n_indirect"),invert=TRUE]
     out<-out[,,c("accumulation","n2_n"),invert=TRUE]
     out<-add_columns(out,addnm = c("soils","agri"))
@@ -140,7 +140,7 @@ calcValidEmissions <- function(datasource="CEDS") {
     
     out <- calcOutput("EmisNitrogenPast",method=datasource,aggregate = FALSE)
     out <- add_columns(out,addnm="n2o_n",dim = 3.2)
-    out[,,"n2o_n"] <- dimSums(out[,,c("n2o_n_direct","n2o_n_indirect")])
+    out[,,"n2o_n"] <- dimSums(out[,,c("n2o_n_direct","n2o_n_indirect")],dim=3.2)
     out <- add_columns(out,addnm = c("soils","agri"))
     out[,,"soils"] <- dimSums(out[,,c("inorg_fert","man_crop","resid","som","rice","pasture_soils")],dim=3.1)
     out[,,"agri"]  <- dimSums(out[,,c("soils","awms")],dim=3.1)

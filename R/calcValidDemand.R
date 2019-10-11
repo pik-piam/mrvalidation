@@ -39,6 +39,9 @@ calcValidDemand<-function(datasource="FAO", detail=T, nutrient="dm"){
     getNames(mb2,dim=2)<-reportingnames(getNames(mb2,dim=2))
 
     mb3<-dimOrder(mb2,c(2,1))
+    sum<-dimSums(mb3,dim=3.1)
+    sum<-reporthelper(x=sum,dim = 3.1,level_zero_name = "Demand",detail = detail)  
+    
     out<-reporthelper(x=mb3,dim = 3.2,level_zero_name = "",detail = detail)  
     getNames(out) <- sub(getNames(out),pattern = "\\.",replacement = "|")
     getNames(out) <- sub("\\|$","",getNames(out)) 

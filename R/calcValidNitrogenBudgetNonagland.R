@@ -56,6 +56,6 @@ calcValidNitrogenBudgetNonagland<-function(datasource="Bodirsky"){
   return(list(x=out,
               weight=NULL,
               unit=unit,
-              description="Non-Agricultural Land Nitrogen Budget")
+              description="Nitrogen Budget of Non-Agricultural Land")
          )
 }
