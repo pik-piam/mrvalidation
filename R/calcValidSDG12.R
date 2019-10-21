@@ -5,8 +5,9 @@
 #' @param datasource FAO 
 #' @return List of magpie object with data and population
 #' @author Edna J. Molina Bacca
-#' @import magpiesets luscale
+#' @import magpiesets 
 #' @importFrom magclass getNames
+#' @importFrom luscale speed_aggregate
 #' 
 calcValidSDG12 <- function(datasource="FAO") {
   x <- NULL  

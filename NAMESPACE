@@ -2,6 +2,7 @@
 
 import(magpiesets)
 importFrom(luscale,groupAggregate)
+importFrom(luscale,speed_aggregate)
 importFrom(madrat,calcOutput)
 importFrom(madrat,getConfig)
 importFrom(madrat,getISOlist)
