@@ -5,7 +5,7 @@
 #' @param datasource FAO 
 #' @return List of magpie object with data and population
 #' @author Edna J. Molina Bacca
-#' @import magpiesets
+#' @import magpiesets luscale
 #' @importFrom magclass getNames
 #' 
 calcValidSDG12 <- function(datasource="FAO") {
@@ -55,7 +55,7 @@ calcValidSDG12 <- function(datasource="FAO") {
     AvFood<-calcOutput(type="FoodSupplyPast",aggregate=FALSE)
     AvFood<-dimSums(AvFood,dim=3)
     #Calculate expected intake. Source is Lutz2014. Average for male,female,ages.ssp1 (historical trend)
-    intake<-calcIntake()
+    intake<-calcOutput("Intake")
     intake<-intake$x[,,"B.All.SSP1"]
     #intersect years
     com_years<-intersect(getYears(AvFood),getYears(intake))
