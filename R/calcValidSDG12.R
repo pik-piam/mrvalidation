@@ -56,7 +56,7 @@ calcValidSDG12 <- function(datasource="FAO") {
     AvFood<-calcOutput(type="FoodSupplyPast",aggregate=FALSE)
     AvFood<-dimSums(AvFood,dim=3)
     #Calculate expected intake. Source is Lutz2014. Average for male,female,ages.ssp1 (historical trend)
-    intake<-calcOutput("Intake")
+    intake<-calcOutput("Intake",aggregate=FALSE)
     intake<-intake[,,"B.All.SSP1"]
     #intersect years
     com_years<-intersect(getYears(AvFood),getYears(intake))
