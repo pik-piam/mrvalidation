@@ -43,7 +43,7 @@ calcValidSDG12 <- function(datasource="FAO") {
     popul<-popul[,,"population"]+10^-10
     com_years<-intersect(getYears(out),getYears(popul))
     popul<-popul[,com_years,]
-    out<-out/popul
+    out<-out/setNames(popul,NULL)
     getNames(out)<-paste0(indicatorname," (",unit,")")
     out<- add_dimension(out, dim=3.1, add="scenario", nm="historical")
     out<- add_dimension(out, dim=3.2, add="model", nm=datasource)
@@ -60,9 +60,9 @@ calcValidSDG12 <- function(datasource="FAO") {
     intake<-intake[,,"B.All.SSP1"]
     #intersect years
     com_years<-intersect(getYears(AvFood),getYears(intake))
-    out<-AvFood[,com_years,]-intake
+    out<-setNames(AvFood[,com_years,]-intake[,com_years,],NULL)
     #if the country doesn't have Supply data the value calculated would be less than 0
-    out[AvFood==0]<-0
+    out[out<0]<-0
     getNames(out)<-paste0(indicatorname," (",unit,")")
     out<- add_dimension(out, dim=3.1, add="scenario", nm="historical")
     out<- add_dimension(out, dim=3.2, add="model", nm=datasource)
