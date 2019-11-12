@@ -22,7 +22,7 @@ calcValidSDG12 <- function(datasource="FAO") {
     #standarized items _ magpie object
     a_agg<-speed_aggregate(foodLoss,rel=aggregation,from = "FAOaggregatedItem_fromWebsite", to="k",dim = 3.1, partrel = TRUE)
     #reading only waste data
-    out<-collapseNames(a_agg[,,"waste"])*1000/1E6
+    out<-collapseNames(a_agg[,,"waste"])
     #Used to determine the total food loss in each country
     out<-dimSums(out,na.rm = TRUE,dim=3)
     getNames(out)<-paste0(indicatorname," (",unit,")")
