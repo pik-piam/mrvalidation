@@ -4,8 +4,11 @@
 \alias{calcValidNutrientBudgetFoodProcessing}
 \title{calcValidNutrientBudgetFoodProcessing}
 \usage{
-calcValidNutrientBudgetFoodProcessing(datasource = "Bodirsky",
-  nutrient = "nr", detail = FALSE)
+calcValidNutrientBudgetFoodProcessing(
+  datasource = "Bodirsky",
+  nutrient = "nr",
+  detail = FALSE
+)
 }
 \arguments{
 \item{datasource}{Bodirsky for own calculations}

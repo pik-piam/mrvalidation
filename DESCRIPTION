@@ -1,8 +1,8 @@
 Package: mrvalidation
 Type: Package
 Title: madrat data preparation for validation purposes
-Version: 1.34.5
-Date: 2019-10-24
+Version: 1.34.10
+Date: 2019-12-18
 Author: Lavinia Baumstark, Anastasis Giannousakis, Jan Philipp Dietrich, Ulrich
     Kreidenweis, Benjamin Bodirsky, Isabelle Weindl, Mishko Stevanovic, Xiaoxi Wang, Ewerton Araujo, Florian Humpenoeder, Kristine Karstens
 Maintainer: Jan Philipp Dietrich <dietrich@pik-potsdam.de>
@@ -22,5 +22,5 @@ Imports:
     luscale
 License: LGPL-3 | file LICENSE
 LazyData: no
-RoxygenNote: 6.1.1
-ValidationKey: 24469585
+RoxygenNote: 7.0.2
+ValidationKey: 244705680

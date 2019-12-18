@@ -4,8 +4,12 @@
 \alias{calcValidProcessing}
 \title{calcValidProcessing}
 \usage{
-calcValidProcessing(datasource = "FAO", detail = T, nutrient = "dm",
-  indicator = "secondary_from_primary")
+calcValidProcessing(
+  datasource = "FAO",
+  detail = T,
+  nutrient = "dm",
+  indicator = "secondary_from_primary"
+)
 }
 \arguments{
 \item{datasource}{Datasource of validation data.}

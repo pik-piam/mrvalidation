@@ -4,9 +4,12 @@
 \alias{calcValidPopulation}
 \title{calcValidPopulation}
 \usage{
-calcValidPopulation(PopulationCalib = "transition",
-  PopulationPast = "WDI", PopulationFuture = "SSP",
-  TimeFromFindSet = TRUE)
+calcValidPopulation(
+  PopulationCalib = "transition",
+  PopulationPast = "WDI",
+  PopulationFuture = "SSP",
+  TimeFromFindSet = TRUE
+)
 }
 \arguments{
 \item{PopulationCalib}{to what should be calibrated? past, future or a transition?}

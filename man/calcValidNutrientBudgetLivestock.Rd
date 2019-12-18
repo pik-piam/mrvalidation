@@ -4,8 +4,7 @@
 \alias{calcValidNutrientBudgetLivestock}
 \title{calcValidNutrientBudgetLivestock}
 \usage{
-calcValidNutrientBudgetLivestock(datasource = "Bodirsky",
-  nutrient = "nr")
+calcValidNutrientBudgetLivestock(datasource = "Bodirsky", nutrient = "nr")
 }
 \arguments{
 \item{datasource}{Bodirsky for own calculations}

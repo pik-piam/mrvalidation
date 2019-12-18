@@ -4,8 +4,11 @@
 \alias{calcValidProductionGrowth}
 \title{calcValidProductionGrowth}
 \usage{
-calcValidProductionGrowth(datasource = "FAO", detail = TRUE,
-  base_year = "y1995")
+calcValidProductionGrowth(
+  datasource = "FAO",
+  detail = TRUE,
+  base_year = "y1995"
+)
 }
 \arguments{
 \item{datasource}{which data to use}

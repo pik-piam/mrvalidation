@@ -24,7 +24,7 @@ calcValidSDG12 <- function(datasource="FAO") {
     #reading only waste data
     out<-collapseNames(a_agg[,,"waste"])
     #Used to determine the total food loss in each country
-    out<-dimSums(out,na.rm = TRUE,dim=3)
+    out<-dimSums(out,na.rm = TRUE,dim=3)/1e6
     getNames(out)<-paste0(indicatorname," (",unit,")")
     out<- add_dimension(out, dim=3.1, add="scenario", nm="historical")
     out<- add_dimension(out, dim=3.2, add="model", nm=datasource)

@@ -4,8 +4,12 @@
 \alias{calcValidPriceIndex}
 \title{calcValidPriceIndex}
 \usage{
-calcValidPriceIndex(datasource = "FAO", value = "real",
-  baseyear = "y2005", round = TRUE)
+calcValidPriceIndex(
+  datasource = "FAO",
+  value = "real",
+  baseyear = "y2005",
+  round = TRUE
+)
 }
 \arguments{
 \item{datasource}{Options of the source of data:  \code{FAO}.}

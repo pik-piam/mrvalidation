@@ -4,8 +4,10 @@
 \alias{calcValidNutrientBudgetFoodWasteAndSewage}
 \title{calcValidNutrientBudgetFoodWasteAndSewage}
 \usage{
-calcValidNutrientBudgetFoodWasteAndSewage(datasource = "Bodirsky",
-  nutrient = "nr")
+calcValidNutrientBudgetFoodWasteAndSewage(
+  datasource = "Bodirsky",
+  nutrient = "nr"
+)
 }
 \arguments{
 \item{datasource}{Bodirsky for own calculations}
