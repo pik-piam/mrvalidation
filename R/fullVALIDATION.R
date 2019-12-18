@@ -20,7 +20,7 @@ fullVALIDATION <- function(rev=0.1) {
   # for the first variable output calculation, append paramenter should be set to FALSE so that the 
   ## eventually exitsting "validation.mif" file is deleted at the begining. 
   # setting rev to -1 will allow for just writing the validation
-  valfile <- "validation3.mif"
+  valfile <- "validation.mif"
   
   #Population and Income
   calcOutput(type="ValidPopulation", aggregate="REG+GLO", file=valfile, append=FALSE, na_warning=FALSE, try=TRUE) #ready
