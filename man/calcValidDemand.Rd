@@ -31,5 +31,5 @@ calcOutput("ValidDemand")
 \code{\link{calcValidLivestockShare}}
 }
 \author{
-Benjamin Leon Bodirsky
+Benjamin Leon Bodirsky, Isabelle Weindl
 }
