@@ -148,5 +148,5 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidSDG12", datasource = "FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
   
   # Forestry run specific 
-  calcOutput(type="ValidTimberDemand", aggregate="REG+GLO", file=valfile, append=TRUE,detail=TRUE, try=TRUE) #ready
+  calcOutput(type="ValidTimberDemand", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
 }

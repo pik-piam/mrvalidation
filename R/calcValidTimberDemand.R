@@ -2,9 +2,9 @@
 #' 
 #' Returns historical timber demand in mio m3 per yr 
 #' 
-#' @param datasource Currently only  available for the "James" source
+#' @param datasource Currently only  available for the "FAO" source
 #' @return List of magpie object with data and population
-#' @author Edna J. Molina Bacca
+#' @author Abhijeet Mishra
 #' @import magpiesets 
 #' @importFrom magclass getNames
 #' 
