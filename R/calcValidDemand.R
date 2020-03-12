@@ -6,7 +6,7 @@
 #' @param nutrient The nutrient in which the results shall be reported.
 #'
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
-#' @author Benjamin Leon Bodirsky
+#' @author Benjamin Leon Bodirsky, Isabelle Weindl
 #' @seealso
 #' \code{\link{calcFoodSupplyPast}},
 #' \code{\link{calcValidLivestockShare}}
@@ -39,12 +39,21 @@ calcValidDemand<-function(datasource="FAO", detail=T, nutrient="dm"){
     getNames(mb2,dim=2)<-reportingnames(getNames(mb2,dim=2))
 
     mb3<-dimOrder(mb2,c(2,1))
-    out<-reporthelper(x=mb3,dim = 3.2,level_zero_name = "",detail = detail)  
-    getNames(out) <- sub(getNames(out),pattern = "\\.",replacement = "|")
-    getNames(out) <- sub("\\|$","",getNames(out)) 
-    getNames(out) <- paste0("Demand|",getNames(out))
+    sum<-dimSums(mb3,dim=3.1)
+    sum<-reporthelper(x=sum,dim = 3.1,level_zero_name = "Demand",detail = detail)  
+    sum <- summationhelper(sum)
+    getNames(sum)[1]<-"Demand"
+    getNames(sum) <- gsub(pattern = "Demand\\|\\+",replacement = "Demand|++",x = getNames(sum))
+    
+    
+    for (type in getNames(mb3,dim=1)) {
+      out <- collapseNames(mb3[,,type],collapsedim = 1)
+      # demand.R renamed dim=3.1
+      out<-reporthelper(x=out,level_zero_name = paste0("Demand|",type),detail = detail,dim=3.1)
+    }
     out <- summationhelper(out)
     
+    out <- mbind(out, sum)
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
 

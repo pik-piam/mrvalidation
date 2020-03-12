@@ -19,6 +19,7 @@ fullMADRATtoLPJml<-function(){
   calcOutput("ValidCellularYields",aggregate=FALSE,file="YieldsPhysical.nc")
   calcOutput("ValidCellularNitrogenBudgetCropland",aggregate=FALSE,file="NitrogenBudgetCropland.nc")
   calcOutput("ValidCellularNitrogenBudgetPasture",aggregate=FALSE,file="NitrogenBudgetPasture.nc")
+  calcOutput("ValidCellularNitrogenBudgetNonagland",aggregate=FALSE,file="NitrogenBudgetNonagland.nc")
   calcOutput("ValidCellularResidueDemand",aggregate=FALSE,file="AbovegroundCropResidueDemand.nc")
   calcOutput("ValidCellularCroplandNitrogenInputs",aggregate=FALSE,file="NitrogenInputsByCropType.nc")
   calcOutput("ValidCellularCroplandNitrogenWithdrawals",aggregate=FALSE,file="NitrogenWithdrawalsByCropType.nc")
