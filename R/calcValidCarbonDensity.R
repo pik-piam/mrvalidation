@@ -166,7 +166,7 @@ calcValidCarbonDensity <- function(datasource="LPJ_IPCC2006"){
     
   } else if(datasource=="SoilGrids"){
     
-    soilc <- readSource("SoilGrids",  convert="onlycorrect")
+    soilc <- readSource("SoilGrids", subtype="cstock_0_30", convert="onlycorrect")
     area  <- calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, selectyears="past_all", aggregate = FALSE)
     area  <- setYears(dimSums(area[,2010,],dim=3),NULL)
     
