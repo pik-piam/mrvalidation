@@ -1,11 +1,23 @@
 Package: mrvalidation
 Type: Package
 Title: madrat data preparation for validation purposes
-Version: 1.36.0
+Version: 2.0.0
 Date: 2020-05-02
-Author: Lavinia Baumstark, Anastasis Giannousakis, Jan Philipp Dietrich, Ulrich
-    Kreidenweis, Benjamin Bodirsky, Isabelle Weindl, Mishko Stevanovic, Xiaoxi Wang, Ewerton Araujo, Florian Humpenoeder, Kristine Karstens
-Maintainer: Jan Philipp Dietrich <dietrich@pik-potsdam.de>
+Authors@R: c(person("Benjamin Leon", "Bodirsky", email = "bodirsky@pik-potsdam.de", role = c("aut","cre")),
+             person("Stephen", "Wirth", role = "aut"),
+             person("Kristine", "Karstens", role = "aut"),
+             person("Florian", "Humpenoeder", role = "aut"),
+             person("Mishko", "Stevanovic", role = "aut"),
+             person("Abhijeet", "Mishra", role = "aut"),
+             person("Anne", "Biewald", role = "aut"),
+             person("Isabelle", "Weindl", role = "aut"),
+             person("David", "Chen", role = "aut"),
+             person("Edna", "Molina Bacca", role = "aut"),
+             person("Ulrich", "Kreidenweis", role = "aut"),
+             person("Amsalu", "W. Yalew", role = "aut"),
+             person("Florian", "Humpenoeder ", role = "aut"),
+             person("Xiaoxi", "Wang", role = "aut"),
+             person("Jan Philipp", "Dietrich", role = "aut"))
 Description: Package contains routines to prepare data for validation exercises.
 Depends:
     R(>= 2.10.0),
@@ -24,4 +36,4 @@ License: LGPL-3 | file LICENSE
 LazyData: no
 Encoding: UTF-8
 RoxygenNote: 7.1.0
-ValidationKey: 25002240
+ValidationKey: 3676800
