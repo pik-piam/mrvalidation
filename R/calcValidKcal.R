@@ -18,7 +18,7 @@
 #' 
 #' @importFrom magpiesets reporthelper
 #' @importFrom magclass getSets dimOrder
-#' @importFrom moinput toolFAOcombine
+#' @importFrom mrcommons toolFAOcombine
 
 calcValidKcal<-function(datasource="FAO", nutrient="kcal", detail=TRUE){
   if(length(nutrient)>1){stop("select only one nutrient")}
@@ -42,7 +42,7 @@ calcValidKcal<-function(datasource="FAO", nutrient="kcal", detail=TRUE){
       FS<-collapseNames(FS[,,nutrient])
       total=FS[,,"2901|Grand Total + (Total)"]
       
-      relationmatrix <- toolGetMapping("FAOitems.rda","sectoral",where="moinput")
+      relationmatrix <- toolGetMapping("FAOitems.rda","sectoral",where="mrvalidation")
       relationmatrix <- relationmatrix[,which(names(relationmatrix)%in%c("FoodBalanceItem","k"))]
       relationmatrix <- relationmatrix[-which(duplicated(relationmatrix[,1])==T),]
       

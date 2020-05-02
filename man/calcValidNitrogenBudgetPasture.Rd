@@ -27,7 +27,6 @@ calcOutput("ValidNitrogenBudgetPasture")
 
 }
 \seealso{
-\code{\link{calcValidSNUpE}},
 \code{\link{calcNitrogenBudgetCropland}}
 }
 \author{

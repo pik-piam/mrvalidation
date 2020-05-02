@@ -29,7 +29,7 @@ calcValidPriceIndex <- function(datasource="FAO", value="real", baseyear="y2005"
     
     # FAO production
     q_t <- calcOutput("FAOharmonized", aggregate=FALSE)
-    aggregation <- toolGetMapping("FAOitems.rda","sectoral",where="moinput")
+    aggregation <- toolGetMapping("FAOitems.rda","sectoral",where="mrvalidation")
     q_t <- toolAggregate(q_t[,,"production"], rel=aggregation, from="FoodBalanceItem", 
                     to="k", dim=3.1, partrel = TRUE, verbosity=2)
     q_t <- collapseNames(q_t)

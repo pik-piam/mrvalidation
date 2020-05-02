@@ -1,5 +1,5 @@
 #' @title fullENGAGE
-#' @description retrieves validation data from moinput for the ENGAGE project
+#' @description retrieves validation data from mrcommons for the ENGAGE project
 #'
 #' @return validation data in IAMC reporting format
 #' @author Florian Humpenoeder

@@ -10,7 +10,6 @@
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Benjamin Leon Bodirsky
 #' @seealso
-#' \code{\link{calcValidSNUpE}},
 #' \code{\link{calcNitrogenBudgetCropland}}
 #' @examples
 #' 

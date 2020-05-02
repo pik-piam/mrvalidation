@@ -18,7 +18,7 @@ calcValidSDG12 <- function(datasource="FAO") {
     unit="Mt"
     #foodLoss <- readSource("FAO",subtype="Fbs")
     foodLoss <- readSource("FAO",subtype="CBCrop")
-    aggregation <- toolGetMapping("FAOitems.rda", type = "sectoral", where="moinput")
+    aggregation <- toolGetMapping("FAOitems.rda", type = "sectoral", where="mrvalidation")
     #standarized items _ magpie object
     a_agg<-speed_aggregate(foodLoss,rel=aggregation,from = "FAOaggregatedItem_fromWebsite", to="k",dim = 3.1, partrel = TRUE)
     #reading only waste data

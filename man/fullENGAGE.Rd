@@ -10,7 +10,7 @@ fullENGAGE()
 validation data in IAMC reporting format
 }
 \description{
-retrieves validation data from moinput for the ENGAGE project
+retrieves validation data from mrcommons for the ENGAGE project
 }
 \author{
 Florian Humpenoeder
