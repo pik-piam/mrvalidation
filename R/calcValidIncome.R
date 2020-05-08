@@ -53,12 +53,12 @@ calcValidIncome <- function(datasource = "James") {
     
     MER   <- collapseNames(calcOutput("GDPppp", GDPpppPast = "IHME_USD05_MER_pc", GDPpppFuture="SRES_SSP_completed",GDPpppCalib="past",aggregate = FALSE))
     MER   <- add_dimension(MER, dim=3.2, add="variable", nm=names[1])
-    MERpc <- collapseNames(calcOutput(type = "GDPpc", gdp="MER", aggregate = FALSE,naming="indicator.scenario"))
+    MERpc <- collapseNames(calcOutput(type = "GDPpc", gdp="MER", aggregate = FALSE))
     MERpc <- add_dimension(MERpc, dim=3.2, add="variable", nm=names[2])
     
     PPP   <- collapseNames(calcOutput("GDPppp", GDPpppFuture="SRES_SSP_completed", aggregate = FALSE,naming="indicator.scenario"))
     PPP   <- add_dimension(PPP, dim=3.2, add="variable", nm=names[3])
-    PPPpc <- collapseNames(calcOutput(type = "GDPpc", gdp="PPP", aggregate = FALSE,naming="indicator.scenario"))
+    PPPpc <- collapseNames(calcOutput(type = "GDPpc", gdp="PPP", aggregate = FALSE))
     PPPpc <- add_dimension(PPPpc, dim=3.2, add="variable", nm=names[4])
     
     years <-intersect(getYears(MERpc),getYears(MER))
@@ -71,7 +71,7 @@ calcValidIncome <- function(datasource = "James") {
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
 
     # Setting weights correctly for intensive and extensive variables
-    pop_weights <- collapseNames(calcOutput(type = "GDPpc", gdp="MER",supplementary = TRUE, aggregate = FALSE,naming="indicator.scenario")$weight + 10^-10)
+    pop_weights <- collapseNames(calcOutput(type = "GDPpc", gdp="MER",supplementary = TRUE, aggregate = FALSE)$weight + 10^-10)
     getSets(pop_weights)[3] <- "scenario"
     pop_weights <- add_dimension(pop_weights, dim=3.2, add="model", nm=datasource)
     

@@ -14,6 +14,7 @@
 #' calcOutput("NitrogenSurplusByCrop")
 #' }
 #' @importFrom magpiesets findset
+#' @importFrom madrat toolNAreplace
 
 
 
