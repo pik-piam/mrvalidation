@@ -13,7 +13,7 @@ calcValidFoodExpenditureShare(detail = FALSE)
 List of magpie object with results on country level, weight on country level, unit and description.
 }
 \description{
-validation for foode expenditure share
+validation for food expenditure share
 }
 \examples{
 

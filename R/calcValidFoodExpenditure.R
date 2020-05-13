@@ -25,7 +25,9 @@ calcValidFoodExpenditure <- function(detail=FALSE) {
   out<-demand_pc*price
   out2<-reporthelper(x=out,level_zero_name = "Household Expenditure|Food|Expenditure",detail = detail,partly=TRUE)  
   out2[is.nan(out2)]=0
-  
+  out2 <- add_dimension(out2, dim=3.1, add="scenario", nm="historical")
+  out2 <- add_dimension(out2, dim=3.2, add="model", nm="FAO")
+
   return(list(x=out2,
               weight=pop,
               unit="USD/capita",

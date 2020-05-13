@@ -29,6 +29,8 @@ calcValidAgGDP<- function(datasource="WDI") {
 #set na's to 0
   getNames(out) <- "Value|Value added agriculture forestry fishery"
  } else {stop("unknown datasource")}
+  out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
+  out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
   
    return(list(x=out,
               weight=NULL,
