@@ -13,7 +13,7 @@ calcValidTimberDemand <- function(datasource="FAO") {
   if(datasource=="FAO"){
     a <- collapseNames(calcOutput("TimberDemand",aggregate = F)[,,"domestic_supply"]) 
 
-    indicatorname="Timber demand|"
+    indicatorname="Timber demand volumetric|"
     unit="mio m3/yr"
     out <- a
     getNames(out) <- paste0(indicatorname, getNames(out)," (",unit,")")
