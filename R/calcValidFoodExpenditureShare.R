@@ -22,10 +22,7 @@ calcValidFoodExpenditureShare <- function(detail=FALSE) {
   expenditure_shr=expenditure/gdp
   expenditure_shr[is.nan(expenditure_shr)]=0
   getNames(expenditure_shr)<-sub(pattern = "\\|Expenditure",replacement = "|Expenditure Share",x = getNames(expenditure_shr))
-  expenditure_shr <- add_dimension(expenditure_shr, dim=3.1, add="scenario", nm="historical")
-  expenditure_shr <- add_dimension(expenditure_shr, dim=3.2, add="model", nm="FAO")
-  
-  
+
   return(list(x=expenditure_shr,
               weight=gdp*pop,
               unit="USD/USD",
