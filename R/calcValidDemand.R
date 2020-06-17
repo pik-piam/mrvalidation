@@ -45,11 +45,12 @@ calcValidDemand<-function(datasource="FAO", detail=T, nutrient="dm"){
     getNames(sum)[1]<-"Demand"
     getNames(sum) <- gsub(pattern = "Demand\\|\\+",replacement = "Demand|++",x = getNames(sum))
     
-    
+    out <- NULL
     for (type in getNames(mb3,dim=1)) {
-      out <- collapseNames(mb3[,,type],collapsedim = 1)
+      tmp <- collapseNames(mb3[,,type],collapsedim = 1)
       # demand.R renamed dim=3.1
-      out<-reporthelper(x=out,level_zero_name = paste0("Demand|",type),detail = detail,dim=3.1)
+      tmp<-reporthelper(x=tmp,level_zero_name = paste0("Demand|",type),detail = detail,dim=3.1)
+      out <- mbind(out,tmp)
     }
     out <- summationhelper(out)
     
