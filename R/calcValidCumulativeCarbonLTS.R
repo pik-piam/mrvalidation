@@ -28,7 +28,7 @@ calcValidCumulativeCarbonLTS <- function(datasource="Johnston_Radeloff") {
     
   } else stop("No validation data exists from the given datasource!")
   
-  return(list(x=out,
+  return(list(x=out*-1,  ## Sequestartion is reported as negative
               weight=NULL,
               unit=unit,
               description="Cumulative sequestration from carbon stored in harvested wood.")
