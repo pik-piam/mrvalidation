@@ -124,6 +124,9 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidEmisLucGlo", subtype="Harris_2013", aggregate=FALSE, file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmisLucGlo", subtype="Houghton_2012", aggregate=FALSE, file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmisLucGlo", subtype="RCP", aggregate=FALSE, file=valfile, append=TRUE, try=TRUE) #ready
+  calcOutput(type="ValidAnnualCarbonLTS", subtype="Lauk_et_al", aggregate=FALSE, file=valfile, append=TRUE, try=TRUE) #ready
+  calcOutput(type="ValidAnnualCarbonLTS", subtype="Johnston_Radeloff", aggregate=FALSE, file=valfile, append=TRUE, try=TRUE) #ready
+  calcOutput(type="ValidCumulativeCarbonLTS", subtype="Johnston_Radeloff", aggregate=FALSE, file=valfile, append=TRUE, try=TRUE) #ready
   
   #Yield
   calcOutput(type="ValidYield", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
