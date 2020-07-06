@@ -11,11 +11,12 @@
 calcValidGrowingStock <- function(datasource="FAO") {
   
   if(datasource=="FAO"){
-    gs <- readSource("FRA2015Doc","forest_gs")
+    gs <- readSource("FRA2015Doc","forest_gs",convert = TRUE)
     area <- setNames(readSource("FRA2015Doc","forest_area"),NULL)
 
     a <- setNames(gs/area,NULL)
     a[is.nan(a)] <- 0
+    a[is.infinite(a)] <- 0
     
     indicatorname="Resources|Growing Stock|+|Forest"
     unit="m3/ha"
