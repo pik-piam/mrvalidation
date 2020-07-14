@@ -7,7 +7,7 @@
 calcValidAnnualCarbonLTS(datasource = "Lauk_et_al")
 }
 \arguments{
-\item{datasource}{Currently available \code{"Lauk_et_al"} or \code{"Johnston_Radeloff"}}
+\item{datasource}{Currently available \code{"Lauk_et_al"} or \code{"Johnston_Radeloff"} or \code{"Johnston_Radeloff_P"} (p = projection)}
 }
 \value{
 List of magpie object with Emissions in wood products
