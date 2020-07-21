@@ -1,4 +1,4 @@
-#' @title calcValidCellularCroparea
+#' @title calcValidGridCroparea
 #' @description reports Croparea by crops on 0.5 degree grid in physical area
 #' 
 #' @return List of magpie objects with results on cellular level, weight on cellular level, unit and description.
@@ -8,14 +8,14 @@
 #' @examples
 #' 
 #' \dontrun{ 
-#' calcOutput("ValidCellularCroparea")
+#' calcOutput("ValidGridCroparea")
 #' }
 #' 
 #' @importFrom magpiesets reportingnames
 #' @importFrom magclass getComment<-
 
 
-calcValidCellularCroparea <-function() {
+calcValidGridCroparea <-function() {
 
   out<-calcOutput("Croparea",cellular=TRUE,aggregate=FALSE,physical=TRUE,irrigation=TRUE)
   getNames(out,dim=1)<-reportingnames(getNames(out,dim=1))

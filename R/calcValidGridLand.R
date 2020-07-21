@@ -1,4 +1,4 @@
-#' @title calcValidCellularLand
+#' @title calcValidGridLand
 #' @description reports the main Land types on 0.5 degree grid
 #' 
 #' @return List of magpie objects with results on cellular level, weight on cellular level, unit and description.
@@ -8,13 +8,13 @@
 #' @examples
 #' 
 #' \dontrun{ 
-#' calcOutput("ValidCellularLand")
+#' calcOutput("ValidGridLand")
 #' }
 #' 
 #' @importFrom magpiesets reportingnames
 #' @importFrom magclass getComment<-
 
-calcValidCellularLand <-function() {
+calcValidGridLand <-function() {
  
   out<-calcOutput("LanduseInitialisation",cellular=TRUE,aggregate=FALSE)
   getNames(out,dim=1)<-reportingnames(getNames(out,dim=1))

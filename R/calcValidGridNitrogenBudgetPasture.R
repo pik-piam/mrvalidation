@@ -1,5 +1,5 @@
-#' @title calcValidCellularYields
-#' @description reports Yields on 0.5 degree grid
+#' @title calcValidGridNitrogenBudgetPasture
+#' @description reports Nitrogen Budgets for Pastures on 0.5 degree grid
 #' 
 #' @return List of magpie objects with results on cellular level, weight on cellular level, unit and description.
 #' @author Benjamin Leon Bodirsky
@@ -8,26 +8,23 @@
 #' @examples
 #' 
 #' \dontrun{ 
-#' calcOutput("ValidCellularYields")
+#' calcOutput("ValidGridNitrogenBudgetPasture")
 #' }
 #' 
 #' @importFrom magpiesets reportingnames
 #' @importFrom magclass getComment<-
 
-calcValidCellularYields <-function() {
-  
-  out<-calcOutput("Yield",cellular=TRUE,aggregate=FALSE,irrigation=TRUE)
+calcValidGridNitrogenBudgetPasture <-function() {
+ 
+  out<-calcOutput("NitrogenBudgetPasture",cellular=TRUE,aggregate=FALSE)
   getNames(out,dim=1)<-reportingnames(getNames(out,dim=1))
-  getNames(out,dim=2)<-reportingnames(getNames(out,dim=2))
-  out<-clean_magpie(out)
-  out<-dimOrder(out,perm = c(2,1))
   
   getComment(out)<-NULL
-  
+ 
   return(list(x=out,
               weight=NULL,
-              unit="t DM per ha physical area",
-              description="Crop yields by plant type and irrigation",
+              unit="Mt Nr/yr",
+              description="Nitrogen Budget for Pasturelands",
               isocountries=FALSE)
   ) 
 }

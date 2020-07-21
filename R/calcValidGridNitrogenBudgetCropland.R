@@ -1,4 +1,4 @@
-#' @title calcValidCellularNitrogenBudgetCropland
+#' @title calcValidGridNitrogenBudgetCropland
 #' @description reports Nitrogen Budget for Croplands on 0.5 degree grid
 #' 
 #' @return List of magpie objects with results on cellular level, weight on cellular level, unit and description.
@@ -8,13 +8,13 @@
 #' @examples
 #' 
 #' \dontrun{ 
-#' calcOutput("ValidCellularNitrogenBudgetCropland")
+#' calcOutput("ValidGridNitrogenBudgetCropland")
 #' }
 #' 
 #' @importFrom magpiesets reportingnames
 #' @importFrom magclass getComment<-
 
-calcValidCellularNitrogenBudgetCropland <-function() {
+calcValidGridNitrogenBudgetCropland <-function() {
  
   out<-calcOutput("NitrogenBudgetCropland",cellular=TRUE,aggregate=FALSE)
   getNames(out,dim=1)<-reportingnames(getNames(out,dim=1))

@@ -1,4 +1,4 @@
-#' @title calcValidCellularCroplandNitrogenWithdrawals
+#' @title calcValidGridCroplandNitrogenWithdrawals
 #' @description reports Cropland Nitrogen Withdrawals from soils on 0.5 degree grid
 #' @param irrigation FALSE for the sum of irrigated and rainfed, FALSE for seperated categories, 'rainfed' or 'irrigated for single categories
 #' @return List of magpie objects with results on cellular level, weight on cellular level, unit and description.
@@ -8,14 +8,14 @@
 #' @examples
 #' 
 #' \dontrun{ 
-#' calcOutput("ValidCellularCroplandNitrogenWithdrawals")
+#' calcOutput("ValidGridCroplandNitrogenWithdrawals")
 #' }
 #' 
 #' @importFrom magpiesets reportingnames
 #' @importFrom magclass getComment<-
 
 
-calcValidCellularCroplandNitrogenWithdrawals <-function(irrigation=FALSE) {
+calcValidGridCroplandNitrogenWithdrawals <-function(irrigation=FALSE) {
  
   out<-calcOutput("NitrogenWithdrawalByCrop",cellular=TRUE,irrigation=irrigation,aggregate=FALSE)
   getNames(out,dim=1)<-reportingnames(getNames(out,dim=1))

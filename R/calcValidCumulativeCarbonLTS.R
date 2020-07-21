@@ -7,6 +7,7 @@
 #' @author Abhijeet Mishra
 #' @import magpiesets 
 #' @importFrom magclass getNames collapseNames
+#' @importFrom utils tail
 
 calcValidCumulativeCarbonLTS <- function(datasource="Johnston_Radeloff") {
   
