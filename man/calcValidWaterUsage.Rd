@@ -15,6 +15,29 @@ calcValidWaterUsage(datasource = "shiklomanov_2000")
 \item \code{"shiklomanov_2000"}
 \item \code{"wada_2011"}
 \item \code{"wisser_2008"}
+\item \code{"cwatm_ipsl-cm5a-lr"}
+\item \code{"cwatm_gfdl-esm2m"}
+\item \code{"cwatm_miroc5"}
+\item \code{"cwatm_hadgem2-es"}
+\item \code{"lpjml_ipsl-cm5a-lr"}    
+\item \code{"lpjml_gfdl-esm2m"}
+\item \code{"lpjml_miroc5"}
+\item \code{"lpjml_hadgem2-es"}
+\item \code{"h08_ipsl-cm5a-lr"}    
+\item \code{"h08_gfdl-esm2m"}
+\item \code{"h08_miroc5"}
+\item \code{"h08_hadgem2-es"}
+\item \code{"matsiro_ipsl-cm5a-lr"}
+\item \code{"matsiro_gfdl-esm2m"}    
+\item \code{"matsiro_miroc5"}
+\item \code{"matsiro_hadgem2-es"}
+\item \code{"mpi-hm_ipsl-cm5a-lr"}
+\item \code{"mpi-hm_gfdl-esm2m"}
+\item \code{"mpi-hm_miroc5"}    
+\item \code{"pcr-globwb_ipsl-cm5a-lr"}
+\item \code{"pcr-globwb_gfdl-esm2m"}
+\item \code{"pcr-globwb_miroc5"}
+\item \code{"pcr-globwb_hadgem2-es"}
 }
 \item projections:
 \itemize{
@@ -33,5 +56,5 @@ list of magpie object with data and weight
 Returns historical and projected water usage from different sources
 }
 \author{
-Stephen Wirth, Anne Biewald
+Stephen Wirth, Anne Biewald, Felicitas Beier
 }
