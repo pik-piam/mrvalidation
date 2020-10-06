@@ -6,8 +6,7 @@
 #'
 #' @examples
 #' \dontrun{ 
-#'  readSource("ISIMIPoutputs", 
-#'             subtype="ISIMIP2b:water:histsoc.airrww_pcr-globwb_gfdl-esm2m", convert=TRUE) 
+#'  readSource("ISIMIPoutputs", convert=TRUE) 
 #' }
 #'
 #' @import madrat

@@ -9,7 +9,7 @@
 #' 
 #' @examples
 #' \dontrun{
-#' a <- readSource("ISIMIPoutputs", subtype="ISIMIP2b:water:histsoc.airrww_pcr-globwb_gfdl-esm2m", convert=TRUE)
+#' a <- readSource("ISIMIPoutputs", convert=TRUE)
 #' }
 #' 
 #' @importFrom madrat toolCountryFill toolMappingFile
