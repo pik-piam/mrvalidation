@@ -69,7 +69,7 @@ calcValidWaterUsage <- function(datasource="shiklomanov_2000"){
                                  "matsiro_ipsl-cm5a-lr",    "matsiro_gfdl-esm2m",      "matsiro_miroc5",          "matsiro_hadgem2-es",     
                                  "mpi-hm_ipsl-cm5a-lr",     "mpi-hm_gfdl-esm2m",       "mpi-hm_miroc5",      
                                  "pcr-globwb_ipsl-cm5a-lr", "pcr-globwb_gfdl-esm2m",   "pcr-globwb_miroc5",       "pcr-globwb_hadgem2-es" )){ 
-       folder <- "ISIMIP2b:water:histsoc.airrww"
+       folder <- "ISIMIP2b:water.histsoc_airrww"
        out <- readSource("ISIMIPoutputs", subtype=paste(folder,datasource,sep="_"), convert=TRUE) 
        out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
        out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
