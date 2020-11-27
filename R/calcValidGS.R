@@ -14,7 +14,7 @@ calcValidGS <- function(datasource="FRA") {
     a <- collapseNames(readSource("FRA2020",subtype = "growing_stock",convert = TRUE)) * 1000 ## Convert from Billion m3 to mio. m3
     
     indicatorname="Resources|Growing Stock|+|"
-    unit="mio. m3"
+    unit="Mm3"
     out <- a
     getNames(out) <- paste0(indicatorname, getNames(out)," (",unit,")")
     

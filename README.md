@@ -1,6 +1,6 @@
 # madrat data preparation for validation purposes
 
-R package **mrvalidation**, version **2.4.0**
+R package **mrvalidation**, version **2.4.1**
 
   
 
@@ -40,7 +40,7 @@ To cite package **mrvalidation** in publications use:
 
 Bodirsky B, Wirth S, Karstens K, Humpenoeder F, Stevanovic M, Mishra A, Biewald A, Weindl I, Chen D, Molina Bacca E,
 Kreidenweis U, W. Yalew A, Humpenoeder F, Wang X, Dietrich J (2020). _mrvalidation: madrat data preparation for validation
-purposes_. R package version 2.4.0.
+purposes_. R package version 2.4.1.
 
 A BibTeX entry for LaTeX users is
 
@@ -49,7 +49,7 @@ A BibTeX entry for LaTeX users is
   title = {mrvalidation: madrat data preparation for validation purposes},
   author = {Benjamin Leon Bodirsky and Stephen Wirth and Kristine Karstens and Florian Humpenoeder and Mishko Stevanovic and Abhijeet Mishra and Anne Biewald and Isabelle Weindl and David Chen and Edna {Molina Bacca} and Ulrich Kreidenweis and Amsalu {W. Yalew} and Florian {Humpenoeder } and Xiaoxi Wang and Jan Philipp Dietrich},
   year = {2020},
-  note = {R package version 2.4.0},
+  note = {R package version 2.4.1},
 }
 ```
 
