@@ -3,6 +3,7 @@
 export(fullENGAGE)
 import(magclass)
 import(magpiesets)
+import(mrcommons)
 importFrom(luscale,groupAggregate)
 importFrom(luscale,speed_aggregate)
 importFrom(madrat,calcOutput)

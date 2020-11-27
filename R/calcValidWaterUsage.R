@@ -46,6 +46,7 @@
 #' @return list of magpie object with data and weight
 #' @author Stephen Wirth, Anne Biewald, Felicitas Beier
 #' @importFrom magpiesets reportingnames
+#' @import mrcommons 
 calcValidWaterUsage <- function(datasource="shiklomanov_2000"){
   #land<-getNames("land")
   
