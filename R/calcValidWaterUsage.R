@@ -48,6 +48,7 @@
 #' @importFrom magpiesets reportingnames
 #' @import mrmagpie 
 #' @import mrcommons 
+
 calcValidWaterUsage <- function(datasource="shiklomanov_2000"){
   #land<-getNames("land")
   
