@@ -137,6 +137,7 @@ calcValidGridCarbonStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
   return(list(x=out,
               weight=NULL,
               unit="Mt C",
-              description="Cellular Soil Carbon")
+              description="Cellular Soil Carbon",
+              isocountries=FALSE)
   )
 }
