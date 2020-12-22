@@ -7,6 +7,7 @@
 #' @author Abhijeet Mishra
 #' @import magpiesets 
 #' @importFrom magclass getNames
+#' @importFrom magpiesets FRAnames
 #' 
 calcValidGS <- function(datasource="FAO",indicator="relative") {
   
