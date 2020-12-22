@@ -4,10 +4,10 @@
 \alias{calcValidGS}
 \title{calcValidGS}
 \usage{
-calcValidGS(datasource = "FRA")
+calcValidGS(datasource = "FAO", indicator = "relative")
 }
 \arguments{
-\item{datasource}{Currently only  available for the "FRA" source}
+\item{datasource}{Currently only  available for the "FAO" source}
 }
 \value{
 List of magpie object with growing stock

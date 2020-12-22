@@ -136,8 +136,8 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput("ValidCarbonDensity", datasource = "SoilGrids", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
   
   #Growing Stocks
-  calcOutput("ValidGrowingStock", datasource = "FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
-  calcOutput("ValidGS", datasource = "FRA", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+  calcOutput("ValidGS", datasource = "FAO", aggregate="REG+GLO", indicator="relative",file=valfile, append=TRUE, try=TRUE)
+  calcOutput("ValidGS", datasource = "FAO", aggregate="REG+GLO", indicator="absolute",file=valfile, append=TRUE, try=TRUE)
   
   
   #GHG emissions
