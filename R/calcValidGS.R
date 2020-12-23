@@ -33,6 +33,7 @@ calcValidGS <- function(datasource="FAO",indicator="relative") {
       weight = collapseNames(readSource("FRA2020",subtype = "forest_area",convert = TRUE))
       getNames(weight) = FRAnames(getNames(weight))
       weight <- weight[,,getNames(out)]
+      getNames(weight) <- paste0(indicatorname, getNames(weight)," (",unit,")")
     }
 
     getNames(out) <- paste0(indicatorname, getNames(out)," (",unit,")")
