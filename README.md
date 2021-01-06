@@ -1,6 +1,6 @@
 # madrat data preparation for validation purposes
 
-R package **mrvalidation**, version **2.6.6**
+R package **mrvalidation**, version **2.6.7**
 
 [![CRAN status](https://www.r-pkg.org/badges/version/mrvalidation)](https://cran.r-project.org/package=mrvalidation) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4317826.svg)](https://doi.org/10.5281/zenodo.4317826)   
 
@@ -38,9 +38,10 @@ In case of questions / problems please contact Benjamin Leon Bodirsky <bodirsky@
 
 To cite package **mrvalidation** in publications use:
 
-Bodirsky B, Wirth S, Karstens K, Humpenoeder F, Stevanovic M, Mishra A, Biewald A, Weindl I, Chen D, Molina Bacca E,
-Kreidenweis U, W. Yalew A, Humpenoeder F, Wang X, Dietrich J (2020). _mrvalidation: madrat data preparation for validation
-purposes_. doi: 10.5281/zenodo.4317826 (URL: https://doi.org/10.5281/zenodo.4317826), R package version 2.6.6, <URL:
+Bodirsky B, Wirth S, Karstens K, Humpenoeder F, Stevanovic M, Mishra A, Biewald A, Weindl I, Chen
+D, Molina Bacca E, Kreidenweis U, W. Yalew A, Humpenoeder F, Wang X, Dietrich J (2021).
+_mrvalidation: madrat data preparation for validation purposes_. doi: 10.5281/zenodo.4317826 (URL:
+https://doi.org/10.5281/zenodo.4317826), R package version 2.6.7, <URL:
 https://github.com/pik-piam/mrvalidation>.
 
 A BibTeX entry for LaTeX users is
@@ -49,8 +50,8 @@ A BibTeX entry for LaTeX users is
 @Manual{,
   title = {mrvalidation: madrat data preparation for validation purposes},
   author = {Benjamin Leon Bodirsky and Stephen Wirth and Kristine Karstens and Florian Humpenoeder and Mishko Stevanovic and Abhijeet Mishra and Anne Biewald and Isabelle Weindl and David Chen and Edna {Molina Bacca} and Ulrich Kreidenweis and Amsalu {W. Yalew} and Florian {Humpenoeder } and Xiaoxi Wang and Jan Philipp Dietrich},
-  year = {2020},
-  note = {R package version 2.6.6},
+  year = {2021},
+  note = {R package version 2.6.7},
   doi = {10.5281/zenodo.4317826},
   url = {https://github.com/pik-piam/mrvalidation},
 }
