@@ -22,11 +22,10 @@ calcValidEmisLucGloGasser <- function(subtype="Gasser_2020") {
     getNames(out, dim=3) <- "Emissions|CO2|Land|+|Land-use Change (Mt CO2/yr)"
     out <- mbind(setYears(out,"y2010"),setYears(out,"y2015"))
     names(dimnames(out))[3] <- "scenario.model.variable"
-    weight <- collapseNames(setYears(readSource("FRA2020",subtype = "forest_area",convert = TRUE)[,"y2010","landArea"],NULL))
   } else stop("Invalid subtype. See function description for valid subtypes.")
   
   return(list(x=out,
-              weight=weight,
+              weight=NULL,
               unit="Mt CO2/yr",
               min=-1000,
               description="Historical land-use change CO2 emissions from different sources in Mt CO2/yr")
