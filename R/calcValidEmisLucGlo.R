@@ -19,7 +19,7 @@ calcValidEmisLucGlo <- function(subtype="Canadell_2007") {
   
   if (subtype %in% c("Canadell_2007","Friedlingstein_2010","Harris_2013", "Houghton_2012","RCP")) {
     out <- readSource("EmisLucGlo", subtype, convert=F)
-    if(subtype %in% c("Canadell_2007","Friedlingstein_2010","Harris_2013", "Houghton_2012")) out <- out[,,"data"]
+    if(subtype %in% c("Canadell_2007","Friedlingstein_2010","Harris_2013", "Houghton_2012")) out <- out[,,"data"] * (44/12) ## Original Data in C, We validate as CO2
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
     out <- add_dimension(out, dim=3.2, add="model", nm=subtype)
     getNames(out, dim=3) <- "Emissions|CO2|Land|+|Land-use Change (Mt CO2/yr)"
