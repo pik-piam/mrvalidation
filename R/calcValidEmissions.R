@@ -16,7 +16,7 @@
 #' 
 calcValidEmissions <- function(datasource="CEDS") {
   
-  out <- calcOutput("LandEmissions", aggregate=FALSE)
+  out <- calcOutput("LandEmissions", aggregate=FALSE, datasource=datasource)
   
   return(list(x=out,
               weight=NULL,
