@@ -14,6 +14,10 @@
 
 convertGasser <- function(x){
   
-  y <- toolCountryFill(x,fill = 0)
-  return(y)
+  if(getRegions(x)=="GLO") {
+    stop("Use convert=FALSE.")
+  } else if(getRegions(x)!="GLO"){
+    y <- toolCountryFill(x,fill = 0)
+    return(y)
+    }
 }

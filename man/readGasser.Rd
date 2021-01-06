@@ -4,13 +4,13 @@
 \alias{readGasser}
 \title{Gasser}
 \usage{
-readGasser()
+readGasser(subtype = "regional")
 }
 \value{
-magpie object containing data land-use change CO2 emissions
+magpie object containing data land-use change CARBON emissions
 }
 \description{
-Read historic land-use change CO2 emissions
+Read historic land-use change CARBON emissions
 }
 \examples{
 
