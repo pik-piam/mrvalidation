@@ -47,7 +47,7 @@ calcValidCarbon <- function(datasource="LPJmL4:CRU_4"){
       
       time  <- "raw"
       dof   <- NULL 
-      harmonize_baseline <- NULL
+      harmonize_baseline <- FALSE
       ref_year <- NULL
       
     } else {
