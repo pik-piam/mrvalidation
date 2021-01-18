@@ -65,7 +65,8 @@ calcValidCarbon <- function(datasource="LPJmL4:CRU_4"){
                         time=time, dof=dof, harmonize_baseline=harmonize_baseline, ref_year=ref_year, aggregate=FALSE)
     litc  <- calcOutput("LPJmL", version=version, climatetype=climatetype, subtype="litc",     
                         time=time, dof=dof, harmonize_baseline=harmonize_baseline, ref_year=ref_year, aggregate=FALSE)
-    vegc  <- calcOutput("LPJmL", version=version, climatetype=climatetype, subtype="vegc",  aggregate=FALSE)
+    vegc  <- calcOutput("LPJmL", version=version, climatetype=climatetype, subtype="vegc",     
+                        time=time, dof=dof, harmonize_baseline=harmonize_baseline, ref_year=ref_year, aggregate=FALSE)
     
     stock <- mbind(soilc, litc, vegc)[,findset("past_all"),]
     rm(soilc, litc, vegc)
