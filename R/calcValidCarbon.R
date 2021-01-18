@@ -21,7 +21,7 @@ calcValidCarbon <- function(datasource="LPJmL4:CRU_4"){
     litc  <- calcOutput("LPJmL", version="LPJmL4", climatetype="CRU_4", subtype="litc",  aggregate=FALSE)
     vegc  <- calcOutput("LPJmL", version="LPJmL4", climatetype="CRU_4", subtype="vegc",  aggregate=FALSE)
     
-    stock <- mbind(soilc, litc, vegc)[,findset("past_all"),]
+    stock <- mbind(soilc, litc, vegc)
     rm(soilc, litc, vegc)
     
     area  <- dimSums(calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, selectyears="past_all", aggregate = FALSE), dim=3)
@@ -68,7 +68,7 @@ calcValidCarbon <- function(datasource="LPJmL4:CRU_4"){
     vegc  <- calcOutput("LPJmL", version=version, climatetype=climatetype, subtype="vegc",     
                         time=time, dof=dof, harmonize_baseline=harmonize_baseline, ref_year=ref_year, aggregate=FALSE)
     
-    stock <- mbind(soilc, litc, vegc)[,findset("past_all"),]
+    stock <- mbind(soilc, litc, vegc)
     rm(soilc, litc, vegc)
     
     area  <- dimSums(calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, selectyears="past_all", aggregate = FALSE), dim=3)
