@@ -3,6 +3,7 @@
 #' Returns historical FRA 2020 growing stock in million m3 
 #' 
 #' @param datasource Currently only  available for the "FAO" source
+#' @param indicator type of indicator (relative or absolute)
 #' @return List of magpie object with growing stock
 #' @author Abhijeet Mishra
 #' @import magpiesets 

@@ -1,5 +1,5 @@
-#' @title calcValidCarbonDensity
-#' @description calculates the validation data for the carbon densities (including weights for aggregation)
+#' @title calcValidSOCDensity
+#' @description calculates the validation data for the soil carbon densities (including weights for aggregation)
 #' 
 #' @param datasource Datasources for validation data, e.g. LPJ_IPCC2006, LPJmL_natural
 #'
@@ -7,17 +7,17 @@
 #' @author Kristine Karstens
 #' @seealso
 #' \code{\link{calcSOM}}
-#' \code{\link{calcValidCarbonStocks}}
+#' \code{\link{calcValidSOCStocks}}
 #' @examples
 #' 
 #' \dontrun{ 
-#'   calcOutput("ValidCarbonDensity")
+#'   calcOutput("ValidSOCDensity")
 #' }
 #' 
 #' @importFrom magpiesets reporthelper summationhelper
 #' @importFrom magclass mbind getYears setYears nregions getCells
 
-calcValidCarbonDensity <- function(datasource="LPJ_IPCC2006"){
+calcValidSOCDensity <- function(datasource="LPJ_IPCC2006"){
   
   if(datasource=="LPJ_IPCC2006"){
     

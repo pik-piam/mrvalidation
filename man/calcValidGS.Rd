@@ -8,6 +8,8 @@ calcValidGS(datasource = "FAO", indicator = "relative")
 }
 \arguments{
 \item{datasource}{Currently only  available for the "FAO" source}
+
+\item{indicator}{type of indicator (relative or absolute)}
 }
 \value{
 List of magpie object with growing stock

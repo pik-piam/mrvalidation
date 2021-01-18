@@ -1,7 +1,7 @@
 #' @title Gasser
 #' @description Read historic land-use change CARBON emissions
 #' 
-#' 
+#' @param subtype subtype
 #' @return magpie object containing data land-use change CARBON emissions
 #' @author Abhijeet Mishra
 #' @seealso \code{\link{readSource}}

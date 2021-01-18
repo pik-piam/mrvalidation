@@ -1,26 +1,31 @@
-#' @title calcValidGridCarbonStocks
-#' @description calculates the validation data for the carbon pools
+#' @title calcValidSOCStocks
+#' @description calculates the validation data for the soil carbon pools
 #' 
-#' @param datasource Datasources for validation data, e.g. LPJ_IPCC2006, LPJmL_natural, ...
-#' @param baseyear baseyear for calculating soil carbon stock change (for LPJ_IPCC2006 only)
+#' @param datasource Datasources for validation data, e.g. LPJ_IPCC2006, LPJmL_natural
+#' @param baseyear baseyear for calculating soil carbon stock change
 #' 
-#' @return List of magpie objects with results on cellular level, weight on cellular level, unit and description.
-#' @author Kristine Karstens
-#' 
+#' @return List of magpie objects with results on country level, weight on country level, unit and description.
+#' @author Benjamin Leon Bodirsky, Kristine Karstens
+#' @seealso
+#' \code{\link{calcFoodSupplyPast}},
+#' \code{\link{calcValidLivestockShare}}
 #' @examples
 #' 
 #' \dontrun{ 
-#'   calcOutput("ValidGridCarbonStocks")
+#'   calcOutput("ValidSOCStocks")
 #' }
 #' 
 #' @importFrom magpiesets reporthelper summationhelper
 #' @importFrom magclass mbind getYears setYears nregions
 
-calcValidGridCarbonStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
+calcValidSOCStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
   
   if(datasource=="LPJ_IPCC2006"){
     
+    mapping    <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
     SOM_stock  <- calcOutput("SOM", subtype="stock",   aggregate = FALSE)
+    SOM_stock  <- toolAggregate(SOM_stock, rel=mapping, from=ifelse(nregions(SOM_stock)>1,"celliso","cell"), to="iso", dim=1)
+    SOM_stock  <- toolCountryFill(SOM_stock,fill=0)
     SOM_stock  <- mbind(SOM_stock, add_dimension(dimSums(SOM_stock, dim=3.1), add="landuse", nm="total"))
     
     out <- mbind(
@@ -32,20 +37,20 @@ calcValidGridCarbonStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
     SOM_chang <- SOM_stock - setYears(SOM_stock[,baseyear,],NULL)
     
     out <- mbind(out,
-                 setNames(SOM_chang[,,"total"][,,"soilc"],       paste0("Resources|Soil Carbon|Actual|Stock Change|SOC in top 30 cm (Mt C wrt ",baseyear,")")),                    
-                 setNames(SOM_chang[,,"cropland"][,,"soilc"],    paste0("Resources|Soil Carbon|Actual|Stock Change|SOC in top 30 cm|+|Cropland Soils (Mt C wrt ",baseyear,")")),   
-                 setNames(SOM_chang[,,"noncropland"][,,"soilc"], paste0("Resources|Soil Carbon|Actual|Stock Change|SOC in top 30 cm|+|Noncropland Soils (Mt C wrt ",baseyear,")"))
+      setNames(SOM_chang[,,"total"][,,"soilc"],       paste0("Resources|Soil Carbon|Actual|Stock Change|SOC in top 30 cm (Mt C wrt ",baseyear,")")),                    
+      setNames(SOM_chang[,,"cropland"][,,"soilc"],    paste0("Resources|Soil Carbon|Actual|Stock Change|SOC in top 30 cm|+|Cropland Soils (Mt C wrt ",baseyear,")")),   
+      setNames(SOM_chang[,,"noncropland"][,,"soilc"], paste0("Resources|Soil Carbon|Actual|Stock Change|SOC in top 30 cm|+|Noncropland Soils (Mt C wrt ",baseyear,")"))
     )
-    
+
     out <- mbind(out,
-                 setNames(SOM_stock[,,"total"][,,"target_soilc"],       "Resources|Soil Carbon|Target|Stock|SOC in top 30 cm (Mt C)"),                    
-                 setNames(SOM_stock[,,"cropland"][,,"target_soilc"],    "Resources|Soil Carbon|Target|Stock|SOC in top 30 cm|+|Cropland Soils (Mt C)"),   
-                 setNames(SOM_stock[,,"noncropland"][,,"target_soilc"], "Resources|Soil Carbon|Target|Stock|SOC in top 30 cm|+|Noncropland Soils (Mt C)")
+      setNames(SOM_stock[,,"total"][,,"target_soilc"],       "Resources|Soil Carbon|Target|Stock|SOC in top 30 cm (Mt C)"),                    
+      setNames(SOM_stock[,,"cropland"][,,"target_soilc"],    "Resources|Soil Carbon|Target|Stock|SOC in top 30 cm|+|Cropland Soils (Mt C)"),   
+      setNames(SOM_stock[,,"noncropland"][,,"target_soilc"], "Resources|Soil Carbon|Target|Stock|SOC in top 30 cm|+|Noncropland Soils (Mt C)")
     )
     
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
-    
+
   } else if (datasource=="LPJmL_rev21"){
     
     litc   <- readSource("LPJml_rev21","litc",convert="onlycorrect")
@@ -64,6 +69,11 @@ calcValidGridCarbonStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
     
     out<-out*area
     
+    mapping<-toolGetMapping(name="CountryToCellMapping.csv",type="cell")
+    out<- toolAggregate(out,rel = mapping,from="celliso",to="iso",dim=1)
+    
+    out  <- toolCountryFill(out,fill=0)
+    
     out <- add_dimension(out, dim=3.1, add="scenario", nm="climatescenarioX")  
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
     
@@ -74,11 +84,14 @@ calcValidGridCarbonStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
     area  <- setYears(dimSums(area[,2010,],dim=3),NULL)
     stock <- soilc * area
     
+    mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
+    stock   <- toolAggregate(stock,rel = mapping,from="celliso",to="iso",dim=1)
+    stock   <- toolCountryFill(stock, fill=0)
     out     <- setNames(stock,"Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
     
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
-    
+  
   } else if (datasource=="LPJmL4Paper"){
     
     soilc <- calcOutput("LPJmL", version="LPJmL4", climatetype="LPJmL4Paper", subtype="soilc_layer", aggregate=FALSE)
@@ -87,6 +100,9 @@ calcValidGridCarbonStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
     area  <- setYears(dimSums(area[,2010,],dim=3),NULL)
     stock <- soilc * area
     
+    mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
+    stock   <- toolAggregate(stock,rel = mapping,from="celliso",to="iso",dim=1)
+    stock   <- toolCountryFill(stock, fill=0)
     out     <- setNames(stock,"Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
     
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
@@ -98,8 +114,12 @@ calcValidGridCarbonStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
     area  <- calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, selectyears="past_all", aggregate = FALSE)
     area  <- setYears(dimSums(area[,2010,],dim=3),NULL)
     stock <- soilc * area
-  
+    
+    mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
+    stock   <- toolAggregate(stock,rel = mapping,from="celliso",to="iso",dim=1)
+    stock   <- toolCountryFill(stock, fill=0)
     out     <- setNames(stock,"Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
+    
     out <- mbind(setYears(out, "y2015"), setYears(out, "y2016"), setYears(out, "y2017"))
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
@@ -110,8 +130,12 @@ calcValidGridCarbonStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
     area  <- calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, selectyears="past_all", aggregate = FALSE)
     area  <- setYears(dimSums(area[,2010,],dim=3),NULL)
     stock <- soilc * area
-
+    
+    mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
+    stock   <- toolAggregate(stock,rel = mapping,from="celliso",to="iso",dim=1)
+    stock   <- toolCountryFill(stock, fill=0)
     out     <- setNames(stock,"Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
+    
     out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
@@ -123,6 +147,9 @@ calcValidGridCarbonStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
     area  <- setYears(dimSums(area[,2010,],dim=3),NULL)
     stock <- soilc * area
     
+    mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
+    stock   <- toolAggregate(stock,rel = mapping,from="celliso",to="iso",dim=1)
+    stock   <- toolCountryFill(stock, fill=0)
     out     <- setNames(stock,"Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
     
     out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
@@ -137,7 +164,6 @@ calcValidGridCarbonStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
   return(list(x=out,
               weight=NULL,
               unit="Mt C",
-              description="Cellular Soil Carbon",
-              isocountries=FALSE)
+              description="Soil Carbon")
   )
 }

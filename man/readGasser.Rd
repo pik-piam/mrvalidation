@@ -6,6 +6,9 @@
 \usage{
 readGasser(subtype = "regional")
 }
+\arguments{
+\item{subtype}{subtype}
+}
 \value{
 magpie object containing data land-use change CARBON emissions
 }
