@@ -25,7 +25,7 @@ calcValidCarbon <- function(datasource="LPJmL4:CRU_4"){
     rm(soilc, litc, vegc)
     
     area  <- dimSums(calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, selectyears="past_all", aggregate = FALSE), dim=3)
-    stock <- stock * area
+    stock <- stock * setYears(area[,"y2010",], NULL)
     
     mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
     stock   <- toolAggregate(stock, rel = mapping,from="celliso",to="iso",dim=1)
