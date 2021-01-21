@@ -59,6 +59,7 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidLand", datasource="LUH2v2", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidLand", datasource="MAgPIEown", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidLand", datasource="SSPResults", aggregate="REG+GLO", file=valfile, append=TRUE, na_warning = FALSE, try=TRUE) #ready
+  calcOutput(type="ValidLand", datasource="FRA2020", aggregate="REG+GLO", file=valfile, append=TRUE, na_warning = FALSE, try=TRUE) #ready
   # Land Cover Change
   calcOutput(type="ValidLandChange", datasource="FAO_crop_past", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidLandChange", datasource="FAO_forest", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready

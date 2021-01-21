@@ -40,6 +40,19 @@ calcValidLand <- function(datasource="MAgPIEown"){
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
     getNames(out,dim=3)<-paste0("Resources|Land Cover|+|",reportingnames(getNames(out,dim=3))," (million ha)")
+  } else if(datasource=="FRA2020") {
+    
+    FRAForest2020   <- readSource("FRA2020","forest_area")[,,c("plantedForest","plantationForest","otherPlantedForest")]
+    getNames(FRAForest2020,dim=1) <- c("Resources|Land Cover|Forest|Managed Forest","Resources|Land Cover|Forest|Managed Forest|+|Plantations","Resources|Land Cover|Forest|Managed Forest|+|NPI/NDC")
+    y_past <- magpiesets::findset("past",noset = "original")
+    y_past <- as.integer(substring(y_past,2,5))
+    y_data <- getYears(FRAForest2020, as.integer=TRUE)
+    y_interpolate <- union(y_past[y_past >= min(y_data)], y_data)
+    FRAForest2020 <- time_interpolate(FRAForest2020,interpolated_year=y_interpolate,integrate_interpolated_years = TRUE,extrapolation_type = "constant")
+    out <- FRAForest2020
+    out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
+    out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
+    getNames(out,dim=3)<-paste0(getNames(out,dim=3)," (million ha)")
   } else if(datasource=="LUH2v2") {
    
     data <- calcOutput("LUH2v2",landuse_types="magpie",irrigation=FALSE,cellular=FALSE,selectyears="past",aggregate = FALSE)
