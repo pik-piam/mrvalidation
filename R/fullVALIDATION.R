@@ -126,7 +126,6 @@ fullVALIDATION <- function(rev=0.1) {
   for(gcm in c("GFDL_ESM2M","IPSL_CM5A_LR","MIROC5","HadGEM2_ES","NorESM1_M")){
     for(rcp in c("rcp2p6","rcp6p0")){
       calcOutput("ValidCarbon", datasource=paste("LPJmL4raw",gcm,rcp,"co2",sep=":"), aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
-      calcOutput("ValidCarbon", datasource=paste("LPJmL4",   gcm,rcp,"co2",sep=":"), aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
     }
   }
   

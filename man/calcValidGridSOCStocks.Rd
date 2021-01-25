@@ -4,12 +4,18 @@
 \alias{calcValidGridSOCStocks}
 \title{calcValidGridSOCStocks}
 \usage{
-calcValidGridSOCStocks(datasource = "LPJ_IPCC2006", baseyear = 1995)
+calcValidGridSOCStocks(
+  datasource = "LPJ_IPCC2006",
+  baseyear = 1995,
+  intensive = FALSE
+)
 }
 \arguments{
 \item{datasource}{Datasources for validation data, e.g. LPJ_IPCC2006, LPJmL_natural, ...}
 
 \item{baseyear}{baseyear for calculating soil carbon stock change (for LPJ_IPCC2006 only)}
+
+\item{intensive}{If FALSE (default) total stocks will be returned; otherwise (TRUE) carbon densities.}
 }
 \value{
 List of magpie objects with results on cellular level, weight on cellular level, unit and description.

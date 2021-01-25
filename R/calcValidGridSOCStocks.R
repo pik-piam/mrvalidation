@@ -3,6 +3,7 @@
 #' 
 #' @param datasource Datasources for validation data, e.g. LPJ_IPCC2006, LPJmL_natural, ...
 #' @param baseyear baseyear for calculating soil carbon stock change (for LPJ_IPCC2006 only)
+#' @param intensive If FALSE (default) total stocks will be returned; otherwise (TRUE) carbon densities.
 #' 
 #' @return List of magpie objects with results on cellular level, weight on cellular level, unit and description.
 #' @author Kristine Karstens
@@ -16,7 +17,7 @@
 #' @importFrom magpiesets reporthelper summationhelper
 #' @importFrom magclass mbind getYears setYears nregions
 
-calcValidGridSOCStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
+calcValidGridSOCStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995, intensive=FALSE){
   
   if(datasource=="LPJ_IPCC2006"){
     
@@ -45,97 +46,60 @@ calcValidGridSOCStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
     
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
+    weight <- NULL
     
-  } else if (datasource=="LPJmL_rev21"){
+  } else if(datasource%in%c("LPJmL_rev21", "LPJmLCarbon", "LPJmL4Paper", "SoilGrids", "GSOC", "WISE")){
     
-    litc   <- readSource("LPJml_rev21","litc",convert="onlycorrect")
-    soilc  <- readSource("LPJml_rev21","soilc_layer",convert="onlycorrect")
-    soilc2 <- soilc[,,"mm0_200"] + setNames(soilc[,,"mm201_500"],NULL)/3
-    vegc   <- readSource("LPJml_rev21","vegc",convert="onlycorrect")
+    if (datasource=="LPJmL_rev21"){
     
-    out<-mbind(
-      setNames(vegc[,getYears(soilc2),],"Resources|Carbon Stocks|Vegetation Carbon (Mt C)"),
-      setNames(soilc2[,getYears(soilc2),],"Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)"),
-      setNames(litc[,getYears(soilc2),],"Resources|Carbon Stocks|Litter Carbon (Mt C)")
-    )
+      soilc  <- readSource("LPJml_rev21","soilc_layer",convert="onlycorrect")
+      out <- soilc[,,"mm0_200"] + setNames(soilc[,,"mm201_500"],NULL)/3
+      
+    } else if (datasource=="LPJmLCarbon"){
+      
+      out <- calcOutput("LPJmlCarbon", climatetype="historical", landtype="nat_veg", subtype="soilc_0-30", aggregate=FALSE)
+      
+    } else if (datasource=="LPJmL4Paper"){
+      
+      out <- calcOutput("LPJmL", version="LPJmL4", climatetype="LPJmL4Paper", subtype="soilc_layer", aggregate=FALSE)
+      out <- collapseNames(out[,,1] + 1/3*out[,,2])
+      
+    } else if(datasource=="GSOC"){
+      
+      out <- readSource("GSOC",  convert="onlycorrect")
+      out <- mbind(setYears(out, "y2015"), setYears(out, "y2016"), setYears(out, "y2017"))
+      
+    } else if(datasource=="WISE"){
+      
+      out <- readSource("WISE",  convert="onlycorrect")
+      out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
+      
+    } else if(datasource=="SoilGrids"){
+      
+      out <- readSource("SoilGrids", subtype="cstock_0_30", convert="onlycorrect")
+      out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
+    }
     
-    area<-readSource("LUH2v2",subtype = "states",convert="onlycorrect")
-    area<-setYears(dimSums(area[,2010,],dim=3),NULL)
-    
-    out<-out*area
-    
-    out <- add_dimension(out, dim=3.1, add="scenario", nm="climatescenarioX")  
-    out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
-    
-  } else if (datasource=="LPJmLCarbon"){
-    
-    soilc <- calcOutput("LPJmlCarbon", climatetype="historical", landtype="nat_veg", subtype="soilc_0-30", aggregate=FALSE)
     area  <- calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, selectyears="past_all", aggregate = FALSE)
     area  <- setYears(dimSums(area[,2010,],dim=3),NULL)
-    stock <- soilc * area
     
-    out     <- setNames(stock,"Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
+    if(intensive){
+      weight <- area
+    } else {
+      weight <- NULL
+      out    <- out * area
+    }
     
-    out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
-    out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
-    
-  } else if (datasource=="LPJmL4Paper"){
-    
-    soilc <- calcOutput("LPJmL", version="LPJmL4", climatetype="LPJmL4Paper", subtype="soilc_layer", aggregate=FALSE)
-    soilc <- collapseNames(soilc[,,1] + 1/3*soilc[,,2])
-    area  <- calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, selectyears="past_all", aggregate = FALSE)
-    area  <- setYears(dimSums(area[,2010,],dim=3),NULL)
-    stock <- soilc * area
-    
-    out     <- setNames(stock,"Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
-    
-    out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
-    out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
-    
-  } else if(datasource=="GSOC"){
-    
-    soilc <- readSource("GSOC",  convert="onlycorrect")
-    area  <- calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, selectyears="past_all", aggregate = FALSE)
-    area  <- setYears(dimSums(area[,2010,],dim=3),NULL)
-    stock <- soilc * area
-  
-    out     <- setNames(stock,"Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
-    out <- mbind(setYears(out, "y2015"), setYears(out, "y2016"), setYears(out, "y2017"))
-    out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
-    out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
-    
-  } else if(datasource=="WISE"){
-    
-    soilc <- readSource("WISE",  convert="onlycorrect")
-    area  <- calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, selectyears="past_all", aggregate = FALSE)
-    area  <- setYears(dimSums(area[,2010,],dim=3),NULL)
-    stock <- soilc * area
-
-    out     <- setNames(stock,"Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
-    out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
-    out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
-    out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
-    
-  } else if(datasource=="SoilGrids"){
-    
-    soilc <- readSource("SoilGrids", subtype="cstock_0_30", convert="onlycorrect")
-    area  <- calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, selectyears="past_all", aggregate = FALSE)
-    area  <- setYears(dimSums(area[,2010,],dim=3),NULL)
-    stock <- soilc * area
-    
-    out     <- setNames(stock,"Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
-    
-    out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
+    out <- setNames(out,"Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
     
   } else stop("No data exist for the given datasource!")
   
-  
   names(dimnames(out))[3] <- "scenario.model.variable"
   
   return(list(x=out,
-              weight=NULL,
+              weight=weight,
               unit="Mt C",
               description="Cellular Soil Carbon",
               isocountries=FALSE)
