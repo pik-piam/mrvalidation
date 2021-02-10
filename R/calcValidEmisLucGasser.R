@@ -28,12 +28,20 @@ calcValidEmisLucGasser <- function(subtype="Gasser_2020") {
     hwp <- hwp / 2 ## Gasser 2020 paper also includes woodfuel burning which is not a category in magpie
     regrowth <-  readSource("Gasser",subtype = subtype,convert=TRUE)[,,"regrowth"] * 1000 * 44/12 ## Conversion from Pg to Mt and C to CO2
     overall  <-  readSource("Gasser",subtype = subtype,convert=TRUE)[,,"overall"] * 1000 * 44/12 ## Conversion from Pg to Mt and C to CO2
-    out <- mbind(hwp,regrowth,overall)
-    getNames(out) <- c("|+|Wood products","|+|Regrowth","")
-    getNames(out) <- paste0("Emissions|CO2|Land|+|Land-use Change",getNames(out)," (Mt CO2/yr)")
+    out <- mbind(hwp,regrowth)
+    getNames(out) <- c("Wood products","Regrowth")
+    getNames(out) <- paste0("Emissions|CO2|Land|Land-use Change|+|",getNames(out)," (Mt CO2/yr)")
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
     out <- add_dimension(out, dim=3.2, add="model",nm="Gasser2020")
     names(dimnames(out))[3] <- "scenario.model.variable"
+
+    getNames(overall) <- c("Emissions|CO2|Land|+|Land-use Change")
+    getNames(overall) <- paste0(getNames(overall)," (Mt CO2/yr)")
+    overall <- add_dimension(overall, dim=3.1, add="scenario", nm="historical")
+    overall <- add_dimension(overall, dim=3.2, add="model",nm="Gasser2020")
+    names(dimnames(overall))[3] <- "scenario.model.variable"
+    
+    out <- mbind(out,overall)
   } else stop("Invalid subtype. See function description for valid subtypes.")
   
   return(list(x=out,
