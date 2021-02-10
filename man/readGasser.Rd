@@ -17,7 +17,7 @@ Read historic land-use change CARBON emissions
 }
 \examples{
 
-\dontrun{ 
+\dontrun{
 a <- readSource("Gasser")
 }
 }

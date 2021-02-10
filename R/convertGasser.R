@@ -14,9 +14,9 @@
 
 convertGasser <- function(x){
   
-  if(getRegions(x)=="GLO") {
-    stop("Use convert=FALSE.")
-  } else if(getRegions(x)!="GLO"){
+  if("GLO" %in% getRegions(x)) {
+    stop("Conversion routine not functional. Use convert=FALSE.")
+  } else if(!("GLO" %in% getRegions(x))){
     y <- toolCountryFill(x,fill = 0)
     return(y)
     }

@@ -166,6 +166,7 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidEmisLucGasser", subtype="Gasser_2020", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmisLucGasser", subtype="LUH2_GCB_2019", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmisLucGasser", subtype="FRA_2015", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
+  calcOutput(type="ValidEmisLucGasser", subtype="bookkeeping", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmisLucGloGasser", subtype="Gasser_2020", aggregate=FALSE, file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmisLucGloGasser", subtype="LUH2_GCB_2019", aggregate=FALSE, file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmisLucGloGasser", subtype="FRA_2015", aggregate=FALSE, file=valfile, append=TRUE, try=TRUE) #ready
