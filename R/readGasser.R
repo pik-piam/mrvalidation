@@ -62,10 +62,9 @@ readGasser <- function(subtype = "regional") {
     eluc <- as.magpie(eluc, temporal = "year", spatial = "region")
     
     eluc <- mbind(setNames(dimSums(eluc[, , c("HWP.Forest.Non-Forest")],dim=3),"hwp"), 
-                  setNames(dimSums(eluc[, , c("Veg.Forest.Forest")],dim=3),"regrowth"))
+                  setNames(dimSums(eluc[, , c("Veg.Forest.Forest")],dim=3),"regrowth"),
+                  setNames(dimSums(eluc[, , ],dim = 3),"overall"))
 
-    #eluc <- mbind(setNames(dimSums(eluc[, , c("HWP")],dim=3),"hwp"), setNames(dimSums(eluc[, , c("Veg")],dim=3),"regrowth"))
-  
     mapping_file_gasser <- "gasser_mapping_git.csv"
     mapping_gasser <- read.csv(file = mapping_file_gasser, header = TRUE, sep = ";")
 
@@ -74,7 +73,6 @@ readGasser <- function(subtype = "regional") {
     weight <- time_interpolate(dataset = weight, interpolated_year = missing_weight_years, extrapolation_type = "constant", integrate_interpolated_years = T)
     iso_list <- intersect(getRegions(weight), unique(mapping_gasser$ISO.Alpha3))
     mapping_gasser <- mapping_gasser[mapping_gasser$ISO.Alpha3 %in% iso_list, ]
-
     hwp <- toolAggregate(x = eluc[,,"hwp"], rel = mapping_gasser, weight = weight[iso_list, getYears(eluc), ], from = "GasserReg", to = "ISO.Alpha3")
     
     weight <- collapseNames(readSource("FRA2020","forest_area")[,,"forestArea"])
@@ -84,7 +82,14 @@ readGasser <- function(subtype = "regional") {
     mapping_gasser <- mapping_gasser[mapping_gasser$ISO.Alpha3 %in% iso_list, ]
     regrowth <- toolAggregate(x = eluc[,,"regrowth"], rel = mapping_gasser, weight = weight[iso_list, getYears(eluc), ], from = "GasserReg", to = "ISO.Alpha3")
     
-    out <- mbind(hwp,regrowth)
+    weight <- collapseNames(readSource("FRA2020","forest_area")[,,"landArea"])
+    missing_weight_years <- setdiff(getYears(eluc), getYears(weight))
+    weight <- time_interpolate(dataset = weight, interpolated_year = missing_weight_years, extrapolation_type = "constant", integrate_interpolated_years = T)
+    iso_list <- intersect(getRegions(weight), unique(mapping_gasser$ISO.Alpha3))
+    mapping_gasser <- mapping_gasser[mapping_gasser$ISO.Alpha3 %in% iso_list, ]
+    overall <- toolAggregate(x = eluc[,,"overall"], rel = mapping_gasser, weight = weight[iso_list, getYears(eluc), ], from = "GasserReg", to = "ISO.Alpha3")
+    
+    out <- mbind(hwp,regrowth,overall)
 
     return(out)
   } else {
