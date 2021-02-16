@@ -10,29 +10,29 @@
 #' \item \code{"shiklomanov_2000"}
 #' \item \code{"wada_2011"}
 #' \item \code{"wisser_2008"}
-#' \item \code{"cwatm_ipsl-cm5a-lr"}
-#' \item \code{"cwatm_gfdl-esm2m"}
-#' \item \code{"cwatm_miroc5"}
-#' \item \code{"cwatm_hadgem2-es"}
-#' \item \code{"lpjml_ipsl-cm5a-lr"}    
-#' \item \code{"lpjml_gfdl-esm2m"}
-#' \item \code{"lpjml_miroc5"}
-#' \item \code{"lpjml_hadgem2-es"}
-#' \item \code{"h08_ipsl-cm5a-lr"}    
-#' \item \code{"h08_gfdl-esm2m"}
-#' \item \code{"h08_miroc5"}
-#' \item \code{"h08_hadgem2-es"}
-#' \item \code{"matsiro_ipsl-cm5a-lr"}
-#' \item \code{"matsiro_gfdl-esm2m"}    
-#' \item \code{"matsiro_miroc5"}
-#' \item \code{"matsiro_hadgem2-es"}
-#' \item \code{"mpi-hm_ipsl-cm5a-lr"}
-#' \item \code{"mpi-hm_gfdl-esm2m"}
-#' \item \code{"mpi-hm_miroc5"}    
-#' \item \code{"pcr-globwb_ipsl-cm5a-lr"}
-#' \item \code{"pcr-globwb_gfdl-esm2m"}
-#' \item \code{"pcr-globwb_miroc5"}
-#' \item \code{"pcr-globwb_hadgem2-es"}
+#' \item \code{"CWatM:ipsl-cm5a-lr"}
+#' \item \code{"CWatM:gfdl-esm2m"}
+#' \item \code{"CWatM:miroc5"}
+#' \item \code{"CWatM:hadgem2-es"}
+#' \item \code{"lpjml:ipsl-cm5a-lr"}    
+#' \item \code{"lpjml:gfdl-esm2m"}
+#' \item \code{"lpjml:miroc5"}
+#' \item \code{"lpjml:hadgem2-es"}
+#' \item \code{"H08:ipsl-cm5a-lr"}    
+#' \item \code{"H08:gfdl-esm2m"}
+#' \item \code{"H08:miroc5"}
+#' \item \code{"H08:hadgem2-es"}
+#' \item \code{"MATSIRO:ipsl-cm5a-lr"}
+#' \item \code{"MATSIRO:gfdl-esm2m"}    
+#' \item \code{"MATSIRO:miroc5"}
+#' \item \code{"MATSIRO:hadgem2-es"}
+#' \item \code{"MPI-HM:ipsl-cm5a-lr"}
+#' \item \code{"MPI-HM:gfdl-esm2m"}
+#' \item \code{"MPI-HM:miroc5"}    
+#' \item \code{"PCR-GLOBWB:ipsl-cm5a-lr"}
+#' \item \code{"PCR-GLOBWB:gfdl-esm2m"}
+#' \item \code{"PCR-GLOBWB:miroc5"}
+#' \item \code{"PCR-GLOBWB:hadgem2-es"}
 #' }
 #' \item projections:
 #' \itemize{
@@ -46,7 +46,8 @@
 #' @return list of magpie object with data and weight
 #' @author Stephen Wirth, Anne Biewald, Felicitas Beier
 #' @importFrom magpiesets reportingnames
-#' @import mrcommons 
+#' @importFrom magclass collapseDim
+#' @importFrom mrcommons toolSurfaceArea
 
 calcValidWaterUsage <- function(datasource="shiklomanov_2000"){
   #land<-getNames("land")
@@ -55,7 +56,6 @@ calcValidWaterUsage <- function(datasource="shiklomanov_2000"){
     out <- readSource("WaterUsage", datasource, convert=F)
     if (datasource %in% c("wisser_2008","fischer_IIASA","hejazi_2013", "seckler_IWMI")){
       out <- out[,,"data"]
-     # getNames(out) <- "Water|Withdrawal|Agriculture (million m3/yr)"
     }
       if (datasource %in% c("foley_2011","shiklomanov_2000", "wada_2011", "wisser_2008")){
       out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
@@ -75,8 +75,27 @@ calcValidWaterUsage <- function(datasource="shiklomanov_2000"){
        out <- readSource("ISIMIPoutputs", subtype=paste(folder,datasource,sep="_"), convert=TRUE) 
        out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
        out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
+    } else if (datasource %in% c("CWatM:ipsl-cm5a-lr",      "CWatM:gfdl-esm2m",        "CWatM:miroc5",            "CWatM:hadgem2-es",       
+                                 "H08:ipsl-cm5a-lr",        "H08:gfdl-esm2m",          "H08:miroc5",              "H08:hadgem2-es",         
+                                 "LPJmL:ipsl-cm5a-lr",      "LPJmL:gfdl-esm2m",        "LPJmL:miroc5",            "LPJmL:hadgem2-es",       
+                                 "MATSIRO:ipsl-cm5a-lr",    "MATSIRO:gfdl-esm2m",      "MATSIRO:miroc5",          "MATSIRO:hadgem2-es",     
+                                 "MPI-HM:ipsl-cm5a-lr",     "MPI-HM:gfdl-esm2m",       "MPI-HM:miroc5",      
+                                 "PCR-GLOBWB:ipsl-cm5a-lr", "PCR-GLOBWB:gfdl-esm2m",   "PCR-GLOBWB:miroc5",       "PCR-GLOBWB:hadgem2-es" )) {
+      out <- readSource("ISIMIP", subtype=paste("airww",datasource,"2b",sep=":"), convert=TRUE) 
+      
+      # unit transformation: from: kg m-2 s-1 = mm/second, to: mm/month
+      # (Note: 1 day = 60*60*24 = 86400 seconds)
+      dayofmonths    <- as.magpie(c(jan=31,feb=28,mar=31,apr=30,may=31,jun=30,jul=31,aug=31,sep=30,oct=31,nov=30,dec=31), temporal = 1)
+      out <- out * dayofmonths * 86400
+      # mm/month -> mm/year
+      out   <- collapseDim(toolAggregate(out, data.frame(getItems(out,"month"),"year"), dim="month"))
+      # mm/year = liter/m^2/year -> liter/year -> mio m^3/year
+      out <- out * toolSurfaceArea("country") * 10^-9
+      
+      out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
+      out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
     } else {
-    stop("Given datasource currently not supported!")
+      stop("Given datasource currently not supported!")
     }
   getNames(out, dim=3) <- "Resources|Water|Withdrawal|Agriculture (km3/yr)"
   names(dimnames(out))[3] <- "scenario.model.variable"
