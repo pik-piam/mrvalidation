@@ -14,10 +14,10 @@
 #' \item \code{"CWatM:gfdl-esm2m"}
 #' \item \code{"CWatM:miroc5"}
 #' \item \code{"CWatM:hadgem2-es"}
-#' \item \code{"lpjml:ipsl-cm5a-lr"}    
-#' \item \code{"lpjml:gfdl-esm2m"}
-#' \item \code{"lpjml:miroc5"}
-#' \item \code{"lpjml:hadgem2-es"}
+#' \item \code{"LPJmL:ipsl-cm5a-lr"}    
+#' \item \code{"LPJmL:gfdl-esm2m"}
+#' \item \code{"LPJmL:miroc5"}
+#' \item \code{"LPJmL:hadgem2-es"}
 #' \item \code{"H08:ipsl-cm5a-lr"}    
 #' \item \code{"H08:gfdl-esm2m"}
 #' \item \code{"H08:miroc5"}
