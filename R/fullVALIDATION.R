@@ -81,12 +81,7 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidWaterUsage",datasource="LPJmL:ipsl-cm5a-lr", aggregate = "REG+GLO", file="validation.mif", append = TRUE, try=TRUE)
   calcOutput(type="ValidWaterUsage",datasource="MATSIRO:ipsl-cm5a-lr", aggregate = "REG+GLO", file="validation.mif", append = TRUE, try=TRUE)
   calcOutput(type="ValidWaterUsage",datasource="MPI-HM:ipsl-cm5a-lr", aggregate = "REG+GLO", file="validation.mif", append = TRUE, try=TRUE)
-  calcOutput(type="ValidWaterUsage",datasource="LPJmL:ipsl-cm5a-lr", aggregate = "REG+GLO", file="validation.mif", append = TRUE, try=TRUE)
-  calcOutput(type="ValidWaterUsage",datasource="MATSIRO:ipsl-cm5a-lr", aggregate = "REG+GLO", file="validation.mif", append = TRUE, try=TRUE)
-  calcOutput(type="ValidWaterUsage",datasource="MPI-HM:ipsl-cm5a-lr", aggregate = "REG+GLO", file="validation.mif", append = TRUE, try=TRUE)
-  
-  
-  
+
   #Area equipped for Irrigation
   calcOutput(type="ValidAEI",datasource="LUH2v2", aggregate = "REG+GLO", file="validation.mif", append = TRUE, try=TRUE)
   calcOutput(type="ValidAEI",datasource="HID", aggregate = "REG+GLO", file="validation.mif", append = TRUE, try=TRUE)

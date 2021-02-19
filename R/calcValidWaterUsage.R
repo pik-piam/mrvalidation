@@ -46,8 +46,8 @@
 #' @return list of magpie object with data and weight
 #' @author Stephen Wirth, Anne Biewald, Felicitas Beier
 #' @importFrom magpiesets reportingnames
-#' @importFrom magclass collapseDim
-#' @importFrom mrcommons toolSurfaceArea
+#' @importFrom magclass collapseDim dimSums
+#' @importFrom madrat calcOutput readSource
 
 calcValidWaterUsage <- function(datasource="shiklomanov_2000"){
   #land<-getNames("land")
@@ -86,18 +86,22 @@ calcValidWaterUsage <- function(datasource="shiklomanov_2000"){
       # unit transformation: from: kg m-2 s-1 = mm/second, to: mm/month
       # (Note: 1 day = 60*60*24 = 86400 seconds)
       dayofmonths    <- as.magpie(c(jan=31,feb=28,mar=31,apr=30,may=31,jun=30,jul=31,aug=31,sep=30,oct=31,nov=30,dec=31), temporal = 1)
-      out <- out * dayofmonths * 86400
+      out      <- out * dayofmonths * 86400
       # mm/month -> mm/year
-      out   <- collapseDim(toolAggregate(out, data.frame(getItems(out,"month"),"year"), dim="month"))
+      out      <- collapseDim(toolAggregate(out, data.frame(getItems(out,"month"),"year"), dim="month"))
       # mm/year = liter/m^2/year -> liter/year -> mio m^3/year
-      out <- out * toolSurfaceArea("country") * 10^-9
+      landarea <- dimSums(calcOutput("LUH2v2", landuse_types="magpie", aggregate=FALSE, cellular=TRUE, cells="magpiecell", irrigation=FALSE, years="y1995"), dim=3)
+      names(dimnames(landarea))[1] <- "iso.cell"
+      landarea                     <- toolAggregate(landarea, data.frame("cell"=getCells(landarea), "iso"=gsub("\\..*","",getCells(landarea)), stringsAsFactors=F), dim=1)
+      landarea                     <- toolCountryFill(landarea, fill=0)
+      out      <- out * landarea * 10^-9
       
       out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
-      out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
+      out <- add_dimension(out, dim=3.2, add="model",    nm=datasource)
     } else {
       stop("Given datasource currently not supported!")
     }
-  getNames(out, dim=3) <- "Resources|Water|Withdrawal|Agriculture (km3/yr)"
+  getNames(out, dim=3)    <- "Resources|Water|Withdrawal|Agriculture (km3/yr)"
   names(dimnames(out))[3] <- "scenario.model.variable"
   
   return(list(x=out,
