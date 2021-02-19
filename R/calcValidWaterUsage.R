@@ -65,16 +65,6 @@ calcValidWaterUsage <- function(datasource="shiklomanov_2000"){
       out <- add_dimension(out, dim=3.1, add="scenario", nm="projection")
       out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
       }
-    } else if (datasource %in% c("cwatm_ipsl-cm5a-lr",      "cwatm_gfdl-esm2m",        "cwatm_miroc5",            "cwatm_hadgem2-es",       
-                                 "h08_ipsl-cm5a-lr",        "h08_gfdl-esm2m",          "h08_miroc5",              "h08_hadgem2-es",         
-                                 "lpjml_ipsl-cm5a-lr",      "lpjml_gfdl-esm2m",        "lpjml_miroc5",            "lpjml_hadgem2-es",       
-                                 "matsiro_ipsl-cm5a-lr",    "matsiro_gfdl-esm2m",      "matsiro_miroc5",          "matsiro_hadgem2-es",     
-                                 "mpi-hm_ipsl-cm5a-lr",     "mpi-hm_gfdl-esm2m",       "mpi-hm_miroc5",      
-                                 "pcr-globwb_ipsl-cm5a-lr", "pcr-globwb_gfdl-esm2m",   "pcr-globwb_miroc5",       "pcr-globwb_hadgem2-es" )){ 
-       folder <- "ISIMIP2b:water.histsoc_airrww"
-       out <- readSource("ISIMIPoutputs", subtype=paste(folder,datasource,sep="_"), convert=TRUE) 
-       out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
-       out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
     } else if (datasource %in% c("CWatM:ipsl-cm5a-lr",      "CWatM:gfdl-esm2m",        "CWatM:miroc5",            "CWatM:hadgem2-es",       
                                  "H08:ipsl-cm5a-lr",        "H08:gfdl-esm2m",          "H08:miroc5",              "H08:hadgem2-es",         
                                  "LPJmL:ipsl-cm5a-lr",      "LPJmL:gfdl-esm2m",        "LPJmL:miroc5",            "LPJmL:hadgem2-es",       
