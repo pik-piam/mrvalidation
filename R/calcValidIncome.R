@@ -14,10 +14,10 @@ calcValidIncome <- function(datasource = "James") {
   if(datasource == "James"){
     
     MER   <- calcOutput("GDPpppPast", GDPpppPast = "IHME_USD05_MER_pc",aggregate = FALSE)
-    MERpc <- readSource("James", subtype="IHME_USD05_MER_pc")
+    MERpc <- readSource("James2019", subtype="IHME_USD05_MER_pc")
     
     PPP   <- calcOutput("GDPpppPast", GDPpppPast = "IHME_USD05_PPP_pc",aggregate = FALSE)
-    PPPpc <- readSource("James", subtype="IHME_USD05_PPP_pc")
+    PPPpc <- readSource("James2019", subtype="IHME_USD05_PPP_pc")
     
     years <-intersect(getYears(MERpc),getYears(MER))
     
