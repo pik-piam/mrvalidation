@@ -181,7 +181,7 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidTimber", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
 
   # Costs validation
-  calcOutput(type="ValidAFFCosts", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready. Overall costs.
+  calcOutput(type="ValidOverallCosts", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready. Overall costs.
   
   
   }
