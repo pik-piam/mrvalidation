@@ -16,7 +16,7 @@ List of magpie object with results on country level, no weight, unit and descrip
 Returns historical values of the overall value of production for the Agricultural, Forestry sectors, and fisheries (mio.05USD)
 }
 \examples{
-\dontrun{ 
+\dontrun{
 calcOutput("calcValidOverallCosts")
 }
 }
