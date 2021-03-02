@@ -8,22 +8,28 @@
 #' calcOutput("calcValidOverallCosts")
 #' }
 
-calcValidCosts <- function(datasource="FAO") {
+calcValidOverallCosts <- function(datasource="FAO") {
 
   #Value of Production for the agriculture, forestry and fisheries sector
 
   if(datasource == "FAO"){
 
-  x<-dimSums(calcOutput("VoP_AFF",aggregate = TRUE),dim=c(3))/(1+0.04)^15 # Original costs in 2020 values. Conversion factor for USD 05.
+  x<-dimSums(calcOutput("VoP_AFF",aggregate = FALSE),dim=3.1)/(1+0.04)^15 # Original costs in 2020 values. Conversion factor for US$D05.
+  
+  #Fraction of revenue
+
+  rev<-readSource("TFP_USDA")[,,"revenue"]
+  rev<-time_interpolate(rev,interpolated_year = c((getYears(rev,as.integer = TRUE)+5)),
+                    extrapolation_type = "constant",integrate_interpolated_years = TRUE) 
+  
+  years<-intersect(getYears(x),getYears(rev))
+  
+  x<-x[,years,]*(1-rev[,years,])
+  
   getNames(x) <- paste0("Costs|MainSolve"," (million US$05/yr)")
   weight=NULL
   units="(million US$05/yr)"
 
-}else if( datasource == "Vittis"){
-  x<-calcOutput("CostsVittis",aggregate= TRUE)
-  getNames(x)
-  weight=NULL
-  units="(million US$05/yr)"
 }
 
   return(list(x=x,weight=weight,
