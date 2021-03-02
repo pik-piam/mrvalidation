@@ -9,11 +9,12 @@
 #'  \item Gasser_2020
 #'  \item LUH2_GCB_2019
 #'  \item FRA_2015
+#'  \item bookkeeping
 #'  }
 #'  }
 #' @return list of magpie object with data and weight
 #' @author Abhijeet Mishra
-calcValidEmisLucGasser <- function(subtype="Gasser_2020") {
+calcValidEmisLucGasser <- function(subtype="bookkeeping") {
   
   if (subtype %in% c("Gasser_2020","LUH2_GCB_2019","FRA_2015")) {
     out <- readSource("Gasser",subtype = "regional",convert=TRUE)[,,subtype] * 1000 * 44/12 ## Conversion from Pg to Mt and C to CO2
@@ -24,24 +25,25 @@ calcValidEmisLucGasser <- function(subtype="Gasser_2020") {
     out <- time_interpolate(dataset = out,interpolated_year = paste0("y",2010:2018),extrapolation_type = "constant",integrate_interpolated_years = TRUE)
     names(dimnames(out))[3] <- "scenario.model.variable"
   } else if(subtype %in% "bookkeeping"){
-    hwp <- -1 * readSource("Gasser",subtype = subtype,convert=TRUE)[,,"hwp"]      * 1000 * 44/12 ## Conversion from Pg to Mt and C to CO2
-    hwp <- hwp / 2 ## Gasser 2020 paper also includes woodfuel burning which is not a category in magpie
-    regrowth <-  readSource("Gasser",subtype = subtype,convert=TRUE)[,,"regrowth"] * 1000 * 44/12 ## Conversion from Pg to Mt and C to CO2
-    overall  <-  readSource("Gasser",subtype = subtype,convert=TRUE)[,,"overall"] * 1000 * 44/12 ## Conversion from Pg to Mt and C to CO2
-    out <- mbind(hwp,regrowth)
-    getNames(out) <- c("Wood products","Regrowth")
-    getNames(out) <- paste0("Emissions|CO2|Land|Land-use Change|+|",getNames(out)," (Mt CO2/yr)")
-    out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
-    out <- add_dimension(out, dim=3.2, add="model",nm="Gasser2020")
-    names(dimnames(out))[3] <- "scenario.model.variable"
-
-    getNames(overall) <- c("Emissions|CO2|Land|+|Land-use Change")
-    getNames(overall) <- paste0(getNames(overall)," (Mt CO2/yr)")
-    overall <- add_dimension(overall, dim=3.1, add="scenario", nm="historical")
-    overall <- add_dimension(overall, dim=3.2, add="model",nm="Gasser2020")
-    names(dimnames(overall))[3] <- "scenario.model.variable"
+    model <- "Gasser et al 2020"
+    # hwp <- -1 * readSource("Gasser",subtype = subtype,convert=TRUE)[,,"hwp"]      * 1000 * 44/12 ## Conversion from Pg to Mt and C to CO2
+    # hwp <- hwp / 2 ## Gasser 2020 paper also includes woodfuel burning which is not a category in magpie
+    out <-  readSource("Gasser",subtype = subtype,convert=TRUE) * 1000 * 44/12 ## Conversion from Pg to Mt and C to CO2
+    out1 <- out[,,c("gross_luc_emis","regrowth_luc_emis")]
+    getNames(out1) <- c("Gross LUC","Regrowth")
+    getNames(out1) <- paste0("Emissions|CO2|Land|Land-use Change|+|",getNames(out1)," (Mt CO2/yr)")
+    out1 <- add_dimension(out1, dim=3.1, add="scenario", nm="historical")
+    out1 <- add_dimension(out1, dim=3.2, add="model",nm=model)
+    names(dimnames(out1))[3] <- "scenario.model.variable"
     
-    out <- mbind(out,overall)
+    out2 <- out[,,"overall"]
+    getNames(out2) <- c("Emissions|CO2|Land|+|Land-use Change")
+    getNames(out2) <- paste0(getNames(out2)," (Mt CO2/yr)")
+    out2 <- add_dimension(out2, dim=3.1, add="scenario", nm="historical")
+    out2 <- add_dimension(out2, dim=3.2, add="model",nm=model)
+    names(dimnames(out2))[3] <- "scenario.model.variable"
+    
+    out <- mbind(out1,out2)
   } else stop("Invalid subtype. See function description for valid subtypes.")
   
   return(list(x=out,

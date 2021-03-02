@@ -4,7 +4,7 @@
 \alias{readGasser}
 \title{Gasser}
 \usage{
-readGasser(subtype = "regional")
+readGasser(subtype = "bookkeeping")
 }
 \arguments{
 \item{subtype}{subtype}

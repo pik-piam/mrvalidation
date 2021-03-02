@@ -4,7 +4,7 @@
 \alias{calcValidEmisLucGasser}
 \title{calcValidEmisLucGasser}
 \usage{
-calcValidEmisLucGasser(subtype = "Gasser_2020")
+calcValidEmisLucGasser(subtype = "bookkeeping")
 }
 \arguments{
 \item{subtype}{Available subtypes are:
@@ -14,6 +14,7 @@ calcValidEmisLucGasser(subtype = "Gasser_2020")
 \item Gasser_2020
 \item LUH2_GCB_2019
 \item FRA_2015
+\item bookkeeping
 }
 }}
 }
