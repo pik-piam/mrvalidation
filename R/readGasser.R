@@ -71,6 +71,10 @@ readGasser <- function(subtype = "bookkeeping") {
     
     eluc_df <- as.data.frame.table(eluc_raw)
     
+    eluc_df$Freq[eluc_df$bio_to == "Urban"] <- 0    ## THIS LINE SHOULD BE COMMENTED OUT IF URBAN LAND IS DYNAMIC IN MAGPIE
+    eluc_df$Freq[eluc_df$bio_from == "Urban"] <- 0  ## THIS LINE SHOULD BE COMMENTED OUT IF URBAN LAND IS DYNAMIC IN MAGPIE
+    message("CAUTION: Emissions related to/from Urban land have been removed from source data.") ## THIS LINE SHOULD BE COMMENTED OUT IF URBAN LAND IS DYNAMIC IN MAGPIE
+    
     eluc <- gasser <- as.magpie(eluc_df, temporal = "year", spatial = "reg_land")
     
     ## From Gasser paper (https://doi.org/10.5194/bg-17-4075-2020)
@@ -96,7 +100,7 @@ readGasser <- function(subtype = "bookkeeping") {
     category6 <- dimSums(gasser[,,c("Cropland.Pasture","Pasture.Cropland","Cropland.Urban","Urban.Cropland","Pasture.Urban","Urban.Pasture")],dim=3)
     category7 <- dimSums(gasser[,,c("Forest.Forest","Non-Forest.Non-Forest")],dim=3)
     
-    gross_luc    <- setNames(category1 + category2 + category4 + category6 + category7,"gross_luc_emis")
+    gross_luc    <- setNames(category1 + category2 + category4 + category6,"gross_luc_emis")
     regrowth_luc <- setNames(category3 + category5,"regrowth_luc_emis")
     
     eluc <- mbind(gross_luc,regrowth_luc)[,1850:2018,]
