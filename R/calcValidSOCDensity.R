@@ -16,6 +16,7 @@
 #' 
 #' @importFrom magpiesets reporthelper summationhelper
 #' @importFrom magclass mbind getYears setYears nregions getCells
+#' @importFrom mrcommons toolCoord2Isocell
 
 calcValidSOCDensity <- function(datasource="LPJ_IPCC2006"){
   
@@ -84,7 +85,7 @@ calcValidSOCDensity <- function(datasource="LPJ_IPCC2006"){
     soilc  <- readSource("LPJml_rev21","soilc_layer",convert="onlycorrect")
     soilc  <- soilc[,,"mm0_200"] + setNames(soilc[,,"mm201_500"],NULL)/3
     
-    area   <- readSource("LUH2v2",subtype = "states",convert="onlycorrect")
+    area   <- toolCoord2Isocell(readSource("LUH2v2",subtype = "states",convert="onlycorrect"))
     area   <- setYears(dimSums(area[,2010,],dim=3),NULL)
     
     mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
