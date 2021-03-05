@@ -1,14 +1,14 @@
-#' @title calcValidCosts
+#' @title calcValidCostOverall
 #' @description Returns historical values of the overall value of production for the Agricultural, Forestry sectors, and fisheries (mio.05USD)
 #' @param datasource datasource for validation. FAO Value of Production dataset.
 #' @return List of magpie object with results on country level, no weight, unit and description.
 #' @author Edna J. Molina Bacca
 #' @examples
 #' \dontrun{
-#' calcOutput("calcValidCosts")
+#' calcOutput("calcValidCostOverall")
 #' }
 
-calcValidCosts <- function(datasource="FAO") {
+calcValidCostOverall <- function(datasource="FAO") {
 
   #Value of Production for the agriculture, forestry and fisheries sector
 
@@ -27,6 +27,9 @@ calcValidCosts <- function(datasource="FAO") {
   x<-x[,years,]*(1-rev[,years,])
 
   getNames(x) <- paste0("Costs|MainSolve"," (million US$05/yr)")
+  x<- add_dimension(x, dim=3.1, add="scenario", nm="historical")
+  x<- add_dimension(x, dim=3.2, add="model", nm=datasource)
+  
   weight=NULL
   units="(million US$05/yr)"
 
