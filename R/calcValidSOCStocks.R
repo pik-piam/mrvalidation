@@ -17,6 +17,7 @@
 #' 
 #' @importFrom magpiesets reporthelper summationhelper
 #' @importFrom magclass mbind getYears setYears nregions
+#' @importFrom mrcommons toolCoord2Isocell
 
 calcValidSOCStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
   
@@ -64,8 +65,8 @@ calcValidSOCStocks <- function(datasource="LPJ_IPCC2006", baseyear=1995){
       setNames(litc[,getYears(soilc2),],"Resources|Carbon Stocks|Litter Carbon (Mt C)")
     )
     
-    area<-readSource("LUH2v2",subtype = "states",convert="onlycorrect")
-    area<-setYears(dimSums(area[,2010,],dim=3),NULL)
+    area <- toolCoord2Isocell(readSource("LUH2v2",subtype = "states",convert="onlycorrect"))
+    area <- setYears(dimSums(area[,2010,],dim=3),NULL)
     
     out<-out*area
     
