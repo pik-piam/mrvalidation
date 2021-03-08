@@ -26,10 +26,10 @@ calcValidCostOverall <- function(datasource="FAO") {
 
   x<-x[,years,]*(1-rev[,years,])
 
-  getNames(x) <- paste0("Costs|MainSolve"," (million US$05/yr)")
+  getNames(x) <- paste0("Costs|Gross value of production"," (million US$05/yr)")
   x<- add_dimension(x, dim=3.1, add="scenario", nm="historical")
   x<- add_dimension(x, dim=3.2, add="model", nm=datasource)
-  
+
   weight=NULL
   units="(million US$05/yr)"
 
