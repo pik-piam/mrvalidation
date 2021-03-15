@@ -8,7 +8,7 @@
 #' calcOutput("calcValidCostOverall")
 #' }
 
-calcValidCostOverall <- function(datasource="FAO") {
+calcValidCostsOverall <- function(datasource="FAO") {
 
   #Value of Production for the agriculture, forestry and fisheries sector
 
