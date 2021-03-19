@@ -55,8 +55,9 @@ calcValidManure<-function(datasource="Bodirsky"){
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
   } else if(datasource=="FAO"){
-    confinement<-readSource("FAO",subtype="EmisAgManureManag")
-    pasture<-readSource("FAO",subtype="EmisAgManurePasture")
+   
+    confinement<-readSource("FAO_online",subtype="EmisAgManureManag")
+    pasture<-readSource("FAO_online",subtype="EmisAgManurePasture")
     
     selection<-c(
       "1053|Chickens, broilers",
@@ -64,33 +65,33 @@ calcValidManure<-function(datasource="Bodirsky"){
       "1079|Turkeys",
       "1052|Chickens, layers",
       "946|Buffaloes",
-      "1760|Camels and Llamas + (Total)",
+      "1760|Camels and Llamas",
       "960|Cattle, dairy",
       "1016|Goats",
       "976|Sheep",
-      "1759|Mules and Asses + (Total)",
+      "1759|Mules and Asses",
       "1051|Swine, breeding",
       "1096|Horses",
       "1049|Swine, market",
       "961|Cattle, non-dairy"
     )
     
-    confinement<-collapseNames(confinement[,,selection][,,"Manure_(N_content)_(Manure_management)_(Kg)"])
-    mapping<-toolMappingFile(type = "sectoral",name = "IPCCitems.csv",readcsv = T)
-    confinement<-toolAggregate(confinement,rel=mapping,from="fao",to="magpie",dim = 3.1)
+    confinement<-collapseNames(confinement[,,selection][,,"Manure_treated_(N_content)_(kg)"])
+    mapping<-toolMappingFile(type = "sectoral",name = "IPCCitems_fao_online.csv",readcsv = T)
+    confinement<-toolAggregate(confinementn,rel=mapping,from="fao",to="magpie",dim = 3.1)
     
-    warning("FAO dataset seems incomplete. Pigs are missing on pastures")
-    pasture<-collapseNames(pasture[,,getNames(pasture,dim=1)[getNames(pasture,dim=1)%in%selection]][,,"Manure_(N_content)_(tonnes)"])
+    pasture<-collapseNames(pasture[,,getNames(pasture,dim=1)[getNames(pasture,dim=1)%in%selection]][,,"Manure_left_on_pasture_(N_content)_(kg)"])
     
     #pasture<-collapseNames(pasture[,,selection][,,"Manure_(N_content)_(Manure_management)_(Kg)"])
-    mapping<-toolMappingFile(type = "sectoral",name = "IPCCitems.csv",readcsv = T)
+    mapping<-toolMappingFile(type = "sectoral",name = "IPCCitems_fao_online.csv",readcsv = T)
     pasture<-toolAggregate(pasture,rel=mapping,from="fao",to="magpie",dim = 3.1,partrel = T)
     
-    out<-pasture+confinement
+    out<-pasture+confinementn
     out<-out/10^9
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
-  } else stop("No data exist for the given datasource!")
+    
+    } else stop("No data exist for the given datasource!")
   
   names(dimnames(out))[3] <- "scenario.model.variable"
   getNames(out) <- paste0(getNames(out)," (Mt Nr/yr)")
