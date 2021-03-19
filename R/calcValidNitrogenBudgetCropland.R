@@ -72,38 +72,39 @@ calcValidNitrogenBudgetCropland<-function(datasource="Bodirsky"){
     )
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
   } else if (datasource=="FAO"){    
-    residues<-readSource("FAO","EmisAgCropResid")
-    residues<-setNames(residues[,,"Residues_(Crop_residues)_(tonnes_of_nutrients)"][,,"1712|All Crops + (Total)"]/10^9,"ag_recycling")
+    residues<-readSource("FAO_online","EmisAgCropResid")
+#    residues<-setNames(residues[,,"Residues_(Crop_residues)_(tonnes_of_nutrients)"][,,"1712|All Crops + (Total)"]/10^9,"ag_recycling")
+    ## Previous conversion was 1e9 which would have converted from ton to Giga ton <--- Confirm with Benni
+    ## New units are provided in kg by FAO so kg to Mt should be 1e9
+    residues<-setNames(residues[,,"Residues_(Crop_residues)_(kg_of_nutrients)"][,,"1712|All Crops"]/1e9,"ag_recycling") 
     
-    manure<-readSource("FAO","EmisAgManureSoil")
+    manure<-readSource("FAO_online","EmisAgManureSoil")
     selection<-c(
       "1053|Chickens, broilers",
       "1068|Ducks",
       "1079|Turkeys",
       "1052|Chickens, layers",
       "946|Buffaloes",
-      "1760|Camels and Llamas + (Total)",
+      "1760|Camels and Llamas",
       "960|Cattle, dairy",
       "1016|Goats",
       "976|Sheep",
-      "1759|Mules and Asses + (Total)",
+      "1759|Mules and Asses",
       "1051|Swine, breeding",
       "1096|Horses",
       "1049|Swine, market",
       "961|Cattle, non-dairy"
     )
     
-    tmp2<-collapseNames(manure[,,selection][,,"Manure_(N_content)_(Manure_applied)_(Kg)"])
-    mapping<-toolMappingFile(type = "sectoral",name = "IPCCitems.csv",readcsv = T)
+    tmp2<-collapseNames(manure[,,selection][,,"Manure_applied_to_soils_(N_content)_(kg)"])
+    mapping<-toolMappingFile(type = "sectoral",name = "IPCCitems_fao_online.csv",readcsv = T)
     tmp2<-toolAggregate(tmp2,rel=mapping,from="fao",to="magpie",dim = 3.1)
-    tmp2=tmp2/10^9
+    tmp2=tmp2/1e9
     manure=setNames(dimSums(tmp2,dim=3.1),"manure")
     
     #fertilizer
-    fertilizer<-readSource("FAO","EmisAgSynthFerti")[,,c(
-      "3102|Nitrogen Fertilizers (N total nutrients).Consumption_in_nutrients_(tonnes_of_nutrients)",
-      "1360|Nitrogenous fertilizers.Consumption_in_nutrients_(tonnes)")]
-    fertilizer<-dimSums(fertilizer,dim=c(3))/1000000
+    fertilizer<-readSource("FAO_online","EmisAgSynthFerti")[,,c("3102|Nutrient nitrogen N (total).Agricultural_Use_in_nutrients_(kg_of_nutrients)")]
+    fertilizer<-dimSums(fertilizer,dim=c(3))/1e6
     fertilizer<-setNames(fertilizer,"fertilizer")
     
     commonyears<-intersect(intersect(getYears(fertilizer),getYears(residues)),getYears(manure))
