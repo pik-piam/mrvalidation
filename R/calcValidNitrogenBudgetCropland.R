@@ -97,7 +97,7 @@ calcValidNitrogenBudgetCropland<-function(datasource="Bodirsky"){
     mapping<-toolMappingFile(type = "sectoral",name = "IPCCitems.csv",readcsv = T)
     tmp2<-toolAggregate(tmp2,rel=mapping,from="fao",to="magpie",dim = 3.1)
     tmp2=tmp2/10^9
-    manure=setNames(dimSums(tmp2,dim=3.1),"manure")
+    manure=setNames(dimSums(tmp2,dim=3.1),"manure_conf")
     
     #fertilizer
     fertilizer<-readSource("FAO","EmisAgSynthFerti")[,,c(

@@ -87,7 +87,7 @@ calcValidTrade<-function(datasource="FAO", detail=T,nutrient="dm", net_trade=TRU
   } else if (nutrient=="k"){unit="Mt K/yr"
   } else if (nutrient=="ge"){unit="PJ/yr"
   } else if (nutrient=="wm"){unit="Mt WM/yr"}
-  getNames(out) <- sub("\\|$","",getNames(out)) 
+  getNames(out) <- paste0(sub("\\|$","",getNames(out))," (",unit,")") 
 
   return(list(x=out,
               weight=NULL,
