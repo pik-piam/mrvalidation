@@ -79,8 +79,8 @@ calcValidWaterUsage <- function(datasource="shiklomanov_2000"){
       out      <- out * dayofmonths * 86400
       # mm/month -> mm/year
       out      <- collapseDim(toolAggregate(out, data.frame(getItems(out,"month"),"year"), dim="month"))
-      # mm/year = liter/m^2/year -> liter/year -> mio m^3/year
-      landarea <- dimSums(calcOutput("LUH2v2", landuse_types="magpie", aggregate=FALSE, cellular=TRUE, cells="magpiecell", irrigation=FALSE, years="y1995"), dim=3)
+      # mm/year = liter/m^2/year -> liter/year -> mio m^3/year (multiply 1e10 for Mha to m2)
+      landarea <- 1e10 * dimSums(calcOutput("LUH2v2", landuse_types="magpie", aggregate=FALSE, cellular=TRUE, cells="magpiecell", irrigation=FALSE, years="y1995"), dim=3)
       names(dimnames(landarea))[1] <- "iso.cell"
       landarea                     <- toolAggregate(landarea, data.frame("cell"=getCells(landarea), "iso"=gsub("\\..*","",getCells(landarea)), stringsAsFactors=F), dim=1)
       landarea                     <- toolCountryFill(landarea, fill=0)

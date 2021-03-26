@@ -24,6 +24,8 @@ calcValidGridNutrientAWMS <- function(nutrient=c("nr","c")) {
   getNames(out, dim=2) <- reportingnames(getNames(out, dim=2))
   getNames(out, dim=1) <- reportingnames(getNames(out, dim=1))
   
+  getComment(out) <- NULL
+  
   return(list(x=out,
               weight=NULL,
               unit="Mt Nr/yr and Mt C/yr",

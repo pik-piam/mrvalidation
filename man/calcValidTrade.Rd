@@ -4,7 +4,13 @@
 \alias{calcValidTrade}
 \title{calcValidTrade}
 \usage{
-calcValidTrade(datasource = "FAO", detail = T, nutrient = "dm")
+calcValidTrade(
+  datasource = "FAO",
+  detail = T,
+  nutrient = "dm",
+  net_trade = TRUE,
+  equalized = TRUE
+)
 }
 \arguments{
 \item{datasource}{Datasource of validation data.}
@@ -12,6 +18,10 @@ calcValidTrade(datasource = "FAO", detail = T, nutrient = "dm")
 \item{detail}{if FALSE, only larger product categories are reported}
 
 \item{nutrient}{The nutrient in which the results shall be reported.}
+
+\item{net_trade}{Net trade flows or total trade}
+
+\item{equalized}{numbers changed so that global production meets global demand (in reality different because of time-delay between exports and imports)}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.
