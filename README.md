@@ -38,11 +38,10 @@ In case of questions / problems please contact Benjamin Leon Bodirsky <bodirsky@
 
 To cite package **mrvalidation** in publications use:
 
-Bodirsky B, Wirth S, Karstens K, Humpenoeder F, Stevanovic M, Mishra A, Biewald A, Weindl
-I, Chen D, Molina Bacca E, Kreidenweis U, W. Yalew A, Humpenoeder F, von Jeetze P, Wang
-X, Dietrich J (2021). _mrvalidation: madrat data preparation for validation purposes_.
-doi: 10.5281/zenodo.4317826 (URL: https://doi.org/10.5281/zenodo.4317826), R package
-version 2.13.6, <URL: https://github.com/pik-piam/mrvalidation>.
+Bodirsky B, Wirth S, Karstens K, Humpenoeder F, Stevanovic M, Mishra A, Biewald A, Weindl I, Chen D, Molina Bacca E, Kreidenweis U,
+W. Yalew A, Humpenoeder F, von Jeetze P, Wang X, Dietrich J (2021). _mrvalidation: madrat data preparation for validation
+purposes_. doi: 10.5281/zenodo.4317826 (URL: https://doi.org/10.5281/zenodo.4317826), R package version 2.13.6, <URL:
+https://github.com/pik-piam/mrvalidation>.
 
 A BibTeX entry for LaTeX users is
 
