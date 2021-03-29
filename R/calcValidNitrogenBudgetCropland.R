@@ -24,6 +24,7 @@ calcValidNitrogenBudgetCropland <- function(datasource = "Bodirsky") {
     budget[, , "som"] <- -budget[, , "som"]
     all <- getNames(budget)
 
+
     withdrawaltypes <- c("harvest", "ag", "bg")
     balancetypes <- c("surplus", "som", "balanceflow")
     inputtypes <- setdiff(setdiff(all, withdrawaltypes), balancetypes)
@@ -93,18 +94,16 @@ calcValidNitrogenBudgetCropland <- function(datasource = "Bodirsky") {
       "1049|Swine, market",
       "961|Cattle, non-dairy"
     )
-
     tmp2 <- collapseNames(manure[, , selection][, , "Manure_applied_to_soils_(N_content)_(kg)"])
     mapping <- toolMappingFile(type = "sectoral", name = "IPCCitems_fao_online.csv", readcsv = T)
     tmp2 <- toolAggregate(tmp2, rel = mapping, from = "fao", to = "magpie", dim = 3.1)
     tmp2 <- tmp2 / 1e9
-    manure <- setNames(dimSums(tmp2, dim = 3.1), "manure")
+    manure <- setNames(dimSums(tmp2, dim = 3.1), "manure_conf")
 
     # fertilizer
     fertilizer <- readSource("FAO_online", "EmisAgSynthFerti")[, , c("3102|Nutrient nitrogen N (total).Agricultural_Use_in_nutrients_(kg_of_nutrients)")]
     fertilizer <- dimSums(fertilizer, dim = c(3)) / 1e6
     fertilizer <- setNames(fertilizer, "fertilizer")
-
     commonyears <- intersect(intersect(getYears(fertilizer), getYears(residues)), getYears(manure))
 
     out <- mbind(
@@ -124,10 +123,10 @@ calcValidNitrogenBudgetCropland <- function(datasource = "Bodirsky") {
   }
   out <- add_dimension(out, dim = 3.1, add = "model", nm = datasource)
   getNames(out) <- paste0(getNames(out), " (Mt Nr/yr)")
-  return(list(
-    x = out,
-    weight = NULL,
-    unit = "Mt Nr/yr",
-    description = "Cropland Nitrogen Budget"
-  ))
+
+ return(list(x=out,
+              weight=NULL,
+              unit="Mt Nr/yr",
+              description="Cropland Nitrogen Budget")
+         )
 }

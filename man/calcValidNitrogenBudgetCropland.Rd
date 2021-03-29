@@ -7,8 +7,8 @@
 calcValidNitrogenBudgetCropland(datasource = "Bodirsky")
 }
 \arguments{
-\item{datasource}{Bodirsky for own calculations, Lassaletta2014 for a country dataset from 
-Lassaletta, L., G. Billen, B. Grizzetti, J. Angalde, and J. Garnier. 2014. 
+\item{datasource}{Bodirsky for own calculations, Lassaletta2014 for a country dataset from
+Lassaletta, L., G. Billen, B. Grizzetti, J. Angalde, and J. Garnier. 2014.
 50 Year Trends in Nitrogen Use Efficiency of World Cropping Systems: The Relationship between Yield and Nitrogen Input to Cropland.
 Environmental Research Letters.
 FAO for some N related parameters published in FAOSTAT.}
@@ -21,7 +21,7 @@ Validation Script for Nitrogen Budgets on Croplands
 }
 \examples{
 
-\dontrun{ 
+\dontrun{
 calcOutput("ValidNitrogenBudgetCropland")
 }
 
