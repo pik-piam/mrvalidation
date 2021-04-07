@@ -7,7 +7,7 @@
 calcValidAgGDP(datasource = "WDI")
 }
 \arguments{
-\item{datasource}{datasource for validation, only WDI for now}
+\item{datasource}{datasource for validation, WDI and FAO}
 }
 \value{
 List of magpie object with results on country level, no weight, unit and description.
@@ -21,5 +21,5 @@ calcOutput("ValidAgGDP")
 }
 }
 \author{
-David Chen
+David Chen, Edna J. Molina Bacca
 }

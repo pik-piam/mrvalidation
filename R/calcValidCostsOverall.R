@@ -8,9 +8,9 @@
 #' calcOutput("calcValidCostOverall")
 #' }
 
-calcValidCostsOverall <- function(datasource="FAO") {
+calcValidCostOverall <- function(datasource="FAO") {
 
-  #Value of Production for the agriculture, forestry and fisheries sector
+  ####Value of Production for the agriculture, forestry and fisheries sector
 
   if(datasource == "FAO"){
 
@@ -26,17 +26,19 @@ calcValidCostsOverall <- function(datasource="FAO") {
 
   x<-x[,years,]*(1-rev[,years,])
 
-  getNames(x) <- paste0("Costs|Gross value of production"," (million US$05/yr)")
+  getNames(x) <- paste0("Costs|Gross value of production (million US$05/yr)")
   x<- add_dimension(x, dim=3.1, add="scenario", nm="historical")
   x<- add_dimension(x, dim=3.2, add="model", nm=datasource)
 
   weight=NULL
   units="(million US$05/yr)"
 
-}
+  }else{
+    warning("Only FAO datasource available")
+  }
 
   return(list(x=x,weight=weight,
               unit=units,
-              description="Costs Validation datset (million US$05/yr)"))
+              description="Validation for overall costs indicators(million US$05/yr)"))
 
 }
