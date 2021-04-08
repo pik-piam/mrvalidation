@@ -25,10 +25,11 @@ calcValidAgGDP<- function(datasource="WDI") {
   
    AgG05 <- AgG*setYears(infl,NULL)
   
-  out <- collapseNames(AgG05)
-#set na's to 0
+   out <- collapseNames(AgG05)
+ 
+   } else {stop("unknown datasource")}
+
   getNames(out) <- "Value|Value added agriculture forestry fishery"
- } else {stop("unknown datasource")}
   out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
   out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
   
