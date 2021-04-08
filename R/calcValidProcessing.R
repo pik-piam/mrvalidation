@@ -65,8 +65,8 @@ else if(indicator == "secondary_from_primary"){
     if(datasource=="FAO"){
       mb<-collapseNames(calcOutput("FAOmassbalance",aggregate = F)[,,nutrient])
       
-      mb2<-mb[,,c("alcohol1","alcohol2","alcohol3","brans1","branoil1","oil1","oil2","oilcakes1","ethanol1", "molasses1", "sugar1", "distillers_grain1")]
-      mb2[,,"alcohol1"]<-dimSums(mb2[,,c("alcohol1","alcohol2","alcohol3")],dim=3.2)
+      mb2<-mb[,,c("alcohol1","alcohol2","alcohol3","alcohol4", "brans1","branoil1","oil1","oil2","oilcakes1","ethanol1", "molasses1", "sugar1", "distillers_grain1")]
+      mb2[,,"alcohol1"]<-dimSums(mb2[,,c("alcohol1","alcohol2","alcohol3", "alcohol4")],dim=3.2)
       mb2[,,"oil1"]<-dimSums(mb2[,,c("oil1","oil2","branoil1")],dim=3.2)
       
       mb3<-mb2[,,c("alcohol1", "brans1", "oil1", "oilcakes1", "ethanol1", "molasses1", "sugar1", "distillers_grain1")]

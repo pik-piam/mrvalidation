@@ -27,6 +27,7 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidIncome", datasource="James", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
   calcOutput(type="ValidIncome", datasource="James_OECD_Nakicenovic",aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
   calcOutput(type="ValidAgGDP", datasource="WDI", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+  calcOutput(type="ValidAgGDP", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
 
   # Food Demand
   calcOutput(type="ValidKcal", datasource="FAO",aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
@@ -177,5 +178,6 @@ fullVALIDATION <- function(rev=0.1) {
   # Costs validation
   calcOutput(type="ValidCostsOverall", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #Overall costs.
   calcOutput(type="ValidCostsTransport", datasource="GTAP", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready.
+  calcOutput(type="ValidCostsCapStocks", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
 
     }
