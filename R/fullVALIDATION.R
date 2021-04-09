@@ -179,5 +179,7 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidCostsOverall", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #Overall costs.
   calcOutput(type="ValidCostsTransport", datasource="GTAP", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready.
   calcOutput(type="ValidCostsCapStocks", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+  calcOutput(type="ValidCostsFertilizer", datasource="Vittis", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) 
+  calcOutput(type="ValidCostsLabor", datasource="Vittis", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) 
 
     }

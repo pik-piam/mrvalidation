@@ -16,7 +16,7 @@ List of magpie object with results on country level, no weight, unit and descrip
 validation for agricultural, fisheries, forestry value added gdp (Million 05USD)
 }
 \examples{
-\dontrun{ 
+\dontrun{
 calcOutput("ValidAgGDP")
 }
 }

@@ -1,6 +1,6 @@
 # madrat data preparation for validation purposes
 
-R package **mrvalidation**, version **2.14.0**
+R package **mrvalidation**, version **2.15.0**
 
 [![CRAN status](https://www.r-pkg.org/badges/version/mrvalidation)](https://cran.r-project.org/package=mrvalidation) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4317826.svg)](https://doi.org/10.5281/zenodo.4317826)  [![R build status](https://github.com/pik-piam/mrvalidation/workflows/check/badge.svg)](https://github.com/pik-piam/mrvalidation/actions) [![codecov](https://codecov.io/gh/pik-piam/mrvalidation/branch/master/graph/badge.svg)](https://codecov.io/gh/pik-piam/mrvalidation)
 
@@ -38,14 +38,8 @@ In case of questions / problems please contact Benjamin Leon Bodirsky <bodirsky@
 
 To cite package **mrvalidation** in publications use:
 
-Bodirsky B, Wirth S, Karstens K, Humpenoeder F,
-Stevanovic M, Mishra A, Biewald A, Weindl I, Chen D,
-Molina Bacca E, Kreidenweis U, W. Yalew A, Humpenoeder
-F, von Jeetze P, Wang X, Dietrich J (2021).
-_mrvalidation: madrat data preparation for validation
-purposes_. doi: 10.5281/zenodo.4317826 (URL:
-https://doi.org/10.5281/zenodo.4317826), R package
-version 2.14.0, <URL:
+Bodirsky B, Wirth S, Karstens K, Humpenoeder F, Stevanovic M, Mishra A, Biewald A, Weindl I, Chen D, Molina Bacca E, Kreidenweis U, W. Yalew A, Humpenoeder F, von Jeetze P, Wang X, Dietrich J
+(2021). _mrvalidation: madrat data preparation for validation purposes_. doi: 10.5281/zenodo.4317826 (URL: https://doi.org/10.5281/zenodo.4317826), R package version 2.15.0, <URL:
 https://github.com/pik-piam/mrvalidation>.
 
 A BibTeX entry for LaTeX users is
@@ -55,7 +49,7 @@ A BibTeX entry for LaTeX users is
   title = {mrvalidation: madrat data preparation for validation purposes},
   author = {Benjamin Leon Bodirsky and Stephen Wirth and Kristine Karstens and Florian Humpenoeder and Mishko Stevanovic and Abhijeet Mishra and Anne Biewald and Isabelle Weindl and David Chen and Edna {Molina Bacca} and Ulrich Kreidenweis and Amsalu {W. Yalew} and Florian {Humpenoeder } and Patrick {von Jeetze } and Xiaoxi Wang and Jan Philipp Dietrich},
   year = {2021},
-  note = {R package version 2.14.0},
+  note = {R package version 2.15.0},
   doi = {10.5281/zenodo.4317826},
   url = {https://github.com/pik-piam/mrvalidation},
 }
