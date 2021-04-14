@@ -3,6 +3,7 @@
 #' @param datasource datasource for validation, WDI and FAO
 #' @return List of magpie object with results on country level, no weight, unit and description.
 #' @author David Chen, Edna J. Molina Bacca
+#' @importFrom magclass collapseNames
 #' @examples
 #' \dontrun{
 #' calcOutput("ValidAgGDP")
@@ -39,12 +40,17 @@ calcValidAgGDP<- function(datasource="WDI") {
     names_kcr<-intersect(getNames(Prod_kcr),getNames(prices_kcr))
     names_kli<-intersect(getNames(Prod_kli),getNames(prices_kli))
 
-        Vprod_all<- dimSums(Prod_kcr[,,names_kcr]*setYears(prices_kcr[,,names_kcr],NULL),dim=3)+
-      dimSums(Prod_kli[,,names_kli]*setYears(prices_kli[,,names_kli],NULL),dim=3)
+    Vprod_all<- dimSums(Prod_kcr[,,names_kcr]*setYears(prices_kcr[,,names_kcr],NULL),dim=3)+
+    dimSums(Prod_kli[,,names_kli]*setYears(prices_kli[,,names_kli],NULL),dim=3)
 
     # Secondary seed and feed
-
-    demand_feed<-collapseNames(calcOutput("FAOFodder_aggrFEED",aggregate=FALSE)[,,"production"])
+        
+    data <- readSource("FAO", "Fodder")#FAO_online showing errors
+    # load sectoral mapping
+    aggregation <- toolGetMapping("FAOFodder_magpieFEED_mapping.csv",type="sectoral")
+    # sectoral aggregation of data  
+    demand_feed<- collapseNames(toolAggregate(data, rel=aggregation, from="ProductionItem", to="MAgPIE_FEED_items", dim=3.1, partrel = TRUE)[,,"production"])
+        
     prices<-calcOutput("PriceAgriculture",datasource="FAO",aggregate=FALSE)
     prices_FF<-mbind(prices[,,"historical.FAO.maiz"],prices[,,"historical.FAO.maiz"],prices[,,"historical.FAO.others"])
     getNames(prices_FF)<-getNames(demand_feed)
