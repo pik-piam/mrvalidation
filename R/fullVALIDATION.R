@@ -181,5 +181,6 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidCostsCapStocks", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
   calcOutput(type="ValidCostsFertilizer", datasource="Vittis", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) 
   calcOutput(type="ValidCostsLabor", datasource="Vittis", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) 
-
+  calcOutput(type="ValidCostsTC", datasource="Pardey", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) 
+  
     }
