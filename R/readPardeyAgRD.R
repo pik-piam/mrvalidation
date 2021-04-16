@@ -11,7 +11,7 @@
 #' a <- readSource("PardeyAgRD")
 #' }
 #' @importFrom tidyr pivot_longer
-#' @importFrom dplyr mutate\
+#' @importFrom dplyr mutate
 #' @importFrom madrat toolCountry2isocode
 
 readPardeyAgRD <- function() {
@@ -59,6 +59,7 @@ readPardeyAgRD <- function() {
   full <- read.csv("AgRD_Pardey.csv")
   colnames(full)[c(3,4)] <- substr(colnames(full)[c(3,4)],5,8)
   full <- pivot_longer(full[,-2], cols = c(2,3), names_to="Year", values_to = "PERD")
+  full$id <- as.character(full$id)
   full$id[c(61,62)] <- "Sao Tome and Principe" ; full$id[c(27,28)] <- "Cote d Ivoire" ; full$id[c(71,72)] <- "Sudan"
   
   full$id <- toolCountry2isocode(full$id)
