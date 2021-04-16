@@ -16,16 +16,16 @@ calcValidCostsCapStocks <- function(datasource="FAO") {
   names<-intersect(getNames(Factor_requirements),getNames(Production))
   years<- intersect(getYears(Factor_requirements),getYears(Production))
     
-  CapitalStocks<-setYears(Factor_requirements[,2005,names],NULL)*Production[,years,names]
+  CapitalStocks<-dimSums(setYears(Factor_requirements[,2005,names],NULL)*Production[,years,names])
 
-  out <- reporthelper(CapitalStocks, dim=3.1, level_zero_name = "Costs|Capital Stocks", detail=FALSE)
-  out <- summationhelper(out)
   
+  getNames(CapitalStocks)<-"Costs|Capital Stocks"
+  getNames(CapitalStocks) <- paste0(getNames(CapitalStocks)," (million US$05)")
   
-  getNames(out) <- paste(getNames(out), "(million US$05)", sep=" ")
   units = "million US$05/yr"
   
-  out<- add_dimension(out, dim=3.1, add="scenario", nm="historical")
+  
+  out<- add_dimension(CapitalStocks, dim=3.1, add="scenario", nm="historical")
   out<- add_dimension(out, dim=3.2, add="model", nm=datasource)
   
   weight<- NULL  
