@@ -94,7 +94,7 @@ calcValidNitrogenBudgetCropland<-function(datasource="Bodirsky"){
     )
     
     tmp2<-collapseNames(manure[,,selection][,,"Manure_(N_content)_(Manure_applied)_(Kg)"])
-    mapping<-toolMappingFile(type = "sectoral",name = "IPCCitems.csv",readcsv = T)
+    mapping <- toolGetMapping(type = "sectoral", name = "IPCCitems.csv")
     tmp2<-toolAggregate(tmp2,rel=mapping,from="fao",to="magpie",dim = 3.1)
     tmp2=tmp2/10^9
     manure=setNames(dimSums(tmp2,dim=3.1),"manure_conf")
