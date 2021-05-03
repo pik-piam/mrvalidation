@@ -4,16 +4,16 @@
 \alias{calcValidAgGDP}
 \title{calcValidAgGDP}
 \usage{
-calcValidAgGDP(datasource = "WDI")
+calcValidAgGDP(datasource = "FAO")
 }
 \arguments{
-\item{datasource}{datasource for validation, WDI and FAO}
+\item{datasource}{datasource for validation (FAO)}
 }
 \value{
 List of magpie object with results on country level, no weight, unit and description.
 }
 \description{
-validation for agricultural, fisheries, forestry value added gdp (Million 05USD)
+Validation for agricultural value added gdp (Million 05USD)
 }
 \examples{
 \dontrun{
@@ -21,5 +21,5 @@ calcOutput("ValidAgGDP")
 }
 }
 \author{
-David Chen, Edna J. Molina Bacca
+Edna J. Molina Bacca
 }
