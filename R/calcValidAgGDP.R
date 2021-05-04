@@ -58,12 +58,12 @@ calcValidAgGDP<- function(datasource="FAO") {
    }else{ 
     stop("unknown datasource")}
   
-  getNames(out) <- "Value|Agriculture GDP"
+  getNames(out) <- "Value|Agriculture GDP (million US$05/yr)"
   out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
   out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
   
   return(list(x=out,
               weight=NULL,
-              unit="Million US$05",
+              unit="million US$05/yr",
               description="Agriculture Value added GDP"))
 }
