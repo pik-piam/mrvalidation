@@ -12,7 +12,7 @@ convertWaterUsage(x, subtype)
 \item{subtype}{: No subtype needed}
 }
 \value{
-Data un water use as MAgPIE object on country level Missing values are added as NA
+Data on water use as MAgPIE object on country level Missing values are added as NA
 }
 \description{
 Convert data on agricultural water use

@@ -1,6 +1,6 @@
 {
   "title": "mrvalidation: madrat data preparation for validation purposes",
-  "version": "2.16.2",
+  "version": "2.16.3",
   "description": "<p>Package contains routines to prepare data for validation exercises.<\/p>",
   "creators": [
     {
@@ -26,6 +26,9 @@
     },
     {
       "name": "Weindl, Isabelle"
+    },
+    {
+      "name": "Beier, Felicitas"
     },
     {
       "name": "Chen, David"
