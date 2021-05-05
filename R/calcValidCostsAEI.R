@@ -17,6 +17,7 @@ calcValidCostsAEI <- function(datasource="IMPACT") {
     
     out <- readSource("IMPACTIrrigInvCosts", convert=TRUE)
     out <- add_dimension(out, dim=3.2, add="variable", nm="Costs|AEI")
+    out <- add_dimension(out, dim=3.1, add="model", nm=datasource)
     
 #NOTE Currently not in 05 USD!!! ---> needs to be added to convertIMPACTIrrigInvCosts.R
     getNames(out) <- paste(getNames(out), "(million US$05/yr)", sep=" ")

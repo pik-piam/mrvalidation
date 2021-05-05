@@ -27,20 +27,20 @@ readIMPACTIrrigInvCosts <- function() {
   a           <- a[-c(1,2),]
 
   # select relevant scenarios and transform to magpie object
-  IPSL <- data.frame(Region=a$Region, IMPACT_IPSL=as.numeric(a$IPSL.Baseline_Expansion))
+  IPSL <- data.frame(Region=a$Region, BAU_IPSL=as.numeric(a$IPSL.Baseline_Expansion))
   IPSL <- as.magpie(IPSL, spatial=1, tidy=T)
   
-  HGEM <- data.frame(Region=a$Region, IMPACT_HGEM=as.numeric(a$HGEM.Baseline_Expansion))
+  HGEM <- data.frame(Region=a$Region, BAU_HGEM=as.numeric(a$HGEM.Baseline_Expansion))
   HGEM <- as.magpie(HGEM, spatial=1, tidy=T)
   
-  NoCC <- data.frame(Region=a$Region, IMPACT_NoCC=as.numeric(a$NoCC.Baseline_Expansion))
+  NoCC <- data.frame(Region=a$Region, BAU_NoCC=as.numeric(a$NoCC.Baseline_Expansion))
   NoCC <- as.magpie(NoCC, spatial=1, tidy=T)
   
   tmp  <- mbind(IPSL, HGEM, NoCC)
   x    <- new.magpie(cells_and_regions = getRegions(tmp), years = years, names = getNames(tmp))
   x[,years,] <- tmp
   
-  names(dimnames(x))[3] <- "model"
+  names(dimnames(x))[3] <- "scenario"
   
   return(x)
 }
