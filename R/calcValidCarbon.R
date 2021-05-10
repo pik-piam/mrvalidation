@@ -1,7 +1,7 @@
 #' @title calcValidCarbon
 #' @description calculates the validation data for carbon pools
 #' 
-#' @param datasource Datasources for validation data, e.g. LPJmL4:CRU_4
+#' @param datasource Datasources for validation data
 #' 
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Kristine Karstens
@@ -13,13 +13,13 @@
 #' }
 #' 
 
-calcValidCarbon <- function(datasource="LPJmL4:CRU_4"){
-
-  if(datasource=="LPJmL4:CRU_4"){
+calcValidCarbon <- function(datasource="LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:historical"){
+  
+  if(datasource=="LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:historical"){
     
-    soilc <- calcOutput("LPJmL", version="LPJmL4", climatetype="CRU_4", subtype="soilc", aggregate=FALSE)
-    litc  <- calcOutput("LPJmL", version="LPJmL4", climatetype="CRU_4", subtype="litc",  aggregate=FALSE)
-    vegc  <- calcOutput("LPJmL", version="LPJmL4", climatetype="CRU_4", subtype="vegc",  aggregate=FALSE)
+    soilc <- calcOutput("LPJmL_new", version="LPJmL4_for_MAgPIE_84a69edd", climatetype="GSWP3-W5E5:historical", stage="raw", subtype="soilc", aggregate=FALSE)
+    litc  <- calcOutput("LPJmL_new", version="LPJmL4_for_MAgPIE_84a69edd", climatetype="GSWP3-W5E5:historical", stage="raw", subtype="litc",  aggregate=FALSE)
+    vegc  <- calcOutput("LPJmL_new", version="LPJmL4_for_MAgPIE_84a69edd", climatetype="GSWP3-W5E5:historical", stage="raw", subtype="vegc",  aggregate=FALSE)
     
     stock <- mbind(soilc, litc, vegc)
     rm(soilc, litc, vegc)
@@ -41,32 +41,14 @@ calcValidCarbon <- function(datasource="LPJmL4:CRU_4"){
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")  
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
     
-  } else if(grepl("LPJmL4",datasource)&!grepl("CRU_4",datasource)){
+  } else if(grepl("LPJmL4",datasource)&!grepl("GSWP3-W5E5",datasource)){
     
-    if(grepl("raw",datasource)){
-      
-      time  <- "raw"
-      dof   <- NULL 
-      harmonize_baseline <- FALSE
-      ref_year <- NULL
-      
-    } else {
-      time  <- "spline"
-      dof   <- 4 
-      harmonize_baseline <- "CRU_4"
-      ref_year <- "y2015"
-      
-    }
-
-    version     <- gsub("^(.[^:]*):(.*)", "\\1", gsub("raw","", datasource))
-    climatetype <- gsub("^(.[^:]*):(.*)", "\\2", gsub("raw","", datasource))
+    version     <- gsub("^(.[^:]*):(.*)", "\\1", datasource)
+    climatetype <- gsub("^(.[^:]*):(.*)", "\\2", datasource)
     
-    soilc <- calcOutput("LPJmL", version=version, climatetype=climatetype, subtype="soilc",     
-                        time=time, dof=dof, harmonize_baseline=harmonize_baseline, ref_year=ref_year, aggregate=FALSE)
-    litc  <- calcOutput("LPJmL", version=version, climatetype=climatetype, subtype="litc",     
-                        time=time, dof=dof, harmonize_baseline=harmonize_baseline, ref_year=ref_year, aggregate=FALSE)
-    vegc  <- calcOutput("LPJmL", version=version, climatetype=climatetype, subtype="vegc",     
-                        time=time, dof=dof, harmonize_baseline=harmonize_baseline, ref_year=ref_year, aggregate=FALSE)
+    soilc <- calcOutput("LPJmL_new", version=version, climatetype=climatetype, subtype="soilc", stage="raw", aggregate=FALSE)
+    litc  <- calcOutput("LPJmL_new", version=version, climatetype=climatetype, subtype="litc",  stage="raw", aggregate=FALSE)
+    vegc  <- calcOutput("LPJmL_new", version=version, climatetype=climatetype, subtype="vegc",  stage="raw", aggregate=FALSE)
     
     stock <- mbind(soilc, litc, vegc)
     rm(soilc, litc, vegc)
