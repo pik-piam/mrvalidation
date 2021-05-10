@@ -9,7 +9,7 @@
 #' @examples
 #' 
 #' \dontrun{ 
-#'   calcstockput("ValidCarbon")
+#'   calcOutput("ValidCarbon")
 #' }
 #' 
 
@@ -17,14 +17,14 @@ calcValidCarbon <- function(datasource="LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:hi
   
   if(datasource=="LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:historical"){
     
-    soilc <- calcstockput("LPJmL_new", version="LPJmL4_for_MAgPIE_84a69edd", climatetype="GSWP3-W5E5:historical", stage="raw", subtype="soilc", aggregate=FALSE)
-    litc  <- calcstockput("LPJmL_new", version="LPJmL4_for_MAgPIE_84a69edd", climatetype="GSWP3-W5E5:historical", stage="raw", subtype="litc",  aggregate=FALSE)
-    vegc  <- calcstockput("LPJmL_new", version="LPJmL4_for_MAgPIE_84a69edd", climatetype="GSWP3-W5E5:historical", stage="raw", subtype="vegc",  aggregate=FALSE)
+    soilc <- calcOutput("LPJmL_new", version="LPJmL4_for_MAgPIE_84a69edd", climatetype="GSWP3-W5E5:historical", stage="raw", subtype="soilc", aggregate=FALSE)
+    litc  <- calcOutput("LPJmL_new", version="LPJmL4_for_MAgPIE_84a69edd", climatetype="GSWP3-W5E5:historical", stage="raw", subtype="litc",  aggregate=FALSE)
+    vegc  <- calcOutput("LPJmL_new", version="LPJmL4_for_MAgPIE_84a69edd", climatetype="GSWP3-W5E5:historical", stage="raw", subtype="vegc",  aggregate=FALSE)
     
     stock <- mbind(soilc, litc, vegc)
     rm(soilc, litc, vegc)
     
-    area  <- dimSums(calcstockput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, years="y1995", aggregate = FALSE), dim=3)
+    area  <- dimSums(calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, years="y1995", aggregate = FALSE), dim=3)
     stock <- stock * setYears(area, NULL)
     
     mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
@@ -46,14 +46,14 @@ calcValidCarbon <- function(datasource="LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:hi
     version     <- gsub("^(.[^:]*):(.*)", "\\1", datasource)
     climatetype <- gsub("^(.[^:]*):(.*)", "\\2", datasource)
     
-    soilc <- calcstockput("LPJmL_new", version=version, climatetype=climatetype, subtype="soilc", stage="raw", aggregate=FALSE)
-    litc  <- calcstockput("LPJmL_new", version=version, climatetype=climatetype, subtype="litc",  stage="raw", aggregate=FALSE)
-    vegc  <- calcstockput("LPJmL_new", version=version, climatetype=climatetype, subtype="vegc",  stage="raw", aggregate=FALSE)
+    soilc <- calcOutput("LPJmL_new", version=version, climatetype=climatetype, subtype="soilc", stage="raw", aggregate=FALSE)
+    litc  <- calcOutput("LPJmL_new", version=version, climatetype=climatetype, subtype="litc",  stage="raw", aggregate=FALSE)
+    vegc  <- calcOutput("LPJmL_new", version=version, climatetype=climatetype, subtype="vegc",  stage="raw", aggregate=FALSE)
     
     stock <- mbind(soilc, litc, vegc)
     rm(soilc, litc, vegc)
     
-    area  <- dimSums(calcstockput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, years="y1995", aggregate = FALSE), dim=3)
+    area  <- dimSums(calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, years="y1995", aggregate = FALSE), dim=3)
     stock <- stock * setYears(area,NULL)
     
     mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
