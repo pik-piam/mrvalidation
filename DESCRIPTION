@@ -1,7 +1,7 @@
 Package: mrvalidation
 Type: Package
 Title: madrat data preparation for validation purposes
-Version: 2.17.4
+Version: 2.18.0
 Date: 2021-05-11
 Authors@R: c(person("Benjamin Leon", "Bodirsky", email = "bodirsky@pik-potsdam.de", role = c("aut","cre")),
              person("Stephen", "Wirth", role = "aut"),
@@ -13,6 +13,7 @@ Authors@R: c(person("Benjamin Leon", "Bodirsky", email = "bodirsky@pik-potsdam.d
              person("Isabelle", "Weindl", role = "aut"),
              person("Felicitas", "Beier", role = "aut"),
              person("David", "Chen", role = "aut"),
+             person("Michael", "Crawford", role = "aut"),
              person("Edna", "Molina Bacca", role = "aut"),
              person("Ulrich", "Kreidenweis", role = "aut"),
              person("Amsalu", "W. Yalew", role = "aut"),
@@ -38,7 +39,12 @@ Imports:
     ncdf4,
     tidyr,
     dplyr,
-    GDPuc
+    GDPuc,
+    hdf5r, 
+    magrittr, 
+    purrr, 
+    rlang, 
+    rvest
 License: LGPL-3 | file LICENSE
 URL: https://github.com/pik-piam/mrvalidation, https://doi.org/10.5281/zenodo.4317826
 BugReports: https://github.com/pik-piam/mrvalidation/issues

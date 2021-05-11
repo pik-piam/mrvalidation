@@ -129,6 +129,7 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidEmissions", datasource="CEDS", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmissions", datasource="FAO_EmisLUC", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmissions", datasource="FAO_EmisAg", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
+  calcOutput(type="ValidEmissions", datasource="GFED", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmissions", datasource="PRIMAPhist", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmissions", datasource="IPCC", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmissions", datasource="Nsurplus2", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
@@ -173,8 +174,8 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidCostsOverall", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #Overall costs.
   calcOutput(type="ValidCostsTransport", datasource="GTAP", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready.
   calcOutput(type="ValidCostsCapStocks", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
-  calcOutput(type="ValidCostsFertilizer", datasource="Vittis", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) 
-  calcOutput(type="ValidCostsLabor", datasource="Vittis", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) 
-  calcOutput(type="ValidCostsTC", datasource="Pardey", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) 
-  
+  calcOutput(type="ValidCostsFertilizer", datasource="Vittis", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+  calcOutput(type="ValidCostsLabor", datasource="Vittis", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+  calcOutput(type="ValidCostsTC", datasource="Pardey", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+
     }
