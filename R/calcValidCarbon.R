@@ -21,25 +21,7 @@ calcValidCarbon <- function(datasource="LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:hi
     litc  <- calcOutput("LPJmL_new", version="LPJmL4_for_MAgPIE_84a69edd", climatetype="GSWP3-W5E5:historical", stage="raw", subtype="litc",  aggregate=FALSE)
     vegc  <- calcOutput("LPJmL_new", version="LPJmL4_for_MAgPIE_84a69edd", climatetype="GSWP3-W5E5:historical", stage="raw", subtype="vegc",  aggregate=FALSE)
     
-    stock <- mbind(soilc, litc, vegc)
-    rm(soilc, litc, vegc)
-    
-    area  <- dimSums(calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, years="y1995", aggregate = FALSE), dim=3)
-    stock <- stock * setYears(area, NULL)
-    
-    mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
-    stock   <- toolAggregate(stock, rel = mapping,from="celliso",to="iso",dim=1)
-    stock   <- toolCountryFill(stock, fill=0)
-    
-    stock <- mbind(
-      setNames(dimSums(stock, dim=3), "Resources|Carbon (Mt C)"),
-      setNames(stock[,,"soilc"],      "Resources|Carbon|+|Soil (Mt C)"),                    
-      setNames(stock[,,"litc"],       "Resources|Carbon|+|Litter (Mt C)"),   
-      setNames(stock[,,"vegc"],       "Resources|Carbon|+|Vegetation (Mt C)")
-    )
-    
-    stock <- add_dimension(stock, dim=3.1, add="scenario", nm="historical")  
-    stock <- add_dimension(stock, dim=3.2, add="model", nm=datasource)
+    nm <- "historical"
     
   } else if(grepl("LPJmL4",datasource)&!grepl("GSWP3-W5E5",datasource)){
     
@@ -50,29 +32,29 @@ calcValidCarbon <- function(datasource="LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:hi
     litc  <- calcOutput("LPJmL_new", version=version, climatetype=climatetype, subtype="litc",  stage="raw", aggregate=FALSE)
     vegc  <- calcOutput("LPJmL_new", version=version, climatetype=climatetype, subtype="vegc",  stage="raw", aggregate=FALSE)
     
-    stock <- mbind(soilc, litc, vegc)
-    rm(soilc, litc, vegc)
+    nm <- "projection"
     
-    area  <- dimSums(calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, years="y1995", aggregate = FALSE), dim=3)
-    stock <- stock * setYears(area,NULL)
-    
-    mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
-    stock   <- toolAggregate(stock, rel = mapping,from="celliso",to="iso",dim=1)
-    stock   <- toolCountryFill(stock, fill=0)
-    
-    stock <- mbind(
-      setNames(dimSums(stock, dim=3), "Resources|Carbon (Mt C)"),
-      setNames(stock[,,"soilc"],      "Resources|Carbon|+|Soil (Mt C)"),                    
-      setNames(stock[,,"litc"],       "Resources|Carbon|+|Litter (Mt C)"),   
-      setNames(stock[,,"vegc"],       "Resources|Carbon|+|Vegetation (Mt C)")
-    )
-    
-    stock <- add_dimension(stock, dim=3.1, add="scenario", nm="projection")
-    stock <- add_dimension(stock, dim=3.2, add="model", nm=datasource)
-    
-  }
+  } else stop("No data exist for the given datasource!")
   
-  else stop("No data exist for the given datasource!")
+  stock <- mbind(setNames(soilc, "soilc"), setNames(litc, "litc"), setNames(vegc, "vegc"))
+  rm(soilc, litc, vegc)
+  
+  area  <- dimSums(calcOutput("LUH2v2", landuse_types="LUH2v2", irrigation=FALSE, cellular=TRUE, years="y1995", aggregate = FALSE), dim=3)
+  stock <- toolCoord2Isocell(stock) * setYears(area, NULL)
+  
+  mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
+  stock   <- toolAggregate(stock, rel = mapping,from="celliso",to="iso",dim=1)
+  stock   <- toolCountryFill(stock, fill=0)
+  
+  stock <- mbind(
+    setNames(dimSums(stock, dim=3), "Resources|Carbon (Mt C)"),
+    setNames(stock[,,"soilc"],      "Resources|Carbon|+|Soil (Mt C)"),                    
+    setNames(stock[,,"litc"],       "Resources|Carbon|+|Litter (Mt C)"),   
+    setNames(stock[,,"vegc"],       "Resources|Carbon|+|Vegetation (Mt C)")
+  )
+  
+  stock <- add_dimension(stock, dim=3.1, add="scenario", nm=nm)
+  stock <- add_dimension(stock, dim=3.2, add="model",    nm=datasource)
   
   return(list(x=stock,
               weight=NULL,
