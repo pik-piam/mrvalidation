@@ -26,8 +26,8 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidPopulation", aggregate="REG+GLO", file=valfile, append=FALSE, na_warning=FALSE, try=TRUE) #ready
   calcOutput(type="ValidIncome", datasource="James", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
   calcOutput(type="ValidIncome", datasource="James_OECD_Nakicenovic",aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
-  calcOutput(type="ValidAgGDP", datasource="WDI", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
-  #calcOutput(type="ValidAgGDP", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)not ready
+  calcOutput(type="ValidAgFFGDP", datasource="WDI", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+  calcOutput(type="ValidAgGDP", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
 
   # Food Demand
   calcOutput(type="ValidKcal", datasource="FAO",aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
