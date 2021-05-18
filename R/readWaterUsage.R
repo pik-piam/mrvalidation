@@ -31,7 +31,7 @@
 #' a <- readSource("aquastat_2008_12")
 #' }
 #' #'@importFrom reshape2 dcast
-#' @importFrom magclass read.magpie getSets<-
+#' @importFrom magclass read.magpie getSets
 
 readWaterUsage <- function(subtype=NULL){
   

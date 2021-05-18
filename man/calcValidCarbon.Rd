@@ -4,10 +4,12 @@
 \alias{calcValidCarbon}
 \title{calcValidCarbon}
 \usage{
-calcValidCarbon(datasource = "LPJmL4:CRU_4")
+calcValidCarbon(
+  datasource = "LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:historical"
+)
 }
 \arguments{
-\item{datasource}{Datasources for validation data, e.g. LPJmL4:CRU_4}
+\item{datasource}{Datasources for validation data}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.
