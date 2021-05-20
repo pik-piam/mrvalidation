@@ -42,8 +42,8 @@ calcValidAgGDP<- function(datasource="FAO") {
     feed_kli<-feed[,,kli]
     
     #Price consumers (World Prices)
-    prices_kcr_con<-setYears(calcOutput("IniFoodPrice",products = "kcr",aggregate=FALSE,convert=FALSE),NULL)
-    prices_kli_con<-setYears(calcOutput("IniFoodPrice",products = "kli",aggregate=FALSE,convert=FALSE),NULL)
+    prices_kcr_con<-setYears(calcOutput("IniFoodPrice",products = "kcr",aggregate=FALSE),NULL)
+    prices_kli_con<-setYears(calcOutput("IniFoodPrice",products = "kli",aggregate=FALSE),NULL)
     
     years<-intersect(getYears(seed_kcr),
                      intersect(getYears(feed_kcr),getYears(Vprod_all)))
