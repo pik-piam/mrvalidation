@@ -20,7 +20,7 @@ calcValidConsumptionValue<- function(datasource="FAO") {
     food_mat<-collapseNames(dimSums((calcOutput("FAOmassbalance",aggregate = FALSE)[,,kall][,,c("food","other_util")])[,,"dm"],dim=3.2))
 
     #Price consumers (World Prices)
-    prices_kall_con<-setYears(calcOutput("IniFoodPrice",products = "kall",aggregate=FALSE,convert=FALSE),NULL)
+    prices_kall_con<-setYears(calcOutput("IniFoodPrice",products = "kall",aggregate=FALSE),NULL)
 
     out<-dimSums(food_mat*prices_kall_con,dim=3)
     
