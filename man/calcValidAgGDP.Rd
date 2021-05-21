@@ -7,7 +7,7 @@
 calcValidAgGDP(datasource = "FAO")
 }
 \arguments{
-\item{datasource}{datasource for validation (FAO)}
+\item{datasource}{datasource for validation. Options FAO and FAO-consum}
 }
 \value{
 List of magpie object with results on country level, no weight, unit and description.

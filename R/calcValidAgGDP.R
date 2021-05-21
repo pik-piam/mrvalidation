@@ -1,6 +1,6 @@
 #' @title calcValidAgGDP
 #' @description Validation for agricultural value added gdp (Million 05USD)
-#' @param datasource datasource for validation (FAO)
+#' @param datasource datasource for validation. Options FAO and FAO-consum
 #' @return List of magpie object with results on country level, no weight, unit and description.
 #' @author Edna J. Molina Bacca
 #' @importFrom magclass collapseNames
@@ -55,8 +55,21 @@ calcValidAgGDP<- function(datasource="FAO") {
     out[out<0]<-0
     
     
+   }else if(datasource == "FAO-consum"){
+     
+     #Food and material demand
+     kall<-findset("kall")
+     food_mat<-collapseNames(dimSums((calcOutput("FAOmassbalance",aggregate = FALSE)[,,kall][,,c("food","other_util")])[,,"dm"],dim=3.2))
+     
+     #Price consumers (World Prices)
+     prices_kall_con<-setYears(calcOutput("IniFoodPrice",products = "kall",aggregate=FALSE),NULL)
+     
+     #Consumption value and production value should be the same at global level
+     out<-dimSums(dimSums(food_mat*prices_kall_con,dim=3),dim=1)
+     
    }else{ 
-    stop("unknown datasource")}
+    stop("unknown datasource")
+     }
   
   getNames(out) <- "Value|Agriculture GDP (million US$05/yr)"
   out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
