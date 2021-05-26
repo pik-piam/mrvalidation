@@ -55,7 +55,7 @@ calcValidAgGDP<- function(datasource="FAO") {
     out[out<0]<-0
     
     
-   }else if(datasource == "FAO-consum"){
+   }else if(datasource == "FAO_consum"){
      
      #Food and material demand
      kall<-findset("kall")
