@@ -26,9 +26,12 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidPopulation", aggregate="REG+GLO", file=valfile, append=FALSE, na_warning=FALSE, try=TRUE) #ready
   calcOutput(type="ValidIncome", datasource="James", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
   calcOutput(type="ValidIncome", datasource="James_OECD_Nakicenovic",aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
-  calcOutput(type="ValidAgGDP", datasource="WDI", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
-  #calcOutput(type="ValidAgGDP", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)not ready
-
+  calcOutput(type="ValidAgFFGDP", datasource="WDI", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+  calcOutput(type="ValidAgGDP", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+  calcOutput(type="ValidAgGDP", datasource="FAO_consum", aggregate=FALSE, file=valfile, append=TRUE, try=TRUE)
+  calcOutput(type="ValidConsumptionValue", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+  
+  
   # Food Demand
   calcOutput(type="ValidKcal", datasource="FAO",aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidKcal", datasource="FAOmassbalance",aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
@@ -102,14 +105,8 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidManure", datasource="Bodirsky", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
 
   #Carbon Stocks
-  calcOutput("ValidCarbon", datasource="LPJmL4:CRU_4", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
-
-  for(gcm in c("GFDL_ESM2M","IPSL_CM5A_LR","MIROC5","HadGEM2_ES","NorESM1_M")){
-    for(rcp in c("rcp2p6","rcp6p0")){
-      calcOutput("ValidCarbon", datasource=paste("LPJmL4raw",gcm,rcp,"co2",sep=":"), aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
-    }
-  }
-
+  calcOutput("ValidCarbon", datasource="LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:historical", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+  
   ## Soil only
   calcOutput("ValidSOCStocks", datasource = "LPJ_IPCC2006", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
   calcOutput("ValidSOCStocks", datasource = "LPJmL_rev21", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
@@ -117,7 +114,7 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput("ValidSOCStocks", datasource = "WISE", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
   calcOutput("ValidSOCStocks", datasource = "GSOC", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
   calcOutput("ValidSOCStocks", datasource = "SoilGrids", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
-
+  
   calcOutput("ValidSOCDensity", datasource = "LPJ_IPCC2006", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
   calcOutput("ValidSOCDensity", datasource = "LPJmL_rev21", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
   calcOutput("ValidSOCDensity", datasource = "LPJmLCarbon", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
@@ -135,6 +132,7 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidEmissions", datasource="CEDS", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmissions", datasource="FAO_EmisLUC", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmissions", datasource="FAO_EmisAg", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
+  calcOutput(type="ValidEmissions", datasource="GFED", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmissions", datasource="PRIMAPhist", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmissions", datasource="IPCC", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
   calcOutput(type="ValidEmissions", datasource="Nsurplus2", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready
@@ -179,8 +177,8 @@ fullVALIDATION <- function(rev=0.1) {
   calcOutput(type="ValidCostsOverall", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #Overall costs.
   calcOutput(type="ValidCostsTransport", datasource="GTAP", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) #ready.
   calcOutput(type="ValidCostsCapStocks", datasource="FAO", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
-  calcOutput(type="ValidCostsFertilizer", datasource="Vittis", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) 
-  calcOutput(type="ValidCostsLabor", datasource="Vittis", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) 
-  calcOutput(type="ValidCostsTC", datasource="Pardey", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE) 
-  
+  calcOutput(type="ValidCostsFertilizer", datasource="Vittis", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+  calcOutput(type="ValidCostsLabor", datasource="Vittis", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+  calcOutput(type="ValidCostsTC", datasource="Pardey", aggregate="REG+GLO", file=valfile, append=TRUE, try=TRUE)
+
     }

@@ -6,7 +6,7 @@
 #' 
 #' @param x MAgPIE object containing IrrigatedArea data on Country level
 #' @param subtype : No subtype needed
-#' @return Data un water use as MAgPIE object on country level Missing values are added as NA
+#' @return Data on water use as MAgPIE object on country level Missing values are added as NA
 #' @author Stephen Wirth
 #' @seealso \code{\link{readSource}}
 #' @examples

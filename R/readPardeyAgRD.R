@@ -13,6 +13,8 @@
 #' @importFrom tidyr pivot_longer
 #' @importFrom dplyr mutate
 #' @importFrom madrat toolCountry2isocode
+#' @importFrom GDPuc convertGDP
+
 
 readPardeyAgRD <- function() {
   
@@ -100,16 +102,20 @@ readPardeyAgRD <- function() {
   aggr <- intersect(getRegions(ratio),unique(mapping$RegionCode))
   aggr_ratio <- as.data.frame(setYears(ratio[aggr,c(1980,2011),],c(1960,2011)))[,-c(1,4,5)]
 
-y_countries <- merge(y_countries, aggr_ratio,  by.x=c("RegionCode", "Year"), by.y=c("Region", "Year"))
-y_countries$GERD <- y_countries$Value.x * y_countries$Value.y
+  y_countries <- merge(y_countries, aggr_ratio,  by.x=c("RegionCode", "Year"), by.y=c("Region", "Year"))
+  y_countries$GERD <- y_countries$Value.x * y_countries$Value.y
 
-gerdy <- as.magpie(y_countries[,c(2,3,7)],spatial=2,temporal=1,tidy=T)
+  gerdy <- as.magpie(y_countries[,c(2,3,7)],spatial=2,temporal=1,tidy=T)
 
-gerdy <- time_interpolate(gerdy, interpolated_year = getYears(fullgerd))
+  gerdy <- time_interpolate(gerdy, interpolated_year = getYears(fullgerd))
 
 pardey <- mbind(fullgerd,gerdy)
 
-
+#convert PARDEY from 2009 PPP to 2005 USD MER
+ pardey1 <- convertGDP(pardey, unit_in="constant 2009 Int$PPP", unit_out = "constant 2005 US$MER")
+ #for missing countries use USA rate for now
+ pardey1[where(is.na(pardey1))$true$regions,,] <- pardey[where(is.na(pardey1))$true$regions,,] * setYears(pardey1["USA",2000,]/pardey["USA",2000,],NULL)
+ pardey <- pardey1
 ### read in OECD data to get missing countries: REF missing from pardey data
   oecd <- read.csv("GERD_FORD_OECD.csv")
   oecd <- oecd[,-c(2,3,5,7,9,11,12,13,14,15,16,18,19)]
@@ -139,6 +145,11 @@ rus_shr <- magpply(total[oecd_rus,c(2010,2011),]/dimSums(pardey[,c(2010,2011),],
 
 past_rus <- new.magpie(cells_and_regions=oecd_rus, years = getYears(pardey),names = getNames(pardey))
 past_rus <- rus_shr * dimSums(pardey, dim=1)
+
+#drop TWN which sneaked in there, fix later
+past_rus <- past_rus["TWN",,inv=T]
+
+past_rus <- convertGDP(past_rus, unit_in = "constant 2015 Int$PPP", unit_out = "constant 2005 US$MER")
 
 out <- mbind(pardey, past_rus)
 
