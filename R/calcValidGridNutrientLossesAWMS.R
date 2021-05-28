@@ -5,7 +5,7 @@
 #' @return List of magpie objects with results on cellular level, weight on cellular level, unit and description.
 #' @author Benjamin Leon Bodirsky
 #' @seealso
-#' \code{\link{fullMADRATtoLPJml}}
+#' \code{\link{fullMADRATTOLPJML}}
 #' @examples
 #' 
 #' \dontrun{ 

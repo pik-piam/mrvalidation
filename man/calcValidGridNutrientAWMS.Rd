@@ -23,7 +23,7 @@ calcOutput("ValidGridNitrogenBudgetCropland")
 
 }
 \seealso{
-\code{\link{fullMADRATtoLPJml}}
+\code{\link{fullMADRATTOLPJML}}
 }
 \author{
 Kristine Karstens, Benjamin Leon Bodirsky
