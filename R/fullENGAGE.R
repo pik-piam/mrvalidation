@@ -56,12 +56,6 @@ fullENGAGE <- function() {
     x <- convertENGAGE(x)
     out <- mbind(out,x)
 
-    # x <- calcOutput(type="ValidKcal", datasource="FAO",aggregate="REG+GLO")
-    # x <- convertENGAGE(x)
-    # out <- mbind(out,x)
-
-    # map  <- toolGetMapping(type = "reportingVariables", name = "mapping_remmag_engage_validation.csv")
     write.report(out,"tmp.csv")
-    #write.reportProject("tmp.csv",mapping = "/p/projects/rd3mod/inputdata/mappings/reportingVariables/mapping_remmag_engage_validation.csv",file=paste0("ENGAGE_valid_data_",reg_map),format = "default")
   }
 }
