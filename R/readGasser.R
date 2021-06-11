@@ -10,7 +10,7 @@
 #' \dontrun{
 #' a <- readSource("Gasser")
 #' }
-#' @importFrom madrat toolSubtypeSelect toolMappingFile
+#' @importFrom madrat toolSubtypeSelect toolGetMapping
 #' @importFrom ncdf4 nc_open ncvar_get
 #' @importFrom magclass time_interpolate
 
@@ -25,7 +25,7 @@ readGasser <- function(subtype = "bookkeeping") {
 
     mapping_file_gasser <- "GasserMapping.csv"
     mapping_gasser <- read.csv(file = mapping_file_gasser, header = TRUE, sep = ";")
-    mapping_magpie <- toolMappingFile(type = "regional", name = "h12.csv", readcsv = TRUE)
+    mapping_magpie <- toolGetMapping(type = "regional", name = "h12.csv")
     colnames(mapping_magpie)[1] <- "ISOName"
     mapping <- merge(mapping_gasser, mapping_magpie, all = FALSE)
 

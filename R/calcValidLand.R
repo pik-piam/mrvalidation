@@ -117,7 +117,7 @@ calcValidLand <- function(datasource="MAgPIEown"){
 
      # Renaming reporting categories from SSPResults to MAgPie validation names (not all SSP-categories have MAgPIE-equivalents)
 
-     mapping <- read.csv(toolMappingFile("sectoral","mappingSSPResultsToMAgPIEValid.csv"))
+     mapping <- toolGetMapping(type = "sectoral", name = "mappingSSPResultsToMAgPIEValid.csv")
      mapping_from <- as.vector(mapping[,"SSPResults"])
      mapping_to <- as.vector(mapping[,"MAgPIEValid"])
      names(mapping_to) <- mapping_from

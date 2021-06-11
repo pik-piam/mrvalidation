@@ -28,7 +28,7 @@ calcValidSOCDensity <- function(datasource="LPJ_IPCC2006"){
     
     soilc     <- calcOutput("LPJmlCarbon", landtype="nat_veg", subtype="soilc_0-30", selectyears="past_all", aggregate=FALSE)
     getCells(soilc) <- getCells(SOM_area)
-    mapping   <- toolMappingFile(type="cell",name="CountryToCellMapping.csv",readcsv=TRUE)
+    mapping   <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv")
     
     SOM_area  <- toolAggregate(SOM_area, rel=mapping, from=ifelse(nregions(SOM_area)>1,"celliso","cell"), to="iso", dim=1)
     SOM_area  <- toolCountryFill(SOM_area,fill=0)

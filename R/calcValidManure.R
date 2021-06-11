@@ -76,14 +76,14 @@ calcValidManure<-function(datasource="Bodirsky"){
     )
     
     confinement<-collapseNames(confinement[,,selection][,,"Manure_(N_content)_(Manure_management)_(Kg)"])
-    mapping<-toolMappingFile(type = "sectoral",name = "IPCCitems.csv",readcsv = T)
+    mapping <- toolGetMapping(type = "sectoral", name = "IPCCitems.csv")
     confinement<-toolAggregate(confinement,rel=mapping,from="fao",to="magpie",dim = 3.1)
     
     warning("FAO dataset seems incomplete. Pigs are missing on pastures")
     pasture<-collapseNames(pasture[,,getNames(pasture,dim=1)[getNames(pasture,dim=1)%in%selection]][,,"Manure_(N_content)_(tonnes)"])
     
     #pasture<-collapseNames(pasture[,,selection][,,"Manure_(N_content)_(Manure_management)_(Kg)"])
-    mapping<-toolMappingFile(type = "sectoral",name = "IPCCitems.csv",readcsv = T)
+    mapping <- toolGetMapping(type = "sectoral", name = "IPCCitems.csv")
     pasture<-toolAggregate(pasture,rel=mapping,from="fao",to="magpie",dim = 3.1,partrel = T)
     
     out<-pasture+confinement

@@ -16,11 +16,11 @@
 
 #' }
 #' 
-#' @importFrom madrat toolCountryFill toolMappingFile
+#' @importFrom madrat toolCountryFill toolGetMapping
 
 convertWaterUsage <- function(x, subtype){
   if( subtype=="aquastat_2008_12"){
-    mapping<-toolMappingFile(type="regional",name="2c86f3f30ff7f2b9a3ea978f9d9d7f6d.csv",readcsv=TRUE)
+    mapping <- toolGetMapping(type = "regional", name = "2c86f3f30ff7f2b9a3ea978f9d9d7f6d.csv")
     y <- toolAggregate(x=x, rel=mapping, from=1, to=2, partrel=TRUE)
     y <- toolCountryFill(y)
     return(y)
