@@ -1,4 +1,4 @@
-#' @title fullMADRATtoLPJml
+#' @title fullMADRATTOLPJML
 #' @description creates historical outputs to be used by LPJml or other models that require gridded inputs
 #' 
 #' @return No return; the function writes a number of netcdf files into the output folder of MADRAT
@@ -8,12 +8,12 @@
 #' @examples
 #' 
 #' \dontrun{ 
-#' fullMADRATtoLPJml()
+#' fullMADRATTOLPJML()
 #' }
 #' 
 
 
-fullMADRATtoLPJml<-function(){
+fullMADRATTOLPJML<-function(){
   calcOutput("ValidGridLand",aggregate=FALSE,file="LandAreaPhysical.nc")
   calcOutput("ValidGridCroparea",aggregate=FALSE,file="CroplandAreaPhysical.nc")
   calcOutput("ValidGridYields",aggregate=FALSE,file="YieldsPhysical.nc")

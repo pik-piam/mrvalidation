@@ -20,7 +20,7 @@ calcOutput("ValidGridYields")
 
 }
 \seealso{
-\code{\link{fullMADRATtoLPJml}}
+\code{\link{fullMADRATTOLPJML}}
 }
 \author{
 Benjamin Leon Bodirsky

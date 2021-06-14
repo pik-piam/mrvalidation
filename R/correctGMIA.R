@@ -28,12 +28,11 @@ correctGMIA <- function(x, subtype){
           aeinc_pct_aei = "gmia_v5_aeinc_pct_aei.asc")
   
   file <- toolSubtypeSelect(subtype, files)
-  if(subtype=="all_data_national"){
+  if (subtype=="all_data_national") {
     return(x)
   }
-  else{
   #getCelnames and extent
-    mapping <- toolMappingFile(type="cell", readcsv=T, name="CountryToCellMapping.csv")
+  mapping <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv")
   cellNames <- mapping[,1]
   lon <- seq(-179.75,179.75,by=0.5)
   lat <- rev(seq(-89.75,89.75,by=0.5))
@@ -42,12 +41,9 @@ correctGMIA <- function(x, subtype){
   x <- raster(file)
   extent(x) <- c(-180,180,-90,90)
   #checkk for subtype and aggregate according to it
-  if(grepl("ha", subtype))
-  {
+  if(grepl("ha", subtype)) {
   x <- aggregate(x,fact=6,fun=sum)
-  }
-  else
-  {
+  } else {
     x <- aggregate(x,fact=6,fun=mean)
   }
   #raster to matrix to magpie
@@ -61,12 +57,10 @@ correctGMIA <- function(x, subtype){
   for (j in 1:59199) {
     mag[j,,] <- x[which(coord[j, 1]==lon), which(coord[j,2]==lat)]
   }
-  
+
   y <- as.magpie(mag,spatial=1,temporal=2)
   z <- new.magpie(cells_and_regions = getCells(y),years = 2000:2008,names = subtype,sets = getSets(y))
   z[,2000:2008,] <- y
-  
 
-return(z)
-  }
+  return(z)
 }

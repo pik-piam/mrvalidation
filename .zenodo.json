@@ -1,6 +1,6 @@
 {
   "title": "mrvalidation: madrat data preparation for validation purposes",
-  "version": "2.13.7",
+  "version": "2.20.2",
   "description": "<p>Package contains routines to prepare data for validation exercises.<\/p>",
   "creators": [
     {
@@ -28,7 +28,13 @@
       "name": "Weindl, Isabelle"
     },
     {
+      "name": "Beier, Felicitas"
+    },
+    {
       "name": "Chen, David"
+    },
+    {
+      "name": "Crawford, Michael"
     },
     {
       "name": "Molina Bacca, Edna"

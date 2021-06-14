@@ -22,24 +22,19 @@
 #' 
 #' 
 convertGMIA <- function(x,subtype) {
-  
-  
-  if(subtype=="all_data_national")
-    {
-    map <- toolMappingFile(type="regional", readcsv=T, name="regionmappingMAgPIE.csv")
- # map <- "regionmappingMAgPIE.csv"
+  if (subtype=="all_data_national") {
+    map <- toolGetMapping(type = "regional", name = "regionmappingMAgPIE.csv")
+    # map <- "regionmappingMAgPIE.csv"
     map$X[grep("Virgin Islands, U.S.", map$X)] <- "Virgin Islands, U"
     map$X <- toupper(map$X)
     getRegions(x) <- toupper(getRegions(x))
-  y <- toolAggregate(x, rel = map, from=1 ,to=2, partrel = T)
-  y <- toolCountryFill(y)
-  
-}
- else{
-   map <- toolMappingFile(type="cell", readcsv=T, name="CountryToCellMapping.csv")
- y <- toolAggregate(x, rel=map, from=1, to=3, partrel = T)
-  # stop(paste0("No conversion for subtype ", subtype, " available. Try convert=correctonly, for aggregation to 0.5 degree resolution, or convert=F for 5 armin resolution"))
-y <- toolCountryFill(y)
-}
+    y <- toolAggregate(x, rel = map, from=1 ,to=2, partrel = T)
+    y <- toolCountryFill(y)
+  } else {
+    map <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv")
+    y <- toolAggregate(x, rel=map, from=1, to=3, partrel = T)
+    # stop(paste0("No conversion for subtype ", subtype, " available. Try convert=correctonly, for aggregation to 0.5 degree resolution, or convert=F for 5 armin resolution"))
+    y <- toolCountryFill(y)
+  }
   return(y)
 }

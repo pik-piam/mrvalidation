@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcValidCostsOverall.R
 \name{calcValidCostsOverall}
 \alias{calcValidCostsOverall}
-\title{calcValidCostOverall}
+\title{calcValidCostsOverall}
 \usage{
 calcValidCostsOverall(datasource = "FAO")
 }
@@ -17,7 +17,7 @@ Returns historical values of the overall value of production for the Agricultura
 }
 \examples{
 \dontrun{
-calcOutput("calcValidCostOverall")
+calcOutput("calcValidCostsOverall")
 }
 }
 \author{

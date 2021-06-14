@@ -4,7 +4,7 @@
 #' @return List of magpie objects with results on cellular level, weight on cellular level, unit and description.
 #' @author Benjamin Leon Bodirsky
 #' @seealso
-#' \code{\link{fullMADRATtoLPJml}}
+#' \code{\link{fullMADRATTOLPJML}}
 #' @examples
 #' 
 #' \dontrun{ 
@@ -16,7 +16,7 @@
 
 calcValidGridYields <-function() {
   
-  out<-calcOutput("Yield",cellular=TRUE,aggregate=FALSE,irrigation=TRUE)
+  out<-calcOutput("FAOYield",cellular=TRUE,aggregate=FALSE,irrigation=TRUE)
   getNames(out,dim=1)<-reportingnames(getNames(out,dim=1))
   getNames(out,dim=2)<-reportingnames(getNames(out,dim=2))
   out<-clean_magpie(out)
