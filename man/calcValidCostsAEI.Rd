@@ -16,7 +16,7 @@ magpie object on country level, unit and description
 calculates the validation data for irrigation investment costs
 }
 \examples{
-\dontrun{ 
+\dontrun{
 calcOutput("ValidCostsAEI")
 }
 

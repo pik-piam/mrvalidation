@@ -24,23 +24,28 @@ readIMPACTIrrigInvCosts <- function() {
   years <- seq(2016, 2030)
 
   # read in data
-  a           <- read.csv("Rosegrant2017_TableK2.csv", header = F)
+  a           <- read.csv("Rosegrant2017_TableK2.csv", header = FALSE, stringsAsFactors = FALSE)
   names(a)    <- paste(a[1, ], a[2, ], sep = ".")
   names(a)[1] <- "Region"
   a           <- a[-c(1, 2), ]
 
   # select relevant scenarios and transform to magpie object
-  IPSL <- data.frame(Region = a$Region, BAU_IPSL = as.numeric(a$IPSL.Baseline_Expansion))
+  IPSL <- data.frame(Region = a$Region, BAU_IPSL = as.numeric(a$IPSL.Baseline_Expansion),
+                     stringsAsFactors = FALSE)
   IPSL <- as.magpie(IPSL, spatial = 1, tidy = T)
 
-  HGEM <- data.frame(Region = a$Region, BAU_HGEM = as.numeric(a$HGEM.Baseline_Expansion))
+  HGEM <- data.frame(Region = a$Region, BAU_HGEM = as.numeric(a$HGEM.Baseline_Expansion),
+                     stringsAsFactors = FALSE)
   HGEM <- as.magpie(HGEM, spatial = 1, tidy = T)
 
-  NoCC <- data.frame(Region = a$Region, BAU_NoCC = as.numeric(a$NoCC.Baseline_Expansion))
+  NoCC <- data.frame(Region = a$Region, BAU_NoCC = as.numeric(a$NoCC.Baseline_Expansion),
+                     stringsAsFactors = FALSE)
   NoCC <- as.magpie(NoCC, spatial = 1, tidy = T)
 
   tmp  <- mbind(IPSL, HGEM, NoCC)
-  x    <- new.magpie(cells_and_regions = getRegions(tmp), years = years, names = getNames(tmp))
+  x    <- new.magpie(cells_and_regions = getRegions(tmp),
+                     years = years,
+                     names = getNames(tmp))
   x[, years, ] <- tmp
 
   names(dimnames(x))[3] <- "scenario"

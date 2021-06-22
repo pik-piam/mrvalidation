@@ -10,18 +10,17 @@ convertIMPACTIrrigInvCosts(x)
 \item{x}{MAgPIE object containing irrigation investment cost data on region level}
 }
 \value{
-magpie object containing average annual baseline water-related 
-        investment cost on country-level 
+magpie object containing average annual baseline water-related
+        investment cost on country-level
         (in million 2005 USD per year)
 }
 \description{
-converts units and dimensions of average annual baseline 
+converts units and dimensions of average annual baseline
              water-related investment cost data from readIMPACTIrrigInvCosts
 }
 \examples{
-
 \dontrun{
-a <- readSource("IMPACTIrrigInvCosts", convert=TRUE)
+a <- readSource("IMPACTIrrigInvCosts", convert = TRUE)
 }
 
 }

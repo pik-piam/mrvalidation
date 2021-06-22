@@ -7,19 +7,18 @@
 readIMPACTIrrigInvCosts()
 }
 \value{
-magpie object containing average annual baseline water-related 
-        investment cost on IMPACT-region level 
+magpie object containing average annual baseline water-related
+        investment cost on IMPACT-region level
         (in billion 2000 USD per year)
 }
 \description{
 Average annual baseline water-related investment cost data (2016-2030)
-             read from Rosegrant et al. (2017) "Quantitative Foresight Modeling to 
+             read from Rosegrant et al. (2017) "Quantitative Foresight Modeling to
              Inform the CGIAR Research Portfolio"
 }
 \examples{
-
 \dontrun{
-a <- readSource("IMPACTIrrigInvCosts", convert=TRUE)
+a <- readSource("IMPACTIrrigInvCosts", convert = TRUE)
 }
 
 }
