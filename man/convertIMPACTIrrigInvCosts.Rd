@@ -10,10 +10,13 @@ convertIMPACTIrrigInvCosts(x)
 \item{x}{MAgPIE object containing irrigation investment cost data on region level}
 }
 \value{
-magpie object containing Average annual baseline water-related investment cost on country-level (in million 2005 US$ per year)
+magpie object containing average annual baseline water-related 
+        investment cost on country-level 
+        (in million 2005 USD per year)
 }
 \description{
-converts units and dimensions of average annual baseline water-related investment cost data from readIMPACTIrrigInvCosts
+converts units and dimensions of average annual baseline 
+             water-related investment cost data from readIMPACTIrrigInvCosts
 }
 \examples{
 
