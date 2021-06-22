@@ -17,18 +17,13 @@
 #' }
 #'
 #' @importFrom madrat toolAggregate toolCountryFill
-#' @importFrom magclass getYears getNames getRegions setYears new.magpie mbind
+#' @importFrom magclass getYears getNames getRegions setYears new.magpie mbind where
 #' @importFrom GDPuc convertGDP
 
 convertIMPACTIrrigInvCosts <- function(x) {
 
   # convert from bio. to mio. USD
   x   <- x * 1000
-
-  # convert 2000 to 2005 USD
-  x <- convertGDP(x, unit_in = "constant 2000 US$MER", unit_out = "constant 2005 US$MER")
-
-  # NOTE: PLEASE CONFIRM THAT IMPACT DATA IS IN MER
 
   # Disaggregate to iso-countries
   # weight for disaggregation: GDP
@@ -43,14 +38,24 @@ convertIMPACTIrrigInvCosts <- function(x) {
   mapping <- rbind(mapping, data.frame(region = "EUR", iso = "JEY"))
   mapping <- mapping[which(mapping$iso != setdiff(mapping$iso, getRegions(w))), ]
 
-  tmp <- new.magpie(cells_and_regions = setdiff(mapping$region, getRegions(x)), 
-                    years = getYears(x), 
-                    names = getNames(x), 
-                    fill = 0)
+  tmp <- new.magpie(cells_and_regions = setdiff(mapping$region, getRegions(x)),
+    years = getYears(x),
+    names = getNames(x),
+    fill = 0)
   x   <- mbind(x, tmp)
   x   <- x[intersect(mapping$region, getCells(x)), , ]
 
   x <- toolAggregate(x, rel = mapping, weight = w, from = "region", to = "iso", dim = 1)
+
+  # convert 2000 to 2005 USD
+  tmp <- convertGDP(x, unit_in = "constant 2000 US$MER", unit_out = "constant 2005 US$MER")
+
+  ### for missing countries use USA rate for now ###
+  tmp[where(is.na(tmp))$true$regions, , ] <- x[where(is.na(tmp))$true$regions, , ] * 
+                                             setYears(tmp["USA", 2016, ] / x["USA", 2016, ], 
+                                                      NULL)
+  x <- tmp
+  ### for missing countries use USA rate for now ###
 
   return(x)
 }
