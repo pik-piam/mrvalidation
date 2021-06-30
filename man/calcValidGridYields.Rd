@@ -4,7 +4,13 @@
 \alias{calcValidGridYields}
 \title{calcValidGridYields}
 \usage{
-calcValidGridYields()
+calcValidGridYields(datasource = "downscaledFAO", future = NULL)
+}
+\arguments{
+\item{datasource}{downscaledFAO or calibratedFAO}
+
+\item{future}{if NULL no future values are returned (default).
+specify climate scenario (gcm:rcp), if future is needed}
 }
 \value{
 List of magpie objects with results on cellular level, weight on cellular level, unit and description.

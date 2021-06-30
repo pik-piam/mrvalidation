@@ -14,7 +14,6 @@
 #' @importFrom magpiesets reportingnames
 #' @importFrom magclass getComment<-
 
-
 calcValidGridCroparea <-function() {
 
   out<-calcOutput("Croparea",cellular=TRUE,aggregate=FALSE,physical=TRUE,irrigation=TRUE)
