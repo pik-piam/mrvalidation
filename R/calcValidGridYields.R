@@ -21,7 +21,7 @@
 
 calcValidGridYields <- function(datasource = "downscaledFAO", future = NULL) {
   
-  if (source == "downscaledFAO") {
+  if (datasource == "downscaledFAO") {
 
     if (!is.null(future)) stop("Future options is not available for source type 'downscaledFAO'.")
     
@@ -32,11 +32,9 @@ calcValidGridYields <- function(datasource = "downscaledFAO", future = NULL) {
     out <- dimOrder(out, perm = c(2, 1))
     getComment(out) <- NULL
 
-  } else if ("calibratedLPJmL") {
+  } else if (datasource == "calibratedLPJmL") {
     
-    if (!is.null(future)) climatetype <- "GSWP3-W5E5:historical"
-    else                  climatetype <- future
-    
+    if (!is.null(future)) climatetype <- "GSWP3-W5E5:historical" else climatetype <- future
     ref_year        <- 2010
     
     yieldFAO_iso    <- calcOutput("FAOYield", cut = 0.98, aggregate = FALSE)

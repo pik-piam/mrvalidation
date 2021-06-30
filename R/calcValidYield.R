@@ -100,7 +100,7 @@ calcValidYield  <-  function(datasource="FAO", future = NULL){
     
   } else if (datasource == "calibratedLPJmL") {
     
-    yieldLPJmL_grid <- calcOutput("ValidGridYields", datasource = "downscaledFAO", future = future, aggregate = FALSE)
+    yieldLPJmL_grid <- calcOutput("ValidGridYields", datasource = "calibratedLPJmL", future = future, aggregate = FALSE)
     areaMAG_grid    <- setYears(calcOutput("ValidGridCroparea", aggregate = FALSE)[, "y2010", ], NULL)
     CountryToCell   <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv")
     
