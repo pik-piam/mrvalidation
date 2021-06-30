@@ -180,6 +180,5 @@ fullVALIDATION <- function(rev = 0.1) {
   calcOutput(type = "ValidCostsLabor", datasource = "Vittis", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidCostsTC", datasource = "Pardey", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidCostsAEI", datasource = "IMPACT", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  # should we include discounting of costs? If so: where? in each of the costs functions individually?
 
 }

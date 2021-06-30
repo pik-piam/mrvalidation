@@ -27,7 +27,7 @@ calcValidCostsAEI <- function(datasource = "IMPACT") {
   }
 
   return(list(x           = out,
-    weight      = NULL,
-    unit        = unit,
-    description = "AEI Costs"))
+              weight      = NULL,
+              unit        = unit,
+              description = "AEI Costs"))
 }
