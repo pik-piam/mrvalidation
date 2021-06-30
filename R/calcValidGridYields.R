@@ -34,8 +34,13 @@ calcValidGridYields <- function(datasource = "downscaledFAO", future = NULL) {
 
   } else if (datasource == "calibratedLPJmL") {
     
-    if (!is.null(future)) climatetype <- "GSWP3-W5E5:historical" else climatetype <- future
-    ref_year        <- 2010
+    sizelimit <- getOption("magclass_sizeLimit")
+    options(magclass_sizeLimit=1e+12)
+    on.exit(options(magclass_sizeLimit=sizelimit))
+    
+    if (is.null(future)) climatetype <- "GSWP3-W5E5:historical" else climatetype <- future
+    
+    ref_year        <- "y2010"
     
     yieldFAO_iso    <- calcOutput("FAOYield", cut = 0.98, aggregate = FALSE)
     yieldLPJmL_grid <- calcOutput("Yields", source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb+oldGSWP3"),
