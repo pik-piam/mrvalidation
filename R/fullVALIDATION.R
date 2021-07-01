@@ -42,7 +42,7 @@ fullVALIDATION <- function(rev = 0.1) {
   calcOutput(type = "ValidFoodExpenditure", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
 
 
-  # Demand, Production, Trade, Self-Sufficieny
+  # Demand, Production, Trade, Self-Sufficiency
   calcOutput(type = "ValidDemand", aggregate = "REG+GLO", file = valfile, append = TRUE, detail = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidDemandBioenergy", aggregate = "REG+GLO", file = valfile, append = TRUE, na_warning = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidProduction", aggregate = "REG+GLO", file = valfile, append = TRUE, detail = TRUE, try = TRUE) # ready
@@ -51,7 +51,7 @@ fullVALIDATION <- function(rev = 0.1) {
   calcOutput(type = "ValidFeed", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidProcessing", datasource = "FAO", nutrient = "dm", detail = TRUE, indicator = "primary_to_process", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidProcessing", datasource = "FAO", nutrient = "dm", detail = TRUE, indicator = "secondary_from_primary", file = valfile, append = TRUE, try = TRUE)
-
+  calcOutput(type = "ValidGrassLSUha", file = valfile, append = TRUE, try = TRUE)
 
   # Resources:
   # Croparea
