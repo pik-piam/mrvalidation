@@ -66,11 +66,14 @@ calcValidLand <- function(datasource="MAgPIEown"){
 
     x <- calcOutput("LanduseInitialisation", nclasses="seven", fao_corr=TRUE,aggregate = FALSE)
     x <- mbind(x,setNames(dimSums(x[,,c("primforest","secdforest","forestry")],dim=3),"forest"))
-
+    
     main_cat <- c("crop","past","urban","other","forest")
     main <- x[,,main_cat]
     getNames(main,dim=1)<-paste0("Resources|Land Cover|+|",reportingnames(getNames(main[,,main_cat],dim=1))," (million ha)")
     main <- mbind(main,setNames(dimSums(main,dim=3),"Resources|Land Cover (million ha)"))
+    
+    grass <- setNames(calcOutput("LanduseInitialisation", nclasses="nine", fao_corr=TRUE,aggregate = FALSE)[,,c("past", "range")], c("pastr", "range"))
+    grass <- setNames(grass, paste0("Grassland Management|+|",reportingnames(getNames(grass,dim=1))," (million ha)"))
 
     forest <- c("primforest","secdforest","forestry")
     forest <- x[,,forest]
@@ -80,7 +83,7 @@ calcValidLand <- function(datasource="MAgPIEown"){
     getNames(forest,dim=1)<-paste0("Resources|Land Cover|Forest|+|",reportingnames(getNames(forest,dim=1))," (million ha)")
     getNames(natrforest,dim=1)<-paste0("Resources|Land Cover|Forest|Natural Forest|+|",reportingnames(getNames(natrforest,dim=1))," (million ha)")
 
-    out <- mbind(main, forest,natrforest)
+    out <- mbind(main, forest,natrforest, grass)
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
    } else if(datasource=="SSPResults") {
