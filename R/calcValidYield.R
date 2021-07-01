@@ -109,6 +109,7 @@ calcValidYield  <-  function(datasource="FAO", future = NULL){
     
     rm(yieldLPJmL_grid, areaMAG_grid)
     
+    yield <- toolCountryFill(yield, 0)
     yield <- setNames(yield, paste0("Productivity|Yield|", gsub("\\.", "|", getNames(yield))))
     area  <- setYears(area[, "y2010", ], NULL)
     
