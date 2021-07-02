@@ -1,6 +1,6 @@
 #' @title calcValidGrassLSUha
 #' @description calculates the validation data for production of grass from managed pastures and rangelands separetely
-#' 
+#' @param datasource Currently available: \code{"MAgPIEown"}
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Marcos Alves
 #' @seealso
@@ -12,7 +12,9 @@
 #' }
 #' @importFrom mrcommons toolCell2isoCell
 
-calcValidGrassLSUha<-function(){
+calcValidGrassLSUha<-function(datasource = "MAgPIEown"){
+  
+  if(datasource=="MAgPIEown") {
   
   mag_years_past <- findset("past")
   biomass <- calcOutput("FAOmassbalance", aggregate = FALSE)[, mag_years_past , "production.dm"][,, "pasture"]
@@ -49,6 +51,9 @@ calcValidGrassLSUha<-function(){
   lsu_split <- toolCountryFill(lsu_split)
   lsu_split[is.nan(lsu_split) | is.na(lsu_split) | is.infinite(lsu_split)] <- 0
   lsu_split <- setNames(lsu_split, paste0("Total lsu|+|Cattle|", reportingnames(getNames(lsu_split, dim = 1)), " (millions)"))
+  lsu_split <- add_dimension(lsu_split, dim=3.1, add="scenario", nm="historical")
+  lsu_split <- add_dimension(lsu_split, dim=3.2, add="model", nm=datasource)
+  }
   
   return(list(x=lsu_split,
               weight=NULL,

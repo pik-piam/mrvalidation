@@ -4,7 +4,10 @@
 \alias{calcValidGrassLSUha}
 \title{calcValidGrassLSUha}
 \usage{
-calcValidGrassLSUha()
+calcValidGrassLSUha(datasource = "MAgPIEown")
+}
+\arguments{
+\item{datasource}{Currently available: \code{"MAgPIEown"}}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.

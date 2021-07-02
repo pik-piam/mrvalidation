@@ -51,7 +51,7 @@ fullVALIDATION <- function(rev = 0.1) {
   calcOutput(type = "ValidFeed", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidProcessing", datasource = "FAO", nutrient = "dm", detail = TRUE, indicator = "primary_to_process", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidProcessing", datasource = "FAO", nutrient = "dm", detail = TRUE, indicator = "secondary_from_primary", file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidGrassLSUha", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidGrassLSUha", aggregate = "REG+GLO", datasource = "MAgPIEown", file = valfile, append = TRUE, try = TRUE)
 
   # Resources:
   # Croparea
