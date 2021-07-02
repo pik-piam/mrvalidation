@@ -22,7 +22,6 @@ calcValidGrassLSUha<-function(datasource = "MAgPIEown"){
   biomass <- toolIso2CellCountries(biomass)
   
   land <- calcOutput("LanduseInitialisation", cellular = TRUE, nclasses = "nine", aggregate = FALSE)[, mag_years_past, ]
-  land_total <- dimSums(land, dim = 3)
   grassl_land <- land[, , c("past", "range")]
   grassl_land <- setNames(grassl_land, c("pastr", "range"))
   grassl_shares <- setNames(grassl_land[, , "pastr"] / dimSums(grassl_land, dim = 3), "pastr")
