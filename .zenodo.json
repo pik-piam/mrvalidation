@@ -1,6 +1,6 @@
 {
   "title": "mrvalidation: madrat data preparation for validation purposes",
-  "version": "2.23.4",
+  "version": "2.23.5",
   "description": "<p>Package contains routines to prepare data for validation exercises.<\/p>",
   "creators": [
     {
