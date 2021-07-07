@@ -22,9 +22,6 @@ calcOutput("ValidGridNitrogenBudgetCropland")
 }
 
 }
-\seealso{
-\code{\link{fullMADRATTOLPJML}}
-}
 \author{
 Benjamin Leon Bodirsky
 }

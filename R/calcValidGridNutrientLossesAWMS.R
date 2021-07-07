@@ -4,8 +4,6 @@
 #' @param nutrient can be c, nr, p, k. For p and k, no losses are assumed in confinements.
 #' @return List of magpie objects with results on cellular level, weight on cellular level, unit and description.
 #' @author Benjamin Leon Bodirsky
-#' @seealso
-#' \code{\link{fullMADRATTOLPJML}}
 #' @examples
 #' 
 #' \dontrun{ 
@@ -20,7 +18,7 @@ calcValidGridNutrientLossesAWMS <-function(nutrient=c("nr","c")) {
  
   past               <- findset("past")
   Excretion          <- collapseNames(calcOutput("Excretion", cellular = TRUE, attributes = "npkc", aggregate = FALSE)[,past,])
-  EmissionFactors_n  <- dimSums(calcOutput("EF3confinement", selection = c("n2o_n_direct","nh3_n","no2_n","no3_n","n2_n"), aggregate = FALSE),dim=3.3)
+  EmissionFactors_n  <- dimSums(calcOutput("EF3confinement", aggregate = FALSE),dim=3.3)
   LossRates_c        <- calcOutput("ClossConfinement", aggregate = FALSE)
   AnimalWasteMSShare <- collapseNames(calcOutput("AWMSconfShr", aggregate = FALSE)[,past,"constant"])
 

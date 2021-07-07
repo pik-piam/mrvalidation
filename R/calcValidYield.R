@@ -100,18 +100,28 @@ calcValidYield  <-  function(datasource="FAO", future = NULL){
     
   } else if (datasource == "calibratedLPJmL") {
     
+    irrigation=FALSE # can be made function argument if needed
     yieldLPJmL_grid <- calcOutput("ValidGridYields", datasource = "calibratedLPJmL", future = future, aggregate = FALSE)
     areaMAG_grid    <- setYears(calcOutput("ValidGridCroparea", aggregate = FALSE)[, "y2010", ], NULL)
     CountryToCell   <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv")
     
     yield <- toolAggregate(yieldLPJmL_grid, weight = areaMAG_grid, rel = CountryToCell, 
                            from = "celliso", to = "iso", dim = 1)
+    area <- toolAggregate(areaMAG_grid, weight = NULL, rel = CountryToCell, 
+                           from = "celliso", to = "iso", dim = 1)
+    
     
     rm(yieldLPJmL_grid, areaMAG_grid)
     
+    if(irrigation==FALSE){
+      yield <- dimSums(yield*area,dim="data1")/dimSums(area,dim="irrigation")
+      area <- dimSums(area,dim="irrigation")
+    }
+
     yield <- toolCountryFill(yield, 0)
+    area <- toolCountryFill(area, 0)
     yield <- setNames(yield, paste0("Productivity|Yield|", gsub("\\.", "|", getNames(yield))))
-    area  <- setYears(area[, "y2010", ], NULL)
+    area <- setNames(area, paste0("Productivity|Yield|", gsub("\\.", "|", getNames(area))))
     
     scenario    <- "projection"
     description <- "CalcValidYield calculates the projected yields from LPJmL calibrated to FAO."
