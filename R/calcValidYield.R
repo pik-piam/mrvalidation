@@ -27,15 +27,16 @@
 
 calcValidYield  <-  function(datasource="FAO", future = NULL){
   
-  #Calculate areas of individual crops and pasture
-  croparea  <-  collapseNames(calcOutput("Croparea", sectoral="kcr", physical=TRUE, aggregate = FALSE))
-  pastarea  <-  setNames(calcOutput("LanduseInitialisation", aggregate=FALSE)[,,"past"],"pasture")
-  area <- mbind(croparea,pastarea)
-  area <- reporthelper(area,level_zero_name = "Productivity|Yield")
-  
+
   if (datasource=="FAO") {
     
     if (!is.null(future)) stop("Future options is not available for source type 'FAO'.")
+    
+    #Calculate areas of individual crops and pasture
+    croparea  <-  collapseNames(calcOutput("Croparea", sectoral="kcr", physical=TRUE, aggregate = FALSE))
+    pastarea  <-  setNames(calcOutput("LanduseInitialisation", aggregate=FALSE)[,,"past"],"pasture")
+    area <- mbind(croparea,pastarea)
+    area <- reporthelper(area,level_zero_name = "Productivity|Yield")
     
     #Calculate production
     histproduction <- calcOutput("FAOmassbalance",aggregate = FALSE)
@@ -114,7 +115,7 @@ calcValidYield  <-  function(datasource="FAO", future = NULL){
     rm(yieldLPJmL_grid, areaMAG_grid)
     
     if(irrigation==FALSE){
-      yield <- dimSums(yield*area,dim="data1")/dimSums(area,dim="irrigation")
+      yield <- dimSums(yield*area,dim="data1")/(dimSums(area,dim="irrigation")+10^-10)
       area <- dimSums(area,dim="irrigation")
     }
 
