@@ -24,9 +24,8 @@ List of magpie objects with results on cellular level, weight on cellular level,
 calculates the validation data for the gridded soil carbon pools
 }
 \examples{
-
-\dontrun{ 
-  calcOutput("ValidGridSOCStocks")
+\dontrun{
+calcOutput("ValidGridSOCStocks")
 }
 
 }
