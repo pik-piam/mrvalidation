@@ -138,6 +138,17 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
 
       out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
       out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+      
+      area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE, cellular = TRUE,
+                          selectyears = "past_all", aggregate = FALSE)
+      area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
+      
+      if (intensive) {
+        weight <- area
+      } else {
+        weight <- NULL
+        out    <- out * area
+      }
 
   } else stop("No data exist for the given datasource!")
 
