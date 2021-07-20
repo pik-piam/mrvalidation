@@ -30,6 +30,7 @@ calcValidGrassSoilCarbon <- function(datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:
     inputs           <- as.vector(readSource("GrassSoilEmu", subtype = paste(datasource, model, "inputs", sep = ":"), convert = F))
     hist_lsu_ha      <- calcOutput("LsuDensityHist", disagg_type = "grassland", aggregate = F)
     land_ini_LUH2v2  <- calcOutput("LUH2v2", aggregate = F, landuse_types = "LUH2v2", cellular = TRUE)
+    soilc_pastr_past <- calcOutput("CollectSoilCarbonPastr", past_mngmt = "me2", lpjml = "lpjml5p2_pasture", climatetype = "IPSL_CM6A_LR", aggregate = F, scenario = "ssp126_co2_Nreturn0p5_limN", sar = 1)
 
     past                  <- intersect(getYears(environment_data), getYears(hist_lsu_ha))
     environment_data_past <- environment_data[, past, ]
@@ -38,17 +39,21 @@ calcValidGrassSoilCarbon <- function(datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:
     input_past            <- as.data.frame(input_past)
     input_past_df         <- pivot_wider(input_past, names_from = Data1, values_from = Value)
     input_df_scaled_past  <- scale(input_past_df[, inputs], center = mean_col[inputs], scale = stddevs_col[inputs])
-    soil_carbon_past      <- toolNeuralNet(input_df_scaled_past, weights, "softplus")
-    soil_carbon_past      <- soil_carbon_past * as.numeric(stddevs_lab) + as.numeric(mean_lab)
-    soil_carbon_past      <- cbind(input_past_df[, c("Cell", "Year")], soil_carbon_past)
-    soil_carbon_past      <- as.magpie(soil_carbon_past, spatial = 1)
-    soil_carbon_past      <- toolCell2isoCell(soil_carbon_past)
-    soil_range_past       <- land_ini_LUH2v2[, past, "range"] * soil_carbon_past
+    soilc_range_past      <- toolNeuralNet(input_df_scaled_past, weights, "softplus")
+    soilc_range_past      <- soilc_range_past * as.numeric(stddevs_lab) + as.numeric(mean_lab)
+    soilc_range_past      <- cbind(input_past_df[, c("Cell", "Year")], soilc_range_past)
+    soilc_range_past      <- as.magpie(soilc_range_past, spatial = 1)
+    soilc_range_past      <- toolCell2isoCell(soilc_range_past)
+    soilc_range_past      <- land_ini_LUH2v2[, past, "range"] * soilc_range_past
+    soilc_pastr_past      <- land_ini_LUH2v2[, past, "pastr"] * soilc_pastr_past[,past, "pastr"]
+    soilc_grassL_past     <- setNames(mbind(soilc_pastr_past, soilc_range_past), c("pastr", "range"))
     
     mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
-    stock   <- toolAggregate(soil_range_past, rel = mapping,from="celliso",to="iso", dim=1)
-    stock   <- toolCountryFill(stock, fill=0)
-    stock   <- setNames(stock, "Resources|Soil Carbon|Grassland|Range|Total (tC)")
+    soilc_grassL_past   <- toolAggregate(soilc_grassL_past, rel = mapping,from="celliso",to="iso", dim=1)
+    soilc_grassL_past   <- toolCountryFill(soilc_grassL_past, fill=0)
+    soilc_grassL_past   <- setNames(soilc_grassL_past, paste0("Resources|Soil Carbon|Grassland|+|",reportingnames(getNames(soilc_grassL_past, dim = 1)),"|Total (tC)"))
+    soilc_grassT_past   <- setNames(dimSums(soilc_grassL_past, dim = 3), paste0("Resources|Soil Carbon|Grassland|Total (tC)"))
+    stock <- mbind(soilc_grassL_past, soilc_grassT_past)
     
     stock <- add_dimension(stock, dim=3.1, add="scenario", nm="historical")
     stock <- add_dimension(stock, dim=3.2, add="model",    nm=datasource_split$climatemodel)
