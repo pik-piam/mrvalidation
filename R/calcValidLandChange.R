@@ -24,6 +24,7 @@ calcValidLandChange <- function(baseyear=1995,datasource="MAgPIEown"){
   
   #rename variable and unit
   getNames(x) <- gsub("\\|Land Cover\\|","\\|Land Cover Change\\|",getNames(x))
+  getNames(x) <- gsub("\\Grassland Management\\|","\\Grassland Management Change\\|",getNames(x))
   getNames(x) <- gsub("\\(million ha\\)",paste0("\\(million ha wrt ",baseyear_sel,"\\)"),getNames(x))
   
   return(list(x=x,
