@@ -125,16 +125,8 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
       LPJmL4_litc      <- calcOutput("LPJmL_new", version = ds$version,
                                      climatetype = paste(ds$climatemodel, ds$scenario, sep = ":"),
                                      subtype = "litc", stage = "raw", aggregate = FALSE)
-      cshift_slow      <- calcOutput("LPJmL_new", version = ds$version,
-                                     climatetype = paste(ds$climatemodel, ds$scenario, sep = ":"),
-                                     subtype = "cshift_slow", stage = "raw", aggregate = FALSE)
-      cshift_fast      <- calcOutput("LPJmL_new", version = ds$version,
-                                     climatetype = paste(ds$climatemodel, ds$scenario, sep = ":"),
-                                     subtype = "cshift_fast", stage = "raw", aggregate = FALSE)
       out              <- setNames(LPJmL4_soilc[, , "layer1"] + 1 / 3 * LPJmL4_soilc[, , "layer2"] +
-                                     LPJmL4_litc * (cshift_slow[, , "layer1"] + 1 / 3 * cshift_slow[, , "layer2"] +
-                                                    cshift_fast[, , "layer1"] + 1 / 3 * cshift_fast[, , "layer2"]),
-                                     "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
+                                   LPJmL4_litc, "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
 
       out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
       out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
