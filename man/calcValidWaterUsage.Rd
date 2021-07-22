@@ -7,7 +7,7 @@
 calcValidWaterUsage(datasource = "shiklomanov_2000")
 }
 \arguments{
-\item{datasource}{Currently available: 
+\item{datasource}{Currently available:
 \itemize{
 \item historical:
 \itemize{
@@ -19,21 +19,21 @@ calcValidWaterUsage(datasource = "shiklomanov_2000")
 \item \code{"CWatM:gfdl-esm2m"}
 \item \code{"CWatM:miroc5"}
 \item \code{"CWatM:hadgem2-es"}
-\item \code{"LPJmL:ipsl-cm5a-lr"}    
+\item \code{"LPJmL:ipsl-cm5a-lr"}
 \item \code{"LPJmL:gfdl-esm2m"}
 \item \code{"LPJmL:miroc5"}
 \item \code{"LPJmL:hadgem2-es"}
-\item \code{"H08:ipsl-cm5a-lr"}    
+\item \code{"H08:ipsl-cm5a-lr"}
 \item \code{"H08:gfdl-esm2m"}
 \item \code{"H08:miroc5"}
 \item \code{"H08:hadgem2-es"}
 \item \code{"MATSIRO:ipsl-cm5a-lr"}
-\item \code{"MATSIRO:gfdl-esm2m"}    
+\item \code{"MATSIRO:gfdl-esm2m"}
 \item \code{"MATSIRO:miroc5"}
 \item \code{"MATSIRO:hadgem2-es"}
 \item \code{"MPI-HM:ipsl-cm5a-lr"}
 \item \code{"MPI-HM:gfdl-esm2m"}
-\item \code{"MPI-HM:miroc5"}    
+\item \code{"MPI-HM:miroc5"}
 \item \code{"PCR-GLOBWB:ipsl-cm5a-lr"}
 \item \code{"PCR-GLOBWB:gfdl-esm2m"}
 \item \code{"PCR-GLOBWB:miroc5"}
@@ -50,10 +50,11 @@ calcValidWaterUsage(datasource = "shiklomanov_2000")
 }}
 }
 \value{
-list of magpie object with data and weight
+list of magpie object, weight, unit, and description
 }
 \description{
-Returns historical and projected water usage from different sources
+Returns historical and projected water usage
+             from different sources
 }
 \author{
 Stephen Wirth, Anne Biewald, Felicitas Beier

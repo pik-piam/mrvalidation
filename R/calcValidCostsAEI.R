@@ -1,34 +1,33 @@
-#' @title calcValidCostsAEI
+#' @title       calcValidCostsAEI
 #' @description calculates the validation data for irrigation investment costs
-#' 
-#' @param datasource Datasource of validation data. 
-#' @return list of magpie object with results on country level, weight on country level, unit and description.
+#'
+#' @param datasource Datasource of validation data
+#'
+#' @return magpie object on country level, unit and description
 #' @author Felicitas Beier
+#'
 #' @examples
-#' 
-#' \dontrun{ 
+#' \dontrun{
 #' calcOutput("ValidCostsAEI")
 #' }
-#' 
+#'
+calcValidCostsAEI <- function(datasource = "IMPACT") {
 
-calcValidCostsAEI <- function(datasource="IMPACT") {
-  
-  if (datasource=="IMPACT") {
-    
-    out <- readSource("IMPACTIrrigInvCosts", convert=TRUE)
-    out <- add_dimension(out, dim=3.2, add="variable", nm="Costs|AEI")
-    out <- add_dimension(out, dim=3.1, add="model", nm=datasource)
-    
-#NOTE Currently not in 05 USD!!! ---> needs to be added to convertIMPACTIrrigInvCosts.R
-    getNames(out) <- paste(getNames(out), "(million US$05/yr)", sep=" ")
+  if (datasource == "IMPACT") {
+
+    out <- readSource("IMPACTIrrigInvCosts", convert = TRUE)
+    out <- add_dimension(out, dim = 3.2, add = "variable", nm = "Costs|AEI")
+    out <- add_dimension(out, dim = 3.1, add = "model", nm = datasource)
+
+    getNames(out) <- paste(getNames(out), "(million US$05/yr)", sep = " ")
     unit          <- "million US$05/yr"
-    
-  } else { 
-    stop("Only IMPACT irrigation investment costs available currently!")
+
+  } else {
+    stop("So far only IMPACT irrigation investment costs available!")
   }
-  
-  return(list(x=out,
-              weight=NULL,
-              unit=unit,
-              description="AEI Costs"))
+
+  return(list(x           = out,
+              weight      = NULL,
+              unit        = unit,
+              description = "AEI Costs"))
 }

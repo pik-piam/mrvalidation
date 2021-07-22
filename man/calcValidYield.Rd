@@ -4,10 +4,14 @@
 \alias{calcValidYield}
 \title{calcValidYield}
 \usage{
-calcValidYield(datasource = "FAO")
+calcValidYield(datasource = "FAO", future = NULL)
 }
 \arguments{
-\item{datasource}{Specify which datasource needs to be used. Currently only "FAO" is available.}
+\item{datasource}{Specify which datasource needs to be used. 
+Currently only "FAO" and "calibratedLPJmL" is available.}
+
+\item{future}{if NULL no future values are returned (default).
+specify climate scenario (gcm:rcp), if future is needed}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit, Max.&Min. values alongwith description.

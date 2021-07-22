@@ -15,7 +15,6 @@ properly).}
 Function that produces the complete validation data set used for evaluation of MAgPIE outputs
 }
 \examples{
-
 \dontrun{
 retrieveData("Validation")
 }

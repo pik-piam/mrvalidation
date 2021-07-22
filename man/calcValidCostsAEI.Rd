@@ -7,17 +7,16 @@
 calcValidCostsAEI(datasource = "IMPACT")
 }
 \arguments{
-\item{datasource}{Datasource of validation data.}
+\item{datasource}{Datasource of validation data}
 }
 \value{
-list of magpie object with results on country level, weight on country level, unit and description.
+magpie object on country level, unit and description
 }
 \description{
 calculates the validation data for irrigation investment costs
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("ValidCostsAEI")
 }
 
