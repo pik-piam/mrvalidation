@@ -14,14 +14,14 @@
 #' }
 #' @importFrom tidyr pivot_wider
 
-calcValidGrassSoilCarbon <- function(datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100", model = "5f5fa2"){
+calcValidGrassSoilCarbon <- function(datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100", model = "9eaf9b"){
   
   Data1 <- NULL
   Value <- NULL
   
     datasource_split <- toolSplitSubtype(datasource, list(version = NULL, climatemodel = NULL, scenario = NULL, years = NULL))
     
-    environment_data <- calcOutput("CollectEnvironmentData_new", subtype = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100", sar = 1, aggregate = F, sel_feat = c("tas", "pr", "lwnet", "rsds", "CO2", "Ks", "Sf", "w_pwp", "w_fc", "w_sat", "hsg"))
+    environment_data <- calcOutput("CollectEnvironmentData_new", subtype = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100", sar = 1, aggregate = F, sel_feat = c("tas", "pr", "lwnet", "rsds", "CO2", "Ks", "Sf", "w_pwp", "w_fc", "w_sat", "hsg", "wet"))
     weights          <- readSource("GrassSoilEmu", subtype = paste(datasource, model, "weights", sep = ":"), convert = F)
     mean_col         <- readSource("GrassSoilEmu", subtype = paste(datasource, model, "mean_col", sep = ":"), convert = F)
     stddevs_col      <- readSource("GrassSoilEmu", subtype = paste(datasource, model, "stddevs_col", sep = ":"), convert = F)

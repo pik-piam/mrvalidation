@@ -6,7 +6,7 @@
 \usage{
 calcValidGrassSoilCarbon(
   datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100",
-  model = "5f5fa2"
+  model = "9eaf9b"
 )
 }
 \arguments{
