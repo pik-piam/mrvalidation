@@ -9,7 +9,7 @@
 #' \dontrun{
 #' a <- readSource("FAOrotation")
 #' }
-#' @importFrom madrat toolSubtypeSelect toolMappingFile getConfig
+#' @importFrom madrat toolSubtypeSelect getConfig
 #' @importFrom openxlsx read.xlsx
 
 readFAOrotation <- function(subtype = "FAO") {
