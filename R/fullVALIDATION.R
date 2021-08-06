@@ -105,7 +105,7 @@ fullVALIDATION <- function(rev = 0.1) {
 
   # Carbon Stocks
   calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:historical", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidGrassSoilCarbon", datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100", model = "9eaf9b",  lpjml = "lpjml5p2_pasture", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput("ValidGrassSoilCarbon", datasource = "ISIMIP3b:MRI-ESM2-0:ssp370:1965_2100", model = "d74aa2",  lpjml = "lpjml5p2_pasture", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
 
   ## Soil only
   calcOutput("ValidSOCStocks", datasource = "LPJ_IPCC2006", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)

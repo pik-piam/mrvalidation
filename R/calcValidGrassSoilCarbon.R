@@ -15,6 +15,7 @@
 #' }
 #' @importFrom tidyr pivot_wider
 
+
 calcValidGrassSoilCarbon <- function(datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100", model = "9eaf9b", lpjml){
   
   # Data1 <- NULL
@@ -31,7 +32,7 @@ calcValidGrassSoilCarbon <- function(datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:
   #   inputs           <- as.vector(readSource("GrassSoilEmu", subtype = paste(datasource, model, "inputs", sep = ":"), convert = F))
   #   hist_lsu_ha      <- calcOutput("LsuDensityHist", disagg_type = "grassland", aggregate = F)
     land_ini_LUH2v2  <- calcOutput("LUH2v2", aggregate = F, landuse_types = "LUH2v2", cellular = TRUE)
-    soilc_pastr_past <- calcOutput("CollectSoilCarbonPastr", past_mngmt = "me2", lpjml = "lpjml5p2_pasture", climatetype = "IPSL_CM6A_LR", aggregate = F, scenario = "ssp126_co2_Nreturn0p5_limN", sar = 1)
+    soilc_pastr_past <- calcOutput("CollectSoilCarbonPastr", past_mngmt = "me2", lpjml = lpjml, climatemodel = datasource_split$climatemodel, aggregate = F, scenario = paste0(datasource_split$scenario, "_co2_Nreturn0p5_limN"), sar = 1)
   # 
   #   past                  <- intersect(getYears(environment_data), getYears(hist_lsu_ha))
   #   environment_data_past <- environment_data[, past, ]
