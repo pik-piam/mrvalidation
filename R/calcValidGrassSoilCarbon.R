@@ -49,8 +49,8 @@ calcValidGrassSoilCarbon <- function(datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:
     
     soilc_range_past <- calcOutput("RangeSoilCarbonHist", subtype = datasource, model = model, lpjml = lpjml, file = "f31_range_soilc_hist.mz", aggregate = F)
     past <- getYears(soilc_range_past)
-    soilc_range_past      <- land_ini_LUH2v2[, past, "range"] * soilc_range_past
-    soilc_pastr_past      <- land_ini_LUH2v2[, past, "pastr"] * soilc_pastr_past[,past, "pastr"]
+    soilc_range_past      <- setNames(land_ini_LUH2v2[, past, "range"] * soilc_range_past, "range")
+    soilc_pastr_past      <- setNames(land_ini_LUH2v2[, past, "pastr"] * soilc_pastr_past[,past, "pastr"], "pastr")
     soilc_grassL_past     <- setNames(mbind(soilc_pastr_past, soilc_range_past), c("pastr", "range"))
     
     mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
@@ -58,8 +58,17 @@ calcValidGrassSoilCarbon <- function(datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:
     soilc_grassL_past   <- toolCountryFill(soilc_grassL_past, fill=0)
     soilc_grassL_past   <- setNames(soilc_grassL_past, paste0("Resources|Soil Carbon|Grassland|+|",reportingnames(getNames(soilc_grassL_past, dim = 1)),"|Total (tC)"))
     soilc_grassT_past   <- setNames(dimSums(soilc_grassL_past, dim = 3), paste0("Resources|Soil Carbon|Grassland|Total (tC)"))
-    stock <- mbind(soilc_grassL_past, soilc_grassT_past)
     
+    soilc_range_past   <- toolAggregate(soilc_range_past, rel = mapping,from="celliso",to="iso", dim=1)
+    soilc_range_past   <- toolCountryFill(soilc_range_past, fill=0)
+    soilc_range_past_reg   <- setNames(soilc_range_past, paste0("Resources|Soil Carbon|Grassland|+|",reportingnames(getNames(soilc_range_past, dim = 1)),"|Density (tC per ha)"))
+    
+    soilc_pastr_past   <- toolAggregate(soilc_pastr_past, rel = mapping,from="celliso",to="iso", dim=1)
+    soilc_pastr_past   <- toolCountryFill(soilc_pastr_past, fill=0)
+    soilc_pastr_past_reg   <- setNames(soilc_pastr_past, paste0("Resources|Soil Carbon|Grassland|+|",reportingnames(getNames(soilc_pastr_past, dim = 1)),"|Density (tC per ha)"))
+    
+    stock <- mbind(soilc_grassL_past, soilc_grassT_past, soilc_range_past_reg, soilc_pastr_past_reg)
+  
     stock <- add_dimension(stock, dim=3.1, add="scenario", nm="historical")
     stock <- add_dimension(stock, dim=3.2, add="model",    nm=datasource_split$climatemodel)
     
