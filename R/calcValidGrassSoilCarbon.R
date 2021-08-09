@@ -22,10 +22,9 @@ calcValidGrassSoilCarbon <- function(datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:
 
     land_ini_LUH2v2  <- calcOutput("LUH2v2", aggregate = F, landuse_types = "LUH2v2", cellular = TRUE)
     soilc_pastr_past_tha <- calcOutput("CollectSoilCarbonPastr", past_mngmt = "me2", lpjml = lpjml, climatemodel = datasource_split$climatemodel, aggregate = F, scenario = paste0(datasource_split$scenario, "_co2_Nreturn0p5_limN"), sar = 1)
-    soilc_range_past_tha <- calcOutput("RangeSoilCarbonHist", subtype = datasource, model = model, lpjml = lpjml, file = "f31_range_soilc_hist.mz", aggregate = F)
+    soilc_range_past_tha <- calcOutput("RangeSoilCarbonHist", subtype = datasource, model = model, lpjml = lpjml, aggregate = F)
     past <- getYears(soilc_range_past_tha)
     
-    # mapping <- toolGetMapping(name="CountryToCellMapping.csv",type="cell")
     map_reg <- toolGetMapping(type = "regional", name = "clustermapping.csv")
     
     soilc_range_past_mt      <- setNames(land_ini_LUH2v2[, past, "range"] * soilc_range_past_tha, "range")
@@ -34,14 +33,14 @@ calcValidGrassSoilCarbon <- function(datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:
     soilc_grassL_past_mt     <- setNames(mbind(soilc_pastr_past_mt, soilc_range_past_mt), c("pastr", "range"))
     soilc_grassL_past_mt     <- toolAggregate(soilc_grassL_past_mt, rel = map_reg, from="cell",to="region")
     glo <- dimSums(soilc_grassL_past_mt, dim = 1)
-    soilc_grassL_past_mt <- mbind(soilc_grassL_past_mt, glo)
+    soilc_grassL_past_mt     <- mbind(soilc_grassL_past_mt, glo)
     soilc_grassL_past_mt     <- setNames(soilc_grassL_past_mt, paste0("Resources|Soil Carbon|Grassland|+|",reportingnames(getNames(soilc_grassL_past_mt, dim = 1)),"|Total (MtC)"))
     soilc_grassL_past_mt_T   <- setNames(dimSums(soilc_grassL_past_mt, dim = 3), paste0("Resources|Soil Carbon|Grassland|Total (MtC)"))
     
-    land_ini_LUH2v2_reg <- toolAggregate(land_ini_LUH2v2[, past, c("range", "pastr")], rel = map_reg, from="cell", to="region")
+    land_ini_LUH2v2_reg <- toolAggregate(land_ini_LUH2v2[, past, c("pastr", "range")], rel = map_reg, from="cell", to="region")
     glo <- dimSums(land_ini_LUH2v2_reg, dim = 1)
     land_ini_LUH2v2_reg <- mbind(land_ini_LUH2v2_reg, glo)
-    soilc_range_pastr_tha_reg <- setNames(setNames(soilc_grassL_past_mt, c("pastr", "range")) / setNames(land_ini_LUH2v2_reg, c("pastr", "range")), paste0("Resources|Soil Carbon|Grassland|+|",reportingnames(c("pastr", "range")),"|Density (tC per ha)"))
+    soilc_range_pastr_tha_reg <- setNames(soilc_grassL_past_mt[,, c("pastr", "range")] / land_ini_LUH2v2_reg[,, c("pastr", "range")], paste0("Resources|Soil Carbon|Grassland|+|",reportingnames(c("pastr", "range")),"|Density (tC per ha)"))
     soilc_range_pastr_tha_reg[is.infinite(soilc_range_pastr_tha_reg) | is.nan(soilc_range_pastr_tha_reg)] <- 0
     soilc_range_pastr_tha_reg_A <- setNames(dimSums(soilc_range_pastr_tha_reg, dim =3) / dimSums(land_ini_LUH2v2_reg, dim = 3),  paste0("Resources|Soil Carbon|Grassland|Density (tC per ha)"))
     
