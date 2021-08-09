@@ -3,6 +3,8 @@
 #' Function that produces the complete validation data set used for evaluation of MAgPIE outputs
 #'
 #' @param rev data revision which should be used as input (positive numeric).
+#' @param lpjml Defines LPJmL version for crop/grass and natveg specific inputs
+#' @param emu_id  Pasture Soil carbon emulator ID
 #' \code{\link{setConfig}} (e.g. for setting the mainfolder if not already set
 #' properly).
 #' @author Jan Philipp Dietrich, Benjamin Leon Bodirsky
@@ -13,7 +15,9 @@
 #' retrieveData("Validation")
 #' }
 #' @importFrom madrat getConfig
-fullVALIDATION <- function(rev = 0.1) {
+fullVALIDATION <- function(rev = 0.1, lpjml= c(natveg = "LPJmL4_for_MAgPIE_44ac93de",
+                                                      crop = "ggcmi_phase3_nchecks_9ca735cb",
+                                                      grass = "lpjml5p2_pasture"),  emu_id = "d660cb") {
 
   # all validation data regional aggregations happens here
   # for the first variable output calculation, append paramenter should be set to FALSE so that the
@@ -105,7 +109,7 @@ fullVALIDATION <- function(rev = 0.1) {
 
   # Carbon Stocks
   calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:historical", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidGrassSoilCarbon", datasource = "ISIMIP3b:MRI-ESM2-0:ssp370:1965_2100", model = "d660cb",  lpjml = "lpjml5p2_pasture", aggregate = F, file = valfile, append = TRUE, try = TRUE)
+  calcOutput("ValidGrassSoilCarbon", datasource = "ISIMIP3b:MRI-ESM2-0:ssp370:1965_2100", model = emu_id,  lpjml = lpjml[["grass"]], aggregate = F, file = valfile, append = TRUE, try = TRUE)
 
   ## Soil only
   calcOutput("ValidSOCStocks", datasource = "LPJ_IPCC2006", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)

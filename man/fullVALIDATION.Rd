@@ -4,10 +4,19 @@
 \alias{fullVALIDATION}
 \title{fullValidation}
 \usage{
-fullVALIDATION(rev = 0.1)
+fullVALIDATION(
+  rev = 0.1,
+  lpjml = c(natveg = "LPJmL4_for_MAgPIE_44ac93de", crop =
+    "ggcmi_phase3_nchecks_9ca735cb", grass = "lpjml5p2_pasture"),
+  emu_id = "d660cb"
+)
 }
 \arguments{
-\item{rev}{data revision which should be used as input (positive numeric).
+\item{rev}{data revision which should be used as input (positive numeric).}
+
+\item{lpjml}{Defines LPJmL version for crop/grass and natveg specific inputs}
+
+\item{emu_id}{Pasture Soil carbon emulator ID
 \code{\link{setConfig}} (e.g. for setting the mainfolder if not already set
 properly).}
 }
