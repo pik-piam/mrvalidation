@@ -112,19 +112,19 @@ fullVALIDATION <- function(rev = 0.1, lpjml= c(natveg = "LPJmL4_for_MAgPIE_44ac9
   calcOutput("ValidGrassSoilCarbon", datasource = "ISIMIP3b:MRI-ESM2-0:ssp370:1965_2100", model = emu_id,  lpjml = lpjml[["grass"]], aggregate = F, file = valfile, append = TRUE, try = TRUE)
 
   ## Soil only
-  calcOutput("ValidSOCStocks", datasource = "LPJ_IPCC2006", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidSOCStocks", datasource = "LPJmL_rev21", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidSOCStocks", datasource = "LPJmLCarbon", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidSOCStocks", datasource = "WISE", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidSOCStocks", datasource = "GSOC", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidSOCStocks", datasource = "SoilGrids", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  #calcOutput("ValidSOCStocks", datasource = "LPJ_IPCC2006", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  #calcOutput("ValidSOCStocks", datasource = "LPJmL_rev21", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  #calcOutput("ValidSOCStocks", datasource = "LPJmLCarbon", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  #calcOutput("ValidSOCStocks", datasource = "WISE", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  #calcOutput("ValidSOCStocks", datasource = "GSOC", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  #calcOutput("ValidSOCStocks", datasource = "SoilGrids", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
 
-  calcOutput("ValidSOCDensity", datasource = "LPJ_IPCC2006", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidSOCDensity", datasource = "LPJmL_rev21", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidSOCDensity", datasource = "LPJmLCarbon", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidSOCDensity", datasource = "WISE", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidSOCDensity", datasource = "GSOC", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidSOCDensity", datasource = "SoilGrids", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  #calcOutput("ValidSOCDensity", datasource = "LPJ_IPCC2006", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  #calcOutput("ValidSOCDensity", datasource = "LPJmL_rev21", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  #calcOutput("ValidSOCDensity", datasource = "LPJmLCarbon", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  #calcOutput("ValidSOCDensity", datasource = "WISE", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  #calcOutput("ValidSOCDensity", datasource = "GSOC", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  #calcOutput("ValidSOCDensity", datasource = "SoilGrids", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
 
   # Growing Stocks
   calcOutput("ValidGS", datasource = "FAO", aggregate = "REG+GLO", indicator = "relative", file = valfile, append = TRUE, try = TRUE)
