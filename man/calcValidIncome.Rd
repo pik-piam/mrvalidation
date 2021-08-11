@@ -7,11 +7,11 @@
 calcValidIncome(datasource = "James")
 }
 \arguments{
-\item{datasource}{To switch between historical values of James et al (default) or 
+\item{datasource}{To switch between historical values of James et al (default) or
 with future projections for different scenarios (James_OECD_Nakicenovic)}
 }
 \value{
-list of magpie object with data and weight. Since intensive and extensive variables 
+list of magpie object with data and weight. Since intensive and extensive variables
 are mixed please keep the mixed_aggregation
 }
 \description{
