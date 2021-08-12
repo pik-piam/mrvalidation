@@ -43,7 +43,7 @@ calcValidGrassSoilCarbon <- function(datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:
     land_ini_LUH2v2_reg <- mbind(land_ini_LUH2v2_reg, glo)
     soilc_range_pastr_tha_reg <- setNames(soilc_grassL_past_mt_tmp[,, c("pastr", "range")] / land_ini_LUH2v2_reg[,, c("pastr", "range")], paste0("Resources|Soil Carbon|Grassland|+|",reportingnames(c("pastr", "range")),"|Density (tC per ha)"))
     soilc_range_pastr_tha_reg[is.infinite(soilc_range_pastr_tha_reg) | is.nan(soilc_range_pastr_tha_reg)] <- 0
-    soilc_range_pastr_tha_reg_A <- setNames(dimSums(soilc_range_pastr_tha_reg, dim =3) / dimSums(land_ini_LUH2v2_reg, dim = 3),  paste0("Resources|Soil Carbon|Grassland|Density (tC per ha)"))
+    soilc_range_pastr_tha_reg_A <- setNames(dimSums(soilc_grassL_past_mt_T, dim =3) / dimSums(land_ini_LUH2v2_reg, dim = 3),  paste0("Resources|Soil Carbon|Grassland|Density (tC per ha)"))
     
     stock <- mbind(soilc_grassL_past_mt, soilc_grassL_past_mt_T, soilc_range_pastr_tha_reg, soilc_range_pastr_tha_reg_A)
   
