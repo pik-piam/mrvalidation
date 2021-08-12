@@ -24,38 +24,33 @@ calcValidRotationLength <- function(datasource = "FAO 2006") {
     max_temp <- setNames(max[, , 1], "max")
 
     for (reg in getCells(valid_rl)) {
-      min_temp[reg, , ] <- mean(min[reg, , ], na.rm = TRUE)
+      min_temp[reg, , ] <- min(min[reg, , ], na.rm = TRUE)
       mean_temp[reg, , ] <- mean(mean[reg, , ], na.rm = TRUE)
-      max_temp[reg, , ] <- mean(max[reg, , ], na.rm = TRUE)
+      max_temp[reg, , ] <- max(max[reg, , ], na.rm = TRUE)
     }
 
     nm <- "historical"
 
-    out <- setYears(collapseNames(ceiling(max_temp)), "y1990")
+    out <- setYears(collapseNames(ceiling(mbind(min_temp, mean_temp, max_temp))), "y1990")
     out <- time_interpolate(dataset = out, interpolated_year = c("y1995", "y2000", "y2005"), extrapolation_type = "constant")
-    out2 <- out
-
-    getNames(out) <- paste0("Rotation lengths|Harvest", getNames(out))
-    getNames(out2) <- paste0("Rotation lengths|Establishment", getNames(out2))
 
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = nm)
-    out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+    getNames(out, dim = 2) <- paste0(datasource, " ", getNames(out, dim = 2))
+    out <- add_dimension(out, dim = 3.3, add = "variable", nm = "Rotation lengths|Harvest")
 
-    out2 <- add_dimension(out2, dim = 3.1, add = "scenario", nm = nm)
-    out2 <- add_dimension(out2, dim = 3.2, add = "model", nm = datasource)
+    out2 <- out
+    getNames(out2, dim = 3) <- "Rotation lengths|Establishment"
 
     out <- mbind(out, out2)
 
-    # out <- round(toolCountryFill(x = out, fill = median(out),no_remove_warning = TRUE),0)
-
-    weight <- setNames(out2, NULL)
+    weight <- setNames(out2[, , 1], NULL)
     weight[weight != 1] <- 1
 
     return(list(
       x = out,
       weight = weight,
       unit = "years",
-      description = "Rotation length"
+      description = "Plantation Rotation length based on Global planted forests thematic study: Results and analysis (2006)"
     ))
   } else {
     stop("No data exist for the given datasource!")
