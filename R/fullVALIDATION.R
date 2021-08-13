@@ -19,7 +19,7 @@ fullVALIDATION <- function(rev = 0.1, lpjml= c(natveg = "LPJmL4_for_MAgPIE_44ac9
                                                       crop = "ggcmi_phase3_nchecks_9ca735cb",
                                                       grass = "lpjml5p2_pasture"),  emu_id = "d660cb") {
   
-  if(rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision under 4.63 anymore.
+  if(rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.63 anymore.
                        Please use a older snapshot/version of the library, if you need older revisions.")
 
   # all validation data regional aggregations happens here
