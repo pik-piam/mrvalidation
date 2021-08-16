@@ -5,6 +5,8 @@
 #' @param rev data revision which should be used as input (positive numeric).
 #' @param lpjml Defines LPJmL version for crop/grass and natveg specific inputs
 #' @param emu_id  Pasture Soil carbon emulator ID
+#' @param climatetype Global Circulation Model to be used
+#' @param version_isimip isimip version being used for loading climate data
 #' \code{\link{setConfig}} (e.g. for setting the mainfolder if not already set
 #' properly).
 #' @author Jan Philipp Dietrich, Benjamin Leon Bodirsky
@@ -17,11 +19,13 @@
 #' @importFrom madrat getConfig
 fullVALIDATION <- function(rev = 0.1, lpjml= c(natveg = "LPJmL4_for_MAgPIE_44ac93de",
                                                       crop = "ggcmi_phase3_nchecks_9ca735cb",
-                                                      grass = "lpjml5p2_pasture"),  emu_id = "d660cb") {
-  
-  if(rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.63 anymore.
+                                                      grass = "lpjml5p2_pasture"),  
+                                      emu_id = "d660cb",
+                                      climatetype = "MRI-ESM2-0:ssp370",
+                                      version_isimip = "ISIMIP3b") {
+                                        
+if(rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.63 anymore.
                        Please use a older snapshot/version of the library, if you need older revisions.")
-
   # all validation data regional aggregations happens here
   # for the first variable output calculation, append paramenter should be set to FALSE so that the
   ## eventually exitsting "validation.mif" file is deleted at the begining.
@@ -112,7 +116,7 @@ fullVALIDATION <- function(rev = 0.1, lpjml= c(natveg = "LPJmL4_for_MAgPIE_44ac9
 
   # Carbon Stocks
   calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:historical", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidGrassSoilCarbon", datasource = "ISIMIP3b:MRI-ESM2-0:ssp370:1965_2100", model = emu_id,  lpjml = lpjml[["grass"]], aggregate = F, file = valfile, append = TRUE, try = TRUE)
+  calcOutput("ValidGrassSoilCarbon", datasource = paste(version_isimip, climatetype, "1965_2100", sep = ":"), model = emu_id,  lpjml = lpjml[["grass"]], aggregate = F, file = valfile, append = TRUE, try = TRUE)
 
   ## Soil only
   #calcOutput("ValidSOCStocks", datasource = "LPJ_IPCC2006", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)

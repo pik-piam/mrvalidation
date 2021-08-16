@@ -8,7 +8,9 @@ fullVALIDATION(
   rev = 0.1,
   lpjml = c(natveg = "LPJmL4_for_MAgPIE_44ac93de", crop =
     "ggcmi_phase3_nchecks_9ca735cb", grass = "lpjml5p2_pasture"),
-  emu_id = "d660cb"
+  emu_id = "d660cb",
+  climatetype = "MRI-ESM2-0:ssp370",
+  version_isimip = "ISIMIP3b"
 )
 }
 \arguments{
@@ -16,7 +18,11 @@ fullVALIDATION(
 
 \item{lpjml}{Defines LPJmL version for crop/grass and natveg specific inputs}
 
-\item{emu_id}{Pasture Soil carbon emulator ID
+\item{emu_id}{Pasture Soil carbon emulator ID}
+
+\item{climatetype}{Global Circulation Model to be used}
+
+\item{version_isimip}{isimip version being used for loading climate data
 \code{\link{setConfig}} (e.g. for setting the mainfolder if not already set
 properly).}
 }
