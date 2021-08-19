@@ -45,7 +45,6 @@ if(rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.6
   # Food Demand
   calcOutput(type = "ValidKcal", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidKcal", datasource = "FAOmassbalance", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidKcal", datasource = "Bodirsky2015", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLivestockShare", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidVegfruitShare", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLivestockDemStructure", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
