@@ -17,12 +17,7 @@
 #' retrieveData("Validation")
 #' }
 #' @importFrom madrat getConfig
-fullVALIDATION <- function(rev = 0.1, lpjml= c(natveg = "LPJmL4_for_MAgPIE_44ac93de",
-                                                      crop = "ggcmi_phase3_nchecks_9ca735cb",
-                                                      grass = "lpjml5p2_pasture"),  
-                                      emu_id = "d660cb",
-                                      climatetype = "MRI-ESM2-0:ssp370",
-                                      version_isimip = "ISIMIP3b") {
+fullVALIDATION <- function(rev = 0.1) {
                                         
 if(rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.63 anymore.
                        Please use a older snapshot/version of the library, if you need older revisions.")
@@ -115,7 +110,7 @@ if(rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.6
 
   # Carbon Stocks
   calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:historical", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidGrassSoilCarbon", datasource = paste(version_isimip, climatetype, "1965_2100", sep = ":"), model = emu_id,  lpjml = lpjml[["grass"]], aggregate = F, file = valfile, append = TRUE, try = TRUE)
+  # calcOutput("ValidGrassSoilCarbon", datasource = paste(version_isimip, climatetype, "1965_2100", sep = ":"), model = emu_id,  lpjml = lpjml[["grass"]], aggregate = F, file = valfile, append = TRUE, try = TRUE)
 
   ## Soil only
   #calcOutput("ValidSOCStocks", datasource = "LPJ_IPCC2006", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
