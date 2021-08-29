@@ -3,10 +3,6 @@
 #' Function that produces the complete validation data set used for evaluation of MAgPIE outputs
 #'
 #' @param rev data revision which should be used as input (positive numeric).
-#' @param lpjml Defines LPJmL version for crop/grass and natveg specific inputs
-#' @param emu_id  Pasture Soil carbon emulator ID
-#' @param climatetype Global Circulation Model to be used
-#' @param version_isimip isimip version being used for loading climate data
 #' \code{\link{setConfig}} (e.g. for setting the mainfolder if not already set
 #' properly).
 #' @author Jan Philipp Dietrich, Benjamin Leon Bodirsky
