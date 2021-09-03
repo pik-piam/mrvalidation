@@ -6,13 +6,16 @@
 \usage{
 calcValidGrassSoilCarbon(
   datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100",
-  model = "5f5fa2"
+  model = "9eaf9b",
+  lpjml
 )
 }
 \arguments{
 \item{datasource}{Datasources for validation data}
 
 \item{model}{trained model ID}
+
+\item{lpjml}{lpjml version}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.
