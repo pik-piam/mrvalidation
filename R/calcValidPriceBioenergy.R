@@ -11,7 +11,10 @@ calcValidPriceBioenergy <- function() {
   getNames(out,dim=3) <- c("Prices|Bioenergy (US$05/GJ)")
   
   # set aggregation weights based on population
-  weight <- calcOutput(type = "Population", PopulationFuture="SSP",aggregate=FALSE)
+  weight <- calcOutput(type = "Population",PopulationCalib = c("past_grPEAP_grFuture", "Ariadne"),
+                       PopulationPast = c("WDI_completed", "Eurostat_WDI_completed"), 
+                       PopulationFuture = c("SSP2018Update_completed_bezierOut", "SSP2Ariadne_completed_bezierOut"),
+                       aggregate=FALSE)
   weight <- weight[,getYears(out),"pop_SSP2"]
   weight <- setNames(weight, NULL)
   
