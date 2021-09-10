@@ -14,7 +14,7 @@
 calcValidFoodExpenditure <- function(detail=FALSE) {
   
   price<-calcOutput("IniFoodPrice", datasource="FAO",aggregate = FALSE)
-  pop<-collapseNames(calcOutput("Population",naming="indicator.scenario",aggregate = FALSE)[,,"SSP2"])
+  pop<-collapseNames(calcOutput("Population",aggregate = FALSE)[,,"pop_SSP2"])
   
   demand<-dimSums(calcOutput("FAOmassbalance",aggregate = FALSE)[,,c("food","flour1")][,,"dm"],dim=c(3.2,3.3))
   demand<-demand[,,getNames(price)]
