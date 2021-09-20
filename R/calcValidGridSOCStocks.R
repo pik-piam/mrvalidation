@@ -60,7 +60,8 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
     weight <- NULL
 
   } else if (datasource %in% c("LPJmL_rev21", "LPJmLCarbon", "LPJmL4Paper",
-                               "SoilGrids", "GSOC", "WISE", "SoilGrids2")) {
+                               "SoilGrids", "GSOC", "WISE", "SoilGrids2:new",
+                               "SoilGrids2:q05_new", "SoilGrids2:q95_new")) {
 
     if (datasource == "LPJmL_rev21") {
 
