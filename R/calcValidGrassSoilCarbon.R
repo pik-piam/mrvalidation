@@ -48,7 +48,7 @@ calcValidGrassSoilCarbon <- function(datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:
     stock <- mbind(soilc_grassL_past_mt, soilc_grassL_past_mt_T, soilc_range_pastr_tha_reg, soilc_range_pastr_tha_reg_A)
   
     stock <- add_dimension(stock, dim=3.1, add="scenario", nm="historical")
-    stock <- add_dimension(stock, dim=3.2, add="model",    nm=datasource_split$climatemodel)
+    stock <- add_dimension(stock, dim=3.2, add="model",    nm= paste0(datasource_split$climatemodel,"_",model))
     
   return(list(x=stock,
               weight=NULL,
