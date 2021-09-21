@@ -107,7 +107,7 @@ if(rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.6
 
   # Carbon Stocks
   calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:historical", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidGrassSoilCarbon", datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100", model = "5f5fa2",  lpjml = "lpjml5p2_pasture", aggregate = F, file = valfile, append = TRUE, try = TRUE)
+  calcOutput("ValidGrassSoilCarbon", datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100", model = "c7491e",  lpjml = "lpjml5p2_pasture", aggregate = F, file = valfile, append = TRUE, try = TRUE)
 
   ## Soil only
   #calcOutput("ValidSOCStocks", datasource = "LPJ_IPCC2006", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
