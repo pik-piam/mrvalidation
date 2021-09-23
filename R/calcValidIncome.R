@@ -75,10 +75,7 @@ calcValidIncome <- function(datasource = "James") {
     weight <- mbind(weight, add_dimension(popWeights, dim = 3.3, add = "variable", nm = names[4]))
     
     
-  }
-  
-
-  if (datasource == "James") {
+  } else if (datasource == "James") {
 
     mer   <- calcOutput("GDPpppPast", GDPpppPast = "IHME_USD05_MER_pc", aggregate = FALSE)
     merpc <- readSource("James", subtype = "IHME_USD05_MER_pc")
@@ -125,11 +122,15 @@ calcValidIncome <- function(datasource = "James") {
       return(add_dimension(collapseNames(x), dim = 3.2, add = "variable", nm = nm))
     }
 
-    mer   <- .tmp(calcOutput("GDPppp", GDPpppPast = "IHME_USD05_MER_pc", GDPpppFuture = "SRES_SSP_completed",
+    mer   <- .tmp(calcOutput("GDPppp", GDPpppPast = "IHME_USD05_MER_pc_completed", GDPpppFuture = "SSP_completed",
                              GDPpppCalib = "past", aggregate = FALSE), names[1])
+    getNames(mer, dim=1) <- gsub("gdp_", "",getNames(mer,dim=1))
+    
     merpc <- .tmp(calcOutput(type = "GDPpc", gdp = "MER", aggregate = FALSE), names[2])
-    ppp   <- .tmp(calcOutput("GDPppp", GDPpppFuture = "SRES_SSP_completed", aggregate = FALSE,
-                             naming = "indicator.scenario"), names[3])
+    ppp   <- .tmp(calcOutput("GDPppp",GDPpppPast = "IHME_USD05_PPP_pc_completed", GDPpppFuture = "SSP_completed", 
+                             GDPpppCalib = "past", aggregate = FALSE, naming = "indicator.scenario"), names[3])
+    getNames(ppp, dim=1) <- gsub("gdp_", "",getNames(ppp,dim=1))
+    
     ppppc <- .tmp(calcOutput(type = "GDPpc", gdp = "PPP", aggregate = FALSE), names[4])
 
     years <- intersect(getYears(merpc), getYears(mer))
