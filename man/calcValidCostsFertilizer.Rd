@@ -4,23 +4,16 @@
 \alias{calcValidCostsFertilizer}
 \title{calcValidCostsFertilizer}
 \usage{
-calcValidCostsFertilizer(datasource = "Vittis")
+calcValidCostsFertilizer(datasource = "FAO")
 }
 \arguments{
-\item{datasource}{Datasource of validation data.}
+\item{datasource}{Source of validation data.}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.
 }
 \description{
 calculates validation data for fertilizer costs
-}
-\examples{
-
-\dontrun{ 
-calcOutput("ValidCostsFertilizer")
-}
-
 }
 \author{
 Debbora Leip
