@@ -14,8 +14,8 @@
 #' }
 #' @importFrom madrat getConfig
 fullVALIDATION <- function(rev = 0.1) {
-                                        
-if(rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.63 anymore.
+
+if (rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.63 anymore.
                        Please use a older snapshot/version of the library, if you need older revisions.")
   # all validation data regional aggregations happens here
   # for the first variable output calculation, append paramenter should be set to FALSE so that the
@@ -26,6 +26,7 @@ if(rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.6
   # Population and Income
   calcOutput(type = "ValidPopulation", aggregate = "REG+GLO", file = valfile, append = FALSE, na_warning = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidIncome", datasource = "James", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidIncome", datasource = "James_OECD_Nakicenovic", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidIncome", datasource = "WDI_completed_SSP_completed", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgFFGDP", datasource = "WDI", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgGDP", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
@@ -105,23 +106,23 @@ if(rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.6
   calcOutput(type = "ValidManure", datasource = "Bodirsky", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
 
   # Carbon Stocks
-  calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:historical", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_44ac93de:GSWP3-W5E5:historical", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput("ValidGrassSoilCarbon", datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100", model = "c7491e",  lpjml = "lpjml5p2_pasture", aggregate = F, file = valfile, append = TRUE, try = TRUE)
 
   ## Soil only
-  #calcOutput("ValidSOCStocks", datasource = "LPJ_IPCC2006", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  #calcOutput("ValidSOCStocks", datasource = "LPJmL_rev21", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  #calcOutput("ValidSOCStocks", datasource = "LPJmLCarbon", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  #calcOutput("ValidSOCStocks", datasource = "WISE", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  #calcOutput("ValidSOCStocks", datasource = "GSOC", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  #calcOutput("ValidSOCStocks", datasource = "SoilGrids", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  # calcOutput("ValidSOCStocks", datasource = "LPJ_IPCC2006", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  # calcOutput("ValidSOCStocks", datasource = "LPJmL_rev21", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  # calcOutput("ValidSOCStocks", datasource = "LPJmLCarbon", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  # calcOutput("ValidSOCStocks", datasource = "WISE", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  # calcOutput("ValidSOCStocks", datasource = "GSOC", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  # calcOutput("ValidSOCStocks", datasource = "SoilGrids", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
 
-  #calcOutput("ValidSOCDensity", datasource = "LPJ_IPCC2006", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  #calcOutput("ValidSOCDensity", datasource = "LPJmL_rev21", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  #calcOutput("ValidSOCDensity", datasource = "LPJmLCarbon", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  #calcOutput("ValidSOCDensity", datasource = "WISE", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  #calcOutput("ValidSOCDensity", datasource = "GSOC", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  #calcOutput("ValidSOCDensity", datasource = "SoilGrids", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  # calcOutput("ValidSOCDensity", datasource = "LPJ_IPCC2006", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  # calcOutput("ValidSOCDensity", datasource = "LPJmL_rev21", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  # calcOutput("ValidSOCDensity", datasource = "LPJmLCarbon", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  # calcOutput("ValidSOCDensity", datasource = "WISE", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  # calcOutput("ValidSOCDensity", datasource = "GSOC", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  # calcOutput("ValidSOCDensity", datasource = "SoilGrids", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
 
   # Growing Stocks
   calcOutput("ValidGS", datasource = "FAO", aggregate = "REG+GLO", indicator = "relative", file = valfile, append = TRUE, try = TRUE)

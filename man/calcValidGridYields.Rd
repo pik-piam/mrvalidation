@@ -19,8 +19,7 @@ List of magpie objects with results on cellular level, weight on cellular level,
 reports Yields on 0.5 degree grid
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("ValidGridYields")
 }
 
