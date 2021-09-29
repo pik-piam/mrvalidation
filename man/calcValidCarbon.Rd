@@ -5,7 +5,7 @@
 \title{calcValidCarbon}
 \usage{
 calcValidCarbon(
-  datasource = "LPJmL4_for_MAgPIE_84a69edd:GSWP3-W5E5:historical"
+  datasource = "LPJmL4_for_MAgPIE_44ac93de:GSWP3-W5E5:historical"
 )
 }
 \arguments{
@@ -18,9 +18,8 @@ List of magpie objects with results on country level, weight on country level, u
 calculates the validation data for carbon pools
 }
 \examples{
-
-\dontrun{ 
-  calcOutput("ValidCarbon")
+\dontrun{
+calcOutput("ValidCarbon")
 }
 
 }

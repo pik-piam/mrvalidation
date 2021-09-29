@@ -38,7 +38,7 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
     out <- mbind(out, setNames(SOM_chang[, , "total"][, , "soilc"],
                       paste0("Resources|Soil Carbon|Actual|Stock Change|SOC in top 30 cm (Mt C wrt ",
                                  baseyear, ")")),
-                      setNames(SOM_chang[, , "cropland"][, , "soilc"], 
+                      setNames(SOM_chang[, , "cropland"][, , "soilc"],
                       paste0("Resources|Soil Carbon|Actual|Stock Change|SOC in top 30 cm|+|Cropland Soils (Mt C wrt ",
                                  baseyear, ")")),
                       setNames(SOM_chang[, , "noncropland"][, , "soilc"],
@@ -60,7 +60,8 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
     weight <- NULL
 
   } else if (datasource %in% c("LPJmL_rev21", "LPJmLCarbon", "LPJmL4Paper",
-                               "SoilGrids", "GSOC", "WISE", "SoilGrids2")) {
+                               "SoilGrids", "GSOC", "WISE", "SoilGrids2:new",
+                               "SoilGrids2:q05_new", "SoilGrids2:q95_new")) {
 
     if (datasource == "LPJmL_rev21") {
 
@@ -93,11 +94,11 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
       out <- readSource("SoilGrids", subtype = "cstock_0_30", convert = "onlycorrect")
       out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
 
-    } else if (datasource == "SoilGrids2") {
+    } else if (grepl("SoilGrids2", datasource)) {
 
-      out <- readSource("SoilGrids", subtype = "cstock_0_30_new", convert = "onlycorrect")
+      var <- toolSplitSubtype(datasource, list(soilgrids = "SoilGrids2", variable = NULL))$variable
+      out <- readSource("SoilGrids", subtype = paste0("cstock_0_30_", var), convert = "onlycorrect")
       out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
-
     }
 
     area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE, cellular = TRUE,
@@ -130,17 +131,28 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
 
       out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
       out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
-      
+
       area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE, cellular = TRUE,
                           selectyears = "past_all", aggregate = FALSE)
       area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
-      
+
       if (intensive) {
         weight <- area
       } else {
         weight <- NULL
         out    <- out * area
       }
+
+  } else if (datasource == "SoilGrids2_range") {
+
+    out <- mbind(setNames(readSource("SoilGrids", subtype = "cstock_0_30_q05_new", convert = "onlycorrect"), "Q0p05"),
+                 setNames(readSource("SoilGrids", subtype = "cstock_0_30_q95_new", convert = "onlycorrect"), "Q0p95"))
+    out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
+
+    out <- setNames(out, "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
+    out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+    out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+
 
   } else stop("No data exist for the given datasource!")
 

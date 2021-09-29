@@ -9,11 +9,73 @@
 #' are mixed please keep the mixed_aggregation
 #' @importFrom madrat vcat calcOutput
 #' @importFrom magclass mbind add_dimension getSets getSets<- collapseNames getYears
+#' @importFrom GDPuc convertGDP
 #' @author Florian Humpenoeder, Abhijeet Mishra, Kristine Karstens
 
 calcValidIncome <- function(datasource = "James") {
+  
+  
+  if (datasource == "WDI_completed_SSP_completed") {
+    
+    
+    names <- c("Income (million US$05 MER/yr)", "Income (US$05 MER/cap/yr)",
+               "Income (million US$05 PPP/yr)", "Income (US$05 PPP/cap/yr)")
+    
+ 
+    .tmp <- function(x, nm) {
+      getSets(x)[3] <- "scenario"
+      return(add_dimension(collapseNames(x), dim = 3.2, add = "variable", nm = nm))
+    }
+    
+    mer   <- .tmp(calcOutput("GDPppp", GDPpppCalib = c("fixHist_IMFgr_return2SSP", "Ariadne"),
+                       GDPpppPast = c("WDI_completed", "Eurostat_WDI_completed"), 
+                       GDPpppFuture = c("SSP_bezierOut_completed", "SSP2Ariadne_completed_bezierOut"), aggregate = FALSE),
+                  names[1])
+    
+                 # Convert from 2005 Int$PPP to 2005 US$MER, and use regional averages when conversion factors are missing
+                  regmap <- toolGetMapping("regionmappingH12.csv")[,c(2,3)] 
+                  names(regmap) <- c("iso3c", "region")                 
 
-  if (datasource == "James") {
+                mer <- convertGDP(mer, unit_in = "constant 2005 Int$PPP", unit_out = "constant 2005 US$MER",
+                                  with_regions = regmap, replace_NAs = "regional_average")
+    getNames(mer, dim=1) <- gsub("gdp_", "",getNames(mer,dim=1))
+                
+    merpc <- .tmp(calcOutput(type = "GDPpc", gdp = "MER", aggregate = FALSE), names[2])
+    
+    ppp   <- .tmp(calcOutput("GDPppp",  GDPpppCalib = c("fixHist_IMFgr_return2SSP", "Ariadne"),
+                             GDPpppPast = c("WDI_completed", "Eurostat_WDI_completed"), 
+                             GDPpppFuture = c("SSP_bezierOut_completed", "SSP2Ariadne_completed_bezierOut"),
+                             aggregate = FALSE), names[3])
+    getNames(ppp, dim=1) <- gsub("gdp_", "",getNames(ppp,dim=1))
+    
+    ppppc <- .tmp(calcOutput(type = "GDPpc", gdp = "PPP", aggregate = FALSE), names[4])
+    
+    years <- intersect(getYears(merpc), getYears(mer))
+    
+    out   <- NULL
+    out   <- mbind(mer[, years, ], merpc[, years, ], ppp[, years, ], ppppc[, years, ])
+    
+    getSets(out)[3] <- "scenario"
+    
+    out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+    
+    # Setting weights correctly for intensive and extensive variables
+    popWeights <- collapseNames(calcOutput(type = "GDPpc", gdp = "MER", supplementary = TRUE, aggregate = FALSE)$weight
+                                + 10^-10)
+    getSets(popWeights)[3] <- "scenario"
+    popWeights <- add_dimension(popWeights, dim = 3.2, add = "model", nm = datasource)
+    
+    noWeights <- popWeights
+    noWeights[] <- 0
+    
+    weight <- NULL
+    weight <- mbind(weight, add_dimension(noWeights, dim = 3.3, add = "variable", nm = names[1]))
+    weight <- mbind(weight, add_dimension(popWeights, dim = 3.3, add = "variable", nm = names[2]))
+    weight <- mbind(weight, add_dimension(noWeights, dim = 3.3, add = "variable", nm = names[3]))
+    weight <- mbind(weight, add_dimension(popWeights, dim = 3.3, add = "variable", nm = names[4]))
+    
+    
+  } else if (datasource == "James") {
 
     mer   <- calcOutput("GDPpppPast", GDPpppPast = "IHME_USD05_MER_pc", aggregate = FALSE)
     merpc <- readSource("James", subtype = "IHME_USD05_MER_pc")
@@ -60,11 +122,15 @@ calcValidIncome <- function(datasource = "James") {
       return(add_dimension(collapseNames(x), dim = 3.2, add = "variable", nm = nm))
     }
 
-    mer   <- .tmp(calcOutput("GDPppp", GDPpppPast = "IHME_USD05_MER_pc", GDPpppFuture = "SRES_SSP_completed",
+    mer   <- .tmp(calcOutput("GDPppp", GDPpppPast = "IHME_USD05_MER_pc_completed", GDPpppFuture = "SSP_completed",
                              GDPpppCalib = "past", aggregate = FALSE), names[1])
+    getNames(mer, dim=1) <- gsub("gdp_", "",getNames(mer,dim=1))
+    
     merpc <- .tmp(calcOutput(type = "GDPpc", gdp = "MER", aggregate = FALSE), names[2])
-    ppp   <- .tmp(calcOutput("GDPppp", GDPpppFuture = "SRES_SSP_completed", aggregate = FALSE,
-                             naming = "indicator.scenario"), names[3])
+    ppp   <- .tmp(calcOutput("GDPppp",GDPpppPast = "IHME_USD05_PPP_pc_completed", GDPpppFuture = "SSP_completed", 
+                             GDPpppCalib = "past", aggregate = FALSE, naming = "indicator.scenario"), names[3])
+    getNames(ppp, dim=1) <- gsub("gdp_", "",getNames(ppp,dim=1))
+    
     ppppc <- .tmp(calcOutput(type = "GDPpc", gdp = "PPP", aggregate = FALSE), names[4])
 
     years <- intersect(getYears(merpc), getYears(mer))

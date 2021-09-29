@@ -5,9 +5,10 @@
 \title{calcValidPopulation}
 \usage{
 calcValidPopulation(
-  PopulationCalib = "transition",
-  PopulationPast = "WDI",
-  PopulationFuture = "SSP",
+  PopulationCalib = c("past_grPEAP_grFuture", "Ariadne"),
+  PopulationPast = c("WDI_completed", "Eurostat_WDI_completed"),
+  PopulationFuture = c("SSP2018Update_completed_bezierOut",
+    "SSP2EU_completed_bezierOut"),
   TimeFromFindSet = TRUE
 )
 }
@@ -27,5 +28,5 @@ list of magpie object with data and weight
 Returns historical development of population and future projections of population dynamics
 }
 \author{
-Florian Humpenoeder, Jan Philipp Dietrich
+Florian Humpenoeder, Jan Philipp Dietrich, David Chen
 }

@@ -24,9 +24,8 @@ List of magpie objects with results on country level, weight on country level, u
 calculates the validation data for grasslands
 }
 \examples{
-
-\dontrun{ 
-  calcOutput("ValidGrassSoilCarbon")
+\dontrun{
+calcOutput("ValidGrassSoilCarbon")
 }
 }
 \author{
