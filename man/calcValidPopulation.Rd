@@ -8,7 +8,7 @@ calcValidPopulation(
   PopulationCalib = c("past_grPEAP_grFuture", "Ariadne"),
   PopulationPast = c("WDI_completed", "Eurostat_WDI_completed"),
   PopulationFuture = c("SSP2018Update_completed_bezierOut",
-    "SSP2Ariadne_completed_bezierOut"),
+    "SSP2EU_completed_bezierOut"),
   TimeFromFindSet = TRUE
 )
 }

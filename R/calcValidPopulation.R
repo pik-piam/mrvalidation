@@ -10,7 +10,7 @@
 #' @return list of magpie object with data and weight
 #' @author Florian Humpenoeder, Jan Philipp Dietrich, David Chen
 #' @importFrom magclass getRegions
-calcValidPopulation <- function(PopulationCalib=c("past_grPEAP_grFuture", "Ariadne"), PopulationPast=c("WDI_completed", "Eurostat_WDI_completed"), PopulationFuture=c("SSP2018Update_completed_bezierOut", "SSP2Ariadne_completed_bezierOut"), TimeFromFindSet = TRUE ) {
+calcValidPopulation <- function(PopulationCalib=c("past_grPEAP_grFuture", "Ariadne"), PopulationPast=c("WDI_completed", "Eurostat_WDI_completed"), PopulationFuture=c("SSP2018Update_completed_bezierOut", "SSP2EU_completed_bezierOut"), TimeFromFindSet = TRUE ) {
  
   past   <- calcOutput("PopulationPast",PopulationPast=PopulationPast[1], aggregate = FALSE)
   getNames(past) <- paste("historical",paste0(PopulationPast[1]),"Population (million people)",sep=".")
