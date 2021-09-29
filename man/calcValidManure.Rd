@@ -17,7 +17,7 @@ Validates the esitmates on  excretion and manure management
 }
 \examples{
 
-\dontrun{ 
+\dontrun{
 calcOutput("ValidManure")
 }
 

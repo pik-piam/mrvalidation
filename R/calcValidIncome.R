@@ -29,7 +29,8 @@ calcValidIncome <- function(datasource = "James") {
     
     mer   <- .tmp(calcOutput("GDPppp", GDPpppCalib = c("fixHist_IMFgr_return2SSP", "Ariadne"),
                        GDPpppPast = c("WDI_completed", "Eurostat_WDI_completed"), 
-                       GDPpppFuture = c("SSP_bezierOut_completed", "SSP2Ariadne_completed_bezierOut"), aggregate = FALSE),
+                       GDPpppFuture = c("SSP_bezierOut_completed", "SSP2EU_completed_bezierOut"), 
+                       aggregate = FALSE),
                   names[1])
     
                  # Convert from 2005 Int$PPP to 2005 US$MER, and use regional averages when conversion factors are missing
@@ -44,7 +45,7 @@ calcValidIncome <- function(datasource = "James") {
     
     ppp   <- .tmp(calcOutput("GDPppp",  GDPpppCalib = c("fixHist_IMFgr_return2SSP", "Ariadne"),
                              GDPpppPast = c("WDI_completed", "Eurostat_WDI_completed"), 
-                             GDPpppFuture = c("SSP_bezierOut_completed", "SSP2Ariadne_completed_bezierOut"),
+                             GDPpppFuture = c("SSP_bezierOut_completed", "SSP2EU_completed_bezierOut"),
                              aggregate = FALSE), names[3])
     getNames(ppp, dim=1) <- gsub("gdp_", "",getNames(ppp,dim=1))
     
