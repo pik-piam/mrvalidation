@@ -23,6 +23,7 @@ if (rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.
   # setting rev to -1 will allow for just writing the validation
   valfile <- "validation.mif"
 
+
   # Population and Income
   calcOutput(type = "ValidPopulation", aggregate = "REG+GLO", file = valfile, append = FALSE, na_warning = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidIncome", datasource = "James", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
@@ -32,7 +33,6 @@ if (rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.
   calcOutput(type = "ValidAgGDP", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgGDP", datasource = "FAO_consum", aggregate = FALSE, file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidConsumptionValue", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-
 
   # Food Demand
   calcOutput(type = "ValidKcal", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
@@ -65,6 +65,7 @@ if (rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.
   calcOutput(type = "ValidLand", datasource = "MAgPIEown", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLand", datasource = "SSPResults", aggregate = "REG+GLO", file = valfile, append = TRUE, na_warning = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidLand", datasource = "FRA2020", aggregate = "REG+GLO", file = valfile, append = TRUE, na_warning = FALSE, try = TRUE) # ready
+
   # Land Cover Change
   calcOutput(type = "ValidLandChange", datasource = "FAO_crop_past", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLandChange", datasource = "FAO_forest", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready

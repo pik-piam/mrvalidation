@@ -16,7 +16,7 @@ calcValidLand <- function(datasource="MAgPIEown"){
   if(datasource=="FAO_crop_past") {
 
     FAOLand <- calcOutput("FAOLand",aggregate = FALSE)
-    data <- collapseNames(FAOLand[,,c("6620|Arable land and Permanent crops", "6655|Permanent meadows and pastures")])
+    data    <- collapseNames(FAOLand[,,c("6620", "6655"), pmatch=TRUE])
     getNames(data) <- c("crop", "past")
 
     out <- data[,,c("crop","past")]

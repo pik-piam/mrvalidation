@@ -33,27 +33,29 @@ calcValidKcal<-function(datasource="FAO", nutrient="kcal", detail=TRUE){
       total=dimSums(value,dim=3)
       
     } else if (datasource=="FAO") {
-      FSCrop <- readSource("FAO", "FSCrop")
-      FSLive <- readSource("FAO", "FSLive")
+
+      FSCrop <- readSource("FAO_online", "FSCrop")
+      FSLive <- readSource("FAO_online", "FSLive")
       FS <- toolFAOcombine(FSLive,FSCrop, combine="Item")
       
       FS<-FS[,,c("food_supply_kcal","protein_supply")]
       getNames(FS,dim=2)<-c("kcal","protein")
       FS<-collapseNames(FS[,,nutrient])
-      total=FS[,,"2901|Grand Total + (Total)"]
+      total=FS[,,"2901|Grand Total"]
       
-      relationmatrix <- toolGetMapping("FAOitems.rda","sectoral",where="mrvalidation")
+      relationmatrix <- toolGetMapping("FAOitems_online.rda","sectoral",where="mrvalidation")
       relationmatrix <- relationmatrix[,which(names(relationmatrix)%in%c("FoodBalanceItem","k"))]
       relationmatrix <- relationmatrix[-which(duplicated(relationmatrix[,1])==T),]
       
-      
+      ## Note: FAO_online now has sub-aggregate and processed equivalent reporting: rice (milled equivalent), sugar (raw eq)
+      ## These get dropped automatically by the mapping
       FS<-toolAggregate(x = FS,rel =relationmatrix,dim = 3.1,from = "FoodBalanceItem",to = "k", partrel=TRUE)
       missing<-setdiff(findset("kall"),getNames(FS,dim=1))
       FS<-add_columns(FS,addnm = missing,dim = 3.1)
       FS[,,missing]<-0
       value=collapseNames(FS)
       weight <- collapseNames(readSource(type="FAO",subtype = "Pop",convert = T)[,getYears(FS),"population"])/1000000
-    }
+       }
     
     if(nutrient=="kcal"){
       mainname="Nutrition|Calorie Supply"
