@@ -114,7 +114,7 @@ calcValidIncome <- function(datasource = "James") {
     weight <- weight[, years, ]
 
   } else if (datasource == "James_OECD_Nakicenovic") {
-
+  #### deprecated as of rev4.64 ####
     names <- c("Income (million US$05 MER/yr)", "Income (US$05 MER/cap/yr)",
                "Income (million US$05 PPP/yr)", "Income (US$05 PPP/cap/yr)")
 

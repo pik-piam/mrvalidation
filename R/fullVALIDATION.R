@@ -27,7 +27,6 @@ if (rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.
   # Population and Income
   calcOutput(type = "ValidPopulation", aggregate = "REG+GLO", file = valfile, append = FALSE, na_warning = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidIncome", datasource = "James", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidIncome", datasource = "James_OECD_Nakicenovic", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidIncome", datasource = "WDI_completed_SSP_completed", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgFFGDP", datasource = "WDI", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgGDP", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)

@@ -23,7 +23,7 @@
 #' calcOutput("ValidYield")
 #' }
 #' @importFrom magclass getNames<- as.magpie
-#' @importFrom magpiesets reporthelper summationhelper
+#' @importFrom magpiesets reporthelper summationhelper findset
 
 calcValidYield  <-  function(datasource="FAO", future = NULL){
   
@@ -32,8 +32,10 @@ calcValidYield  <-  function(datasource="FAO", future = NULL){
     
     if (!is.null(future)) stop("Future options is not available for source type 'FAO'.")
     
+    past <- findset("past")
+    
     #Calculate areas of individual crops and pasture
-    croparea  <-  collapseNames(calcOutput("Croparea", sectoral="kcr", physical=TRUE, aggregate = FALSE))
+    croparea  <-  collapseNames(calcOutput("Croparea", sectoral="kcr", physical=TRUE, aggregate = FALSE)[,past,])
     pastarea  <-  setNames(calcOutput("LanduseInitialisation", aggregate=FALSE)[,,"past"],"pasture")
     area <- mbind(croparea,pastarea)
     area <- reporthelper(area,level_zero_name = "Productivity|Yield")
@@ -49,10 +51,6 @@ calcValidYield  <-  function(datasource="FAO", future = NULL){
     cropproduction  <-  histproduction[,,kcr]
     pastproduction  <-  histproduction[,,"pasture"]
     production <- mbind(cropproduction,pastproduction)
-    
-    #Make sure that both production and area contain data for same years
-    past <- findset("past")
-    area  <-  area[,past,] #Subsetting
     
     #Calculate Yields
     production <- reporthelper(production, level_zero_name = "Productivity|Yield")
@@ -96,7 +94,7 @@ calcValidYield  <-  function(datasource="FAO", future = NULL){
     yield[R,Y,V]  <-  0
     vcat(verbosity = 2, "Yields>200 ton/ha were converted to 0 when area and production values were ambiguous")
     
-    scenario    <- "hisorical"
+    scenario    <- "historical"
     description <- "CalcValidYield calculates the historical yield from FAO database."
     
   } else if (datasource == "calibratedLPJmL") {
