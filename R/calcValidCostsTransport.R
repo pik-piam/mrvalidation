@@ -39,12 +39,12 @@ calcValidCostsTransport<-function(datasource="GTAP"){
   out   <- toolCountryFill(out, fill=0)
   
   
-#add missing product groups, so that report and summation helper work properly    
- missing_products <- setdiff(findset("kcr"), products)  
+#add missing product groups, so that report and summation helper work properly.
+  #Note that forest, secondary, fish, bioenergy and  residues set to 0 currently    
+ missing_products <- setdiff(findset("kall"), products)  
   out <- add_columns(out, addnm=missing_products, dim=3.1)
   out[,,missing_products] <- 0
   
-  #delete Mainsolve also in magpie4 costs
  out <- reporthelper(out, dim=3.1, level_zero_name = "Costs|Transport", detail=FALSE)
  out <- summationhelper(out)
  getNames(out) <- paste(getNames(out), "(million US$05/yr)", sep=" ")
