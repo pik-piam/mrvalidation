@@ -14,7 +14,7 @@
 calcValidFoodExpenditureShare <- function(detail=FALSE) {
   
   expenditure<-calcOutput("ValidFoodExpenditure",aggregate = FALSE)
-  gdp<-collapseNames(calcOutput("GDPpc",aggregate = FALSE)[,,"SSP2"])
+  gdp<-collapseNames(calcOutput("GDPpc", naming = "scenario", aggregate = FALSE)[,,"SSP2"])
   gdp<-gdp[,getYears(expenditure),]
   pop<-collapseNames(calcOutput("Population",aggregate = FALSE)[,,"pop_SSP2"])
   pop<-pop[,getYears(expenditure),]
