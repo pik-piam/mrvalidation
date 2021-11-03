@@ -7,7 +7,7 @@
 calcValidYield(datasource = "FAO", future = NULL)
 }
 \arguments{
-\item{datasource}{Specify which datasource needs to be used. 
+\item{datasource}{Specify which datasource needs to be used.
 Currently only "FAO" and "calibratedLPJmL" is available.}
 
 \item{future}{if NULL no future values are returned (default).
@@ -17,15 +17,15 @@ specify climate scenario (gcm:rcp), if future is needed}
 List of magpie objects with results on country level, weight on country level, unit, Max.&Min. values alongwith description.
 }
 \description{
-Calculates a dataset of agricultural production out of the combined 
-data of calcFAOharmonized(). Covers dry matter (DM) production. 
-Also returns areas of individual crops from FAOSTAT. 
+Calculates a dataset of agricultural production out of the combined
+data of calcFAOharmonized(). Covers dry matter (DM) production.
+Also returns areas of individual crops from FAOSTAT.
 Total area can be lower or higher than arable land because of multicropping or fallow land.
 Returns yield as calculated from area area and production.
 }
 \examples{
 
-\dontrun{ 
+\dontrun{
 calcOutput("ValidYield")
 }
 }
