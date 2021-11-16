@@ -7,7 +7,7 @@
 #' @examples
 #'
 #' \dontrun{
-#' calcOutput("ValidCostsFertilizer", datasource = "FAO)
+#' calcOutput("ValidCostsFertilizer", datasource = "FAO")
 #' }
 #'
 #' @importFrom magpiesets reporthelper summationhelper reportingnames

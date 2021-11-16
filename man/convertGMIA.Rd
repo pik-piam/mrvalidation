@@ -20,15 +20,11 @@ Convert Global Map on Irrigated Area Data
 Convert subtypes on ISO country level.
 }
 \examples{
-
 \dontrun{
- a <- readSource("GlobalIrrigationMap", "all_data_national")
-a <- readSource ("GMIA", "aei_pct", convert=F)
-a <- readSource ("GMIA", "aei_pct", convert="correctonly")
+a <- readSource("GlobalIrrigationMap", "all_data_national")
+a <- readSource ("GMIA", "aei_pct", convert = FALSE)
+a <- readSource ("GMIA", "aei_pct", convert = "correctonly")
 }
-
-
-
 }
 \seealso{
 \code{\link{readSource}}

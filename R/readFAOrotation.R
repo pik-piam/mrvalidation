@@ -9,7 +9,7 @@
 #' \dontrun{
 #' a <- readSource("FAOrotation")
 #' }
-#' @importFrom madrat toolSubtypeSelect getConfig
+#' @importFrom madrat toolSubtypeSelect
 #' @importFrom openxlsx read.xlsx
 
 readFAOrotation <- function(subtype = "FAO") {
@@ -18,22 +18,19 @@ readFAOrotation <- function(subtype = "FAO") {
     file <- "rotation_length_validation.xlsx"
 
     ## Read source data
-    rl_data <- read.xlsx(file)
+    rlData <- read.xlsx(file)
 
     ## Change colnames and little cleanup
-    colnames(rl_data) <- gsub(pattern = "\\.", replacement = "_", x = tolower(colnames(rl_data)))
+    colnames(rlData) <- gsub(pattern = "\\.", replacement = "_", x = tolower(colnames(rlData)))
 
     ## Convert to MAgPIE object
-    rl_mag <- as.magpie(unique(rl_data[, c(-1, -7)]), spatial = "sub_region", temporal = NULL)
+    rlMag <- as.magpie(unique(rlData[, c(-1, -7)]), spatial = "sub_region", temporal = NULL)
 
     ## Set mapping
     mapping <- read.csv("subreg_mapping.csv", sep = ";", strip.white = TRUE)
 
     ## Convert to ISO level data
-    rl_iso <- toolAggregate(rl_mag, rel = mapping, from = "sub_region", to = "CountryCode", dim = 1, weight = NULL)
-
-    ## Pass info to out
-    out <- rl_iso
+    out <- toolAggregate(rlMag, rel = mapping, from = "sub_region", to = "CountryCode", dim = 1, weight = NULL)
 
     return(out)
   } else {

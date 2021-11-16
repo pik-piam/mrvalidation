@@ -15,6 +15,13 @@ List of magpie objects with results on country level, weight on country level, u
 \description{
 calculates validation data for fertilizer costs
 }
+\examples{
+
+\dontrun{
+calcOutput("ValidCostsFertilizer", datasource = "FAO")
+}
+
+}
 \author{
 Debbora Leip
 }
