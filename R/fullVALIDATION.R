@@ -27,7 +27,7 @@ if (rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.
              append = FALSE, na_warning = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidIncome", datasource = "James", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidIncome", datasource = "WDI_completed_SSP_completed",
+  calcOutput(type = "ValidIncome", datasource = "WDI-MI_SSPs-MI",
              aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgFFGDP", datasource = "WDI", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)

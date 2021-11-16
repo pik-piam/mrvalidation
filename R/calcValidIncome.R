@@ -9,70 +9,57 @@
 #' are mixed please keep the mixed_aggregation
 #' @importFrom madrat vcat calcOutput
 #' @importFrom magclass mbind add_dimension getSets getSets<- collapseNames getYears
-#' @importFrom GDPuc convertGDP
 #' @author Florian Humpenoeder, Abhijeet Mishra, Kristine Karstens
 
 calcValidIncome <- function(datasource = "James") {
-  
-  
-  if (datasource == "WDI_completed_SSP_completed") {
-    
-    
-    names <- c("Income (million US$05 MER/yr)", "Income (US$05 MER/cap/yr)",
-               "Income (million US$05 PPP/yr)", "Income (US$05 PPP/cap/yr)")
-    
- 
+
+
+  if (datasource == "WDI-MI_SSPs-MI") {
+
     .tmp <- function(x, nm) {
       getSets(x)[3] <- "scenario"
-      return(add_dimension(collapseNames(x), dim = 3.2, add = "variable", nm = nm))
+      add_dimension(collapseNames(x), dim = 3.2, add = "variable", nm = nm)
     }
-    
-    mer   <- .tmp(calcOutput("GDP", aggregate = FALSE), names[1])
-    
-    # Convert from 2005 Int$PPP to 2005 US$MER, and use regional averages when conversion factors are missing
-    regmap <- toolGetMapping("regionmappingH12.csv")[,c(2,3)] 
-    names(regmap) <- c("iso3c", "region")                 
 
-    mer <- convertGDP(mer, unit_in = "constant 2005 Int$PPP", unit_out = "constant 2005 US$MER",
-                      with_regions = regmap, replace_NAs = "regional_average")
-    getNames(mer, dim=1) <- gsub("gdp_", "",getNames(mer,dim=1))
-                
-    merpc <- .tmp(calcOutput(type = "GDPpc", unit = "2005 constant US$MER", naming = "scenario", aggregate = FALSE), names[2])
-    
-    ppp   <- .tmp(calcOutput("GDP", aggregate = FALSE), names[3])
-    getNames(ppp, dim=1) <- gsub("gdp_", "",getNames(ppp,dim=1))
-    
-    ppppc <- .tmp(calcOutput(type = "GDPpc", naming = "scenario", aggregate = FALSE), names[4])
-    
-    years <- intersect(getYears(merpc), getYears(mer))
-    
+    names <- c("Income (million US$05 MER/yr)",
+               "Income (US$05 MER/cap/yr)",
+               "Income (million US$05 PPP/yr)",
+               "Income (US$05 PPP/cap/yr)")
+
+    mer   <- .tmp(calcOutput("GDP", unit = "constant 2005 US$MER", naming = "scenario", aggregate = FALSE), names[1])
+    merpc <- .tmp(calcOutput("GDPpc", unit = "constant 2005 US$MER", naming = "scenario", aggregate = FALSE), names[2])
+    ppp   <- .tmp(calcOutput("GDP", naming = "scenario", aggregate = FALSE), names[3])
+    ppppc <- .tmp(calcOutput("GDPpc", naming = "scenario", aggregate = FALSE), names[4])
+
+    years <- getYears(mer)
+
     out   <- NULL
     out   <- mbind(mer[, years, ], merpc[, years, ], ppp[, years, ], ppppc[, years, ])
-    
+
     getSets(out)[3] <- "scenario"
-    
+
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
-    
+
     # Setting weights correctly for intensive and extensive variables
-    popWeights <- collapseNames(calcOutput(type = "GDPpc", 
-                                           unit = "2005 constant US$MER", 
-                                           naming = "scenario", 
-                                           supplementary = TRUE, 
+    popWeights <- collapseNames(calcOutput(type = "GDPpc",
+                                           unit = "constant 2005 US$MER",
+                                           naming = "scenario",
+                                           supplementary = TRUE,
                                            aggregate = FALSE)$weight
                                 + 10^-10)
     getSets(popWeights)[3] <- "scenario"
     popWeights <- add_dimension(popWeights, dim = 3.2, add = "model", nm = datasource)
-    
+
     noWeights <- popWeights
     noWeights[] <- 0
-    
+
     weight <- NULL
     weight <- mbind(weight, add_dimension(noWeights, dim = 3.3, add = "variable", nm = names[1]))
     weight <- mbind(weight, add_dimension(popWeights, dim = 3.3, add = "variable", nm = names[2]))
     weight <- mbind(weight, add_dimension(noWeights, dim = 3.3, add = "variable", nm = names[3]))
     weight <- mbind(weight, add_dimension(popWeights, dim = 3.3, add = "variable", nm = names[4]))
-    
-    
+
+
   } else if (datasource == "James") {
 
     mer   <- calcOutput("GDPPast", GDPPast = "IHME_USD05_MER_pc", aggregate = FALSE)
@@ -120,24 +107,24 @@ calcValidIncome <- function(datasource = "James") {
       return(add_dimension(collapseNames(x), dim = 3.2, add = "variable", nm = nm))
     }
 
-    mer   <- .tmp(calcOutput("GDP", 
-                             GDPPast = "IHME_USD05_MER_pc-MI", 
+    mer   <- .tmp(calcOutput("GDP",
+                             GDPPast = "IHME_USD05_MER_pc-MI",
                              GDPFuture = "SSPs-MI",
-                             GDPCalib = "past", 
-                             aggregate = FALSE), 
+                             GDPCalib = "past",
+                             aggregate = FALSE),
                   names[1])
-    merpc <- .tmp(calcOutput(type = "GDPpc", 
-                             unit = "2005 constant US$MER", 
-                             naming = "scenario", 
-                             aggregate = FALSE), 
+    merpc <- .tmp(calcOutput(type = "GDPpc",
+                             unit = "constant 2005 US$MER",
+                             naming = "scenario",
+                             aggregate = FALSE),
                   names[2])
 
     ppp   <- .tmp(calcOutput("GDP",
-                             GDPPast = "IHME_USD05_PPP_pc-MI", 
-                             GDPFuture = "SSP-MI", 
-                             GDPCalib = "past", 
-                             aggregate = FALSE, 
-                             naming = "indicator.scenario"), 
+                             GDPPast = "IHME_USD05_PPP_pc-MI",
+                             GDPFuture = "SSP-MI",
+                             GDPCalib = "past",
+                             aggregate = FALSE,
+                             naming = "indicator.scenario"),
                   names[3])
     ppppc <- .tmp(calcOutput(type = "GDPpc", naming = "scenario", aggregate = FALSE), names[4])
 
@@ -151,10 +138,10 @@ calcValidIncome <- function(datasource = "James") {
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
     # Setting weights correctly for intensive and extensive variables
-    popWeights <- collapseNames(calcOutput(type = "GDPpc", 
-                                           unit = "2005 constant US$MER", 
-                                           naming = "scenario", 
-                                           supplementary = TRUE, 
+    popWeights <- collapseNames(calcOutput(type = "GDPpc",
+                                           unit = "constant 2005 US$MER",
+                                           naming = "scenario",
+                                           supplementary = TRUE,
                                            aggregate = FALSE)$weight
                                 + 10^-10)
     getSets(popWeights)[3] <- "scenario"
