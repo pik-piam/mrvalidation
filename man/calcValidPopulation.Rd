@@ -5,16 +5,12 @@
 \title{calcValidPopulation}
 \usage{
 calcValidPopulation(
-  PopulationCalib = c("past_grPEAP_grFuture", "Ariadne"),
-  PopulationPast = c("WDI_completed", "Eurostat_WDI_completed"),
-  PopulationFuture = c("SSP2018Update_completed_bezierOut",
-    "SSP2EU_completed_bezierOut"),
+  PopulationPast = "WDI-UN_PopDiv-MI",
+  PopulationFuture = c("SSPs-UN_PopDiv-MI", "SDPs-UN_PopDiv-MI", "SSP2EU-UN_PopDiv-MI"),
   TimeFromFindSet = TRUE
 )
 }
 \arguments{
-\item{PopulationCalib}{to what should be calibrated? past, future or a transition?}
-
 \item{PopulationPast}{population past data source}
 
 \item{PopulationFuture}{population future data source}
