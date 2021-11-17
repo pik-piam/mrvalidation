@@ -24,7 +24,7 @@ convertGMIA <- function(x, subtype) {
     map <- toolGetMapping(type = "regional", name = "regionmappingMAgPIE.csv")
     map$X[grep("Virgin Islands, U.S.", map$X)] <- "Virgin Islands, U"
     map$X <- toupper(map$X) # nolint
-    getItems(x, dim = 1.1) <- toupper(getItems(x, dim = 1.1))
+    getItems(x, dim = 1) <- toupper(getItems(x, dim = 1))
     y <- toolAggregate(x, rel = map, from = 1, to = 2, partrel = TRUE)
     y <- toolCountryFill(y)
   } else {
