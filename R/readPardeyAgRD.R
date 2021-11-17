@@ -16,7 +16,7 @@
 #' @importFrom dplyr mutate
 #' @importFrom madrat toolCountry2isocode
 #' @importFrom GDPuc convertGDP
-#' @importFrom magclass magpply
+#' @importFrom magclass magpply as.data.frame
 
 
 readPardeyAgRD <- function() {
@@ -80,9 +80,9 @@ readPardeyAgRD <- function() {
   #### multiply the PERD data by the 2011 and 1980 GERD/PERD ratios for the smaller countries, based on regional share
 
   # rename regions to match our mapping
-  getItems(ratio, 1)[which(getItems(ratio, 1) == "EastSouth Asia and Pacific")] <- "OAS"
-  getItems(ratio, 1)[which(getItems(ratio, 1) == "LAC")] <- "LAM"
-  getItems(ratio, 1)[which(getItems(ratio, 1) == "MENA")] <- "MEA"
+  getItems(ratio, dim = 1)[which(getItems(ratio, dim = 1) == "EastSouth Asia and Pacific")] <- "OAS"
+  getItems(ratio, dim = 1)[which(getItems(ratio, dim = 1) == "LAC")] <- "LAM"
+  getItems(ratio, dim = 1)[which(getItems(ratio, dim = 1) == "MENA")] <- "MEA"
 
   # make regional aggregations and apply other regions to EUR has available countries for mean,
   # SPain 1980 looks like outlier
@@ -103,7 +103,7 @@ readPardeyAgRD <- function() {
 
   # multiply those countriesin OAS, MEA, LAM, SSA by regional share in 1960 and 1980
   # NOTE assumption: share of  private investment in 1960  based on 1980 levels
-  aggr <- intersect(getItems(ratio, 1), unique(mapping$RegionCode))
+  aggr <- intersect(getItems(ratio, dim = 1), unique(mapping$RegionCode))
   aggrRatio <- as.data.frame(setYears(ratio[aggr, c(1980, 2011), ], c(1960, 2011)))[, -c(1, 4, 5)]
 
   yCountries <- merge(yCountries, aggrRatio,  by.x = c("RegionCode", "Year"), by.y = c("Region", "Year"))
@@ -135,10 +135,7 @@ readPardeyAgRD <- function() {
 
   getNames(total) <- "GERD"
 
-  ### note the currencies are different! this is in 2015 and pardey in 2009 PPP
-  # CONVERT TO 2009USD
-
-  oecdRus <- setdiff(getItems(total, 1), getItems(pardey, 1))
+  oecdRus <- setdiff(getItems(total, dim =  1), getItems(pardey, dim =  1))
 
   # assume share of these countries as global total same in the past as data only intersects in 2010/2011
   rusShr <- magpply(total[oecdRus, c(2010, 2011), ] / dimSums(pardey[, c(2010, 2011), ], dim = 1), mean, MARGIN = 1)
