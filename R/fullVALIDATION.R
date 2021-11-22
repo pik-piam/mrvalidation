@@ -219,6 +219,7 @@ if (rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.
 
   # Productivity
   calcOutput(type = "ValidTau", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidTauPastr", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
 
   # Prices
   calcOutput(type = "ValidPriceAgriculture", datasource = "WBGEM", aggregate = FALSE,
