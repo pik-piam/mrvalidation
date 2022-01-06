@@ -61,7 +61,8 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
 
   } else if (datasource %in% c("LPJmL_rev21", "LPJmLCarbon", "LPJmL4Paper",
                                "SoilGrids", "GSOC", "WISE", "SoilGrids2:new",
-                               "SoilGrids2:q05_new", "SoilGrids2:q95_new")) {
+                               "SoilGrids2:q05_new", "SoilGrids2:q95_new",
+                               "SOCDebtPaper")) {
 
     if (datasource == "LPJmL_rev21") {
 
@@ -99,6 +100,13 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
       var <- toolSplitSubtype(datasource, list(soilgrids = "SoilGrids2", variable = NULL))$variable
       out <- readSource("SoilGrids", subtype = paste0("cstock_0_30_", var), convert = "onlycorrect")
       out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
+      
+    }  else if (datasource == "SOCDebtPaper") {
+      
+      out <- readSource("SoilGrids", convert = "onlycorrect")
+      out <- mbind(setYears(out[ , , "SOCS_1960"], "y1960"), 
+                   setYears(out[ , , "SOCS_1990"], "y1990"), 
+                   setYears(out[ , , "SOCS_2010"], "y2010"))
     }
 
     area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE, cellular = TRUE,
