@@ -103,7 +103,7 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
       
     }  else if (datasource == "SOCDebtPaper") {
       
-      out <- readSource("SoilGrids", convert = "onlycorrect")
+      out <- readSource("SoilCarbonDebt", convert = "onlycorrect")
       out <- mbind(setYears(out[ , , "SOCS_1960"], "y1960"), 
                    setYears(out[ , , "SOCS_1990"], "y1990"), 
                    setYears(out[ , , "SOCS_2010"], "y2010"))
