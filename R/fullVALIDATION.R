@@ -185,6 +185,8 @@ if (rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidEmissions", datasource = "GFED", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidEmissions", datasource = "EDGAR6", aggregate = "REG+GLO", 
+             file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidEmissions", datasource = "PRIMAPhist", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidEmissions", datasource = "IPCC", aggregate = "REG+GLO",
