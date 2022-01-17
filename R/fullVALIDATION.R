@@ -13,7 +13,7 @@
 #'
 fullVALIDATION <- function(rev = 0.1) {
 
-if (rev < 4.63) stop("mrvalidation(>= 2.28.0) does not support revision below 4.63 anymore.
+if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.63 anymore.
                        Please use a older snapshot/version of the library, if you need older revisions.")
   # all validation data regional aggregations happens here
   # for the first variable output calculation, append paramenter should be set to FALSE so that the
