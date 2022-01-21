@@ -14,8 +14,7 @@
 
 downloadSoilCarbonDebt <- function() {
 
-  files <- c(all           = "all",
-             SOCS_900      = "SOCS_0_30cm_year_900AD_10km.tif",
+  files <- c(SOCS_900      = "SOCS_0_30cm_year_900AD_10km.tif",
              SOCS_1800     = "SOCS_0_30cm_year_1800AD_10km.tif",
              SOCS_1910     = "SOCS_0_30cm_year_1910AD_10km.tif",
              SOCS_1960     = "SOCS_0_30cm_year_1960AD_10km.tif",
