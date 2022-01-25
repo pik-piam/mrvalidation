@@ -34,7 +34,7 @@ readSoilCarbonDebt <- function() {
 
     data           <- raster::raster(file)
     data           <- raster::projectRaster(data, r5min, over = TRUE)
-    data30min      <- raster::aggregate(data * area5min, fact = 6, fun = mean) / area30min
+    data30min      <- raster::aggregate(data * area5min, fact = 6, fun = sum) / area30min
     mag            <- as.magpie(raster::extract(data30min, map[c("lon", "lat")]), spatial = 1)
 
     getNames(mag)  <- f
