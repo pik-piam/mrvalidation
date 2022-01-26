@@ -104,9 +104,9 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
     }  else if (datasource == "SOCDebtPaper") {
       
       out <- toolCoord2Isocell(readSource("SoilCarbonDebt", convert = "onlycorrect"))
-      out <- mbind(setYears(out[ , , "SOCS_1960"], "y1960"), 
-                   setYears(out[ , , "SOCS_1990"], "y1990"), 
-                   setYears(out[ , , "SOCS_2010"], "y2010"))
+      out <- mbind(setNames(setYears(out[ , , "SOCS_1960"], "y1960"), "SOC"),
+                   setNames(setYears(out[ , , "SOCS_1990"], "y1990"), "SOC"), 
+                   setNames(setYears(out[ , , "SOCS_2010"], "y2010"), "SOC"))
     }
 
     area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE, cellular = TRUE,
