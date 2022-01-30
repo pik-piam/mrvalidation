@@ -49,7 +49,7 @@ calcValidTauPastr <-  function(){
   t[is.nan(t) | is.infinite(t)] <- 0
   t <- collapseNames(t)
   names(dimnames(t))[3] <- "scenario.model.variable"
-  getNames(t) <- "historical.MAgPIEOwn.Productivity|Landuse Intensity Indicator Tau Managed Pasture (Index)"
+  getNames(t) <- "historical.MAgPIEOwn.Productivity|Landuse Intensity Indicator Tau managed pastures (Index)"
   
   return(list(x = t,
               weight = yref * area, # Xref
