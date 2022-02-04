@@ -73,7 +73,7 @@ calcValidLand <- function(datasource="MAgPIEown"){
     main <- mbind(main,setNames(dimSums(main,dim=3),"Resources|Land Cover (million ha)"))
     
     grassland <- setNames(calcOutput("LanduseInitialisation", nclasses="nine", fao_corr=TRUE,aggregate = FALSE)[,,c("past", "range")], c("pastr", "range"))
-    grassland <- setNames(grassland, paste0("Grassland Management|+|",reportingnames(getNames(grassland,dim=1))," (million ha)"))
+    grassland <- setNames(grassland, paste0("Resources|Land Cover|+|",reportingnames(getNames(grassland,dim=1))," (million ha)"))
 
     forest <- c("primforest","secdforest","forestry")
     forest <- x[,,forest]
