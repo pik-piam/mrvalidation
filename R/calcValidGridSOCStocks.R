@@ -59,7 +59,7 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
     weight <- NULL
 
-  } else if (datasource %in% c("LPJmL_rev21", "LPJmLCarbon", "LPJmL4Paper",
+  } else if (datasource %in% c("LPJmL_rev21", "LPJmL4Paper",
                                "SoilGrids", "GSOC", "WISE", "SoilGrids2:new",
                                "SoilGrids2:q05_new", "SoilGrids2:q95_new",
                                "SOCDebtPaper")) {
@@ -68,11 +68,6 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
 
       soilc  <- readSource("LPJml_rev21", "soilc_layer", convert = "onlycorrect")
       out <- soilc[, , "mm0_200"] + setNames(soilc[, , "mm201_500"], NULL) / 3
-
-    } else if (datasource == "LPJmLCarbon") {
-
-      out <- calcOutput("LPJmlCarbon", climatetype = "historical", landtype = "nat_veg",
-                        subtype = "soilc_0-30", aggregate = FALSE)
 
     } else if (datasource == "LPJmL4Paper") {
 
