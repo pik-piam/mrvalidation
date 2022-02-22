@@ -11,8 +11,12 @@
 #' \dontrun{
 #'   readSource("SoilCarbonDebt", convert="onlycorrect")
 #' }
+#' 
+#' @importFrom madrat toolConditionalReplace
 
 correctSoilCarbonDebt <- function(x){
 
+  x <- toolConditionalReplace(x, conditions = c("is.na()"), replaceby = 0)
+  
   return(x)
 }
