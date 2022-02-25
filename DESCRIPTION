@@ -26,7 +26,7 @@ Description: Package contains routines to prepare data for validation exercises.
 Depends:
     R(>= 2.10.0),
     magclass(>= 3.17),
-    madrat(>= 2.5.0),
+    madrat(>= 2.11.0),
     mrdrivers(>= 0.2.2),
     mrcommons(>= 1.0.0),
     mrmagpie
