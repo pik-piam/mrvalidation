@@ -33,7 +33,7 @@ readPardeyAgRD <- function() {
   perd$PERD <- perd$PERD * 1000 # nolint
   # separate out the countries from the aggregates for using the aggregates later
   perdc <- perd
-  perdc$Region <- toolCountry2isocode(perdc$Region) # nolint
+  perdc$Region <- toolCountry2isocode(perdc$Region, ignoreCountries = c("EastSouth Asia and Pacific", "High Income", "LAC", "Low Income", "Lower Middle Income", "MENA", "SSA", "Lower Middle", "Upper Middle", "Upper Middle Income", "World Total")) # nolint
   perdc <- perdc[!is.na(perdc$Region), ]
   perdc <- as.magpie(perdc, spatial = 1, temporal = 2, tidy = TRUE)
   perd <- as.magpie(perd, spatial = 1, temporal = 2, tidy = TRUE)
@@ -47,7 +47,7 @@ readPardeyAgRD <- function() {
   gerd$GERD <- gerd$GERD * 1000 # nolint
   # separate out the countries from the aggregates for using the aggregates later
   gerdc <- gerd
-  gerdc$Region <- toolCountry2isocode(gerdc$Region) # nolint
+  gerdc$Region <- toolCountry2isocode(gerdc$Region, ignoreCountries = c("EastSouth Asia and Pacific", "High Income", "LAC", "Low Income", "Lower Middle Income", "MENA", "SSA", "Lower Middle", "Upper Middle", "Upper Middle Income", "World Total"))  # nolint
   gerdc <- gerdc[!is.na(gerdc$Region), ]
   gerdc <- as.magpie(gerdc, spatial = 1, temporal = 2, tidy = TRUE)
   gerd <- as.magpie(gerd, spatial = 1, temporal = 2, tidy = TRUE)
