@@ -53,8 +53,6 @@ calcValidTauPastr <-  function(){
   
   return(list(x = t,
               weight = yref * area, # Xref
-              min=0,
-              max=10,
               unit="-",
               description="Historic Trends in managed pastures Land Use Intensity Tau based on FAO yield trends") )
 }
