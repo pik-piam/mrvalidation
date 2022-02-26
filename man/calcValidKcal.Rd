@@ -7,7 +7,9 @@
 calcValidKcal(datasource = "FAO", nutrient = "kcal", detail = TRUE)
 }
 \arguments{
-\item{datasource}{Datasource of validation data. If "FAO", we use FAO calories with FAO population data (slightly diverges from original data as the convert script for example splits up countries for the past). In the case of "PopulationPast", we also use FAO calorie values, but divide them by our standard population. "Bodirsky2015" uses projections from slightly altered method of the Bodirsky et al 2015 PLOS ONE paper.}
+\item{datasource}{Datasource of validation data. If "FAO", we use FAO calories with FAO population data (slightly
+diverges from original data as the convert script for example splits up countries for the past). If "FAOmassbalance"
+we use calories from the FAO massbalance calculations, and divide them by our standard population.}
 
 \item{nutrient}{kcal or protein}
 
@@ -20,8 +22,7 @@ List of magpie objects with results on country level, weight on country level, u
 calculates the validation data for calorie food supply
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("ValidKcal")
 }
 
