@@ -24,7 +24,7 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
 
   # Population and Income
   calcOutput(type = "ValidPopulation", aggregate = "REG+GLO", file = valfile,
-             append = FALSE, na_warning = FALSE, try = TRUE) # ready
+             append = FALSE, warnNA = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidIncome", datasource = "James", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidIncome", datasource = "WDI-MI_SSPs-MI",
@@ -59,7 +59,7 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
   calcOutput(type = "ValidDemand", aggregate = "REG+GLO", file = valfile,
              append = TRUE, detail = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidDemandBioenergy", aggregate = "REG+GLO", file = valfile,
-             append = TRUE, na_warning = FALSE, try = TRUE) # ready
+             append = TRUE, warnNA = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidProduction", aggregate = "REG+GLO", file = valfile,
              append = TRUE, detail = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidTrade", aggregate = "REG+GLO", file = valfile,
@@ -89,9 +89,9 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
   calcOutput(type = "ValidLand", datasource = "MAgPIEown", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLand", datasource = "SSPResults", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, na_warning = FALSE, try = TRUE) # ready
+             file = valfile, append = TRUE, warnNA = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidLand", datasource = "FRA2020", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, na_warning = FALSE, try = TRUE) # ready
+             file = valfile, append = TRUE, warnNA = FALSE, try = TRUE) # ready
 
   # Land Cover Change
   calcOutput(type = "ValidLandChange", datasource = "FAO_crop_past", aggregate = "REG+GLO",
@@ -103,7 +103,7 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
   calcOutput(type = "ValidLandChange", datasource = "MAgPIEown", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLandChange", datasource = "SSPResults", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, na_warning = FALSE, try = TRUE) # ready
+             file = valfile, append = TRUE, warnNA = FALSE, try = TRUE) # ready
 
   # WaterUsage
   calcOutput(type = "ValidWaterUsage", datasource = "foley_2011", aggregate = FALSE,
@@ -185,7 +185,7 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidEmissions", datasource = "GFED", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidEmissions", datasource = "EDGAR6", aggregate = "REG+GLO", 
+  calcOutput(type = "ValidEmissions", datasource = "EDGAR6", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidEmissions", datasource = "PRIMAPhist", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
@@ -234,9 +234,9 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
              file = valfile, append = TRUE, try = TRUE)
 
   calcOutput(type = "ValidPriceBioenergy", aggregate = "REG+GLO", file = valfile, append = TRUE,
-             na_warning = FALSE, try = TRUE) # ready
+             warnNA = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidPriceGHG",   datasource = "SSPResults", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, na_warning = FALSE, try = TRUE)
+             file = valfile, append = TRUE, warnNA = FALSE, try = TRUE)
 
   # PriceIndex
   calcOutput(type = "ValidPriceIndex", datasource = "FAO", baseyear = "y2010", round = TRUE,
