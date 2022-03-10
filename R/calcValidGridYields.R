@@ -17,6 +17,7 @@
 #' @importFrom magpiesets reportingnames
 #' @importFrom magclass getComment<- clean_magpie
 #' @importFrom madrat toolConditionalReplace
+#' @importFrom stringr str_split
 
 calcValidGridYields <- function(datasource = "downscaledFAO", future = NULL) {
 
@@ -37,35 +38,39 @@ calcValidGridYields <- function(datasource = "downscaledFAO", future = NULL) {
     options(magclass_sizeLimit = 1e+12)
     on.exit(options(magclass_sizeLimit = sizelimit))
 
-    if (is.null(future)) climatetype <- "GSWP3-W5E5:historical" else climatetype <- future
+    lpjml       <- "ggcmi_phase3_nchecks_bft_6277d36e"
+    isimip      <- NULL
+    climatetype <- "GSWP3-W5E5:historical"
+    
+    if (!is.null(future)){
+      
+      if (grepl("\\+", future)) {
+        
+        tmp         <- unlist(str_split(future, "\\+"))
+        climatetype <- tmp[1]
+        
+        if (any(grepl("lpjml:", tmp))) {
+          i <- grep("lpjml:", tmp)
+          lpjml  <- gsub("lpjml:", "", tmp[i])
+        } 
+        
+        if (any(grepl("isimip:", tmp))) {
+          i <- grep("isimip:", tmp)
+          isimip  <- gsub("isimip:", "", tmp[i])
+        } 
+        
+        
+      } else {
+        
+        climatetype <- future
+        
+      }
+    }
+    
+    refYear        <- "y2010"
 
-    ref_year        <- "y2010"
-
-    yieldFAO_iso    <- calcOutput("FAOYield", cut = 0.98, aggregate = FALSE)
-    yieldLPJmL_grid <- calcOutput("Yields", source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb"),
-                                  climatetype = climatetype, aggregate = FALSE)[, , findset("kcr")]
-
-    areaMAG_grid    <- calcOutput("Croparea", sectoral = "kcr", physical = TRUE, cellular = TRUE,
-                                  irrigation = TRUE, aggregate = FALSE)[, ref_year, ]
-    CountryToCell   <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv")
-
-    areaMAG_iso     <- toolAggregate(dimSums(areaMAG_grid, dim = 3.1), rel = CountryToCell,
-                                     from = "celliso", to = "iso", dim = 1)
-    cropMAG_grid    <- dimSums(areaMAG_grid, dim = 3.2)
-
-    yieldLPJmL_iso  <- toolAggregate(dimSums(yieldLPJmL_grid[, ref_year, ] * areaMAG_grid, dim = 3.2),
-                                             rel = CountryToCell, from = "celliso", to = "iso", dim = 1) /
-                                                                                                   areaMAG_iso
-
-    yieldLPJmL_iso[areaMAG_iso == 0] <- (toolAggregate(dimSums(yieldLPJmL_grid[, ref_year, ] * cropMAG_grid, dim = 3.2),
-                                                       rel = CountryToCell, from = "celliso", to = "iso", dim = 1) /
-                                                     dimSums(areaMAG_iso, dim = 3))[areaMAG_iso == 0]
-
-    yieldLPJmL_iso <- toolConditionalReplace(yieldLPJmL_iso, "is.na()", 0)
-    yieldLPJmL_iso <- toolIso2CellCountries(yieldLPJmL_iso)
-    yieldFAO_iso   <- toolIso2CellCountries(yieldFAO_iso)
-
-    out <- toolPatternScaling(yieldLPJmL_grid, yieldLPJmL_iso, yieldFAO_iso, ref_year = ref_year)
+    out <- calcOutput("YieldsCalibrated", source = c(lpjml = lpjml, isimip = isimip),
+                      climatetype = climatetype, refYear = refYear, cells = "magpiecell", aggregate = FALSE)
 
     getNames(out, dim = 1) <- reportingnames(getNames(out, dim = 1))
     getNames(out, dim = 2) <- reportingnames(getNames(out, dim = 2))
