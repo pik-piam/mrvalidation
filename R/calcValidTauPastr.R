@@ -18,7 +18,7 @@ calcValidTauPastr <-  function(){
   
   # areas
   pastr_weight <- calcOutput("PastureSuit",
-                             subtype = paste("ISIMIP3b", "MRI-ESM2-0", "1850_2100", sep = ":"),
+                             subtype = paste("ISIMIP3bv2", "MRI-ESM2-0", "1850_2100", sep = ":"),
                              aggregate = F
   )[, past, 1]
   # regional mapping
