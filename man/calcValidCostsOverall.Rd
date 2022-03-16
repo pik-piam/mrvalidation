@@ -13,12 +13,14 @@ calcValidCostsOverall(datasource = "FAO")
 List of magpie object with results on country level, no weight, unit and description.
 }
 \description{
-Returns historical values of the overall value of production for the Agricultural, Forestry sectors, and fisheries (mio.05USD)
+Returns historical values of the overall value of production for the Agricultural, 
+Forestry sectors, and fisheries (mio.05USD)
 }
 \examples{
 \dontrun{
 calcOutput("calcValidCostsOverall")
 }
+
 }
 \author{
 Edna J. Molina Bacca
