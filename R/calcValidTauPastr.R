@@ -48,6 +48,23 @@ calcValidTauPastr <-  function(){
   t <- yact[, past, ] / yref[, past, ]
   t[is.nan(t) | is.infinite(t)] <- 0
   t <- collapseNames(t)
+  
+  # replacing unrealistic high tau values by regional averages
+  reg_map <- toolGetMapping("regionmappingH12.csv", type = "cell")
+  t_reg <- toolAggregate(t, rel = reg_map, weight = area, from = "CountryCode", to = "RegionCode")
+  regions <- reg_map$RegionCode
+  names(regions) <- reg_map[, "CountryCode"]
+  
+  largeTC <- where(t >= 10)$true$individual # tau threshold
+  colnames(largeTC)[1] <- "country"
+  largeTC <- as.data.frame(largeTC)
+  
+  for (i in as.vector(largeTC[, "country"])) {
+    for (j in as.vector(largeTC[largeTC$country == i, "year"])) {
+      t[i, j, ] <- t_reg[regions[i], j, ]
+    }
+  }
+  
   names(dimnames(t))[3] <- "scenario.model.variable"
   getNames(t) <- "historical.MAgPIEOwn.Productivity|Landuse Intensity Indicator Tau managed pastures (Index)"
   
