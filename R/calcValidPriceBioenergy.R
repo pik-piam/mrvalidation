@@ -7,7 +7,7 @@
 #' @author Florian Humpenoeder
 calcValidPriceBioenergy <- function() {
   sel <- c("Price|Primary Energy|Biomass (US$2005/GJ)")
-  out <- calcOutput("ValidSSPResults", aggregate = FALSE)[, , sel]
+  out <- calcOutput("ValidSSPResults", aggregate = FALSE, warnNA = FALSE)[, , sel]
   getNames(out, dim = 3) <- c("Prices|Bioenergy (US$05/GJ)")
 
   # set aggregation weights based on population

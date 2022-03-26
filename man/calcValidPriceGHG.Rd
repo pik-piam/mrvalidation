@@ -13,8 +13,7 @@ calcValidPriceGHG(datasource = "SSPResults")
 Validates MAgPIE GHG emission price input against SSP GHG emission price projections
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("ValidPriceGHG")
 }
 
