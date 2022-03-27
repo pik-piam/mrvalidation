@@ -102,8 +102,8 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLandChange", datasource = "MAgPIEown", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidLandChange", datasource = "SSPResults", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, warnNA = FALSE, try = TRUE) # ready
+  calcOutput(type = "ValidLandChange", datasource = "SSPResults", baseyear = 2005, # 1995 not available as baseyear
+             aggregate = "REG+GLO", file = valfile, append = TRUE, warnNA = FALSE, try = TRUE) # ready
 
   # WaterUsage
   calcOutput(type = "ValidWaterUsage", datasource = "foley_2011", aggregate = FALSE,
