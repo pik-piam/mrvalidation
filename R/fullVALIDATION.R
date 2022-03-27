@@ -182,7 +182,7 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
   calcOutput(type = "ValidEmissions", datasource = "FAO_EmisLUC", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE, warnNA = FALSE) # ready
   calcOutput(type = "ValidEmissions", datasource = "FAO_EmisAg", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, try = TRUE) # ready
+             file = valfile, append = TRUE, try = TRUE, warnNA = FALSE) # ready
   calcOutput(type = "ValidEmissions", datasource = "GFED", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidEmissions", datasource = "EDGAR6", aggregate = "REG+GLO",
