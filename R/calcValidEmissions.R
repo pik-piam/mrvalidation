@@ -15,7 +15,6 @@
 #' }
 #'
 #' @importFrom  magpiesets reportingnames
-#' @importFrom  luscale groupAggregate
 #'
 calcValidEmissions <- function(datasource = "CEDS") {
 
