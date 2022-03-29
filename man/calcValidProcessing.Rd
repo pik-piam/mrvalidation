@@ -6,7 +6,7 @@
 \usage{
 calcValidProcessing(
   datasource = "FAO",
-  detail = T,
+  detail = TRUE,
   nutrient = "dm",
   indicator = "secondary_from_primary"
 )
@@ -18,17 +18,18 @@ calcValidProcessing(
 
 \item{nutrient}{The nutrient in which the results shall be reported.}
 
-\item{indicator}{if "primary_to_process", returns the amount of primary product into processing. if "secondary_from_primary", gives primary into secondary.}
+\item{indicator}{if "primary_to_process", returns the amount of primary product into processing.
+if "secondary_from_primary", gives primary into secondary.}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.
 }
 \description{
-calculates the validation data for the share of inputs that go into processing processes, and the share of inputs that secondary products are composed of
+calculates the validation data for the share of inputs that go into processing processes,
+and the share of inputs that secondary products are composed of
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("ValidProcessing", indicator = "secondary_from_primary")
 }
 

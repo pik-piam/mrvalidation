@@ -4,7 +4,7 @@
 \alias{calcValidFeed}
 \title{calcValidFeed}
 \usage{
-calcValidFeed(datasource = "FAO", detail = T, nutrient = "dm")
+calcValidFeed(datasource = "FAO", detail = TRUE, nutrient = "dm")
 }
 \arguments{
 \item{datasource}{Datasource of validation data.}
@@ -20,8 +20,7 @@ List of magpie objects with results on country level, weight on country level, u
 calculates the validation data for feed demand by animal type
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("ValidFeed")
 }
 
