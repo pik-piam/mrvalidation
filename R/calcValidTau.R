@@ -4,7 +4,7 @@ calcValidTau <- function() {
   weight <- collapseNames(tau[,,"xref.total"])
   
   names(dimnames(out))[3] <- "scenario.model.variable"
-  getNames(out) <- "historical.dietrich_et_al_2012.Productivity|Landuse Intensity Indicator Tau cropland (Index)"
+  getNames(out) <- "historical.dietrich_et_al_2012.Productivity|Landuse Intensity Indicator Tau (Index)"
   
   return(list(x=out,
               weight=weight,
