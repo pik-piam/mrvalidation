@@ -70,7 +70,8 @@ calcValidTauPastr <- function() {
   t <- collapseNames(t)
 
   # replacing unrealistic high tau values by regional averages
-  reg_map <- toolGetMapping("regionmappingH12.csv", type = "cell")
+  map <- getConfig("regionmapping")
+  reg_map <- toolGetMapping(map, type = "cell")
   t_reg <- toolAggregate(t,
     rel = reg_map, weight = area,
     from = "CountryCode", to = "RegionCode"
