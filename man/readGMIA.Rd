@@ -9,7 +9,8 @@ readGMIA(subtype = NULL)
 \arguments{
 \item{subtype}{: Available subtypes are:
 \itemize{
-\item all_data_national : National Data on AEI (including differentiation by source (Groundwater, Surface water and nonconventional)), AAI
+\item all_data_national : National Data on AEI (including differentiation by source
+(Groundwater, Surface water and nonconventional)), AAI
 \item aei_pct : AEI in Percent
 \item aei_ha : AEI in ha
 \item aai_pct_aei : AAI as percentage of AEI
@@ -22,9 +23,11 @@ readGMIA(subtype = NULL)
 magpie object of the Irrigated Area  data
 }
 \description{
-Read Global Irrigation Map 
+Read Global Irrigation Map
 
-Read the Data from Siebert et.al on Irrigated Areas for each Country. Data contains total valuesas well as values from groundwater, surface water and non convential water sources for the following Categories:
+Read the Data from Siebert et.al on Irrigated Areas for each Country. Data
+contains total valuesas well as values from groundwater, surface water and
+non convential water sources for the following Categories:
 \itemize{
 \item Area equipped for Irrigation (AEI)
 \item Area acutally irrigated (AAI)
@@ -39,15 +42,16 @@ The following Data is also available spatialy explicit with a resolution of 5 ar
 \item AEI from surface water sources as percent of total AEI
 \item AEI from non conventional sources as percent of total AEI
 }
-There also exists a correct function to aggregate the data to 0.5 degree resolution, set convert="correctonly" to run.
+There also exists a correct function to aggregate the data to 0.5 degree resolution,
+set convert="correctonly" to run.
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 a <- readSource("GlobalIrrigationMap", "all_data_national")
-a <- readSource ("GMIA", "aei_pct", convert=F)
-a <- readSource ("GMIA", "aei_pct", convert="correctonly")
+a <- readSource ("GMIA", "aei_pct", convert = FALSE)
+a <- readSource ("GMIA", "aei_pct", convert = "correctonly")
 }
+
 }
 \seealso{
 \code{\link{readSource}}
