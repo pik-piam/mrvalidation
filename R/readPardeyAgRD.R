@@ -116,7 +116,8 @@ readPardeyAgRD <- function() {
   pardey <- mbind(fullgerd, gerdy)
 
   # convert PARDEY from 2009 PPP to 2005 USD MER
-  pardey1 <- convertGDP(pardey, unit_in = "constant 2009 Int$PPP", unit_out = "constant 2005 US$MER")
+  pardey1 <- convertGDP(pardey, unit_in = "constant 2009 Int$PPP", unit_out = "constant 2005 US$MER",
+                        replace_NAs = "no_conversion")
   # for missing countries use USA rate for now
   pardey1[where(is.na(pardey1))$true$regions, , ] <- pardey[where(is.na(pardey1))$true$regions, , ] *
                                                      setYears(pardey1["USA", 2000, ] / pardey["USA", 2000, ], NULL)
@@ -145,7 +146,8 @@ readPardeyAgRD <- function() {
   # drop TWN which sneaked in there, fix later
   pastRus <- pastRus["TWN", , inv = TRUE]
 
-  pastRus <- convertGDP(pastRus, unit_in = "constant 2015 Int$PPP", unit_out = "constant 2005 US$MER")
+  pastRus <- convertGDP(pastRus, unit_in = "constant 2015 Int$PPP", unit_out = "constant 2005 US$MER",
+                        replace_NAs = "no_conversion")
 
   out <- mbind(pardey, pastRus)
 

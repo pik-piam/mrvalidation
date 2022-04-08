@@ -34,9 +34,9 @@ convertIMPACTIrrigInvCosts <- function(x) {
   mapping <- data.frame(region = mapping$Region_Code, iso = mapping$ISO_code)
   mapping <- rbind(mapping, data.frame(region = "EUR", iso = "ATA"))
   mapping <- rbind(mapping, data.frame(region = "EUR", iso = "JEY"))
-  mapping <- mapping[which(mapping$iso != setdiff(mapping$iso, getRegions(w))), ]
+  mapping <- mapping[which(mapping$iso != setdiff(mapping$iso, getCells(w))), ]
 
-  tmp <- new.magpie(cells_and_regions = setdiff(mapping$region, getRegions(x)),
+  tmp <- new.magpie(cells_and_regions = setdiff(mapping$region, getCells(x)),
                     years = getYears(x),
                     names = getNames(x),
                     fill = 0)
@@ -46,7 +46,8 @@ convertIMPACTIrrigInvCosts <- function(x) {
   x <- toolAggregate(x, rel = mapping, weight = w, from = "region", to = "iso", dim = 1)
 
   # convert 2000 to 2005 USD
-  tmp <- convertGDP(x, unit_in = "constant 2000 US$MER", unit_out = "constant 2005 US$MER")
+  tmp <- convertGDP(x, unit_in = "constant 2000 US$MER", unit_out = "constant 2005 US$MER",
+                    replace_NAs = "no_conversion")
 
   ### for missing countries use DEU rate for now ###
   tmp[where(is.na(tmp))$true$regions, , ] <- x[where(is.na(tmp))$true$regions, , ] *
