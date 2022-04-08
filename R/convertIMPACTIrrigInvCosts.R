@@ -49,10 +49,6 @@ convertIMPACTIrrigInvCosts <- function(x) {
   tmp <- convertGDP(x, unit_in = "constant 2000 US$MER", unit_out = "constant 2005 US$MER",
                     replace_NAs = "no_conversion")
 
-  ### for missing countries use DEU rate for now ###
-  tmp[where(is.na(tmp))$true$regions, , ] <- x[where(is.na(tmp))$true$regions, , ] *
-                                             setYears(tmp["DEU", "y2020", ] / x["DEU", "y2020", ],
-                                                      NULL)
   x <- tmp
   ### for missing countries use DEU rate for now ###
 

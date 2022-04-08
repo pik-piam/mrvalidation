@@ -116,12 +116,9 @@ readPardeyAgRD <- function() {
   pardey <- mbind(fullgerd, gerdy)
 
   # convert PARDEY from 2009 PPP to 2005 USD MER
-  pardey1 <- convertGDP(pardey, unit_in = "constant 2009 Int$PPP", unit_out = "constant 2005 US$MER",
-                        replace_NAs = "no_conversion")
-  # for missing countries use USA rate for now
-  pardey1[where(is.na(pardey1))$true$regions, , ] <- pardey[where(is.na(pardey1))$true$regions, , ] *
-                                                     setYears(pardey1["USA", 2000, ] / pardey["USA", 2000, ], NULL)
-  pardey <- pardey1
+  pardey <- convertGDP(pardey, unit_in = "constant 2009 Int$PPP", unit_out = "constant 2005 US$MER",
+                       replace_NAs = "no_conversion")
+
   ### read in OECD data to get missing countries: REF missing from pardey data
   oecd <- read.csv("GERD_FORD_OECD.csv")
   oecd <- oecd[, -c(2, 3, 5, 7, 9, 11, 12, 13, 14, 15, 16, 18, 19)]
