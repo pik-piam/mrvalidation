@@ -1,8 +1,8 @@
 Package: mrvalidation
 Type: Package
 Title: madrat data preparation for validation purposes
-Version: 2.37.19
-Date: 2022-05-04
+Version: 2.37.20
+Date: 2022-05-23
 Authors@R: c(person("Benjamin Leon", "Bodirsky", email = "bodirsky@pik-potsdam.de", role = c("aut","cre")),
              person("Stephen", "Wirth", role = "aut"),
              person("Kristine", "Karstens", role = "aut"),
@@ -47,6 +47,6 @@ URL: https://github.com/pik-piam/mrvalidation, https://doi.org/10.5281/zenodo.43
 BugReports: https://github.com/pik-piam/mrvalidation/issues
 LazyData: no
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 Suggests:
     covr
