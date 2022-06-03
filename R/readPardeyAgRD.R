@@ -140,7 +140,7 @@ readPardeyAgRD <- function() {
 
   pastRus <- rusShr * dimSums(pardey, dim = 1)
 
-  # drop TWN which sneaked in there, fix later
+  # drop TWN which sneaked in there
   pastRus <- pastRus["TWN", , inv = TRUE]
 
   pastRus <- convertGDP(pastRus, unit_in = "constant 2015 Int$PPP", unit_out = "constant 2005 US$MER",
