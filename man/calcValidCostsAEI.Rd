@@ -13,7 +13,7 @@ calcValidCostsAEI(datasource = "IMPACT")
 magpie object on country level, unit and description
 }
 \description{
-calculates the validation data for irrigation investment costs
+provides the validation data for irrigation investment costs
 }
 \examples{
 \dontrun{
