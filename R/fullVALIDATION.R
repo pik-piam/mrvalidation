@@ -137,6 +137,8 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
   # Area equipped for Irrigation
   calcOutput(type = "ValidAEI", datasource = "LUH2v2", aggregate = "REG+GLO",
              file = "validation.mif", append = TRUE, try = TRUE)
+  calcOutput(type = "ValidAEI", datasource = "Mehta2022", aggregate = "REG+GLO",
+             file = "validation.mif", append = TRUE, try = TRUE)
   calcOutput(type = "ValidAEI", datasource = "HID", aggregate = "REG+GLO",
              file = "validation.mif", append = TRUE, try = TRUE)
   calcOutput(type = "ValidAEI", datasource = "GMIA", aggregate = "REG+GLO",

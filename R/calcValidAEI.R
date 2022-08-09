@@ -2,15 +2,18 @@
 #'
 #' @description Returns historical area equipped for irrigation.
 #'
-#' @param datasource Currently available: \code{"LUH2v2"}, \code{"HID"} and \code{"GMIA"}
+#' @param datasource Currently available: \code{"LUH2v2"}, \code{"HID"},
+#'                   \code{"GMIA"} and \code{"Mehta2022"}
 #' @return list of magpie object with data and weight
-#' @author Stephen Wirth, Anne Biewald
+#' @author Stephen Wirth, Anne Biewald, Felicitas Beier
 #' @importFrom magpiesets reportingnames
 #' @importFrom magclass collapseNames
+
 calcValidAEI <- function(datasource = "LUH2v2") {
 
-  if (datasource == "LUH2v2") {
-   out <- calcOutput("AreaEquippedForIrrigation", aggregate = FALSE)
+  if (datasource == "LUH2v2" || datasource == "Mehta2022") {
+    out <- calcOutput("AreaEquippedForIrrigation", source = datasource,
+                      cellular = FALSE, aggregate = FALSE)
   } else if (datasource == "HID") {
     out <- readSource("HID", "national_1900_2005") / 10^6
   } else if (datasource == "GMIA") {
@@ -29,6 +32,5 @@ calcValidAEI <- function(datasource = "LUH2v2") {
               weight = NULL,
               unit = "million ha",
               min = 0,
-              description = "Area equipped for Irrigation in Mha")
-  )
+              description = "Area equipped for Irrigation in Mha"))
 }

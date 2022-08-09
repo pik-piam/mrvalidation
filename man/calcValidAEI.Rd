@@ -7,7 +7,8 @@
 calcValidAEI(datasource = "LUH2v2")
 }
 \arguments{
-\item{datasource}{Currently available: \code{"LUH2v2"}, \code{"HID"} and \code{"GMIA"}}
+\item{datasource}{Currently available: \code{"LUH2v2"}, \code{"HID"},
+\code{"GMIA"} and \code{"Mehta2022"}}
 }
 \value{
 list of magpie object with data and weight
@@ -16,5 +17,5 @@ list of magpie object with data and weight
 Returns historical area equipped for irrigation.
 }
 \author{
-Stephen Wirth, Anne Biewald
+Stephen Wirth, Anne Biewald, Felicitas Beier
 }
