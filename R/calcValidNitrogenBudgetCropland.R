@@ -97,12 +97,12 @@ calcValidNitrogenBudgetCropland <- function(datasource = "Bodirsky") {
     tmp2 <- collapseNames(manure[, , selection][, , "Manure_applied_to_soils_(N_content)_(kg)"])
     mapping <- toolGetMapping(type = "sectoral", name = "IPCCitems_fao_online.csv")
     tmp2 <- toolAggregate(tmp2, rel = mapping, from = "fao", to = "magpie", dim = 3.1)
-    tmp2 <- tmp2 / 1e9
+    tmp2 <- tmp2 / 1e12
     manure <- setNames(dimSums(tmp2, dim = 3.1), "manure_conf")
 
     # fertilizer
     fertilizer <- readSource("FAO_online", "EmisAgSynthFerti")[, , c("3102|Nutrient nitrogen N (total).Agricultural_Use_in_nutrients_(kg_of_nutrients)")]
-    fertilizer <- dimSums(fertilizer, dim = c(3)) / 1e6
+    fertilizer <- dimSums(fertilizer, dim = c(3)) / 1e12
     fertilizer <- setNames(fertilizer, "fertilizer")
     commonyears <- intersect(intersect(getYears(fertilizer), getYears(residues)), getYears(manure))
 
