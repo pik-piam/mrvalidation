@@ -170,7 +170,8 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
   calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_44ac93de:GSWP3-W5E5:historical", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
   # calcOutput("ValidGrassSoilCarbon", datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100", model = "c7491e",
-  #           lpjml = "lpjml5p2_pasture", aggregate = FALSE, file = valfile, append = TRUE, try = TRUE) # Temporaraly swiched off for debugging
+  #           lpjml = "lpjml5p2_pasture", aggregate = FALSE, file = valfile, append = TRUE, try = TRUE)
+  # Temporaraly swiched off for debugging
 
   # Growing Stocks
   calcOutput("ValidGS", datasource = "FAO", aggregate = "REG+GLO", indicator = "relative",
@@ -224,7 +225,9 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
   calcOutput(type = "ValidYield", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
 
   # Productivity
-  calcOutput(type = "ValidTau", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidTau", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidTau", datasource = "FAOonline", aggregate = "REG+GLO", file = valfile,
+             append = TRUE, try = TRUE)
   calcOutput(type = "ValidTauPastr", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidLSUdensity", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgriResearchIntensity", aggregate = "REG+GLO", datasource = "Pardey",
