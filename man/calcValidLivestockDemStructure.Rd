@@ -17,7 +17,7 @@ calculates the validation data for the share of different livestock products (ex
 }
 \examples{
 
-\dontrun{ 
+\dontrun{
 calcOutput("ValidLivestockDemStructure")
 }
 

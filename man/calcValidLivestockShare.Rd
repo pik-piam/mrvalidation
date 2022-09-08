@@ -17,7 +17,7 @@ calculates the validation data for the share of livestock products (including fi
 }
 \examples{
 
-\dontrun{ 
+\dontrun{
 calcOutput("ValidLivestockShare")
 }
 

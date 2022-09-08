@@ -63,8 +63,10 @@ calcValidKcal <- function(datasource = "FAO", nutrient = "kcal", detail = TRUE) 
 
     if (nutrient == "kcal") {
       mainname <- "Nutrition|Calorie Supply"
+      unit <- "cal/capita/day"
     } else if (nutrient == "protein") {
       mainname <- "Nutrition|Protein Supply"
+      unit <- "g protein/capita/day"
     }
 
     out <- reporthelper(x = value, level_zero_name = mainname, detail = detail)
@@ -91,7 +93,7 @@ calcValidKcal <- function(datasource = "FAO", nutrient = "kcal", detail = TRUE) 
 
   return(list(x = out,
               weight = weight,
-              unit = "kcal/capita/day, protein/capita/day and kcal/kcal",
+              unit = unit,
               description = "FAO datasource contains slight alterations of original data, e.g. historical divison of countries.",
               min = 0,
               max = 7000))

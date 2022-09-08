@@ -47,7 +47,7 @@ calcValidSDG12 <- function(datasource = "FAO") {
     unitsX <- c(unitsX, unit)
 
     indicatorname <- "SDG|SDG12|Food waste"
-    unit <- "kcal/cap/day"
+    unit <- "cal/cap/day"
     # Reads food supply including household waste
     avFood <- calcOutput(type = "FoodSupplyPast", aggregate = FALSE)
     avFood <- dimSums(avFood, dim = 3)

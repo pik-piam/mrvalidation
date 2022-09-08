@@ -12,7 +12,7 @@ Package contains routines to prepare data for validation exercises.
 Useful links:
 \itemize{
   \item \url{https://github.com/pik-piam/mrvalidation}
-  \item \doi{10.5281/zenodo.4317826}
+  \item \url{https://doi.org/10.5281/zenodo.4317826}
   \item Report bugs at \url{https://github.com/pik-piam/mrvalidation/issues}
 }
 

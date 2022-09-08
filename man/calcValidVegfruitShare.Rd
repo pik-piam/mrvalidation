@@ -17,7 +17,7 @@ calculates the validation data for the share of vegetables, fruit and nuts produ
 }
 \examples{
 
-\dontrun{ 
+\dontrun{
 calcOutput("ValidVegfruitShare")
 }
 
