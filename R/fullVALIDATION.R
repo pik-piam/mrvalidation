@@ -39,6 +39,8 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgEmployment", datasource = "ILO", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidHourlyLaborCosts", datasource = "ILO_completed", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
 
   # Food Demand
   calcOutput(type = "ValidKcal", datasource = "FAO", aggregate = "REG+GLO",

@@ -23,6 +23,7 @@ calcValidTotalLaborCosts <- function(datasource = "USDA") {
                          "Costs Optimization|Input Factors|Labor costs|+|Livestock products (million US$05/yr)"))
 
   if (datasource == "USDA") datasource <- "USDA/FAO"
+  if (datasource == "ILO") datasource <- "ILO based"
   out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
   out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
