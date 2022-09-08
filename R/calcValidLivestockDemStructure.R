@@ -32,7 +32,7 @@ calcValidLivestockDemStructure<-function(datasource="FAO"){
 
     nosum  <- out[,,paste(level_zero_name,reportingnames(group),sep="|"),invert=TRUE]
     out <- summationhelper(nosum)
-    getNames(out) <- paste(getNames(out),"(cal/cal)",sep=" ")
+    getNames(out) <- paste(getNames(out),"(kcal/kcal)",sep=" ")
 
 
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
@@ -43,7 +43,7 @@ calcValidLivestockDemStructure<-function(datasource="FAO"){
 
   return(list(x=out,
               weight=weight,
-              unit="cal/cal",
+              unit="kcal/kcal",
               description="Share of livestock product calories within total calories of animal origin (excluding fish)",
               min=0,
               max=1)

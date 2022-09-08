@@ -35,7 +35,7 @@ calcValidVegfruitShare<-function(datasource="FAO"){
 
   return(list(x=out,
               weight=weight,
-              unit="cal/cal",
+              unit="kcal/kcal",
               description="Share of Food Supply Calories derived from vegetables, fruits and nuts",
               min=0,
               max=1)

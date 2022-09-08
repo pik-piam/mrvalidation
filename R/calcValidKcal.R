@@ -63,7 +63,7 @@ calcValidKcal <- function(datasource = "FAO", nutrient = "kcal", detail = TRUE) 
 
     if (nutrient == "kcal") {
       mainname <- "Nutrition|Calorie Supply"
-      unit <- "cal/capita/day"
+      unit <- "kcal/capita/day"
     } else if (nutrient == "protein") {
       mainname <- "Nutrition|Protein Supply"
       unit <- "g protein/capita/day"
@@ -90,6 +90,8 @@ calcValidKcal <- function(datasource = "FAO", nutrient = "kcal", detail = TRUE) 
   } else {
     stop("unknown data source")
   }
+
+  getNames(out) <- paste0(getNames(out), " (", unit, ")")
 
   return(list(x = out,
               weight = weight,

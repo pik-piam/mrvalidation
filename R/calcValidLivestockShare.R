@@ -27,7 +27,7 @@ calcValidLivestockShare<-function(datasource="FAO"){
 
     out=l/weight
 
-    getNames(out) <- "Nutrition|Dietary Composition|Livestock Share (cal/cal)"
+    getNames(out) <- "Nutrition|Dietary Composition|Livestock Share (kcal/kcal)"
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
     out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
     if(any(is.nan(out))){out[is.nan(out)]=0}
@@ -36,7 +36,7 @@ calcValidLivestockShare<-function(datasource="FAO"){
 
   return(list(x=out,
               weight=weight,
-              unit="cal/cal",
+              unit="kcal/kcal",
               description="Share of Food Supply Calories derived from animal origin (including fish)",
               min=0,
               max=1)
