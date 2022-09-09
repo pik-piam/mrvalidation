@@ -17,7 +17,7 @@ calcValidAgEmployment <- function(datasource = "ILO") {
 
   if (datasource == "ILO") {
     agEmpl <- calcOutput("AgEmplILO", aggregate = FALSE)[, , c("Livestock", "Crops")]
-    agEmpl <- setNames(dimSums(agEmpl, dim = 3), "Agricultural employment (mio people)")
+    agEmpl <- setNames(dimSums(agEmpl, dim = 3), "Agricultural employment|Crop and livestock products (mio people)")
   } else {
     stop("Datsource not available")
   }

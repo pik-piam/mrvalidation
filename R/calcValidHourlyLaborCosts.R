@@ -16,10 +16,9 @@
 
 calcValidHourlyLaborCosts <- function(datasource = "ILO_completed") {
 
-  hourlyCosts <- calcOutput("HourlyLaborCosts", datasource = "USDA_FAO", aggregate = FALSE)
-
   if (datasource == "ILO_completed") {
     hourlyCosts <- calcOutput("HourlyLaborCosts", datasource = "USDA_FAO", aggregate = FALSE)
+    hourlyCosts <- setNames(hourlyCosts, "Hourly labor costs (USDMER05/h)")
     years <- getYears(hourlyCosts)
     # total hours worked as weight for aggregation to world regions
     agEmpl <- calcOutput("AgEmplILO", aggregate = FALSE, subsectors = FALSE)
@@ -37,7 +36,7 @@ calcValidHourlyLaborCosts <- function(datasource = "ILO_completed") {
 
   return(list(x = out,
               weight = weight,
-              unit = "USD05MER/h",
+              unit = "USDMER05/h",
               description = description))
 
 }
