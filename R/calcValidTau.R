@@ -9,9 +9,8 @@
 #' @author Jan Philipp Dietrich
 
 calcValidTau <- function(datasource = "FAO2012") {
-
+  tau    <- readSource("Tau", "historical")
   if (datasource == "FAO2012") {
-    tau    <- readSource("Tau", "historical")
     out    <- collapseNames(tau[, , "tau.total"])
     weight <- collapseNames(tau[, , "xref.total"])
     sourceName <- "dietrich_et_al_2012"
