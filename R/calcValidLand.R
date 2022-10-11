@@ -69,7 +69,7 @@ calcValidLand <- function(datasource = "MAgPIEown") {
 
   } else if (datasource == "MAgPIEown") {
 
-    x <- calcOutput("LanduseInitialisation", nclasses = "seven", fao_corr = TRUE, aggregate = FALSE)
+    x <- calcOutput("LanduseInitialisation", nclasses = "seven", aggregate = FALSE)
     x <- mbind(x, setNames(dimSums(x[, , c("primforest", "secdforest", "forestry")], dim = 3), "forest"))
 
     mainCat <- c("crop", "past", "urban", "other", "forest")
