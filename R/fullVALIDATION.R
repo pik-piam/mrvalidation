@@ -285,5 +285,6 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
   calcOutput(type = "ValidTotalLaborCosts", datasource = "GTAP", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
 
-
+  # BII
+  calcOutput(type = "ValidBII", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
 }
