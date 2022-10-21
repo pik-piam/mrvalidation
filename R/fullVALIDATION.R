@@ -287,4 +287,8 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
 
   # BII
   calcOutput(type = "ValidBII", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+
+  # Global surface temperature
+  calcOutput(type = "ValidGlobalSurfaceTemperature", aggregate = "GLO", file = valfile, append = TRUE, try = TRUE)
+
 }
