@@ -1,4 +1,4 @@
-#' @title readGISTEMP.R
+#' @title readGISTEMP
 #' @description read GISTEMP historical global surface temperature data from the Goddard Institute for Space Studies
 #' @seealso https://data.giss.nasa.gov/gistemp/
 #' @author Michael Crawford

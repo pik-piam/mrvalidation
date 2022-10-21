@@ -2,7 +2,7 @@
 % Please edit documentation in R/readGISTEMP.R
 \name{readGISTEMP}
 \alias{readGISTEMP}
-\title{readGISTEMP.R}
+\title{readGISTEMP}
 \usage{
 readGISTEMP()
 }

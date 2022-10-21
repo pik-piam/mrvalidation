@@ -15,7 +15,7 @@ download GISTEMP historical global surface temperature data from the Goddard Ins
 \examples{
 
 \dontrun{
-  downloadSource("BII")
+  downloadSource("GISTEMP")
 }
 
 }

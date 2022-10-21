@@ -8,7 +8,7 @@
 #' @examples
 #'
 #' \dontrun{
-#'   downloadSource("BII")
+#'   downloadSource("GISTEMP")
 #' }
 #'
 #' @importFrom utils download.file
