@@ -163,10 +163,14 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidNitrogenBudgetPasture", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidNitrogenBudgetNonagland", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidManure", datasource = "IPCC", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidManure", datasource = "Bodirsky", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidNitrogenSurplus", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
 
   # Carbon Stocks
   calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_44ac93de:GSWP3-W5E5:historical", aggregate = "REG+GLO",
@@ -286,13 +290,15 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
              file = valfile, append = TRUE, try = TRUE)
 
   # Diversity indices
-  calcOutput(type = "ValidBII", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidCropareaDiversity", index = "shannon",
-             aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidCropareaDiversity", index = "invsimpson",
-             aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidBII", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidCropareaDiversity", index = "shannon", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidCropareaDiversity", index = "invsimpson", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
 
   # Global surface temperature
-  calcOutput(type = "ValidGlobalSurfaceTemp", aggregate = "GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidGlobalSurfaceTemp", aggregate = FALSE,
+             file = valfile, append = TRUE, try = TRUE)
 
 }
