@@ -33,11 +33,11 @@ calcValidNitrogenSurplus <- function() {
   out <- mbind(lapply(X = allReports, FUN = function(.x) .x[, yearsPresent, ]))
   out <- dimSums(out, dim = 3)
 
-  getNames(out) <- "Resources|Nitrogen|Nutrient Surplus (Mt Nr/yr)"
+  getNames(out) <- "Resources|Nitrogen|Nutrient surplus from land and manure management (Mt Nr/yr)"
   getSets(out)["d1.1"] <- "iso"
   getSets(out)["d3.1"] <- "variable"
   out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
-  out <- add_dimension(out, dim = 3.2, add = "model", nm = "combined")
+  out <- add_dimension(out, dim = 3.2, add = "model", nm = "MADRaT")
   getComment(out) <- NULL
 
   return(list(x           = out,
