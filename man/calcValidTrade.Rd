@@ -6,7 +6,7 @@
 \usage{
 calcValidTrade(
   datasource = "FAO",
-  detail = T,
+  detail = TRUE,
   nutrient = "dm",
   net_trade = TRUE,
   equalized = TRUE
@@ -21,7 +21,8 @@ calcValidTrade(
 
 \item{net_trade}{Net trade flows or total trade}
 
-\item{equalized}{numbers changed so that global production meets global demand (in reality different because of time-delay between exports and imports)}
+\item{equalized}{numbers changed so that global production meets global demand
+(in reality different because of time-delay between exports and imports)}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.
@@ -30,8 +31,7 @@ List of magpie objects with results on country level, weight on country level, u
 calculates the validation data for trade of agricultural products
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("ValidTrade")
 }
 
