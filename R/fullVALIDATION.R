@@ -300,5 +300,7 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
   # Global surface temperature
   calcOutput(type = "ValidGlobalSurfaceTemp", aggregate = FALSE,
              file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidCMIP6", aggregate = FALSE,
+             file = valfile, append = TRUE, try = TRUE)
 
 }
