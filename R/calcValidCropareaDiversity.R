@@ -139,7 +139,7 @@ calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
   }
 
   land <- calcOutput("FAOLand", aggregate = FALSE)
-  landArea <- land[, "y2015", "6601|Land area"] # total land is stable over time, so y2015 is arbitrarily chosen
+  croplandArea <- land[, , "6620|Cropland"]
 
   if (index == "shannon") {
     desc <- "Shannon crop area diversity index calculated based on historical FAO country-level crop area"
@@ -151,7 +151,7 @@ calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
 
   return(list(
     x = x,
-    weight = landArea,
+    weight = croplandArea,
     unit = "unitless",
     description = desc
   ))
