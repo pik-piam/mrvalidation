@@ -133,10 +133,26 @@ calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
   if (index == "shannon") {
     x <- setNames(x, "Biodiversity|Shannon crop area diversity index (unitless)")
   } else if (index == "invsimpson") {
-    setNames(x, "Biodiversity|Inverted Simpson crop area diversity index (unitless)")
+    x <- setNames(x, "Biodiversity|Inverted Simpson crop area diversity index (unitless)")
   } else if (index == "gini") {
-    setNames(x, "Biodiversity|Gini crop area diversity index (unitless)")
+    x <- setNames(x, "Biodiversity|Gini crop area diversity index (unitless)")
   }
 
-  return(x)
+  land <- calcOutput("FAOLand", aggregate = FALSE)
+  landArea <- land[, "y2015", "6601|Land area"] # total land is stable over time, so y2015 is arbitrarily chosen
+
+  if (index == "shannon") {
+    desc <- "Shannon crop area diversity index calculated based on historical FAO country-level crop area"
+  } else if (index == "invsimpson") {
+    desc <- "Inverted Simpson crop area diversity index based on historical FAO country-level crop area"
+  } else if (index == "gini") {
+    desc <- "Gini crop area diversity index based on historical FAO country-level crop area"
+  }
+
+  return(list(
+    x = x,
+    weight = landArea,
+    unit = "unitless",
+    description = desc
+  ))
 }
