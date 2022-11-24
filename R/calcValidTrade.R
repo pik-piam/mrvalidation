@@ -50,7 +50,8 @@ stop("no weight exits")
         normalizedTrade <- mb
       }
 
-      out <- reporthelper(x = normalizedTrade, dim = 3.1, level_zero_name = "Net-Trade", detail = detail)
+      out <- reporthelper(x = normalizedTrade, dim = 3.1, level_zero_name = "Trade|Net-Trade",
+                          detail = detail, partly = TRUE)
 
     } else {
 stop("No data exist for the given datasource!")
@@ -79,8 +80,8 @@ stop("No data exist for the given datasource!")
  stop("no equalized absolute trade implemented yet. You should set equalized to FALSE")
 }
 
-    out1 <- reporthelper(exports, dim = 3.1, level_zero_name = "Exports", detail = detail)
-    out2 <- reporthelper(imports, dim = 3.1, level_zero_name = "Imports", detail = detail)
+    out1 <- reporthelper(exports, dim = 3.1, level_zero_name = "Trade|Exports", detail = detail, partly = TRUE)
+    out2 <- reporthelper(imports, dim = 3.1, level_zero_name = "Trade|Imports", detail = detail, partly = TRUE)
     out <- mbind(out1, out2)
   }
 

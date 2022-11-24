@@ -68,6 +68,8 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
              append = TRUE, detail = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidTrade", aggregate = "REG+GLO", file = valfile,
              append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidTrade", aggregate = "REG+GLO", file = valfile,
+             append = TRUE,  net_trade = FALSE, equalized = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidSelfsuff", aggregate = "REG+GLO", file = valfile,
              append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidFeed", datasource = "FAO", aggregate = "REG+GLO",
