@@ -53,8 +53,6 @@ stop("no weight exits")
                           detail = detail, partly = TRUE)
 } else {
 
-    mb <- collapseNames(mb[, , nutrient][, , kTrade])
-
     exports <- collapseNames(mb[, , c("export")])
     imports <- collapseNames(mb[, , c("import")])
     netTrade <- collapseNames(mb[, , c("production")]) - collapseNames(mb[, , "domestic_supply"] -
