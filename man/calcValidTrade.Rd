@@ -41,5 +41,5 @@ calcOutput("ValidTrade")
 \code{\link{calcValidDemand}}
 }
 \author{
-Benjamin Leon Bodirsky, Xiaoxi Wang
+Benjamin Leon Bodirsky, Xiaoxi Wang, David M Chen
 }

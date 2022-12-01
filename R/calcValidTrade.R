@@ -9,7 +9,7 @@
 #'  (in reality different because of time-delay between exports and imports)
 #'
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
-#' @author Benjamin Leon Bodirsky, Xiaoxi Wang
+#' @author Benjamin Leon Bodirsky, Xiaoxi Wang, David M Chen
 #' @seealso
 #' \code{\link{calcFAOmassbalance}},
 #' \code{\link{calcValidDemand}}
@@ -22,12 +22,11 @@
 
 calcValidTrade <- function(datasource = "FAO", detail = TRUE, nutrient = "dm", net_trade = TRUE, equalized = TRUE) { # nolint
 
-  if (net_trade) {
     if (datasource == "FAO") {
       kTrade <- findset("k_trade")
       mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient][, , kTrade])
-
-      # exports
+  if (net_trade) {
+       # exports
       mb <- collapseNames(mb[, , c("production")]) - collapseNames(mb[, , "domestic_supply"])
 
       ### normalize trade for global production/demand mismatch
@@ -52,14 +51,8 @@ stop("no weight exits")
 
       out <- reporthelper(x = normalizedTrade, dim = 3.1, level_zero_name = "Trade|Net-Trade",
                           detail = detail, partly = TRUE)
+} else {
 
-    } else {
-stop("No data exist for the given datasource!")
-}
-  } else {
-
-    kTrade <- findset("k_trade")
-    mb <- calcOutput("FAOmassbalance", aggregate = FALSE)
     mb <- collapseNames(mb[, , nutrient][, , kTrade])
 
     exports <- collapseNames(mb[, , c("export")])
@@ -84,6 +77,47 @@ stop("No data exist for the given datasource!")
     out2 <- reporthelper(imports, dim = 3.1, level_zero_name = "Trade|Imports", detail = detail, partly = TRUE)
     out <- mbind(out1, out2)
   }
+    } else if (datasource == "FAOBilateral") {
+
+ tkcr <- calcOutput("FAOBilateralTrade", aggregate = FALSE,
+          output = "qty", products = "kcr", prod_agg = TRUE, five_year = TRUE)
+ tkli <- calcOutput("FAOBilateralTrade", aggregate = FALSE,
+          output = "qty", products = "kli", prod_agg = TRUE, five_year = TRUE)
+ to <- calcOutput("FAOBilateralTrade", aggregate = FALSE,
+          output = "qty", products = "kothers", prod_agg = TRUE, five_year = TRUE)
+
+ trade <- mbind(tkcr, tkli, to)
+ rm(tkcr, tkli, to)
+
+# set within region trade to 0
+# NOTE THIS IS ASSUMING H12 regions!!!!
+h12 <- toolGetMapping("h12.csv",  type = "regional")
+
+for (i in unique(h12$RegionCode)) {
+   trade[list("im" = h12[(h12$RegionCode == i), "CountryCode"],
+              "ex" = h12[(h12$RegionCode == i), "CountryCode"]), , ] <- 0
+}
+
+imports <- dimSums(trade, dim = 1.1)
+exports <- dimSums(trade, dim = 1.2)
+
+ if (net_trade) {
+  net <- exports - imports
+  out <- reporthelper(x = net, dim = 3.1, level_zero_name = "Trade|Net-Trade",
+                          detail = detail, partly = TRUE)
+ } else {
+    out1 <- reporthelper(exports, dim = 3.1, level_zero_name = "Trade|Exports", detail = detail, partly = TRUE)
+    out2 <- reporthelper(imports, dim = 3.1, level_zero_name = "Trade|Imports", detail = detail, partly = TRUE)
+    out <- mbind(out1, out2)
+ }
+
+ if (nutrient != "dm") {
+  attr <- calcOutput("Attributes", aggregate = FALSE)
+  out <- out * attr[, , nutrient]
+ }
+    } else {
+stop("No data exist for the given datasource!")
+}
 
   out <- summationhelper(out, excludeLevels = 1)
   out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
