@@ -23,7 +23,8 @@ calcValidAgEmployment <- function(datasource = "ILO") {
     description <- "Employment in agriculture (livestock+crop production) from ILO modelled estimates"
   } else if (datasource == "ILO_FAO") {
     agEmpl <- calcOutput("AgEmplILO", aggregate = FALSE)[, , c("Livestock", "Crops")]
-    out <- setNames(agEmpl, paste0("Agricultural employment|+|", getNames(agEmpl), " products (mio people)"))
+    out <- setNames(agEmpl, c("Agricultural employment|+|Livestock products (mio people)",
+                              "Agricultural employment|+|Crop products (mio people)"))
     description <- paste0("Employment in agriculture (livestock+crop production) from ILO modelled estimates, ",
                           "disaggregated by applying FAO value of production shares")
   } else {
