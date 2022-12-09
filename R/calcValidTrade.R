@@ -96,8 +96,8 @@ for (i in unique(h12$RegionCode)) {
               "ex" = h12[(h12$RegionCode == i), "CountryCode"]), , ] <- 0
 }
 
-imports <- dimSums(trade, dim = 1.1)
-exports <- dimSums(trade, dim = 1.2)
+imports <- dimSums(trade, dim = 1.2)
+exports <- dimSums(trade, dim = 1.1)
 
  if (net_trade) {
   net <- exports - imports
