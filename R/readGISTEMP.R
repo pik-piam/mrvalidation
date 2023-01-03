@@ -16,7 +16,8 @@
 
 readGISTEMP <- function() {
 
-    d <- read.csv("https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv", header = TRUE, skip = 1)
+    d <- read.csv("GISTEMP_GlobalSurfaceTemperature.csv", header = TRUE, skip = 1) %>%
+        as.data.frame()
 
     d <- d %>%
         mutate(Region = "GLO") %>%
