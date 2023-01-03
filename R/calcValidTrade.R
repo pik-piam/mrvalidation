@@ -78,11 +78,11 @@ stop("no weight exits")
     } else if (datasource == "FAOBilateral") {
 
  tkcr <- calcOutput("FAOBilateralTrade", aggregate = FALSE,
-          output = "qty", products = "kcr", prod_agg = TRUE, five_year = TRUE)
+          output = "qty", products = "kcr", prodAgg = TRUE, fiveYear = TRUE)
  tkli <- calcOutput("FAOBilateralTrade", aggregate = FALSE,
-          output = "qty", products = "kli", prod_agg = TRUE, five_year = TRUE)
+          output = "qty", products = "kli", prodAgg = TRUE, fiveYear = TRUE)
  to <- calcOutput("FAOBilateralTrade", aggregate = FALSE,
-          output = "qty", products = "kothers", prod_agg = TRUE, five_year = TRUE)
+          output = "qty", products = "kothers", prodAgg = TRUE, fiveYear = TRUE)
 
  trade <- mbind(tkcr, tkli, to)
  rm(tkcr, tkli, to)
