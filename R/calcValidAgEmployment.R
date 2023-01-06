@@ -19,12 +19,12 @@ calcValidAgEmployment <- function(datasource = "ILO") {
 
   if (datasource == "ILO") {
     agEmpl <- calcOutput("AgEmplILO", aggregate = FALSE)[, , c("Livestock", "Crops")]
-    out <- setNames(dimSums(agEmpl, dim = 3), "Agricultural employment|Crop and livestock products (mio people)")
+    out <- setNames(dimSums(agEmpl, dim = 3), "Labor|Employment|Agricultural employment (mio people)")
     description <- "Employment in agriculture (livestock+crop production) from ILO modelled estimates"
   } else if (datasource == "ILO_FAO") {
     agEmpl <- calcOutput("AgEmplILO", aggregate = FALSE)[, , c("Livestock", "Crops")]
-    out <- setNames(agEmpl, c("Agricultural employment|+|Livestock products (mio people)",
-                              "Agricultural employment|+|Crop products (mio people)"))
+    out <- setNames(agEmpl, c("Labor|Employment|Agricultural employment|+|Livestock products (mio people)",
+                              "Labor|Employment|Agricultural employment|+|Crop products (mio people)"))
     description <- paste0("Employment in agriculture (livestock+crop production) from ILO modelled estimates, ",
                           "disaggregated by applying FAO value of production shares")
   } else {

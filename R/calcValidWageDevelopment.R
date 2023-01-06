@@ -20,7 +20,7 @@ calcValidWageDevelopment <- function(datasource = "ILO_completed") {
     hourlyCosts <- calcOutput("HourlyLaborCosts", datasource = "USDA_FAO", aggregate = FALSE)
 
     wageIndex <- collapseDim(hourlyCosts / hourlyCosts[, 2000, ], dim = 2.2)
-    wageIndex <- setNames(wageIndex, "Hourly labor costs relative to 2000")
+    wageIndex <- setNames(wageIndex, "Labor|Wages|Hourly labor costs relative to 2000 (index)")
 
     # population in 2000 as weight for aggregation to world regions and globally
     weight <- wageIndex
