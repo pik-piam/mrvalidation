@@ -149,8 +149,13 @@ calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
     desc <- "Gini crop area diversity index based on historical FAO country-level crop area"
   }
 
+  out <- add_dimension(x, dim = 3.1, add = "scenario",
+    nm = "historical")
+  out <- add_dimension(out, dim = 3.2, add = "model",
+    nm = "MAgPIEown")
+
   return(list(
-    x = x,
+    x = out,
     weight = croplandArea,
     unit = "unitless",
     description = desc
