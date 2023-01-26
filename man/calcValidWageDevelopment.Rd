@@ -4,17 +4,19 @@
 \alias{calcValidWageDevelopment}
 \title{calcValidWageDevelopment}
 \usage{
-calcValidWageDevelopment(datasource = "ILO_completed")
+calcValidWageDevelopment(datasource = "ILO_completed", baseYear = 2000)
 }
 \arguments{
 \item{datasource}{So far only "ILO_completed" (based on regression between ILO hourly labor costs and GDP pc MER,
 calibrated to match USDA/FAO total labor costs)}
+
+\item{baseYear}{year relative to which the wage development should be calculated}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.
 }
 \description{
-wage index: hourly labor costs in crop+livestock production relative to 2000
+wage index: hourly labor costs in crop+livestock production relative to a baseyear
 }
 \examples{
 \dontrun{
