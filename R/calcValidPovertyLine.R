@@ -12,7 +12,7 @@
 #'
 calcValidPovertyLine <- function(datasource = "WBPoverty", subtype = "320PovertyLine") {
 
-  rawPer <- readSource(type = datasource, subtype = subtype)
+  rawPer <- readSource("WBPoverty", subtype = subtype)
   rawPer <- rawPer[, getYears(rawPer, as.integer = TRUE) >= 1995, ]
   rawPer[!is.finite(rawPer) | rawPer == 9999] <- 0
 
