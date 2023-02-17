@@ -97,66 +97,6 @@ calcValidIncome <- function(datasource = "James") {
     out <- out[, years, ]
     weight <- weight[, years, ]
 
-  } else if (datasource == "James_OECD_Nakicenovic") {
-  #### deprecated as of rev4.64 ####
-    names <- c("Income (million US$05 MER/yr)", "Income (US$05 MER/cap/yr)",
-               "Income (million US$05 PPP/yr)", "Income (US$05 PPP/cap/yr)")
-
-    .tmp <- function(x, nm) {
-      getSets(x)[3] <- "scenario"
-      return(add_dimension(collapseNames(x), dim = 3.2, add = "variable", nm = nm))
-    }
-
-    mer   <- .tmp(calcOutput("GDP",
-                             GDPPast = "IHME_USD05_MER_pc-MI",
-                             GDPFuture = "SSPs-MI",
-                             GDPCalib = "past",
-                             aggregate = FALSE),
-                  names[1])
-    merpc <- .tmp(calcOutput(type = "GDPpc",
-                             unit = "constant 2005 US$MER",
-                             naming = "scenario",
-                             aggregate = FALSE),
-                  names[2])
-
-    ppp   <- .tmp(calcOutput("GDP",
-                             GDPPast = "IHME_USD05_PPP_pc-MI",
-                             GDPFuture = "SSP-MI",
-                             GDPCalib = "past",
-                             aggregate = FALSE,
-                             naming = "indicator.scenario"),
-                  names[3])
-    ppppc <- .tmp(calcOutput(type = "GDPpc", naming = "scenario", aggregate = FALSE), names[4])
-
-    years <- intersect(getYears(merpc), getYears(mer))
-
-    out   <- NULL
-    out   <- mbind(mer[, years, ], merpc[, years, ], ppp[, years, ], ppppc[, years, ])
-
-    getSets(out)[3] <- "scenario"
-
-    out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
-
-    # Setting weights correctly for intensive and extensive variables
-    popWeights <- collapseNames(calcOutput(type = "GDPpc",
-                                           unit = "constant 2005 US$MER",
-                                           naming = "scenario",
-                                           supplementary = TRUE,
-                                           aggregate = FALSE)$weight
-                                + 10^-10)
-    getSets(popWeights)[3] <- "scenario"
-    popWeights <- add_dimension(popWeights, dim = 3.2, add = "model", nm = datasource)
-
-    noWeights <- popWeights
-    noWeights[] <- 0
-
-    weight <- NULL
-    weight <- mbind(weight, add_dimension(noWeights, dim = 3.3, add = "variable", nm = names[1]))
-    weight <- mbind(weight, add_dimension(popWeights, dim = 3.3, add = "variable", nm = names[2]))
-    weight <- mbind(weight, add_dimension(noWeights, dim = 3.3, add = "variable", nm = names[3]))
-    weight <- mbind(weight, add_dimension(popWeights, dim = 3.3, add = "variable", nm = names[4]))
-
-
   } else {
 
     vcat(verbosity = 1, paste("Wrong selection of parameters in calcOutput"))
