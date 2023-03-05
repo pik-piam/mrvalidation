@@ -289,7 +289,9 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
   calcOutput(type = "ValidCostsOverall", datasource = "FAO", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # Overall costs.
   calcOutput(type = "ValidCostsTransport", datasource = "GTAP", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, try = TRUE) # ready.
+             file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidCostsTransport", datasource = "MAgPIEcalc", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidCostsCapStocks", datasource = "FAO", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidCostsFertilizer", datasource = "FAO", aggregate = "REG+GLO",
