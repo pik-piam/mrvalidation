@@ -38,7 +38,7 @@ calcValidCostsTransport <- function(datasource = "GTAP") {
 
 } else if (datasource == "MAgPIEcalc") {
 
-  distance <- readSource("TransportTime", convert = "onlycorrect")
+  distance <- calcOutput("TransportTime", aggregate = FALSE)
   productionKcr <- calcOutput("Production", cellular = TRUE, products = "kcr", attributes = "dm", aggregate = FALSE)
   productionKli <- calcOutput("Production", cellular = TRUE, products = "kli", attributes = "dm", aggregate = FALSE)
   productionPasture <- calcOutput("Production", cellular = TRUE,
@@ -61,7 +61,6 @@ calcValidCostsTransport <- function(datasource = "GTAP") {
   out   <- toolAggregate(out, rel = mapping, from = "celliso", to = "iso", dim = 1)
   out   <- toolCountryFill(out, fill = 0)
 
-
 # add missing product groups, so that report and summation helper work properly.
   # Note that forest, secondary, fish, bioenergy and  residues set to 0 currently
  missingProducts <- setdiff(findset("kall"), products)
@@ -70,6 +69,9 @@ calcValidCostsTransport <- function(datasource = "GTAP") {
 
  out <- reporthelper(out, dim = 3.1, level_zero_name = "Costs|Transport", detail = FALSE)
  out <- summationhelper(out)
+
+ getNames(out[, , "Costs|+|Transport"]) <- "Costs|Transport"
+
  getNames(out) <- paste(getNames(out), "(million US$05/yr)", sep = " ")
  unit <- "million US$05/yr"
 
