@@ -1,56 +1,60 @@
-Package: mrvalidation
 Type: Package
+Package: mrvalidation
 Title: madrat data preparation for validation purposes
 Version: 2.46.5
 Date: 2023-03-10
-Authors@R: c(person("Benjamin Leon", "Bodirsky", email = "bodirsky@pik-potsdam.de", role = c("aut","cre")),
-             person("Stephen", "Wirth", role = "aut"),
-             person("Kristine", "Karstens", role = "aut"),
-             person("Florian", "Humpenoeder", role = "aut"),
-             person("Mishko", "Stevanovic", role = "aut"),
-             person("Abhijeet", "Mishra", role = "aut"),
-             person("Anne", "Biewald", role = "aut"),
-             person("Isabelle", "Weindl", role = "aut"),
-             person("Felicitas", "Beier", role = "aut"),
-             person("David", "Chen", role = "aut"),
-             person("Michael", "Crawford", role = "aut"),
-             person("Edna", "Molina Bacca", role = "aut"),
-             person("Ulrich", "Kreidenweis", role = "aut"),
-             person("Amsalu", "W. Yalew", role = "aut"),
-             person("Florian", "Humpenoeder ", role = "aut"),
-             person("Patrick", "von Jeetze ", role = "aut"),
-             person("Xiaoxi", "Wang", role = "aut"),
-             person("Jan Philipp", "Dietrich", role = "aut"),
-             person("Marcos", "Alves", role = "aut"))
-Description: Package contains routines to prepare data for validation exercises.
+Authors@R: c(
+    person("Benjamin Leon", "Bodirsky", , "bodirsky@pik-potsdam.de", role = c("aut", "cre")),
+    person("Stephen", "Wirth", role = "aut"),
+    person("Kristine", "Karstens", role = "aut"),
+    person("Florian", "Humpenoeder", role = "aut"),
+    person("Mishko", "Stevanovic", role = "aut"),
+    person("Abhijeet", "Mishra", role = "aut"),
+    person("Anne", "Biewald", role = "aut"),
+    person("Isabelle", "Weindl", role = "aut"),
+    person("Felicitas", "Beier", role = "aut"),
+    person("David", "Chen", role = "aut"),
+    person("Michael", "Crawford", role = "aut"),
+    person("Edna", "Molina Bacca", role = "aut"),
+    person("Ulrich", "Kreidenweis", role = "aut"),
+    person("Amsalu", "W. Yalew", role = "aut"),
+    person("Florian", "Humpenoeder ", role = "aut"),
+    person("Patrick", "von Jeetze ", role = "aut"),
+    person("Xiaoxi", "Wang", role = "aut"),
+    person("Jan Philipp", "Dietrich", role = "aut"),
+    person("Marcos", "Alves", role = "aut")
+  )
+Description: Package contains routines to prepare data for validation
+    exercises.
+License: LGPL-3 | file LICENSE
+URL: https://github.com/pik-piam/mrvalidation,
+    https://doi.org/10.5281/zenodo.4317826
+BugReports: https://github.com/pik-piam/mrvalidation/issues
 Depends:
-    R(>= 2.10.0),
-    magclass(>= 3.17),
-    madrat(>= 2.11.3),
-    mrdrivers(>= 0.2.2),
-    mrcommons(>= 1.0.0),
+    R (>= 2.10.0),
+    madrat (>= 2.11.3),
+    magclass (>= 3.17),
+    mrcommons (>= 1.0.0),
+    mrdrivers (>= 0.2.2),
     mrmagpie
 Imports:
-    reshape2,
-    utils,
+    GDPuc,
+    dplyr,
+    jsonlite,
     magpiesets,
-    readxl,
-    raster,
-    stringr,
     ncdf4,
     openxlsx,
-    tidyr,
-    dplyr,
-    GDPuc,
-    rlang,
-    jsonlite,
     purrr,
+    raster,
+    readxl,
+    reshape2,
+    rlang,
+    stringr,
+    tidyr,
+    utils,
     withr
-License: LGPL-3 | file LICENSE
-URL: https://github.com/pik-piam/mrvalidation, https://doi.org/10.5281/zenodo.4317826
-BugReports: https://github.com/pik-piam/mrvalidation/issues
-LazyData: no
-Encoding: UTF-8
-RoxygenNote: 7.2.3
 Suggests:
     covr
+Encoding: UTF-8
+LazyData: no
+RoxygenNote: 7.2.3
