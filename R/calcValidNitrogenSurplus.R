@@ -5,7 +5,6 @@
 #' @return MAgPIE object with results on the iso level, unweighted, unit, and description
 #'
 #' @examples
-#'
 #' \dontrun{
 #' calcOutput("calcValidNitrogenSurplus")
 #' }
@@ -13,8 +12,12 @@
 calcValidNitrogenSurplus <- function() {
 
   # Manure nutrient surplus
-  manure <- calcOutput("ValidManure", aggregate = FALSE)
-  manure <- manure[, , "historical.Bodirsky.Resources|Nitrogen|Manure (Mt Nr/yr)"]
+  manure <- calcOutput("EmisNitrogenAWMSPast", aggregate = FALSE)
+  manure <- dimSums(manure, dim = c(3.1, 3.2))
+  manure <- manure[, , c("no3_n", "n2_n", "nh3_n", "no2_n", "n2o_n_direct")] # Remove recycling
+  manure <- dimSums(manure, dim = 3)
+  getNames(manure) <- "Bodirsky.historical.Resources|Nitrogen|Manure|Manure In Confinements|+|Losses (Mt Nr/yr)"
+  getSets(manure) <- c("iso", "year", "model", "scenario", "d3")
 
   # Non-agricultural land nutrient surplus
   nonagland <- calcOutput("ValidNitrogenBudgetNonagland", aggregate = FALSE)
@@ -43,7 +46,7 @@ calcValidNitrogenSurplus <- function() {
   return(list(x           = out,
               weight      = NULL,
               unit        = "Mt Nr/yr",
-              description = "Total nutrient surplus inc. non-agricultural land")
+              description = "Total nutrient surplus including non-agricultural land")
   )
 
 }

@@ -13,7 +13,6 @@ MAgPIE object with results on the iso level, unweighted, unit, and description
 reports nutrient surplus for all land types
 }
 \examples{
-
 \dontrun{
 calcOutput("calcValidNitrogenSurplus")
 }

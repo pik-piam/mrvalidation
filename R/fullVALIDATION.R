@@ -244,6 +244,16 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidEmisLucGasser", subtype = "bookkeeping", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidEmissionsAFOLU", datasource = "FAO", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidEmissionsAFOLU", datasource = "FAO", aggregate = "REG+GLO", cumulative = TRUE,
+             file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidEmissionsAFOLU", datasource = "EDGAR_LU", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidEmissionsAFOLU", datasource = "EDGAR_LU", aggregate = "REG+GLO", cumulative = TRUE,
+             file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidEmissionsPeatland", aggregate = FALSE,
+             file = valfile, append = TRUE, try = TRUE) # ready
 
   # Yield
   calcOutput(type = "ValidYield", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
