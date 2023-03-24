@@ -1,7 +1,7 @@
 #' @title calcValidWaterUsage
 #'
-#' @description Returns historical and projected water usage
-#'              from different sources
+#' @description Returns historical and projected water withdrawal
+#'              from different data sources
 #'
 #' @param datasource Currently available:
 #' \itemize{
@@ -57,7 +57,7 @@ calcValidWaterUsage <- function(datasource = "shiklomanov_2000") {
                         "wisser_2008", "fischer_IIASA", "hejazi_2013",
                         "molden_IWMI", "seckler_IWMI", "shiklomanov")) {
 
-    out <- readSource("WaterUsage", datasource, convert = F)
+    out <- readSource("WaterUsage", datasource, convert = FALSE)
 
     if (datasource %in% c("wisser_2008", "fischer_IIASA", "hejazi_2013", "seckler_IWMI")) {
       out <- out[, , "data"]
@@ -98,15 +98,10 @@ calcValidWaterUsage <- function(datasource = "shiklomanov_2000") {
       # landarea (given in Mha) -> m^2 (multiply 1e10)
       # liter -> km^3 (multiply with 1e-12)
       landarea <- dimSums(calcOutput("LUH2v2", landuse_types = "magpie",
-                                     cellular = TRUE, cells = "magpiecell",
+                                     cellular = TRUE, cells = "lpjcell",
                                      irrigation = FALSE, years = "y1995",
                                      aggregate = FALSE), dim = 3)
-      names(dimnames(landarea))[1] <- "iso.cell"
-      landarea                     <- toolAggregate(x = landarea,
-                                                    rel = data.frame("cell" = getCells(landarea),
-                                                                     "iso" = gsub("\\..*", "", getCells(landarea)),
-                                                                     stringsAsFactors = FALSE),
-                                                    dim = 1)
+      landarea                     <- dimSums(landarea, dim = c("x", "y"))
       landarea                     <- toolCountryFill(landarea, fill = 0)
       out                          <- out * landarea * 1e-02
 
@@ -124,5 +119,5 @@ calcValidWaterUsage <- function(datasource = "shiklomanov_2000") {
               weight      = NULL,
               unit        = "km^3",
               min         = 0,
-              description = "Agricultural waterusage from different sources in km^3"))
+              description = "Agricultural water withdrawal from different sources in km^3"))
 }

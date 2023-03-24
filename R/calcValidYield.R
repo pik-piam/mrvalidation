@@ -27,7 +27,6 @@
 
 calcValidYield  <-  function(datasource="FAO", future = NULL){
 
-
   if (datasource=="FAO") {
 
     if (!is.null(future)) stop("Future options is not available for source type 'FAO'.")
