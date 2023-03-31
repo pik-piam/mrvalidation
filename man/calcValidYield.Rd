@@ -14,7 +14,9 @@ Currently only "FAO" and "calibratedLPJmL" is available.}
 specify climate scenario (gcm:rcp), if future is needed}
 }
 \value{
-List of magpie objects with results on country level, weight on country level, unit, Max.&Min. values alongwith description.
+List of magpie objects with results on country level,
+        weight on country level, unit,
+        Max.&Min. values alongwith description.
 }
 \description{
 Calculates a dataset of agricultural production out of the combined
@@ -24,7 +26,6 @@ Total area can be lower or higher than arable land because of multicropping or f
 Returns yield as calculated from area area and production.
 }
 \examples{
-
 \dontrun{
 calcOutput("ValidYield")
 }

@@ -53,8 +53,8 @@ calcValidWaterUsage(datasource = "shiklomanov_2000")
 list of magpie object, weight, unit, and description
 }
 \description{
-Returns historical and projected water usage
-             from different sources
+Returns historical and projected water withdrawal
+             from different data sources
 }
 \author{
 Stephen Wirth, Anne Biewald, Felicitas Beier

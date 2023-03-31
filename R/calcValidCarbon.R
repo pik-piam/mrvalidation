@@ -29,19 +29,25 @@ calcValidCarbon <- function(datasource = "LPJmL4_for_MAgPIE_44ac93de:GSWP3-W5E5:
     version     <- gsub("^(.[^:]*):(.*)", "\\1", datasource)
     climatetype <- gsub("^(.[^:]*):(.*)", "\\2", datasource)
 
-    soilc <- calcOutput("LPJmL_new", version = version, climatetype = climatetype, subtype = "soilc", stage = "raw", aggregate = FALSE)
-    litc  <- calcOutput("LPJmL_new", version = version, climatetype = climatetype, subtype = "litc",  stage = "raw", aggregate = FALSE)
-    vegc  <- calcOutput("LPJmL_new", version = version, climatetype = climatetype, subtype = "vegc",  stage = "raw", aggregate = FALSE)
+    soilc <- calcOutput("LPJmL_new", version = version, climatetype = climatetype,
+                        subtype = "soilc", stage = "raw", aggregate = FALSE)
+    litc  <- calcOutput("LPJmL_new", version = version, climatetype = climatetype,
+                        subtype = "litc",  stage = "raw", aggregate = FALSE)
+    vegc  <- calcOutput("LPJmL_new", version = version, climatetype = climatetype,
+                        subtype = "vegc",  stage = "raw", aggregate = FALSE)
 
     nm <- "projection"
 
-  } else stop("No data exist for the given datasource!")
+  } else {
+    stop("No data exist for the given datasource!")
+  }
 
   stock <- mbind(setNames(soilc, "soilc"), setNames(litc, "litc"), setNames(vegc, "vegc"))
   rm(soilc, litc, vegc)
 
   area  <- dimSums(calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE,
-                              cellular = TRUE, cells = "lpjcell", years = "y1995", aggregate = FALSE),
+                              cellular = TRUE, cells = "lpjcell", years = "y1995",
+                              aggregate = FALSE),
                    dim = 3)
   stock <- stock * setYears(area, NULL)
 
