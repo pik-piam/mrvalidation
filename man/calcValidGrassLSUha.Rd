@@ -16,8 +16,7 @@ List of magpie objects with results on country level, weight on country level, u
 calculates the validation data for production of grass from managed pastures and rangelands separetely
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("ValidGrassLSUha")
 }
 }
