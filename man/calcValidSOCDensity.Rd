@@ -4,10 +4,10 @@
 \alias{calcValidSOCDensity}
 \title{calcValidSOCDensity}
 \usage{
-calcValidSOCDensity(datasource = "LPJ_IPCC2006")
+calcValidSOCDensity(datasource = "GSOC")
 }
 \arguments{
-\item{datasource}{Datasources for validation data, e.g. LPJ_IPCC2006, LPJmL_natural}
+\item{datasource}{Datasources for validation data}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.
@@ -16,9 +16,8 @@ List of magpie objects with results on country level, weight on country level, u
 calculates the validation data for the soil carbon densities (including weights for aggregation)
 }
 \examples{
-
-\dontrun{ 
-  calcOutput("ValidSOCDensity")
+\dontrun{
+calcOutput("ValidSOCDensity")
 }
 
 }

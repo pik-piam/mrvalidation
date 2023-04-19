@@ -21,37 +21,39 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
 
   if (datasource == "LPJ_IPCC2006") {
 
-    SOM_stock  <- calcOutput("SOM", subtype = "stock",   aggregate = FALSE)
-    SOM_stock  <- mbind(SOM_stock, add_dimension(dimSums(SOM_stock, dim = 3.1), add = "landuse", nm = "total"))
+    somStock  <- calcOutput("SOM", subtype = "stock",   aggregate = FALSE)
+    somStock  <- mbind(somStock, add_dimension(dimSums(somStock, dim = 3.1), add = "landuse", nm = "total"))
 
     out <- mbind(
-      setNames(SOM_stock[, , "total"][, , "soilc"],
+      setNames(somStock[, , "total"][, , "soilc"],
                "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)"),
-      setNames(SOM_stock[, , "cropland"][, , "soilc"],
+      setNames(somStock[, , "cropland"][, , "soilc"],
                "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm|+|Cropland Soils (Mt C)"),
-      setNames(SOM_stock[, , "noncropland"][, , "soilc"],
+      setNames(somStock[, , "noncropland"][, , "soilc"],
                "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm|+|Noncropland Soils (Mt C)")
     )
 
-    SOM_chang <- SOM_stock - setYears(SOM_stock[, baseyear, ], NULL)
+    somChang <- somStock - setYears(somStock[, baseyear, ], NULL)
 
-    out <- mbind(out, setNames(SOM_chang[, , "total"][, , "soilc"],
-                      paste0("Resources|Soil Carbon|Actual|Stock Change|SOC in top 30 cm (Mt C wrt ",
-                                 baseyear, ")")),
-                      setNames(SOM_chang[, , "cropland"][, , "soilc"],
-                      paste0("Resources|Soil Carbon|Actual|Stock Change|SOC in top 30 cm|+|Cropland Soils (Mt C wrt ",
-                                 baseyear, ")")),
-                      setNames(SOM_chang[, , "noncropland"][, , "soilc"],
-                      paste0("Resources|Soil Carbon|Actual|Stock Change|SOC in top 30 cm|+|Noncropland Soils (Mt C wrt ",
-                                 baseyear, ")"))
+    out <- mbind(out, setNames(somChang[, , "total"][, , "soilc"],
+                               paste0("Resources|Soil Carbon|Actual|Stock Change|",
+                               "SOC in top 30 cm (Mt C wrt ", baseyear, ")")),
+                      setNames(somChang[, , "cropland"][, , "soilc"],
+                               paste0("Resources|Soil Carbon|Actual|Stock Change|",
+                                      "SOC in top 30 cm|+|Cropland Soils (Mt C wrt ",
+                                      baseyear, ")")),
+                      setNames(somChang[, , "noncropland"][, , "soilc"],
+                               paste0("Resources|Soil Carbon|Actual|Stock Change|",
+                                      "SOC in top 30 cm|+|Noncropland Soils (Mt C wrt ",
+                                      baseyear, ")"))
     )
 
     out <- mbind(out,
-                 setNames(SOM_stock[, , "total"][, , "target_soilc"],
+                 setNames(somStock[, , "total"][, , "target_soilc"],
                           "Resources|Soil Carbon|Target|Stock|SOC in top 30 cm (Mt C)"),
-                 setNames(SOM_stock[, , "cropland"][, , "target_soilc"],
+                 setNames(somStock[, , "cropland"][, , "target_soilc"],
                           "Resources|Soil Carbon|Target|Stock|SOC in top 30 cm|+|Cropland Soils (Mt C)"),
-                 setNames(SOM_stock[, , "noncropland"][, , "target_soilc"],
+                 setNames(somStock[, , "noncropland"][, , "target_soilc"],
                           "Resources|Soil Carbon|Target|Stock|SOC in top 30 cm|+|Noncropland Soils (Mt C)")
     )
 
@@ -59,17 +61,12 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
     weight <- NULL
 
-  } else if (datasource %in% c("LPJmL_rev21", "LPJmL4Paper",
+  } else if (datasource %in% c("LPJmL4Paper",
                                "SoilGrids", "GSOC", "WISE", "SoilGrids2:new",
                                "SoilGrids2:q05_new", "SoilGrids2:q95_new",
                                "SOCDebtPaper")) {
 
-    if (datasource == "LPJmL_rev21") {
-
-      soilc  <- readSource("LPJml_rev21", "soilc_layer", convert = "onlycorrect")
-      out <- soilc[, , "mm0_200"] + setNames(soilc[, , "mm201_500"], NULL) / 3
-
-    } else if (datasource == "LPJmL4Paper") {
+    if (datasource == "LPJmL4Paper") {
 
       out <- calcOutput("LPJmL", version = "LPJmL4", climatetype = "LPJmL4Paper",
                         subtype = "soilc_layer", aggregate = FALSE)
@@ -95,13 +92,13 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
       var <- toolSplitSubtype(datasource, list(soilgrids = "SoilGrids2", variable = NULL))$variable
       out <- readSource("SoilGrids", subtype = paste0("cstock_0_30_", var), convert = "onlycorrect")
       out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
-      
-    }  else if (datasource == "SOCDebtPaper") {
-      
+
+    } else if (datasource == "SOCDebtPaper") {
+
       out <- toolCoord2Isocell(readSource("SoilCarbonDebt", convert = "onlycorrect"))
-      out <- mbind(setNames(setYears(out[ , , "SOCS_1960"], "y1960"), "SOC"),
-                   setNames(setYears(out[ , , "SOCS_1990"], "y1990"), "SOC"), 
-                   setNames(setYears(out[ , , "SOCS_2010"], "y2010"), "SOC"))
+      out <- mbind(setNames(setYears(out[, , "SOCS_1960"], "y1960"), "SOC"),
+                   setNames(setYears(out[, , "SOCS_1990"], "y1990"), "SOC"),
+                   setNames(setYears(out[, , "SOCS_2010"], "y2010"), "SOC"))
     }
 
     area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE, cellular = TRUE,
@@ -123,14 +120,14 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
 
       ds <- toolSplitSubtype(datasource, list(version = NULL, climatemodel = NULL, scenario = NULL))
 
-      LPJmL4_soilc     <- calcOutput("LPJmL_new", version = ds$version,
+      lpjml4soilc     <- calcOutput("LPJmL_new", version = ds$version,
                                      climatetype = paste(ds$climatemodel, ds$scenario, sep = ":"),
                                      subtype = "soilc_layer", stage = "raw", aggregate = FALSE)
-      LPJmL4_litc      <- calcOutput("LPJmL_new", version = ds$version,
+      lpjml4litc      <- calcOutput("LPJmL_new", version = ds$version,
                                      climatetype = paste(ds$climatemodel, ds$scenario, sep = ":"),
                                      subtype = "litc", stage = "raw", aggregate = FALSE)
-      out              <- setNames(LPJmL4_soilc[, , "layer1"] + 1 / 3 * LPJmL4_soilc[, , "layer2"] +
-                                   LPJmL4_litc, "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
+      out              <- setNames(lpjml4soilc[, , "layer1"] + 1 / 3 * lpjml4soilc[, , "layer2"] +
+                                   lpjml4litc, "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
 
       out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
       out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
@@ -157,7 +154,9 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
 
-  } else stop("No data exist for the given datasource!")
+  } else {
+    stop("No data exist for the given datasource!")
+  }
 
   names(dimnames(out))[3] <- "scenario.model.variable"
 
