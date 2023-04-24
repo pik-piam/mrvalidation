@@ -84,13 +84,13 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
 
     } else if (datasource == "SoilGrids") {
 
-      out <- readSource("SoilGrids", subtype = "cstock_0_30", convert = "onlycorrect")
+      out <- toolCoord2Isocell(readSource("SoilGrids", subtype = "cstock_0_30", convert = "onlycorrect"))
       out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
 
     } else if (grepl("SoilGrids2", datasource)) {
 
       var <- toolSplitSubtype(datasource, list(soilgrids = "SoilGrids2", variable = NULL))$variable
-      out <- readSource("SoilGrids", subtype = paste0("cstock_0_30_", var), convert = "onlycorrect")
+      out <- toolCoord2Isocell(readSource("SoilGrids", subtype = paste0("cstock_0_30_", var), convert = "onlycorrect"))
       out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
 
     } else if (datasource == "SOCDebtPaper") {
@@ -145,9 +145,14 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
 
   } else if (datasource == "SoilGrids2_range") {
 
-    out <- mbind(setNames(readSource("SoilGrids", subtype = "cstock_0_30_q05_new", convert = "onlycorrect"), "Q0p05"),
-                 setNames(readSource("SoilGrids", subtype = "cstock_0_30_q95_new", convert = "onlycorrect"), "Q0p95"))
-    out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"), setYears(out, "y2005"), setYears(out, "y2010"))
+    out <- mbind(setNames(toolCoord2Isocell(
+                   readSource("SoilGrids", subtype = "cstock_0_30_q05_new",
+                              convert = "onlycorrect")), "Q0p05"),
+                 setNames(toolCoord2Isocell(
+                   readSource("SoilGrids", subtype = "cstock_0_30_q95_new",
+                              convert = "onlycorrect")), "Q0p95"))
+    out <- mbind(setYears(out, "y1995"), setYears(out, "y2000"),
+                 setYears(out, "y2005"), setYears(out, "y2010"))
 
     out <- setNames(out, "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
