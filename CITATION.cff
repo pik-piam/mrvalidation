@@ -1,0 +1,51 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it using the metadata from this file.
+type: software
+title: 'mrvalidation: madrat data preparation for validation purposes'
+version: 2.48.1
+date-released: '2023-04-25'
+abstract: Package contains routines to prepare data for validation exercises.
+authors:
+- family-names: Bodirsky
+  given-names: Benjamin Leon
+  email: bodirsky@pik-potsdam.de
+- family-names: Wirth
+  given-names: Stephen
+- family-names: Karstens
+  given-names: Kristine
+- family-names: Humpenoeder
+  given-names: Florian
+- family-names: Stevanovic
+  given-names: Mishko
+- family-names: Mishra
+  given-names: Abhijeet
+- family-names: Biewald
+  given-names: Anne
+- family-names: Weindl
+  given-names: Isabelle
+- family-names: Beier
+  given-names: Felicitas
+- family-names: Chen
+  given-names: David
+- family-names: Crawford
+  given-names: Michael
+- family-names: Molina Bacca
+  given-names: Edna
+- family-names: Kreidenweis
+  given-names: Ulrich
+- family-names: W. Yalew
+  given-names: Amsalu
+- family-names: 'Humpenoeder '
+  given-names: Florian
+- family-names: 'von Jeetze '
+  given-names: Patrick
+- family-names: Wang
+  given-names: Xiaoxi
+- family-names: Dietrich
+  given-names: Jan Philipp
+- family-names: Alves
+  given-names: Marcos
+license: LGPL-3.0
+repository-code: https://github.com/pik-piam/mrvalidation
+doi: 10.5281/zenodo.4317826
+
