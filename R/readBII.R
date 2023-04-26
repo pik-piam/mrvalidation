@@ -21,6 +21,7 @@
 #' }
 #'
 #' @importFrom dplyr %>% mutate select
+#' @importFrom tidyr drop_na
 #' @importFrom rlang .data
 #' @importFrom stringr str_match
 #' @importFrom magclass as.magpie
@@ -34,9 +35,8 @@ readBII <- function(subtype = "historical", subset = "bii") {
 
     bii <- bii %>%
         mutate(ISO = str_match(string = .data$area_code, pattern = "[A-Z]{3}")) %>% # identify the country aggregation
-        select(.data$ISO, .data$scenario, .data$variable, .data$year, .data$value)
-
-    bii <- subset(bii, !is.na("ISO")) # remove all non-country aggregations (e.g. global)
+        drop_na("ISO") %>% # remove all non-country aggregations (e.g. global)
+        select("ISO", "scenario", "variable", "year", "value")
 
     biiMag <- as.magpie(bii)
 
