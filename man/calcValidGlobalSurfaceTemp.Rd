@@ -7,15 +7,15 @@
 calcValidGlobalSurfaceTemp()
 }
 \value{
-Global MAgPIE object
+global MAgPIE object
 }
 \description{
-validation for the global surface temperature
+validation for the global surface temperature anomaly
 }
 \examples{
 
 \dontrun{
-   calcOutput("calcValidGlobalSurfaceTemp")
+   calcOutput("ValidGlobalSurfaceTemp", aggregate = FALSE)
 }
 
 }
