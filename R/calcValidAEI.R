@@ -12,8 +12,8 @@
 calcValidAEI <- function(datasource = "LUH2v2") {
 
   if (datasource == "LUH2v2" || datasource == "Mehta2022") {
-    out <- calcOutput("AreaEquippedForIrrigation", source = datasource,
-                      cellular = FALSE, aggregate = FALSE)
+    out <- collapseNames(calcOutput("AreaEquippedForIrrigation", cells = "lpjcell",
+                                    cellular = FALSE, aggregate = FALSE)[, , datasource])
   } else if (datasource == "HID") {
     out <- readSource("HID", "national_1900_2005") / 10^6
   } else if (datasource == "GMIA") {
