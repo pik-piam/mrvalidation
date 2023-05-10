@@ -1,23 +1,25 @@
 #' @title calcValidGlobalSurfaceTemp
-#' @description validation for the global surface temperature
+#' @description validation for the global surface temperature anomaly
 #' @author Michael Crawford
 #'
-#' @return Global MAgPIE object
+#' @return global MAgPIE object
 #'
 #' @examples
 #'
 #' \dontrun{
-#'    calcOutput("calcValidGlobalSurfaceTemp")
+#'    calcOutput("ValidGlobalSurfaceTemp", aggregate = FALSE)
 #' }
 #'
 
 calcValidGlobalSurfaceTemp <- function() {
 
-  surfaceTemp <- readSource("GISTEMP")
-  getNames(surfaceTemp, dim = "variable") <- "Global Surface Temperature"
+    surfaceTemp <- readSource("AR6SPMFig1")
 
-  return(list(x = surfaceTemp,
-              unit = "C",
-              description = "Estimate of global surface temperature change, with 1951-1980 as the base period"))
+    getNames(surfaceTemp, dim = "variable") <- "Global Surface Temperature"
+
+    return(list(x           = surfaceTemp,
+                unit        = "C",
+                description = "Estimate of global surface temperature anomaly, with 1850-1900 
+                used as the base period."))
 
 }
