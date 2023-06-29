@@ -95,10 +95,10 @@ readPardeyAgRD <- function() {
   ratioMissing[c("NEU", "REF"), , ] <- ratio["Upper Middle", , ]
   ratioMissing["CAZ", , ] <- ratio["High Income", , ]
 
-  ratio <- mbind(ratio, ratioMissing[where(is.na(ratioMissing))$true$regions, , inv = TRUE])
+  ratio <- mbind(ratio, ratioMissing[where(is.na(ratioMissing))$true$regions, , invert = TRUE])
 
   # map smaller countries to region
-  yCountries <- as.data.frame(full[countries, , inv = TRUE])[, -1]
+  yCountries <- as.data.frame(full[countries, , invert = TRUE])[, -1]
   yCountries <- merge(yCountries, mapping[, c(2, 3)], by.x = "Region", by.y = "CountryCode")
 
   # multiply those countriesin OAS, MEA, LAM, SSA by regional share in 1960 and 1980
@@ -127,7 +127,7 @@ readPardeyAgRD <- function() {
 
   oecd <- oecd[, , "Agricultural and veterinary sciences"][, , "2015 Dollars - Constant prices and PPPs"]
 
-  total <- dimSums(oecd[, , "Total intramural", inv = TRUE], na.rm = TRUE)
+  total <- dimSums(oecd[, , "Total intramural", invert = TRUE], na.rm = TRUE)
   total["POL", , ] <- oecd["POL", , "Total intramural"]
   # 2015$ price and PPP
 
@@ -141,7 +141,7 @@ readPardeyAgRD <- function() {
   pastRus <- rusShr * dimSums(pardey, dim = 1)
 
   # drop TWN which sneaked in there
-  pastRus <- pastRus["TWN", , inv = TRUE]
+  pastRus <- pastRus["TWN", , invert = TRUE]
 
   pastRus <- convertGDP(pastRus, unit_in = "constant 2015 Int$PPP", unit_out = "constant 2005 US$MER",
                         replace_NAs = "no_conversion")
