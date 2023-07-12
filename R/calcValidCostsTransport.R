@@ -57,7 +57,7 @@ calcValidCostsTransport <- function(datasource = "GTAP") {
 
   out <- costs[, , products] * productionDistance[, , products]
 
-  mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell")
+  mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
   out   <- toolAggregate(out, rel = mapping, from = "celliso", to = "iso", dim = 1)
   out   <- toolCountryFill(out, fill = 0)
 

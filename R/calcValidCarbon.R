@@ -40,7 +40,7 @@ calcValidCarbon <- function(datasource = "LPJmL4_for_MAgPIE_44ac93de:GSWP3-W5E5:
   area  <- dimSums(calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE, cellular = TRUE, years = "y1995", aggregate = FALSE), dim = 3)
   stock <- toolCoord2Isocell(stock) * setYears(area, NULL)
 
-  mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell")
+  mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
   stock   <- toolAggregate(stock, rel = mapping, from = "celliso", to = "iso", dim = 1)
   stock   <- toolCountryFill(stock, fill = 0)
 

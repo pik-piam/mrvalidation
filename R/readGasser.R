@@ -25,7 +25,7 @@ readGasser <- function(subtype = "bookkeeping") {
 
     mapping_file_gasser <- "GasserMapping.csv"
     mapping_gasser <- read.csv(file = mapping_file_gasser, header = TRUE, sep = ";")
-    mapping_magpie <- toolGetMapping(type = "regional", name = "h12.csv")
+    mapping_magpie <- toolGetMapping(type = "regional", name = "h12.csv", where = "mappingfolder")
     colnames(mapping_magpie)[1] <- "ISOName"
     mapping <- merge(mapping_gasser, mapping_magpie, all = FALSE)
 

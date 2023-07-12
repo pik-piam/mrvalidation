@@ -30,7 +30,7 @@ convertHID <- function(x, subtype){
   }
   else
   { 
-    map <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv")
+    map <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv", where = "mappingfolder")
     y <- toolAggregate(x, rel=map, from=1, to=3, partrel = T)
     y <- toolCountryFill(y)
   }

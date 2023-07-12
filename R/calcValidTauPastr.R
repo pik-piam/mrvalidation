@@ -15,7 +15,7 @@ calcValidTauPastr <- function() {
   prod <- toolCountryFill(prod, fill = 0)
 
   # regional mapping
-  cell2reg <- toolGetMapping("CountryToCellMapping.csv", type = "cell")
+  cell2reg <- toolGetMapping("CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
 
   # pasture areas
   area <- calcOutput("LUH2v2",
@@ -71,7 +71,7 @@ calcValidTauPastr <- function() {
   t <- collapseNames(t)
 
   # replacing unrealistic high tau values by regional averages
-  reg_map <- toolGetMapping("regionmappingH12.csv", type = "regional")
+  reg_map <- toolGetMapping("regionmappingH12.csv", type = "regional", where = "mappingfolder")
   t_reg <- toolAggregate(t,
     rel = reg_map, weight = area,
     from = "CountryCode", to = "RegionCode"

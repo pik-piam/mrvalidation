@@ -21,7 +21,7 @@
 
 readPardeyAgRD <- function() {
 
-  mapping <- toolGetMapping("regionmappingH12.csv", "regional")
+  mapping <- toolGetMapping("regionmappingH12.csv", "regional", where = "mappingfolder")
 
   ### perd data only public investment
   perd <- read.csv("agPERD.csv")

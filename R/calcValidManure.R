@@ -77,13 +77,13 @@ calcValidManure<-function(datasource="Bodirsky"){
     )
 
     confinement<-collapseNames(confinement[,,selection][,,"Manure_treated_(N_content)_(kg)"])
-    mapping<-toolGetMapping(type = "sectoral",name = "IPCCitems_fao_online.csv")
+    mapping<-toolGetMapping(type = "sectoral",name = "IPCCitems_fao_online.csv", where = "mappingfolder")
     confinement<-toolAggregate(confinement,rel=mapping,from="fao",to="magpie",dim = 3.1)
 
     pasture<-collapseNames(pasture[,,getNames(pasture,dim=1)[getNames(pasture,dim=1)%in%selection]][,,"Manure_left_on_pasture_(N_content)_(kg)"])
 
     #pasture<-collapseNames(pasture[,,selection][,,"Manure_(N_content)_(Manure_management)_(Kg)"])
-    mapping<-toolGetMapping(type = "sectoral",name = "IPCCitems_fao_online.csv")
+    mapping<-toolGetMapping(type = "sectoral",name = "IPCCitems_fao_online.csv", where = "mappingfolder")
     pasture<-toolAggregate(pasture,rel=mapping,from="fao",to="magpie",dim = 3.1,partrel = T)
 
     out<-pasture+confinement

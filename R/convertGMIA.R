@@ -21,14 +21,14 @@
 #'
 convertGMIA <- function(x, subtype) {
   if (subtype == "all_data_national") {
-    map <- toolGetMapping(type = "regional", name = "regionmappingMAgPIE.csv")
+    map <- toolGetMapping(type = "regional", name = "regionmappingMAgPIE.csv", where = "mappingfolder")
     map$X[grep("Virgin Islands, U.S.", map$X)] <- "Virgin Islands, U"
     map$X <- toupper(map$X) # nolint
     getItems(x, dim = 1) <- toupper(getItems(x, dim = 1))
     y <- toolAggregate(x, rel = map, from = 1, to = 2, partrel = TRUE)
     y <- toolCountryFill(y)
   } else {
-    map <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv")
+    map <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv", where = "mappingfolder")
     y <- toolAggregate(x, rel = map, from = 1, to = 3, partrel = TRUE)
     y <- toolCountryFill(y)
   }

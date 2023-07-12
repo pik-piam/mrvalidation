@@ -16,7 +16,7 @@ calcValidSDG12 <- function(datasource = "FAO") {
     indicatorname <- "SDG|SDG12|Food loss"
     unit <- "Mt"
     foodLoss <- readSource("FAO_online", subtype = "CBCrop")
-    aggregation <- toolGetMapping("FAOitems_online.rda", type = "sectoral")
+    aggregation <- toolGetMapping("FAOitems_online.rda", type = "sectoral", where = "mappingfolder")
     # standarized items _ magpie object
     aAgg <- toolAggregate(foodLoss, rel = aggregation, from = "FAOaggregatedItem_fromWebsite",
                           to = "k", dim = 3.1, partrel = TRUE)
