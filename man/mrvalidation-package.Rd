@@ -32,6 +32,7 @@ Authors:
   \item Felicitas Beier
   \item David Chen
   \item Michael Crawford
+  \item Debbora Leip
   \item Edna Molina Bacca
   \item Ulrich Kreidenweis
   \item Amsalu W. Yalew

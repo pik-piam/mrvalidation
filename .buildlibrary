@@ -1,7 +1,9 @@
-ValidationKey: '48892500'
+ValidationKey: '49110660'
 AutocreateReadme: yes
 AcceptedWarnings:
 - 'Warning: package ''.*'' was built under R version'
 - 'Warning: namespace ''.*'' is not available and has been replaced'
-AcceptedNotes: unable to verify current time
+AcceptedNotes:
+- unable to verify current time
+- Depends: includes the non-default packages
 allowLinterWarnings: no
