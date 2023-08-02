@@ -298,7 +298,7 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
   # Costs validation
   calcOutput(type = "ValidCostsOverall", datasource = "FAO", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # Overall costs.
-  calcOutput(type = "ValidCostsTransport", datasource = "GTAP", aggregate = FALSE,
+  calcOutput(type = "ValidCostsTransport", datasource = "GTAPtransport", aggregate = FALSE,
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidCostsTransport", datasource = "MAgPIEcalc", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
@@ -317,6 +317,8 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
   calcOutput(type = "ValidTotalLaborCosts", datasource = "USDA", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidTotalLaborCosts", datasource = "GTAP", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
+calcOutput(type = "ValidCostsTransport", datasource = "GTAPwholesale", aggregate = FALSE,
              file = valfile, append = TRUE, try = TRUE)
 
   # Diversity indices

@@ -1,7 +1,7 @@
 #' @title calcValidCostsTransport
 #' @description calculates the validation data for transport costs
 #'
-#' @param datasource Datasource of validation data.
+#' @param datasource Datasource of validation data
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author David Chen
 #' @examples
@@ -11,30 +11,88 @@
 #'
 #' @import mrmagpie
 
-#' @importFrom magpiesets reporthelper summationhelper
-calcValidCostsTransport <- function(datasource = "GTAP") {
+#' @importFrom magpiesets reporthelper summationhelper reportingnames
+calcValidCostsTransport <- function(datasource = "GTAPtransport") {
 
-  if (datasource == "GTAP") {
+  if (datasource %in% c("GTAPtransport", "GTAPwholesale")) {
+      if (datasource == "GTAPtransport") {
+        costType <- "transport"
+      } else {
+ costType <- "wholesale"
+}
 
-  costs <- readSource("TransportCostsGTAP", convert = FALSE)
-  getYears(costs) <- 2005
- missingProducts <- setdiff(findset("kall"), getNames(costs))
+transportGtap <- calcOutput("GTAPTotalTransportCosts", costType = costType,
+                 aggregate = FALSE)
 
-  out <- add_columns(costs, addnm = missingProducts, dim = 3.1)
-  out[, , missingProducts] <- 0
+# re-do some of calcTransportCosts, but add processed products, and only take totals
 
- out <- reporthelper(out, dim = 3.1, level_zero_name = "Costs|Transport", detail = TRUE)
- out <- summationhelper(out)
+  # map gtap cfts to MAgPIE cfts
+  cftRel <- list()
+  cftRel[["pdr"]] <- c("rice_pro")
+  cftRel[["wht"]] <- c("tece")
+  cftRel[["gro"]] <- c("maiz", "trce", "begr", "betr")
+  cftRel[["v_f"]] <- c("others", "potato", "cassav_sp", "puls_pro")
+  cftRel[["osd"]] <- c("soybean", "oilpalm", "rapeseed", "sunflower", "groundnut")
+  cftRel[["c_b"]] <- c("sugr_beet", "sugr_cane")
+  cftRel[["ocr"]] <- c("foddr")
+  cftRel[["rmk"]] <- "livst_milk"
+  cftRel[["ctl"]] <- c("livst_rum")
+  cftRel[["oap"]] <- c("livst_chick", "livst_egg", "livst_pig")
+  cftRel[["pfb"]] <- c("fibres")
+  cftRel[["sgr"]] <- c("sugar")
+  cftRel[["vol"]] <- c("oils")
+  cftRel[["b_t"]] <- c("alcohol")
 
- # take away + from total
- getNames(out[, , "Costs|+|Transport"]) <- "Costs|Transport"
+   # add processed rice, cattle meat, dairy products, and other meats to their raw eq's, and remove
+   transportGtap[, , "pdr"] <- transportGtap[, , "pdr"] + setNames(transportGtap[, , "pcr"], NULL)
+   transportGtap[, , "ctl"] <- transportGtap[, , "ctl"] + setNames(transportGtap[, , "cmt"], NULL)
+   transportGtap[, , "rmk"] <- transportGtap[, , "rmk"] + setNames(transportGtap[, , "mil"], NULL)
+   transportGtap[, , "oap"] <- transportGtap[, , "oap"] + setNames(transportGtap[, , "omt"], NULL)
+
+   rm <- c("pcr", "mil", "cmt", "omt")
+
+  transportGtap <- transportGtap[, , rm, invert = TRUE]
+
+# use production ratios to split along product categories
+
+prod <- collapseNames(
+          calcOutput("FAOmassbalance", aggregate = FALSE)[, , "production"][, ,
+ "dm"])
+prod <- time_interpolate(prod, interpolated_year = c(2000:2010),
+                         integrate_interpolated_years = TRUE)
+
+out <- new.magpie(cells_and_regions = getItems(transportGtap, dim = 1),
+                      years = getYears(transportGtap),
+                       unlist(cftRel))
+
+
+## split the combined products by production ratio
+  for (i in seq_along(cftRel)) {
+   out[, , cftRel[[i]]] <- collapseNames(transportGtap[, , names(cftRel)[[i]]]) *
+                                 (prod[, getYears(out), cftRel[[i]]] /
+                                ifelse(dimSums(prod[, getYears(out), cftRel[[i]]], dim = 3) > 0,
+                                        dimSums(prod[, getYears(out), cftRel[[i]]], dim = 3),
+                                        length(cftRel[[i]]) / 1))
+
+  }
+
+  if (costType == "transport") {
+      lzname <- "Costs|Transport"
+      description <- "Tranposrt Costs"
+ } else {
+
+      lzname <- "Costs|Wholesale"
+      description <- "Wholesale Costs"
+}
+
+  out <- reporthelper(out, level_zero_name = lzname, partly = TRUE)
+  out <- summationhelper(out, excludeLevels = 1)
+
+  out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+  out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
  getNames(out) <- paste(getNames(out), "(million US$05/yr)", sep = " ")
-  unit <- "million US$05/yr"
  unit <- "million US$05/yr"
-
- out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
- out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
 } else if (datasource == "MAgPIEcalc") {
 
@@ -77,6 +135,7 @@ calcValidCostsTransport <- function(datasource = "GTAP") {
 
  out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
  out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+ description <- "Transport Costs"
 
   } else {
  stop("Only own calculation and GTAP transport costs avilable currently!")
@@ -85,6 +144,6 @@ calcValidCostsTransport <- function(datasource = "GTAP") {
   return(list(x = out,
               weight = NULL,
               unit = unit,
-              description = "Transport Costs")
+              description = description)
   )
 }
