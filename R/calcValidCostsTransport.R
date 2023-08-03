@@ -78,10 +78,10 @@ out <- new.magpie(cells_and_regions = getItems(transportGtap, dim = 1),
 
   if (costType == "transport") {
       lzname <- "Costs|Transport"
-      description <- "Tranposrt Costs"
+      description <- "Transport Costs"
  } else {
 
-      lzname <- "Costs|Wholesale"
+      lzname <- "Costs|Wholesale Costs"
       description <- "Wholesale Costs"
 }
 
