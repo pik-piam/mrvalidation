@@ -85,7 +85,7 @@ out <- new.magpie(cells_and_regions = getItems(transportGtap, dim = 1),
       description <- "Wholesale Costs"
 }
 
-  out <- reporthelper(out, level_zero_name = lzname, partly = TRUE)
+  out <- reporthelper(out, level_zero_name = lzname, partly = TRUE, detail = FALSE)
   out <- summationhelper(out, excludeLevels = 1)
 
   out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
@@ -119,16 +119,9 @@ out <- new.magpie(cells_and_regions = getItems(transportGtap, dim = 1),
   out   <- toolAggregate(out, rel = mapping, from = "celliso", to = "iso", dim = 1)
   out   <- toolCountryFill(out, fill = 0)
 
-# add missing product groups, so that report and summation helper work properly.
-  # Note that forest, secondary, fish, bioenergy and  residues set to 0 currently
- missingProducts <- setdiff(findset("kall"), products)
-  out <- add_columns(out, addnm = missingProducts, dim = 3.1)
-  out[, , missingProducts] <- 0
-
- out <- reporthelper(out, dim = 3.1, level_zero_name = "Costs|Transport", detail = FALSE)
+ out <- reporthelper(out, dim = 3.1, level_zero_name = "Costs|Transport", partly = TRUE,
+                      detail = FALSE)
  out <- summationhelper(out)
-
- getNames(out[, , "Costs|+|Transport"]) <- "Costs|Transport"
 
  getNames(out) <- paste(getNames(out), "(million US$05/yr)", sep = " ")
  unit <- "million US$05/yr"
