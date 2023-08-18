@@ -28,7 +28,7 @@ calcValidPovertyLine <- function(datasource = "WBPoverty", subtype = "320Poverty
     if (length(where(rawPer[i, , ] != 0)$true$years) >= 2 &&
         length(where(rawPer[i, , ] != 0)$true$years) < length(getYears(rawPer))) {
       yrInter <- where(rawPer[i, , ] == 0)$true$years
-      rawPer[i, yrInter, ] <- time_interpolate(rawPer[i, , ][, yrInter, , inv = TRUE], yrInter)
+      rawPer[i, yrInter, ] <- time_interpolate(rawPer[i, , ][, yrInter, , invert = TRUE], yrInter)
     }
   }
 

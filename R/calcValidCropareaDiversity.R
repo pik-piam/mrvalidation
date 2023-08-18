@@ -1,6 +1,6 @@
 #' @title calcValidCropareaDiversity
 #' @description calculates validation for croparea diversity index. As opposed to
-#' \code{magpie4::CropareaDiversityIndex} due to lack of data fallow land is not considered
+#' CropareaDiversityIndex from magpie4 due to lack of data fallow land is not considered
 #'
 #' @export
 #'
@@ -60,7 +60,7 @@ calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
     return(x)
   }
 
-  # as opposed to magpie4::CropareaDiversityIndex due to lack of data fallow land is not considered here
+  # as opposed to CropareaDiversityIndex in magpie4 due to lack of data fallow land is not considered here
 
   cropdiv <- function(cellvalue, cropnames) {
     cellvalue <- as.vector(cellvalue)

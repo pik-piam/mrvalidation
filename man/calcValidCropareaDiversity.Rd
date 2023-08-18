@@ -17,7 +17,7 @@ MAgPIE object (unit depends on attributes)
 }
 \description{
 calculates validation for croparea diversity index. As opposed to
-\code{magpie4::CropareaDiversityIndex} due to lack of data fallow land is not considered
+CropareaDiversityIndex from magpie4 due to lack of data fallow land is not considered
 }
 \examples{
 \dontrun{
