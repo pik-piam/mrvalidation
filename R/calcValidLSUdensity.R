@@ -14,9 +14,6 @@ past <- findset("past")
 prod <- calcOutput("GrasslandBiomass", aggregate = F)[, past, "range"]
 prod <- toolCountryFill(prod, fill = 0)
 
-# regional mapping
-cell2reg <- toolGetMapping("CountryToCellMapping.csv", type = "cell")
-
   # pasture areas
 area <- calcOutput("LUH2v2",
    landuse_types = "LUH2v2",
@@ -32,8 +29,11 @@ yref_weights <- calcOutput("LUH2v2",
     landuse_types = "LUH2v2", cellular = T,
     aggregate = F)[, past, "range"]
 
+# aggregate cells to iso country level
+cell2iso <- data.frame(celliso = getItems(yref, 1, full = TRUE),
+                       iso = getItems(yref, if (magclass::dimExists(1.3, yref)) 1.3 else 1.1, full = TRUE))
 yref <- toolAggregate(yref,
-    rel = cell2reg, from = "celliso", 
+    rel = cell2iso, from = "celliso",
     to = "iso", 
     weight = yref_weights)
 
