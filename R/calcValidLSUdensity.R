@@ -27,9 +27,9 @@ calcValidLSUdensity <- function() {
   yrefWeights <- calcOutput("LUH2v2", landuse_types = "LUH2v2", cellular = TRUE, aggregate = FALSE)[, past, "range"]
 
   # aggregate cells to iso country level
-  cell2iso <- data.frame(celliso = getItems(yref, 1, full = TRUE),
-                         iso = getItems(yref, if (magclass::dimExists(1.3, yref)) 1.3 else 1.1, full = TRUE))
-  yref <- toolAggregate(yref, rel = cell2iso, from = "celliso", to = "iso", weight = yrefWeights)
+  cell2iso <- data.frame(cell = getItems(yref, 1, full = TRUE),
+                         iso = getItems(yref, if (dimExists("iso", yref)) "iso" else 1.1, full = TRUE))
+  yref <- toolAggregate(yref, rel = cell2iso, from = "cell", to = "iso", weight = yrefWeights)
 
   yref <- toolCountryFill(yref, fill = 0)
 
