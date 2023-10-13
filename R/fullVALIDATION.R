@@ -13,7 +13,7 @@
 #'
 fullVALIDATION <- function(rev = 0.1) {
 
-if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.63 anymore.
+  if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.63 anymore.
                        Please use a older snapshot/version of the library, if you need older revisions.")
   # all validation data regional aggregations happens here
   # for the first variable output calculation, append paramenter should be set to FALSE so that the
@@ -43,9 +43,15 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidHourlyLaborCosts", datasource = "ILO_completed", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidHourlyLaborCosts", datasource = "USDA_FAO_completed", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidWageDevelopment", datasource = "ILO_completed", baseYear = 2000,
              aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidWageDevelopment", datasource = "ILO_completed", baseYear = 2010,
+             aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidWageDevelopment", datasource = "USDA_FAO_completed", baseYear = 2000,
+             aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidWageDevelopment", datasource = "USDA_FAO_completed", baseYear = 2010,
              aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidGini", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
@@ -80,9 +86,9 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
              append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidTrade", aggregate = "REG+GLO", file = valfile,
              append = TRUE,  net_trade = FALSE, equalized = FALSE, try = TRUE) # ready
-   calcOutput(type = "ValidTrade", aggregate = "REG+GLO",
-              datasource = "FAOBilateral", file = valfile,
-              append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidTrade", aggregate = "REG+GLO",
+             datasource = "FAOBilateral", file = valfile,
+             append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidTrade", aggregate = "REG+GLO",
              datasource = "FAOBilateral",  file = valfile,
              append = TRUE,  net_trade = FALSE, equalized = FALSE, try = TRUE) # ready
@@ -265,7 +271,7 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
   calcOutput(type = "ValidTauPastr", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidLSUdensity", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgriResearchIntensity", aggregate = "REG+GLO", datasource = "Pardey",
-            file = valfile, append = TRUE, try = TRUE)
+             file = valfile, append = TRUE, try = TRUE)
 
   # Prices
   calcOutput(type = "ValidPriceAgriculture", datasource = "WBGEM", aggregate = FALSE,
@@ -318,7 +324,7 @@ if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidTotalLaborCosts", datasource = "GTAP", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
-calcOutput(type = "ValidCostsTransport", datasource = "GTAPwholesale", aggregate = "REG+GLO",
+  calcOutput(type = "ValidCostsTransport", datasource = "GTAPwholesale", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
 
   # Diversity indices
