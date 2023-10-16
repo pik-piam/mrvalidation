@@ -7,8 +7,13 @@
 calcValidHourlyLaborCosts(datasource = "ILO_completed")
 }
 \arguments{
-\item{datasource}{So far only "ILO_completed" (based on regression between ILO hourly labor costs and GDP pc MER,
-calibrated to match USDA/FAO total labor costs)}
+\item{datasource}{Available datasources are:
+\itemize{
+\item ILO_raw : ILO hourly labor costs data
+\item ILO_completed : ILO hourly labor costs data completed with a regression with GDP pc MER
+\item USDA_FA0_raw : USDA/FAO hourly labor costs data
+\item USDA_FA0_completed : USDA/FAO hourly labor costs data completed with a regression with GDP pc MER
+}}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.
@@ -18,7 +23,7 @@ hourly labor costs in crop+livestock production
 }
 \examples{
 \dontrun{
-calcOutput("ValidHourlyLaborCosts", datasource="ILO_completed")
+calcOutput("ValidHourlyLaborCosts", datasource = "ILO_completed")
 }
 
 }

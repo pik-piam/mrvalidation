@@ -7,8 +7,13 @@
 calcValidWageDevelopment(datasource = "ILO_completed", baseYear = 2000)
 }
 \arguments{
-\item{datasource}{So far only "ILO_completed" (based on regression between ILO hourly labor costs and GDP pc MER,
-calibrated to match USDA/FAO total labor costs)}
+\item{datasource}{Available datasources are:
+\itemize{
+\item ILO_raw : based on ILO hourly labor costs data
+\item ILO_completed : based on ILO hourly labor costs data completed with a regression with GDP pc MER
+\item USDA_FA0_raw : based on USDA/FAO hourly labor costs data
+\item USDA_FA0_completed : based on USDA/FAO hourly labor costs data completed with a regression with GDP pc MER
+}}
 
 \item{baseYear}{year relative to which the wage development should be calculated}
 }
