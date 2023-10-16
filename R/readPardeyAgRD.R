@@ -89,8 +89,8 @@ readPardeyAgRD <- function() {
   missingRegions <- setdiff(unique(mapping$RegionCode), getItems(ratio, 1))
 
   ratioMissing <- new.magpie(cells_and_regions = missingRegions,
-                              years = getYears(ratio),
-                              names = getNames(ratio))
+                             years = getYears(ratio),
+                             names = getNames(ratio))
   ratioMissing["EUR", , ] <- dimSums(ratio[c("Germany", "France", "Italy", "Spain"), , ], dim = 1) / 4
   ratioMissing[c("NEU", "REF"), , ] <- ratio["Upper Middle", , ]
   ratioMissing["CAZ", , ] <- ratio["High Income", , ]
