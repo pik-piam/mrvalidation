@@ -24,7 +24,7 @@ calcValidGrassSoilCarbon <- function(datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:
     soilc_range_past_tha <- calcOutput("RangeSoilCarbonHist", subtype = datasource, model = model, lpjml = lpjml, aggregate = F)
     past <- getYears(soilc_range_past_tha)
 
-    map_reg <- toolGetMapping(type = "regional", name = "clustermapping.csv")
+    map_reg <- toolGetMapping(type = "regional", name = "clustermapping.csv", where = "mappingfolder")
 
     soilc_range_past_mt      <- setNames(land_ini_LUH2v2[, past, "range"] * soilc_range_past_tha, "range")
     soilc_pastr_past_mt      <- setNames(land_ini_LUH2v2[, past, "pastr"] * soilc_pastr_past_tha[, past, "pastr"], "pastr")

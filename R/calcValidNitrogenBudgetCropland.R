@@ -95,7 +95,7 @@ calcValidNitrogenBudgetCropland <- function(datasource = "Bodirsky") {
       "961|Cattle, non-dairy"
     )
     tmp2 <- collapseNames(manure[, , selection][, , "Manure_applied_to_soils_(N_content)_(kg)"])
-    mapping <- toolGetMapping(type = "sectoral", name = "IPCCitems_fao_online.csv")
+    mapping <- toolGetMapping(type = "sectoral", name = "IPCCitems_fao_online.csv", where = "mappingfolder")
     tmp2 <- toolAggregate(tmp2, rel = mapping, from = "fao", to = "magpie", dim = 3.1)
     tmp2 <- tmp2 / 1e12
     manure <- setNames(dimSums(tmp2, dim = 3.1), "manure_conf")

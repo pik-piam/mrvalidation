@@ -76,9 +76,9 @@ calcValidTau <- function(datasource = "FAO2012") {
               unit = "-",
               description = description,
               note = c("data uses initialization values for 1995 based on ",
-                     "Dietrich J.P., Schmitz C., M\uFCller C., Fader M., Lotze-Campen H., Popp A.,",
-                     "Measuring agricultural land-use intensity - A global analysis using a model-assisted approach",
-                     "Ecological Modelling, Volume 232, 10 May 2012, 109-118, DOI 10.1016/j.ecolmodel.2012.03.002.",
-                     "preprint available \u40 http://edoc.gfz-potsdam.de/pik/display.epl?mode=doc&id=5281")))
+                       "Dietrich J.P., Schmitz C., M\uFCller C., Fader M., Lotze-Campen H., Popp A.,",
+                       "Measuring agricultural land-use intensity - A global analysis using a model-assisted approach",
+                       "Ecological Modelling, Volume 232, 10 May 2012, 109-118, DOI 10.1016/j.ecolmodel.2012.03.002.",
+                       "preprint available \u40 http://edoc.gfz-potsdam.de/pik/display.epl?mode=doc&id=5281")))
 
 }

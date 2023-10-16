@@ -107,11 +107,14 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
     yieldLPJmLgrid <- calcOutput("ValidGridYields", datasource = "calibratedLPJmL",
                                   future = future, aggregate = FALSE)
     areaMAGgrid    <- setYears(calcOutput("ValidGridCroparea", aggregate = FALSE)[, "y2010", ], NULL)
-    country2cell   <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv")
+    
+    cell2iso <- data.frame(cell = getItems(yieldLPJmLgrid, 1, full = TRUE),
+                           iso = getItems(yieldLPJmLgrid,
+                                          if (dimExists("iso", yieldLPJmLgrid)) "iso" else 1.1, full = TRUE))
 
-    yield <- toolAggregate(yieldLPJmLgrid, weight = areaMAGgrid, rel = country2cell,
+    yield <- toolAggregate(yieldLPJmLgrid, weight = areaMAGgrid, rel = cell2iso,
                            from = "celliso", to = "iso", dim = 1)
-    area <- toolAggregate(areaMAGgrid, weight = NULL, rel = country2cell,
+    area <- toolAggregate(areaMAGgrid, weight = NULL, rel = cell2iso,
                            from = "celliso", to = "iso", dim = 1)
 
 

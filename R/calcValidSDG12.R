@@ -16,7 +16,7 @@ calcValidSDG12 <- function(datasource = "FAO") {
     indicatorname <- "SDG|SDG12|Food loss"
     unit <- "Mt"
     foodLoss <- readSource("FAO_online", subtype = "CBCrop")
-    aggregation <- toolGetMapping("FAOitems_online.rda", type = "sectoral")
+    aggregation <- toolGetMapping("FAOitems_online.rda", type = "sectoral", where = "mrvalidation")
     # standarized items _ magpie object
     aAgg <- toolAggregate(foodLoss, rel = aggregation, from = "FAOaggregatedItem_fromWebsite",
                           to = "k", dim = 3.1, partrel = TRUE)
@@ -49,7 +49,7 @@ calcValidSDG12 <- function(datasource = "FAO") {
     indicatorname <- "SDG|SDG12|Food waste"
     unit <- "kcal/cap/day"
     # Reads food supply including household waste
-    avFood <- calcOutput(type = "FoodSupplyPast", aggregate = FALSE)[,,"kcal"]
+    avFood <- calcOutput(type = "FoodSupplyPast", aggregate = FALSE)[, , "kcal"]
     avFood <- dimSums(avFood, dim = 3)
     # Calculate expected intake. Source is Lutz2014. Average for male,female,ages.ssp1 (historical trend)
     intake <- calcOutput("Intake", aggregate = FALSE)
@@ -67,7 +67,9 @@ calcValidSDG12 <- function(datasource = "FAO") {
     unitsX <- c(unitsX, unit)
     popul <- popul[, comYears, ]
 
-  } else stop("No data exist for the given datasource!")
+  } else {
+    stop("No data exist for the given datasource!")
+  }
 
   return(list(x = x,
               weight = popul,
