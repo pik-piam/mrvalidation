@@ -15,8 +15,7 @@ calcValidNitrogenBudgetNonagland <- function() {
   out <- calcOutput("NitrogenBudgetNonagland", cellular = TRUE, aggregate = FALSE)
   out <- dimSums(out, dim = 3.1)
 
-  mapping <- toolGetMapping(name = "CountryToCellMapping.rds", where = "mrcommons")
-  out <- toolAggregate(x = out, rel = mapping, from = "celliso", to = "iso")
+  out <- dimSums(out, dim = c("x", "y"))
   out <- toolCountryFill(x = out, fill = 0)
 
   out <- out[, , "surplus"] # At the moment we focus only on the nutrient surplus

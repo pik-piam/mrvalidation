@@ -117,7 +117,7 @@ calcValidCostsTransport <- function(datasource = "GTAPtransport") {
     out <- costs[, , products] * productionDistance[, , products]
 
     # aggregate to country-level
-    out <- dimSums(out, dim = c("x", "y"))
+    out <- dimSums(out, dim = c(1.1, 1.2))
     out <- toolCountryFill(out, fill = 0)
 
     # add missing product groups, so that report and summation helper work properly.
