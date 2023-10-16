@@ -89,7 +89,7 @@ stop("no weight exits")
 
 # set within region trade to 0
 # NOTE THIS IS ASSUMING H12 regions!!!!
-h12 <- toolGetMapping("h12.csv",  type = "regional", where = "mappingfolder")
+h12 <- toolGetMapping("regionmappingH12.csv", type = "regional", where = "madrat")
 
 for (i in unique(h12$RegionCode)) {
    trade[list("im" = h12[(h12$RegionCode == i), "CountryCode"],
