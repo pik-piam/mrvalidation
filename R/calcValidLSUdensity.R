@@ -15,7 +15,7 @@ prod <- calcOutput("GrasslandBiomass", aggregate = F)[, past, "range"]
 prod <- toolCountryFill(prod, fill = 0)
 
 # regional mapping
-cell2reg <- toolGetMapping("CountryToCellMapping.csv", type = "cell")
+cell2reg <- toolGetMapping("CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
 
   # pasture areas
 area <- calcOutput("LUH2v2",

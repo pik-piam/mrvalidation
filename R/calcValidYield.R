@@ -102,7 +102,7 @@ calcValidYield  <-  function(datasource="FAO", future = NULL){
     irrigation=FALSE # can be made function argument if needed
     yieldLPJmL_grid <- calcOutput("ValidGridYields", datasource = "calibratedLPJmL", future = future, aggregate = FALSE)
     areaMAG_grid    <- setYears(calcOutput("ValidGridCroparea", aggregate = FALSE)[, "y2010", ], NULL)
-    CountryToCell   <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv")
+    CountryToCell   <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv", where = "mappingfolder")
 
     yield <- toolAggregate(yieldLPJmL_grid, weight = areaMAG_grid, rel = CountryToCell,
                            from = "celliso", to = "iso", dim = 1)

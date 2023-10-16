@@ -16,7 +16,6 @@ magpie object containing data land-use change CARBON emissions
 Read historic land-use change CARBON emissions
 }
 \examples{
-
 \dontrun{
 a <- readSource("Gasser")
 }

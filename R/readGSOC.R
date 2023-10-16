@@ -29,7 +29,7 @@ readGSOC <- function() {
   lat <- rev(seq(-89.75,89.75,by=0.5))
   
   #Load celliso names for 1:59199 magpie cells
-  mapping   <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv")
+  mapping   <- toolGetMapping(type = "cell", name = "CountryToCellMapping.csv", where = "mappingfolder")
   cellNames <- mapping$celliso
   
   #Change longitude and latitude

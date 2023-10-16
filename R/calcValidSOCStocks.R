@@ -22,7 +22,7 @@ calcValidSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995) {
 
   if (datasource == "LPJ_IPCC2006") {
 
-    mapping    <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell")
+    mapping    <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     somStock  <- calcOutput("SOM", subtype = "stock",   aggregate = FALSE)
     somStock  <- toolAggregate(somStock, rel = mapping,
                                from = ifelse(nregions(somStock) > 1, "celliso", "cell"), to = "iso", dim = 1)
@@ -75,7 +75,7 @@ calcValidSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995) {
     area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
     stock <- soilc * area
 
-    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell")
+    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     stock   <- toolAggregate(stock, rel = mapping, from = "celliso", to = "iso", dim = 1)
     stock   <- toolCountryFill(stock, fill = 0)
     out     <- setNames(stock, "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
@@ -91,7 +91,7 @@ calcValidSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995) {
     area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
     stock <- soilc * area
 
-    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell")
+    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     stock   <- toolAggregate(stock, rel = mapping, from = "celliso", to = "iso", dim = 1)
     stock   <- toolCountryFill(stock, fill = 0)
     out     <- setNames(stock, "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
@@ -108,7 +108,7 @@ calcValidSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995) {
     area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
     stock <- soilc * area
 
-    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell")
+    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     stock   <- toolAggregate(stock, rel = mapping, from = "celliso", to = "iso", dim = 1)
     stock   <- toolCountryFill(stock, fill = 0)
     out     <- setNames(stock, "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
@@ -126,7 +126,7 @@ calcValidSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995) {
     area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
     stock <- soilc * area
 
-    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell")
+    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     stock   <- toolAggregate(stock, rel = mapping, from = "celliso", to = "iso", dim = 1)
     stock   <- toolCountryFill(stock, fill = 0)
     out     <- setNames(stock, "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")

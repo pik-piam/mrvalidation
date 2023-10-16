@@ -11,17 +11,14 @@
 calcValidTauPastr <- function() {
   past <- findset("past")
   # Production
-  prod <- calcOutput("GrasslandBiomass", aggregate = F)[, past, "pastr"]
+  prod <- calcOutput("GrasslandBiomass", aggregate = FALSE)[, past, "pastr"]
   prod <- toolCountryFill(prod, fill = 0)
 
   # regional mapping
-  cell2reg <- toolGetMapping("CountryToCellMapping.csv", type = "cell")
+  cell2reg <- toolGetMapping("CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
 
   # pasture areas
-  area <- calcOutput("LUH2v2",
-    landuse_types = "LUH2v2",
-    cellular = F, aggregate = F
-  )[, past, "pastr"]
+  area <- calcOutput("LUH2v2", landuse_types = "LUH2v2", cellular = FALSE, aggregate = FALSE)[, past, "pastr"]
   area <- toolCountryFill(area, fill = 0)
 
   # Adding 'otherland' as an extra source of grass biomass comparable
@@ -29,7 +26,7 @@ calcValidTauPastr <- function() {
   otherland <-
     calcOutput("LUH2v2",
       landuse_types = "LUH2v2",
-      cellular = F, aggregate = F
+      cellular = FALSE, aggregate = FALSE
     )[, past, c("secdn", "primn")]
   area["IND", , "pastr"] <-
     area["IND", , "pastr"] +
@@ -47,21 +44,20 @@ calcValidTauPastr <- function() {
 
   # reference yields
   yref <- calcOutput("GrasslandsYields",
-    lpjml = "lpjml5p2_pasture",
-    climatetype = "MRI-ESM2-0:ssp245",
-    subtype = "/co2/Nreturn0p5",
-    lsu_levels = c(seq(0, 2.2, 0.2), 2.5), past_mngmt = "mdef",
-    aggregate = F
-  )[, past, "pastr.rainfed"]
+                     lpjml = "lpjml5p2_pasture",
+                     climatetype = "MRI-ESM2-0:ssp245",
+                     subtype = "/co2/Nreturn0p5", # nolint: absolute_path_linter.
+                     lsu_levels = c(seq(0, 2.2, 0.2), 2.5), past_mngmt = "mdef",
+                     aggregate = FALSE)[, past, "pastr.rainfed"]
 
-  yref_weights <- calcOutput("LUH2v2",
-    landuse_types = "LUH2v2", cellular = T,
-    aggregate = F
+  yrefWeights <- calcOutput("LUH2v2",
+    landuse_types = "LUH2v2", cellular = TRUE,
+    aggregate = FALSE
   )[, past, "pastr"]
   yref <- toolAggregate(yref,
-    rel = cell2reg, from = "celliso", 
-    to = "iso", 
-    weight = yref_weights
+    rel = cell2reg, from = "celliso",
+    to = "iso",
+    weight = yrefWeights
   )
   yref <- toolCountryFill(yref, fill = 0)
 
@@ -71,13 +67,13 @@ calcValidTauPastr <- function() {
   t <- collapseNames(t)
 
   # replacing unrealistic high tau values by regional averages
-  reg_map <- toolGetMapping("regionmappingH12.csv", type = "regional")
-  t_reg <- toolAggregate(t,
-    rel = reg_map, weight = area,
+  regMap <- toolGetMapping("regionmappingH12.csv", type = "regional", where = "madrat")
+  tReg <- toolAggregate(t,
+    rel = regMap, weight = area,
     from = "CountryCode", to = "RegionCode"
   )
-  regions <- reg_map$RegionCode
-  names(regions) <- reg_map[, "CountryCode"]
+  regions <- regMap$RegionCode
+  names(regions) <- regMap[, "CountryCode"]
 
   largeTC <- where(t >= 10)$true$individual # tau threshold
   colnames(largeTC)[1] <- "country"
@@ -85,7 +81,7 @@ calcValidTauPastr <- function() {
 
   for (i in as.vector(largeTC[, "country"])) {
     for (j in as.vector(largeTC[largeTC$country == i, "year"])) {
-      t[i, j, ] <- t_reg[regions[i], j, ]
+      t[i, j, ] <- tReg[regions[i], j, ]
     }
   }
 

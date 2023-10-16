@@ -26,7 +26,7 @@ calcValidSOCDensity <- function(datasource = "GSOC") {
                         cellular = TRUE, selectyears = "past_all", aggregate = FALSE)
     area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
 
-    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell")
+    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     soilc   <- toolAggregate(soilc, weight = area, rel = mapping, from = "celliso", to = "iso", dim = 1)
     soilc   <- toolCountryFill(soilc, fill = 0)
     out     <- setNames(soilc, "Resources|Soil Carbon|Actual|Density|SOC in top 30 cm (tC/ha)")
@@ -48,7 +48,7 @@ calcValidSOCDensity <- function(datasource = "GSOC") {
                         cellular = TRUE, selectyears = "past_all", aggregate = FALSE)
     area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
 
-    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell")
+    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     soilc   <- toolAggregate(soilc, weight = area, rel = mapping, from = "celliso", to = "iso", dim = 1)
     soilc   <- toolCountryFill(soilc, fill = 0)
     out     <- setNames(soilc, "Resources|Soil Carbon|Actual|Density|SOC in top 30 cm (tC/ha)")
@@ -70,7 +70,7 @@ calcValidSOCDensity <- function(datasource = "GSOC") {
                         cellular = TRUE, selectyears = "past_all", aggregate = FALSE)
     area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
 
-    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell")
+    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     soilc   <- toolAggregate(soilc, weight = area, rel = mapping, from = "celliso", to = "iso", dim = 1)
     soilc   <- toolCountryFill(soilc, fill = 0)
     out     <- setNames(soilc, "Resources|Soil Carbon|Actual|Density|SOC in top 30 cm (tC/ha)")
