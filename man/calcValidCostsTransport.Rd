@@ -4,10 +4,10 @@
 \alias{calcValidCostsTransport}
 \title{calcValidCostsTransport}
 \usage{
-calcValidCostsTransport(datasource = "GTAP")
+calcValidCostsTransport(datasource = "GTAPtransport")
 }
 \arguments{
-\item{datasource}{Datasource of validation data.}
+\item{datasource}{Datasource of validation data}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.

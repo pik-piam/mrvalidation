@@ -44,6 +44,22 @@ calcValidTau <- function(datasource = "FAO2012") {
     out <- tauHist
     description <- "Historic Trends in Agricultural Land Use Intensity Tau based on FAO yield trends (updated)"
     sourceName <- "dietrich_et_al_2012_updated"
+  } else if (datasource == "FAOValidYields") {
+    cropYields <- calcOutput("ValidYield", aggregate = FALSE)[, , "historical.FAO.Productivity|Yield|+|Crops (t DM/ha)"]
+    yieldIndex <- collapseDim(cropYields / cropYields[, 1995, ])
+
+    # average growth rates of more than 20% per year are assumed to be incorrect
+    maxYieldIndex <- (max(getYears(yieldIndex, as.integer = TRUE)) - 1995) * 0.2
+    yieldIndex[yieldIndex > maxYieldIndex] <- 1
+
+    tauHist <- collapseDim(yieldIndex * tau[, 1995, "tau"])
+    weight <- collapseDim(tau[, 1995, "xref"])
+    weight <- magpie_expand(weight, tauHist)
+    weight[is.na(tauHist)] <- 0
+    tauHist[is.na(tauHist)] <- 0
+    out <- tauHist
+    description <- "Trends in Agricultural Land Use Intensity Tau based on FAO yield trends from calcValidYield"
+    sourceName <- "yield validation FAO"
   } else {
     stop("Unknown datasource chosen in calcValidTau!")
   }
