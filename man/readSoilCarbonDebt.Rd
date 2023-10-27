@@ -13,9 +13,8 @@ List of magpie objects with results on cellular level, weight, unit and descript
 Read data from Soil Carbon Debt Paper (https://github.com/whrc/Soil-Carbon-Debt/)
 }
 \examples{
-
 \dontrun{
-  readSource("SoilCarbonDebt", subtype = "SOCS_2010")
+readSource("SoilCarbonDebt", subtype = "SOCS_2010")
 }
 
 }
