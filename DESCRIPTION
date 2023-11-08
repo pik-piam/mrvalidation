@@ -1,8 +1,8 @@
 Type: Package
 Package: mrvalidation
 Title: madrat data preparation for validation purposes
-Version: 2.51.7.9001
-Date: 2023-10-27
+Version: 2.52.0
+Date: 2023-11-08
 Authors@R: c(
     person("Benjamin Leon", "Bodirsky", , "bodirsky@pik-potsdam.de", role = c("aut", "cre")),
     person("Stephen", "Wirth", role = "aut"),
@@ -35,9 +35,9 @@ Depends:
     R (>= 2.10.0),
     madrat (>= 2.11.3),
     magclass (>= 3.17),
-    mrcommons (>= 1.0.0),
+    mrcommons (>= 1.37.0),
     mrdrivers (>= 0.2.2),
-    mrmagpie,
+    mrmagpie (>= 1.39.0),
     mrfactors
 Imports:
     GDPuc,
