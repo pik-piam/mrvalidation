@@ -16,11 +16,9 @@ Data on water use as MAgPIE object on country level Missing values are added as 
 }
 \description{
 Convert data on agricultural water use
-
 Convert subtypes on ISO country level.
 }
 \examples{
-
 \dontrun{
 a <- readSource("WaterUsage", "aquastat_2008_12")
 }

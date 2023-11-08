@@ -47,20 +47,20 @@
 readGMIA <- function(subtype = NULL) {
 
   files <- c(all_data_national = "HESS_2010_159_Supplement_S2.csv",
-          aei_pct = "gmia_v5_aei_pct.asc",
-          aei_ha = "gmia_v5_aei_ha.asc",
-          aai_pct_aei = "gmia_v5_aai_pct_aei.asc",
-          aeigw_pct_aei = "gmia_v5_aeigw_pct_aei.asc",
-          aeisw_pct_aei = "gmia_v5_aeisw_pct_aei.asc",
-          aeinc_pct_aei = "gmia_v5_aeinc_pct_aei.asc")
+             aei_pct = "gmia_v5_aei_pct.asc",
+             aei_ha = "gmia_v5_aei_ha.asc",
+             aai_pct_aei = "gmia_v5_aai_pct_aei.asc",
+             aeigw_pct_aei = "gmia_v5_aeigw_pct_aei.asc",
+             aeisw_pct_aei = "gmia_v5_aeisw_pct_aei.asc",
+             aeinc_pct_aei = "gmia_v5_aeinc_pct_aei.asc")
 
   file <- toolSubtypeSelect(subtype, files)
 
   # check wether data is gridded for countries
   if (subtype == "all_data_national") {
     # read data for countries
-    a <-  read.csv("HESS_2010_159_Supplement_S2.csv", sep = ";", header = TRUE, skip = 3, stringsAsFactors = FALSE)
-    a <- subset(a, select = - (2:5))
+    a <- read.csv("HESS_2010_159_Supplement_S2.csv", sep = ";", header = TRUE, skip = 3, stringsAsFactors = FALSE)
+    a <- subset(a, select = -(2:5))
     a <- a[1:(length(a[, 1]) - 1), ]
     # change dots in columnames to underscores
     colnames(a) <- gsub("\\.{2}", ".", colnames(a))
@@ -87,7 +87,7 @@ readGMIA <- function(subtype = NULL) {
     # change years and names
     getYears(c) <- c(2000:2008)
     getNames(c) <- paste0(subtype, " in 5 arcmin resolution")
-    getCells(c) <- paste0("GLO.", 1:dim(c)[1])
+    getCells(c) <- paste0("GLO.", 1:dim(c)[1]) #nolint
   }
   return(c)
 }

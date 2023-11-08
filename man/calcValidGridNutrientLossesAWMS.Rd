@@ -16,8 +16,7 @@ List of magpie objects with results on cellular level, weight on cellular level,
 reports Nutrient Losses in animal waste management on 0.5 degree grid
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("ValidGridNitrogenBudgetCropland")
 }
 

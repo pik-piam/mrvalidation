@@ -69,11 +69,6 @@ readGasser <- function(subtype = "bookkeeping") {
 
     elucDf <- as.data.frame.table(elucRaw)
 
-    ## THE FOLLOWING THREE LINES SHOULD BE COMMENTED OUT IF URBAN LAND IS DYNAMIC IN MAGPIE
-    elucDf$Freq[elucDf$bio_to == "Urban"] <- 0
-    elucDf$Freq[elucDf$bio_from == "Urban"] <- 0
-    message("CAUTION: Emissions related to/from Urban land have been removed from source data.")
-
     eluc <- gasser <- as.magpie(elucDf, temporal = "year", spatial = "reg_land")
 
     ## From Gasser paper (https://doi.org/10.5194/bg-17-4075-2020)

@@ -1,7 +1,7 @@
 #' @title calcValidWaterUsage
 #'
-#' @description Returns historical and projected water usage
-#'              from different sources
+#' @description Returns historical and projected water withdrawal
+#'              from different data sources
 #'
 #' @param datasource Currently available:
 #' \itemize{
@@ -57,7 +57,7 @@ calcValidWaterUsage <- function(datasource = "shiklomanov_2000") {
                         "wisser_2008", "fischer_IIASA", "hejazi_2013",
                         "molden_IWMI", "seckler_IWMI", "shiklomanov")) {
 
-    out <- readSource("WaterUsage", datasource, convert = F)
+    out <- readSource("WaterUsage", datasource, convert = FALSE)
 
     if (datasource %in% c("wisser_2008", "fischer_IIASA", "hejazi_2013", "seckler_IWMI")) {
       out <- out[, , "data"]
@@ -76,37 +76,39 @@ calcValidWaterUsage <- function(datasource = "shiklomanov_2000") {
 
       }
 
-    } else if (datasource %in% c("CWatM:ipsl-cm5a-lr",      "CWatM:gfdl-esm2m",        "CWatM:miroc5",            "CWatM:hadgem2-es",
-                                 "H08:ipsl-cm5a-lr",        "H08:gfdl-esm2m",          "H08:miroc5",              "H08:hadgem2-es",
-                                 "LPJmL:ipsl-cm5a-lr",      "LPJmL:gfdl-esm2m",        "LPJmL:miroc5",            "LPJmL:hadgem2-es",
-                                 "MATSIRO:ipsl-cm5a-lr",    "MATSIRO:gfdl-esm2m",      "MATSIRO:miroc5",          "MATSIRO:hadgem2-es",
-                                 "MPI-HM:ipsl-cm5a-lr",     "MPI-HM:gfdl-esm2m",       "MPI-HM:miroc5",
-                                 "PCR-GLOBWB:ipsl-cm5a-lr", "PCR-GLOBWB:gfdl-esm2m",   "PCR-GLOBWB:miroc5",       "PCR-GLOBWB:hadgem2-es")) {
+    } else if (datasource %in% c("CWatM:ipsl-cm5a-lr",      "CWatM:gfdl-esm2m",
+                                 "CWatM:miroc5",            "CWatM:hadgem2-es",
+                                 "H08:ipsl-cm5a-lr",        "H08:gfdl-esm2m",
+                                 "H08:miroc5",              "H08:hadgem2-es",
+                                 "LPJmL:ipsl-cm5a-lr",      "LPJmL:gfdl-esm2m",
+                                 "LPJmL:miroc5",            "LPJmL:hadgem2-es",
+                                 "MATSIRO:ipsl-cm5a-lr",    "MATSIRO:gfdl-esm2m",
+                                 "MATSIRO:miroc5",          "MATSIRO:hadgem2-es",
+                                 "MPI-HM:ipsl-cm5a-lr",     "MPI-HM:gfdl-esm2m",
+                                 "MPI-HM:miroc5",
+                                 "PCR-GLOBWB:ipsl-cm5a-lr", "PCR-GLOBWB:gfdl-esm2m",
+                                 "PCR-GLOBWB:miroc5",       "PCR-GLOBWB:hadgem2-es")) {
 
       out <- readSource("ISIMIP", subtype = paste("airww", datasource, "2b", sep = ":"), convert = TRUE)
 
-      # unit transformation: from: kg m-2 s-1 = mm/second, to: mm/month
+      # unit transformation: from: kg m-2 s-1 is equal to mm/second, to: mm/month
       # (Note: 1 day = 60*60*24 = 86400 seconds)
       dayofmonths <- as.magpie(c(jan = 31, feb = 28, mar = 31, apr = 30,
                                  may = 31, jun = 30, jul = 31, aug = 31,
                                  sep = 30, oct = 31, nov = 30, dec = 31), temporal = 1)
       out      <- out * dayofmonths * 86400
-      # mm/month -> mm/year
-      out      <- collapseDim(toolAggregate(out, data.frame(getItems(out, "month"), "year"), dim = "month"))
-      # Note: mm/year = liter/m^2/year -> liter/year
+      # transform mm/month to mm/year
+      out      <- collapseDim(toolAggregate(out, data.frame(getItems(out, "month"), "year"),
+                              dim = "month"))
+      # Note: mm/year is equal to liter/m^2/year -> liter/year
       # Conversion from liter/m^2/year -> liter/year: multiply with landarea
       # landarea (given in Mha) -> m^2 (multiply 1e10)
       # liter -> km^3 (multiply with 1e-12)
       landarea <- dimSums(calcOutput("LUH2v2", landuse_types = "magpie",
-                                     cellular = TRUE, cells = "magpiecell",
+                                     cellular = TRUE, cells = "lpjcell",
                                      irrigation = FALSE, years = "y1995",
                                      aggregate = FALSE), dim = 3)
-      names(dimnames(landarea))[1] <- "iso.cell"
-      landarea                     <- toolAggregate(x = landarea,
-                                                    rel = data.frame("cell" = getCells(landarea),
-                                                                     "iso" = gsub("\\..*", "", getCells(landarea)),
-                                                                     stringsAsFactors = FALSE),
-                                                    dim = 1)
+      landarea                     <- dimSums(landarea, dim = c("x", "y"))
       landarea                     <- toolCountryFill(landarea, fill = 0)
       out                          <- out * landarea * 1e-02
 
@@ -124,5 +126,5 @@ calcValidWaterUsage <- function(datasource = "shiklomanov_2000") {
               weight      = NULL,
               unit        = "km^3",
               min         = 0,
-              description = "Agricultural waterusage from different sources in km^3"))
+              description = "Agricultural water withdrawal from different sources in km^3"))
 }

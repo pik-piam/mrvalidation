@@ -116,6 +116,7 @@ calcValidCostsTransport <- function(datasource = "GTAPtransport") {
     # total costs
     out <- costs[, , products] * productionDistance[, , products]
 
+<<<<<<< HEAD
     # aggregate to country-level
     out <- dimSums(out, dim = c(1.1, 1.2))
     out <- toolCountryFill(out, fill = 0)
@@ -125,6 +126,11 @@ calcValidCostsTransport <- function(datasource = "GTAPtransport") {
     missingProducts <- setdiff(findset("kall"), products)
     out <- add_columns(out, addnm = missingProducts, dim = 3.1)
     out[, , missingProducts] <- 0
+=======
+    mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
+    out   <- toolAggregate(out, rel = mapping, from = "celliso", to = "iso", dim = 1)
+    out   <- toolCountryFill(out, fill = 0)
+>>>>>>> master
 
     out <- reporthelper(out, dim = 3.1, level_zero_name = "Costs|Transport", partly = TRUE,
                         detail = FALSE)

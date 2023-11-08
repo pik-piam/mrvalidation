@@ -6,57 +6,65 @@
 #' @seealso
 #' \code{\link{calcFAOmassbalance}},
 #' @examples
-#' 
-#' \dontrun{ 
+#' \dontrun{
 #' calcOutput("ValidGrassLSUha")
 #' }
 #' @importFrom mrcommons toolCell2isoCell
 
-calcValidGrassLSUha<-function(datasource = "MAgPIEown"){
-  
-  if(datasource=="MAgPIEown") {
-  
-  mag_years_past <- findset("past")
-  biomass <- calcOutput("FAOmassbalance", aggregate = FALSE)[, mag_years_past , "production.dm"][,, "pasture"]
-  biomass <- collapseNames(biomass)
-  biomass <- toolIso2CellCountries(biomass)
-  
-  land <- calcOutput("LanduseInitialisation", cellular = TRUE, nclasses = "nine", aggregate = FALSE)[, mag_years_past, ]
-  grassl_land <- land[, , c("past", "range")]
-  grassl_land <- setNames(grassl_land, c("pastr", "range"))
-  grassl_shares <- setNames(grassl_land[, , "pastr"] / dimSums(grassl_land, dim = 3), "pastr")
-  grassl_shares <- add_columns(grassl_shares, addnm = "range", dim = 3.1)
-  grassl_shares[, , "range"] <- 1 - grassl_shares[, , "pastr"]
-  grassl_shares[is.nan(grassl_shares) | is.infinite(grassl_shares)] <- 0
-  
-  mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
-  
-  livestock <- setNames(toolCell2isoCell(readSource("GLW3")), "liv_numb")
-  livst_split <- livestock * grassl_shares
-  livst_split <- collapseNames(livst_split)
-  livst_split_ctry <- toolAggregate(livst_split, rel = mapping, to = "iso", from = "celliso")
-  livst_share_ctry <- livst_split_ctry[, , "pastr"] / dimSums(livst_split_ctry, dim = 3)
-  livst_share_ctry[is.nan(livst_share_ctry) | is.infinite(livst_share_ctry)] <- 0
-  livst_share_ctry <- add_columns(livst_share_ctry, addnm = "range", dim = 3.1)
-  livst_share_ctry[, , "range"] <- 1 - livst_share_ctry[, , "pastr"]
-  
-  # I am splitting biomass consumption assuming the share
-  # between animals reared on rangelands and pastures correlates linearly
-  # with the production of grass in pastures and rangelands in a country. That can be
-  # derived by the fact that the feedbaskets assume the same productivity (feed ingreedients shares)
-  # within a country.
-  
-  lsu_split <- biomass * livst_share_ctry / (8.9 * 365 / 1000)
-  lsu_split <- toolCountryFill(lsu_split)
-  lsu_split[is.nan(lsu_split) | is.na(lsu_split) | is.infinite(lsu_split)] <- 0
-  lsu_split <- setNames(lsu_split, paste0("Total lsu|+|Cattle|", reportingnames(getNames(lsu_split, dim = 1)), " (millions)"))
-  lsu_split <- add_dimension(lsu_split, dim=3.1, add="scenario", nm="historical")
-  lsu_split <- add_dimension(lsu_split, dim=3.2, add="model", nm=datasource)
+calcValidGrassLSUha <- function(datasource = "MAgPIEown") {
+
+  if (datasource == "MAgPIEown") {
+    # coordinate to country mapping for 67420 cells
+    mappingCtry <- toolGetMappingCoord2Country()
+    countries <- unique(mappingCtry$iso)
+    mappingCtry$coordiso <- paste(mappingCtry$coords,
+                                  mappingCtry$iso,
+                                  sep = ".")
+
+    yearsPast <- findset("past")
+    biomass   <- calcOutput("FAOmassbalance", aggregate = FALSE)[, yearsPast, "production.dm"][, , "pasture"]
+    biomass   <- collapseNames(biomass)[countries, , ]
+
+    land <- calcOutput("LanduseInitialisation", nclasses = "nine",
+                      cellular = TRUE, cells = "lpjcell",
+                      aggregate = FALSE)[, yearsPast, ]
+    grasslLand   <- land[, , c("past", "range")]
+    grasslLand   <- setNames(grasslLand, c("pastr", "range"))
+    grasslShares <- setNames(grasslLand[, , "pastr"] / dimSums(grasslLand, dim = 3), "pastr")
+    grasslShares <- add_columns(grasslShares, addnm = "range", dim = 3.1)
+    grasslShares[, , "range"] <- 1 - grasslShares[, , "pastr"]
+    grasslShares[is.nan(grasslShares) | is.infinite(grasslShares)] <- 0
+
+    livestock  <- setNames(readSource("GLW3"), "liv_numb")
+    livstSplit <- livestock * grasslShares
+    livstSplit <- collapseNames(livstSplit)
+    livstSplitCtry <- toolAggregate(livstSplit, rel = mappingCtry,
+                                    from = "coordiso", to = "iso")
+    livstShareCtry <- livstSplitCtry[, , "pastr"] / dimSums(livstSplitCtry, dim = 3)
+    livstShareCtry[is.nan(livstShareCtry) | is.infinite(livstShareCtry)] <- 0
+    livstShareCtry <- add_columns(livstShareCtry, addnm = "range", dim = 3.1)
+    livstShareCtry[, , "range"] <- 1 - livstShareCtry[, , "pastr"]
+
+    # I am splitting biomass consumption assuming the share
+    # between animals reared on rangelands and pastures correlates linearly
+    # with the production of grass in pastures and rangelands in a country. That can be
+    # derived by the fact that the feedbaskets assume the same productivity (feed ingreedients shares)
+    # within a country.
+
+    lsuSplit <- biomass * livstShareCtry / (8.9 * 365 / 1000)
+    lsuSplit <- toolCountryFill(lsuSplit)
+    lsuSplit[is.nan(lsuSplit) | is.na(lsuSplit) | is.infinite(lsuSplit)] <- 0
+    lsuSplit <- setNames(lsuSplit,
+                         paste0("Total lsu|+|Cattle|",
+                         reportingnames(getNames(lsuSplit, dim = 1)),
+                         " (millions)"))
+    lsuSplit <- add_dimension(lsuSplit, dim = 3.1, add = "scenario", nm = "historical")
+    lsuSplit <- add_dimension(lsuSplit, dim = 3.2, add = "model", nm = datasource)
   }
-  
-  return(list(x=lsu_split,
-              weight=NULL,
-              unit="Mt DM/yr",
-              description="Grass Production from pastures and rangelands")
+
+  return(list(x = lsuSplit,
+              weight = NULL,
+              unit = "Mt DM/yr",
+              description = "Grass Production from pastures and rangelands")
   )
 }

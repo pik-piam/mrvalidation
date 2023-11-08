@@ -5,9 +5,8 @@
 #' @author Kristine Karstens
 #'
 #' @examples
-#'
 #' \dontrun{
-#'   readSource("SoilCarbonDebt", subtype = "SOCS_2010")
+#' readSource("SoilCarbonDebt", subtype = "SOCS_2010")
 #' }
 #'
 #' @importFrom magclass as.magpie getNames getSets getCells
@@ -26,15 +25,15 @@ readSoilCarbonDebt <- function() {
 
   map        <- toolGetMappingCoord2Country(pretty = TRUE)
   area       <- raster::raster("landmask_10km.tif")
-  r5min      <- raster::raster(res = 0.5/6)
-  area5min   <- raster::area(r5min)/10^4 * area
-  area30min  <- raster::aggregate(area5min, fact = 6, fun = sum)
+  r5min      <- raster::raster(res = 0.5 / 6)
+  area5min   <- raster::area(r5min) / 10^4 * area
+  area30min  <- raster::aggregate(area5min, fact = 6, fun = sum, na.rm = TRUE)
 
   .convertToMag <- function(f, file) {
 
     data           <- raster::raster(file)
     data           <- raster::projectRaster(data, r5min, over = TRUE)
-    data30min      <- raster::aggregate(data * area5min, fact = 6, fun = sum) / area30min
+    data30min      <- raster::aggregate(data * area5min, fact = 6, fun = sum, na.rm = TRUE) / area30min
     mag            <- as.magpie(raster::extract(data30min, map[c("lon", "lat")]), spatial = 1)
 
     getNames(mag)  <- f

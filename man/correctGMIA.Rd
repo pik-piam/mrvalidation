@@ -18,10 +18,10 @@ Global Map on Irrigation data as MAgPIE object at a 0.5 Degree resolution.
 Correct Irrigated Area
 
 Correct Irrigated Area to 0.5 Degree x 0.5 Degree Grid.
-Change resolution from 5 arcmin to 0.5 Degree by aggregating. Values in ha are summed up, Values in percent are calculated using mean.
+Change resolution from 5 arcmin to 0.5 Degree by aggregating. Values in ha are summed up,
+Values in percent are calculated using mean.
 }
 \examples{
-
 \dontrun{
 a <- readSource("IrrigatedArea")
 }

@@ -14,9 +14,6 @@ calcValidTauPastr <- function() {
   prod <- calcOutput("GrasslandBiomass", aggregate = FALSE)[, past, "pastr"]
   prod <- toolCountryFill(prod, fill = 0)
 
-  # regional mapping
-  cell2reg <- toolGetMapping("CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
-
   # pasture areas
   area <- calcOutput("LUH2v2", landuse_types = "LUH2v2", cellular = FALSE, aggregate = FALSE)[, past, "pastr"]
   area <- toolCountryFill(area, fill = 0)
@@ -50,15 +47,11 @@ calcValidTauPastr <- function() {
                      lsu_levels = c(seq(0, 2.2, 0.2), 2.5), past_mngmt = "mdef",
                      aggregate = FALSE)[, past, "pastr.rainfed"]
 
-  yrefWeights <- calcOutput("LUH2v2",
-    landuse_types = "LUH2v2", cellular = TRUE,
-    aggregate = FALSE
-  )[, past, "pastr"]
-  yref <- toolAggregate(yref,
-    rel = cell2reg, from = "celliso",
-    to = "iso",
-    weight = yrefWeights
-  )
+  yrefWeights <- calcOutput("LUH2v2", landuse_types = "LUH2v2", cellular = TRUE,
+                            aggregate = FALSE)[, past, "pastr"]
+  cell2iso <- data.frame(cell = getItems(yref, 1, full = TRUE),
+                         iso = getItems(yref, if (dimExists("iso", yref)) "iso" else 1.1, full = TRUE))
+  yref <- toolAggregate(yref, rel = cell2iso, from = "cell", to = "iso", weight = yrefWeights)
   yref <- toolCountryFill(yref, fill = 0)
 
   # tau calculation
