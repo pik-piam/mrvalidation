@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: If you use this software, please cite it using the metadata from this file.
 type: software
 title: 'mrvalidation: madrat data preparation for validation purposes'
-version: 2.52.0
-date-released: '2023-11-08'
+version: 2.52.1
+date-released: '2023-12-06'
 abstract: Package contains routines to prepare data for validation exercises.
 authors:
 - family-names: Bodirsky
@@ -37,9 +37,7 @@ authors:
   given-names: Ulrich
 - family-names: W. Yalew
   given-names: Amsalu
-- family-names: 'Humpenoeder '
-  given-names: Florian
-- family-names: 'von Jeetze '
+- family-names: von Jeetze
   given-names: Patrick
 - family-names: Wang
   given-names: Xiaoxi

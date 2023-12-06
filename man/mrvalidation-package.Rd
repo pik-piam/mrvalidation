@@ -36,8 +36,7 @@ Authors:
   \item Edna Molina Bacca
   \item Ulrich Kreidenweis
   \item Amsalu W. Yalew
-  \item Florian Humpenoeder 
-  \item Patrick von Jeetze 
+  \item Patrick von Jeetze
   \item Xiaoxi Wang
   \item Jan Philipp Dietrich
   \item Marcos Alves
