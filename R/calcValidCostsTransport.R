@@ -57,7 +57,7 @@ calcValidCostsTransport <- function(datasource = "GTAPtransport") {
 
     prod <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , "production"][, ,
                                                                                             "dm"])
-    prod <- time_interpolate(prod, interpolated_year = c(2000:2010),
+    prod <- time_interpolate(prod, interpolated_year = c(2000:2011),
                              integrate_interpolated_years = TRUE)
 
     out <- new.magpie(cells_and_regions = getItems(transportGtap, dim = 1),
