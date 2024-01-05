@@ -265,6 +265,8 @@ fullVALIDATION <- function(rev = 0.1) {
 
   # Yield
   calcOutput(type = "ValidYield", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidYield", datasource = "Ostberg2023_FAO_LUH2v2",
+             aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
 
   # Productivity
   calcOutput(type = "ValidTau", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)

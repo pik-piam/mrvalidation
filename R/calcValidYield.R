@@ -101,13 +101,85 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
     scenario    <- "historical"
     description <- "CalcValidYield calculates the historical yield from FAO database."
 
+  } else if (datasource == "Ostberg2023_FAO_LUH2v2") {
+
+    if (!is.null(future)) stop("Future options is not available for source type 'FAO'.")
+
+    past <- findset("past")
+
+    # Calculate areas of individual crops and pasture
+    croparea <- calcOutput("CropareaLandInG", aggregate = FALSE)
+    pastarea  <-  setNames(calcOutput("LanduseInitialisation", aggregate = FALSE)[, , "past"],
+                           "pasture")
+    area <- mbind(croparea[, getYears(pastarea), ], pastarea)
+    area <- summationhelper(reporthelper(area,
+                                         level_zero_name = "Productivity|Yield by phyiscal area"))
+
+    # Calculate production
+    histproduction <- calcOutput("FAOmassbalance", aggregate = FALSE)
+    # extract DryMatter(dm) from production data
+    # Extract Production from subsetted production data containing only DryMatter(dm)
+    histproduction  <-  collapseNames(histproduction[, , "dm"][, , "production"])
+
+    # Figure out which commodities are common and make sure that production and area has same commodity names
+    kcr <- findset("kcr")
+    cropproduction  <-  histproduction[, , kcr]
+    pastproduction  <-  histproduction[, , "pasture"]
+    production <- mbind(cropproduction, pastproduction)
+
+    # Calculate Yields
+    production <- summationhelper(reporthelper(production,
+                                               level_zero_name = "Productivity|Yield by phyiscal area"))
+    yield      <-  production / area
+
+    # Check for NaN values
+    indexNaN  <-  which(is.nan(yield))
+    # Change NaN to 0
+    yield[is.nan(yield)] <- 0
+    if (length(indexNaN) > 0) {
+      vcat(verbosity = 2, "NaN values were found in the calculated yields ---> NaN values set to 0")
+    } else if (length(indexNaN) == 0) {
+      vcat(verbosity = 2, paste0("No NaN values detected in calculated yields. ",
+                                 "Yields for area reported as 0 are converted to 0."))
+    }
+
+    # Check for infinite values - Production reported but on 0 area
+    infindex  <-  which(is.infinite(yield)) # Lots of inf values. Being too diplomatic FAO aren't we!!
+    # Change inf to 0
+    yield[is.infinite(yield)] <- 0
+    if (length(infindex) > 0) {
+      vcat(verbosity = 2, "inf values were found in the calculated yields ---> inf values set to 0")
+    } else if (length(infindex) == 0) {
+      vcat(verbosity = 2, "No inf values found in the calculated yields")
+    }
+
+    ## Additional checks required because we are reporting insanely high yields
+    ## Check which(yield>200,arr.ind = TRUE)
+    ## looks like Vatican are the best producers of oil
+
+    ## We decided to set these outliers to 0
+    # look for the Region names which are outliers
+    region   <- rownames(which(yield > 200, arr.ind = TRUE))
+    # look for the Years where reporting is flawed
+    year     <- which(yield > 200, arr.ind = TRUE)[, 2]
+    # look for the scenario.model.Variable where reporting is flawed
+    variable <- which(yield > 200, arr.ind = TRUE)[, 3]
+
+    ## Now do the operation of our magpie object
+    yield[region, year, variable]  <-  0
+    vcat(verbosity = 2, paste0("Yields>200 ton/ha were converted to 0 ",
+                               "when area and production values were ambiguous"))
+
+    scenario    <- "historical"
+    description <- "FAO massbalance yields divided by physical area excluding fallow from Ostberg"
+
   } else if (datasource == "calibratedLPJmL") {
 
     irrigation <- FALSE # can be made function argument if needed
     yieldLPJmLgrid <- calcOutput("ValidGridYields", datasource = "calibratedLPJmL",
-                                  future = future, aggregate = FALSE)
+                                 future = future, aggregate = FALSE)
     areaMAGgrid    <- setYears(calcOutput("ValidGridCroparea", aggregate = FALSE)[, "y2010", ], NULL)
-    
+
     cell2iso <- data.frame(cell = getItems(yieldLPJmLgrid, 1, full = TRUE),
                            iso = getItems(yieldLPJmLgrid,
                                           if (dimExists("iso", yieldLPJmLgrid)) "iso" else 1.1, full = TRUE))
@@ -115,7 +187,7 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
     yield <- toolAggregate(yieldLPJmLgrid, weight = areaMAGgrid, rel = cell2iso,
                            from = "celliso", to = "iso", dim = 1)
     area <- toolAggregate(areaMAGgrid, weight = NULL, rel = cell2iso,
-                           from = "celliso", to = "iso", dim = 1)
+                          from = "celliso", to = "iso", dim = 1)
 
 
     rm(yieldLPJmLgrid, areaMAGgrid)
