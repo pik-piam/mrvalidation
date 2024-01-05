@@ -107,6 +107,8 @@ fullVALIDATION <- function(rev = 0.1) {
   # Croparea
   calcOutput(type = "ValidCroparea", datasource = "FAO", aggregate = "REG+GLO",
              file = valfile, append = TRUE, detail = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidCroparea", datasource = "ostberg2023", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, detail = TRUE, try = TRUE) # ready
   # Land Cover
   calcOutput(type = "ValidLand", datasource = "FAO_crop_past", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
