@@ -15,7 +15,7 @@ calcValidAAI <- function(datasource = "LUH2v2") {
 
     out <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = TRUE,
                       cellular = FALSE, selectyears = "past", aggregate = FALSE)
-    out <- collapseNames(out[, , c("c3ann", "c4ann")][, , "irrigated"])
+    out <- collapseNames(out[, , c("c3ann", "c4ann", "c3per", "c4per", "c3nfx")][, , "irrigated"])
 
     out <- dimSums(out, dim = 3)
 
