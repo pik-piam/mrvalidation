@@ -22,5 +22,5 @@ Ostberg2023 is a slightly modified version of
 https://gmd.copernicus.org/articles/16/3375/2023/gmd-16-3375-2023-assets.html
 }
 \author{
-Ulrich Kreidenweis
+Benjamin Bodirsky, Ulrich Kreidenweis
 }
