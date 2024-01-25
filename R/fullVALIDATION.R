@@ -279,6 +279,10 @@ fullVALIDATION <- function(rev = 0.1) {
   calcOutput(type = "ValidLSUdensity", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgriResearchIntensity", aggregate = "REG+GLO", datasource = "Pardey",
              file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidFeedConversion", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
+
+
 
   # Prices
   calcOutput(type = "ValidPriceAgriculture", datasource = "WBGEM", aggregate = FALSE,
