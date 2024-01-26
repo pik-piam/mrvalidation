@@ -9,7 +9,8 @@ calcValidNitrogenBudgetCropland(datasource = "Bodirsky")
 \arguments{
 \item{datasource}{Bodirsky for own calculations, Lassaletta2014 for a country dataset from
 Lassaletta, L., G. Billen, B. Grizzetti, J. Angalde, and J. Garnier. 2014.
-50 Year Trends in Nitrogen Use Efficiency of World Cropping Systems: The Relationship between Yield and Nitrogen Input to Cropland.
+50 Year Trends in Nitrogen Use Efficiency of World Cropping Systems: The Relationship
+between Yield and Nitrogen Input to Cropland.
 Environmental Research Letters.
 FAO for some N related parameters published in FAOSTAT.}
 }
@@ -20,7 +21,6 @@ List of magpie objects with results on country level, weight on country level, u
 Validation Script for Nitrogen Budgets on Croplands
 }
 \examples{
-
 \dontrun{
 calcOutput("ValidNitrogenBudgetCropland")
 }

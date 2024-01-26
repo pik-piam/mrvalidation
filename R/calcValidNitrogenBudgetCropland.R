@@ -3,7 +3,8 @@
 #'
 #' @param datasource Bodirsky for own calculations, Lassaletta2014 for a country dataset from
 #' Lassaletta, L., G. Billen, B. Grizzetti, J. Angalde, and J. Garnier. 2014.
-#' 50 Year Trends in Nitrogen Use Efficiency of World Cropping Systems: The Relationship between Yield and Nitrogen Input to Cropland.
+#' 50 Year Trends in Nitrogen Use Efficiency of World Cropping Systems: The Relationship
+#' between Yield and Nitrogen Input to Cropland.
 #' Environmental Research Letters.
 #' FAO for some N related parameters published in FAOSTAT.
 #'
@@ -12,7 +13,6 @@
 #' @seealso
 #' \code{\link{calcNitrogenBudgetCropland}}
 #' @examples
-#'
 #' \dontrun{
 #' calcOutput("ValidNitrogenBudgetCropland")
 #' }
@@ -58,24 +58,28 @@ calcValidNitrogenBudgetCropland <- function(datasource = "Bodirsky") {
 
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
   } else if (datasource == "ACCMIP") {
-    dep <- calcOutput("AtmosphericDeposition", datasource = "ACCMIP", scenario = c("rcp26", "rcp45", "rcp85"), aggregate = FALSE)
+    dep <- calcOutput("AtmosphericDeposition", datasource = "ACCMIP",
+                      scenario = c("rcp26", "rcp45", "rcp85"), aggregate = FALSE)
     out <- dep
     out <- dimSums(out, dim = c(3.1, 3.3, 3.4))
-    out <- add_dimension(out, dim = 3.2, add = "indicator", nm = "Resources|Nitrogen|Cropland Budget|Inputs|+|Atmospheric Deposition")
+    out <- add_dimension(out, dim = 3.2, add = "indicator",
+                         nm = "Resources|Nitrogen|Cropland Budget|Inputs|+|Atmospheric Deposition")
     getSets(out)[3] <- "scenario"
   } else if (datasource == "Lassaletta2014") {
     budget <- readSource("Lassaletta2014", subtype = "budget")
     out <- mbind(
-      setNames(budget[, , "harvest"], paste0("Resources|Nitrogen|Cropland Budget|Withdrawals|+|", reportingnames(getNames(budget[, , "harvest"])))),
-      setNames(budget[, , "harvest", invert = T], paste0("Resources|Nitrogen|Cropland Budget|Inputs|+|", reportingnames(getNames(budget[, , "harvest", invert = T]))))
+      setNames(budget[, , "harvest"], paste0("Resources|Nitrogen|Cropland Budget|Withdrawals|+|",
+                                             reportingnames(getNames(budget[, , "harvest"])))),
+      setNames(budget[, , "harvest", invert = TRUE],
+               paste0("Resources|Nitrogen|Cropland Budget|Inputs|+|",
+                      reportingnames(getNames(budget[, , "harvest", invert = TRUE]))))
     )
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
   } else if (datasource == "FAO") {
     residues <- readSource("FAO_online", "EmisAgCropResid")
-    #    residues<-setNames(residues[,,"Residues_(Crop_residues)_(tonnes_of_nutrients)"][,,"1712|All Crops + (Total)"]/10^9,"ag_recycling")
-    ## Previous conversion was 1e9 which would have converted from ton to Giga ton <--- Confirm with Benni
     ## New units are provided in kg by FAO so kg to Mt should be 1e9
-    residues <- setNames(residues[, , "Residues_(Crop_residues)_(kg_of_nutrients)"][, , "1712|All Crops"] / 1e9, "ag_recycling")
+    residues <- setNames(residues[, , "Residues_(Crop_residues)_(kg_of_nutrients)"][, , "1712|All Crops"]
+                         / 1e9, "ag_recycling")
 
     manure <- readSource("FAO_online", "EmisAgManureSoil")
     selection <- c(
@@ -97,12 +101,13 @@ calcValidNitrogenBudgetCropland <- function(datasource = "Bodirsky") {
     tmp2 <- collapseNames(manure[, , selection][, , "Manure_applied_to_soils_(N_content)_(kg)"])
     mapping <- toolGetMapping(type = "sectoral", name = "IPCCitems_fao_online.csv", where = "mappingfolder")
     tmp2 <- toolAggregate(tmp2, rel = mapping, from = "fao", to = "magpie", dim = 3.1)
-    tmp2 <- tmp2 / 1e12
+    tmp2 <- tmp2 / 1e9
     manure <- setNames(dimSums(tmp2, dim = 3.1), "manure_conf")
 
     # fertilizer
-    fertilizer <- readSource("FAO_online", "EmisAgSynthFerti")[, , c("3102|Nutrient nitrogen N (total).Agricultural_Use_in_nutrients_(kg_of_nutrients)")]
-    fertilizer <- dimSums(fertilizer, dim = c(3)) / 1e12
+    fertilizer <- (readSource("FAO_online", "EmisAgSynthFerti")
+    )[, , c("3102|Nutrient nitrogen N (total).Agricultural_Use_in_nutrients_(kg_of_nutrients)")]
+    fertilizer <- dimSums(fertilizer, dim = c(3)) / 1e9
     fertilizer <- setNames(fertilizer, "fertilizer")
     commonyears <- intersect(intersect(getYears(fertilizer), getYears(residues)), getYears(manure))
 
@@ -114,9 +119,9 @@ calcValidNitrogenBudgetCropland <- function(datasource = "Bodirsky") {
 
     vcat(2, "instead of removing years with no data, each object should rather be blown up to full dimensionality")
 
-    names_x <- reportingnames(getNames(out))
-    names(names_x) <- NULL
-    getNames(out) <- paste0("Resources|Nitrogen|Cropland Budget|Inputs|+|", names_x)
+    namesX <- reportingnames(getNames(out))
+    names(namesX) <- NULL
+    getNames(out) <- paste0("Resources|Nitrogen|Cropland Budget|Inputs|+|", namesX)
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
   } else {
     stop("No data exist for the given datasource!")
@@ -124,9 +129,9 @@ calcValidNitrogenBudgetCropland <- function(datasource = "Bodirsky") {
   out <- add_dimension(out, dim = 3.1, add = "model", nm = datasource)
   getNames(out) <- paste0(getNames(out), " (Mt Nr/yr)")
 
- return(list(x=out,
-              weight=NULL,
-              unit="Mt Nr/yr",
-              description="Cropland Nitrogen Budget")
-         )
+  return(list(x = out,
+              weight = NULL,
+              unit = "Mt Nr/yr",
+              description = "Cropland Nitrogen Budget")
+  )
 }
