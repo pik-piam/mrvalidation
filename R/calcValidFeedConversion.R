@@ -154,6 +154,8 @@ calcValidFeedConversion <- function(livestockSystem = TRUE) {
   x <- add_dimension(x, dim = 3.1, add = "scenario", nm = "historical")
   x <- add_dimension(x, dim = 3.2, add = "model", nm = "Weindl_et_al2017")
 
+  x[weight == 0] <- 0
+
   getNames(x) <- sub("\\|$", "", getNames(x))
   getNames(weight) <- sub("\\|$", "", getNames(weight))
 
