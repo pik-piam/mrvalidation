@@ -38,6 +38,8 @@ calcValidCroparea <- function(datasource = "FAO", detail = FALSE) {
                          "Resources|Land Cover|Cropland|+|Croparea")
     out <- mbind(cropland, fallow, croparea)
     getNames(out) <- paste(getNames(out), "(million ha)", sep = " ")
+    out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+    out <- add_dimension(out, dim = 3.2, add = "model", nm = "Ostberg2023")
   } else if (datasource == "FAOfallow") {
     fallow <- calcOutput("FAOLand", aggregate = FALSE)[, , "6640", pmatch = TRUE]
     # cut off incomplete data before 2001
