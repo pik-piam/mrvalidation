@@ -2,6 +2,9 @@
 #' @description calculates various feed indicators
 #'
 #' @param livestockSystem if TRUE, ruminant meat and milk are aggregated, and poultry meat and egg are aggregated
+#' @param subtractBalanceflow if TRUE, balanceflow is subtracted so that the feed efficiency reflects
+#' our feedbasket calucaltions. If FALSE, it reflects the FAO values and the pasture demand
+#'
 #'
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Benjamin Leon Bodirsky, github Copilot
@@ -13,13 +16,24 @@
 #' calcOutput("ValidFeed")
 #' }
 #'
-#' @importFrom magpiesets reporthelper
+#' @importFrom magpiesets reporthelper findset
 #' @importFrom magclass dimOrder
-calcValidFeedConversion <- function(livestockSystem = TRUE) {
+calcValidFeedConversion <- function(livestockSystem = TRUE, subtractBalanceflow = FALSE) {
   ### calculate product specific feed conversion efficiency as quotient between
   ### feed and animal products
 
   mb <- calcOutput("FAOmassbalance", aggregate = FALSE)
+
+  # subtract balanceflow
+  if (subtractBalanceflow) {
+    balanceflow <- calcOutput("FeedBalanceflow", aggregate = FALSE, future = FALSE)
+    getNames(balanceflow, dim = 1) <- paste0("feed_", getNames(balanceflow, dim = 1))
+    balanceflow <- balanceflow * calcOutput("Attributes", aggregate = FALSE)
+    balanceflow <- as.magpie(aperm(unwrap(balanceflow), c(1, 2, 4, 3, 5)))
+    balanceflowTotal <- dimSums(balanceflow, dim = 3.2)
+    mb[, , findset("kap", alias = "feed")] <- mb[, , findset("kap", alias = "feed")] - balanceflow
+    mb[, , "feed"] <- mb[, , "feed"] - balanceflowTotal
+  }
 
   mb <- mb[, , c("ge", "nr")]
   x <- NULL

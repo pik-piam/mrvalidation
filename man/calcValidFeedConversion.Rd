@@ -4,10 +4,13 @@
 \alias{calcValidFeedConversion}
 \title{calcValidFeedConversion}
 \usage{
-calcValidFeedConversion(livestockSystem = TRUE)
+calcValidFeedConversion(livestockSystem = TRUE, subtractBalanceflow = FALSE)
 }
 \arguments{
 \item{livestockSystem}{if TRUE, ruminant meat and milk are aggregated, and poultry meat and egg are aggregated}
+
+\item{subtractBalanceflow}{if TRUE, balanceflow is subtracted so that the feed efficiency reflects
+our feedbasket calucaltions. If FALSE, it reflects the FAO values and the pasture demand}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.
