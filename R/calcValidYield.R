@@ -113,7 +113,7 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
                            "pasture")
     area <- mbind(croparea[, getYears(pastarea), ], pastarea)
     area <- summationhelper(reporthelper(area,
-                                         level_zero_name = "Productivity|Yield by phyiscal area"))
+                                         level_zero_name = "Productivity|Yield by physical area"))
 
     # Calculate production
     histproduction <- calcOutput("FAOmassbalance", aggregate = FALSE)
@@ -129,7 +129,7 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
 
     # Calculate Yields
     production <- summationhelper(reporthelper(production,
-                                               level_zero_name = "Productivity|Yield by phyiscal area"))
+                                               level_zero_name = "Productivity|Yield by physical area"))
     yield      <-  production / area
 
     # Check for NaN values
