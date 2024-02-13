@@ -4,7 +4,7 @@
 \alias{calcValidProduction}
 \title{calcValidProduction}
 \usage{
-calcValidProduction(datasource = "FAO", detail = T, nutrient = "dm")
+calcValidProduction(datasource = "FAO", detail = TRUE, nutrient = "dm")
 }
 \arguments{
 \item{datasource}{Datasource of validation data.}
@@ -20,8 +20,7 @@ List of magpie objects with results on country level, weight on country level, u
 calculates the validation data for production of agricultural products
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("ValidProduction")
 }
 
