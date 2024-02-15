@@ -7,7 +7,8 @@
 fullVALIDATION(rev = 0.1)
 }
 \arguments{
-\item{rev}{data revision which should be used as input (positive numeric).}
+\item{rev}{data revision which should be used as input. Will be converted to
+\code{\link[base]{numeric_version}} when called via \code{\link[madrat]{retrieveData}}.}
 }
 \description{
 Function that produces the complete validation data set used for evaluation of MAgPIE outputs
