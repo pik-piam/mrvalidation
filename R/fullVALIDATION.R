@@ -2,7 +2,8 @@
 #'
 #' Function that produces the complete validation data set used for evaluation of MAgPIE outputs
 #'
-#' @param rev data revision which should be used as input (positive numeric).
+#' @param rev data revision which should be used as input. Will be converted to
+#' \code{\link[base]{numeric_version}} when called via \code{\link[madrat]{retrieveData}}.
 #' @author Jan Philipp Dietrich, Benjamin Leon Bodirsky
 #' @seealso
 #' \code{\link{readSource}},\code{\link{getCalculations}},\code{\link{calcOutput}}
@@ -13,12 +14,13 @@
 #'
 fullVALIDATION <- function(rev = 0.1) {
 
-  if (rev < 4.66) stop("mrvalidation(>= 2.34.0) does not support revision below 4.63 anymore.
-                       Please use a older snapshot/version of the library, if you need older revisions.")
+  if (rev < numeric_version("4.66")) {
+    stop("mrvalidation(>= 2.34.0) does not support revision below 4.66 anymore. ",
+         "Please use a older snapshot/version of the library, if you need older revisions.")
+  }
   # all validation data regional aggregations happens here
   # for the first variable output calculation, append paramenter should be set to FALSE so that the
-  ## eventually exitsting "validation.mif" file is deleted at the begining.
-  # setting rev to -1 will allow for just writing the validation
+  # eventually exitsting "validation.mif" file is deleted at the begining.
   valfile <- "validation.mif"
 
 
