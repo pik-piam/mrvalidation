@@ -4,11 +4,13 @@
 \alias{calcValidTotalLaborCosts}
 \title{calcValidTotalLaborCosts}
 \usage{
-calcValidTotalLaborCosts(datasource = "USDA")
+calcValidTotalLaborCosts(datasource = "USDA", dataVersionILO = "Aug23")
 }
 \arguments{
 \item{datasource}{"USDA" (which uses FAO VoP and USDA cost shares) or "ILO" (which is based on ILO datasets and
 calibrated to the USDA/FAO approach, but includes costs for some countries without VoP data) or "GTAP"}
+
+\item{dataVersionILO}{"" for the oldest version, or "monthYear" (e.g. "Aug23") for a newer version}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.

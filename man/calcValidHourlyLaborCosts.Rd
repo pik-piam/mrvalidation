@@ -4,7 +4,10 @@
 \alias{calcValidHourlyLaborCosts}
 \title{calcValidHourlyLaborCosts}
 \usage{
-calcValidHourlyLaborCosts(datasource = "ILO_completed")
+calcValidHourlyLaborCosts(
+  datasource = "ILO_completed",
+  dataVersionILO = "Aug23"
+)
 }
 \arguments{
 \item{datasource}{Available datasources are:
@@ -14,6 +17,8 @@ calcValidHourlyLaborCosts(datasource = "ILO_completed")
 \item USDA_FA0_raw : USDA/FAO hourly labor costs data
 \item USDA_FA0_completed : USDA/FAO hourly labor costs data completed with a regression with GDP pc MER
 }}
+
+\item{dataVersionILO}{"" for the oldest version, or "monthYear" (e.g. "Aug23") for a newer version}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.

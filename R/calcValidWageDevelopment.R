@@ -10,6 +10,7 @@
 #' \item USDA_FA0_completed : based on USDA/FAO hourly labor costs data completed with a regression with GDP pc MER
 #' }
 #' @param baseYear year relative to which the wage development should be calculated
+#' @param dataVersionILO "" for the oldest version, or "monthYear" (e.g. "Aug23") for a newer version
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Debbora Leip
 #'
@@ -19,9 +20,10 @@
 #' }
 #'
 
-calcValidWageDevelopment <- function(datasource = "ILO_completed", baseYear = 2000) {
+calcValidWageDevelopment <- function(datasource = "ILO_completed", baseYear = 2000, dataVersionILO = "Aug23") {
 
-  hourlyCosts <- setNames(calcOutput("ValidHourlyLaborCosts", datasource = datasource, aggregate = FALSE), NULL)
+  hourlyCosts <- setNames(calcOutput("ValidHourlyLaborCosts", datasource = datasource,
+                                     dataVersionILO = dataVersionILO, aggregate = FALSE), NULL)
 
   if (!baseYear %in% getYears(hourlyCosts, as.integer = TRUE)) stop("Baseyear not available.")
 
@@ -35,6 +37,9 @@ calcValidWageDevelopment <- function(datasource = "ILO_completed", baseYear = 20
 
   description <- paste("Wage index calculated as hourly labor costs in agriculture relative to 2000")
 
+  # USDA_FAO still depends on ILO employment
+  if (dataVersionILO == "") dataVersionILO <- "Aug21"
+  datasource <- paste(datasource, dataVersionILO, sep = "_")
   out <- add_dimension(wageIndex, dim = 3.1, add = "scenario", nm = "historical")
   out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 

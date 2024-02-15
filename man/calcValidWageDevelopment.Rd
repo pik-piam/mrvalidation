@@ -4,7 +4,11 @@
 \alias{calcValidWageDevelopment}
 \title{calcValidWageDevelopment}
 \usage{
-calcValidWageDevelopment(datasource = "ILO_completed", baseYear = 2000)
+calcValidWageDevelopment(
+  datasource = "ILO_completed",
+  baseYear = 2000,
+  dataVersionILO = "Aug23"
+)
 }
 \arguments{
 \item{datasource}{Available datasources are:
@@ -16,6 +20,8 @@ calcValidWageDevelopment(datasource = "ILO_completed", baseYear = 2000)
 }}
 
 \item{baseYear}{year relative to which the wage development should be calculated}
+
+\item{dataVersionILO}{"" for the oldest version, or "monthYear" (e.g. "Aug23") for a newer version}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.
