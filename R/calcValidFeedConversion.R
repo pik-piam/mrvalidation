@@ -157,14 +157,30 @@ calcValidFeedConversion <- function(livestockSystem = TRUE, subtractBalanceflow 
   indicatorTmp <- dimSums(
                           feedProductspecific[, , c("Other roughage intensity", "Pasture intensity")],
                           dim = "ItemCodeItem") / quotientTmp
+  indicatorTmp2 <- dimSums(
+                           feedProductspecific[, , c("Pasture intensity")],
+                           dim = "ItemCodeItem") / quotientTmp
   if (livestockSystem == TRUE) {
     quotientTmp <- quotientTmp[, , "Ruminant meat and dairy"]
     indicatorTmp <- indicatorTmp[, , "Ruminant meat and dairy"]
+    indicatorTmp2 <- indicatorTmp[, , "Ruminant meat and dairy"]
   }
   prefix <- "Productivity|Roughage share|"
   nameIndicator <- paste0(prefix, getNames(indicatorTmp, dim = 1), " (", "GE per GE", ")")
   x <- mbind(x, setNames(collapseNames(indicatorTmp[, , "ge"]), nameIndicator))
   weight <- mbind(weight, setNames(quotientTmp[, , "ge"], nameIndicator))
+
+  prefix <- "Productivity|Pasture share|"
+  nameIndicator <- paste0(prefix, getNames(indicatorTmp2, dim = 1), " (", "GE per GE", ")")
+  x <- mbind(x, setNames(collapseNames(indicatorTmp2[, , "ge"]), nameIndicator))
+  weight <- mbind(weight, setNames(quotientTmp[, , "ge"], nameIndicator))
+
+  # add livestock yields
+  livestockYield <- calcOutput("LivestockProductivity", future = FALSE, aggregate = FALSE, supplementary = TRUE)
+  prefix <- "Productivity|Livestock system yield|"
+  nameIndicator <- paste0(prefix, getNames(livestockYield$x, dim = 1), " (", "DM per live animal", ")")
+  x <- mbind(x, setNames(livestockYield$x, nameIndicator))
+  weight <- mbind(weight, setNames(livestockYield$weight, nameIndicator))
 
   x <- add_dimension(x, dim = 3.1, add = "scenario", nm = "historical")
   x <- add_dimension(x, dim = 3.2, add = "model", nm = "Weindl_et_al2017")
