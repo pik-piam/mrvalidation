@@ -163,7 +163,7 @@ calcValidFeedConversion <- function(livestockSystem = TRUE, subtractBalanceflow 
   if (livestockSystem == TRUE) {
     quotientTmp <- quotientTmp[, , "Ruminant meat and dairy"]
     indicatorTmp <- indicatorTmp[, , "Ruminant meat and dairy"]
-    indicatorTmp2 <- indicatorTmp[, , "Ruminant meat and dairy"]
+    indicatorTmp2 <- indicatorTmp2[, , "Ruminant meat and dairy"]
   }
   prefix <- "Productivity|Roughage share|"
   nameIndicator <- paste0(prefix, getNames(indicatorTmp, dim = 1), " (", "GE per GE", ")")
