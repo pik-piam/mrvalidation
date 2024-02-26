@@ -35,7 +35,7 @@ calcValidCroparea <- function(datasource = "FAO", detail = FALSE) {
                                   cellular = FALSE),
                        paste("Resources|Land Cover|Cropland|+|", reportingnames("fallow"), sep = ""))
     cropland <- setNames(dimSums(mbind(data, fallow), dim = 3.1),
-                         "Resources|Land Cover|+|Cropland")
+                         "Resources|Land Cover|Cropland|+|Croparea")
     out <- mbind(cropland, fallow, croparea)
     getNames(out) <- paste(getNames(out), "(million ha)", sep = " ")
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")

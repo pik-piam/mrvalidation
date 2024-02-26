@@ -41,7 +41,8 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
                            "pasture")
     area <- mbind(croparea, pastarea)
     area <- summationhelper(reporthelper(area,
-                                         level_zero_name = "Productivity|Yield"))
+                                         level_zero_name = "Productivity|Yield"),
+                            sep = NULL)
 
     # Calculate production
     histproduction <- calcOutput("FAOmassbalance", aggregate = FALSE)
@@ -57,7 +58,8 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
 
     # Calculate Yields
     production <- summationhelper(reporthelper(production,
-                                               level_zero_name = "Productivity|Yield"))
+                                               level_zero_name = "Productivity|Yield"),
+                                  sep = NULL)
     yield      <-  production / area
 
     # Check for NaN values
@@ -113,7 +115,8 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
                            "pasture")
     area <- mbind(croparea[, getYears(pastarea), ], pastarea)
     area <- summationhelper(reporthelper(area,
-                                         level_zero_name = "Productivity|Yield by physical area"))
+                                         level_zero_name = "Productivity|Yield by physical area"),
+                            sep = NULL)
 
     # Calculate production
     histproduction <- calcOutput("FAOmassbalance", aggregate = FALSE)
@@ -129,7 +132,8 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
 
     # Calculate Yields
     production <- summationhelper(reporthelper(production,
-                                               level_zero_name = "Productivity|Yield by physical area"))
+                                               level_zero_name = "Productivity|Yield by physical area"),
+                                  sep = NULL)
     yield      <-  production / area
 
     # Check for NaN values
