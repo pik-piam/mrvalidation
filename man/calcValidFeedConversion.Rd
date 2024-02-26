@@ -9,7 +9,7 @@ calcValidFeedConversion(livestockSystem = TRUE, subtractBalanceflow = FALSE)
 \arguments{
 \item{livestockSystem}{if TRUE, ruminant meat and milk are aggregated, and poultry meat and egg are aggregated}
 
-\item{subtractBalanceflow}{if TRUE, balanceflow is subtracted so that the feed efficiency reflects
+\item{subtractBalanceflow}{if TRUE, balanceflow is subtracted so that the feed conversion reflects
 our feedbasket calucaltions. If FALSE, it reflects the FAO values and the pasture demand}
 }
 \value{

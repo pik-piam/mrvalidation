@@ -344,6 +344,11 @@ fullVALIDATION <- function(rev = 0.1) {
   calcOutput(type = "ValidCostsTransport", datasource = "GTAPwholesale", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
 
+  calcOutput(type = "ValidFactorReqShares", subtype = "crop", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidFactorReqShares", subtype = "livestock", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
+
   # Diversity indices
   calcOutput(type = "ValidBII", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
