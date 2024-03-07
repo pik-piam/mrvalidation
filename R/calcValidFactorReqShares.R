@@ -33,7 +33,9 @@ calcValidFactorReqShares <- function(subtype = "crop") {
   # production as weight (0 weight to countries with unexpectedly high capital shares)
   weight <- dimSums(collapseDim(calcOutput("Production", aggregate = FALSE)[, , "dm"]), dim = 3.1)
   weight[c("BLZ", "CRI", "DOM", "HND", "JAM", "MEX", "NIC", "PAN", "SLV"), , ] <- 0
-  weight <- weight[, getItems(out, dim = 2), ]
+  years <- intersect(getYears(weight), getYears(out))
+  weight <- weight[, years, ]
+  out <- out[, years, ]
   weight[out[, , "Capital", pmatch = TRUE] == 0] <- 0
 
 
