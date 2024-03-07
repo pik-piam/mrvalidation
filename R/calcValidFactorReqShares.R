@@ -23,6 +23,9 @@ calcValidFactorReqShares <- function(subtype = "crop") {
   out <- mbind(out, setNames(1 - out, paste0("Factor requirement shares|", stringr::str_to_title(subtype),
                                              " products|+|Labor requirement share (%)")))
 
+  # convert to percentage
+  out <- out * 100
+
   out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
   out <- add_dimension(out, dim = 3.2, add = "model", nm = "USDA")
 
