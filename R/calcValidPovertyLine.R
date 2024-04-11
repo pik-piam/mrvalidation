@@ -26,7 +26,7 @@ calcValidPovertyLine <- function(datasource = "WBPoverty", subtype = "320Poverty
   # Fill interpolating values when there are 2 or more points reported
   for (i in getCells(rawPer)) {
     if (length(where(rawPer[i, , ] != 0)$true$years) >= 2 &&
-        length(where(rawPer[i, , ] != 0)$true$years) < length(getYears(rawPer))) {
+          length(where(rawPer[i, , ] != 0)$true$years) < length(getYears(rawPer))) {
       yrInter <- where(rawPer[i, , ] == 0)$true$years
       rawPer[i, yrInter, ] <- time_interpolate(rawPer[i, , ][, yrInter, , invert = TRUE], yrInter)
     }
@@ -53,7 +53,7 @@ calcValidPovertyLine <- function(datasource = "WBPoverty", subtype = "320Poverty
   out <- magpiesort(setNames((round(rawPer * population[, years, ] * 1e6, digits = 0)) / 1e6, NULL))
   nameScenario <- if (subtype == "190PovertyLine") "1p90 USDppp11/day" else if (subtype == "320PovertyLine")
     "3p20 USDppp11/day" else if (subtype == "550PovertyLine")
-      "5p50 USDppp11/day"
+    "5p50 USDppp11/day"
 
   getNames(out) <- paste0("Income|Number of People Below ", nameScenario)
   out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")

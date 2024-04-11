@@ -8,7 +8,7 @@ calcValidProcessing(
   datasource = "FAO",
   detail = TRUE,
   nutrient = "dm",
-  indicator = "secondary_from_primary"
+  indicator = "primary_to_process"
 )
 }
 \arguments{

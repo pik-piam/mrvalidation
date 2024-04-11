@@ -19,54 +19,57 @@
 #' @importFrom magpiesets reporthelper summationhelper reportingnames
 #' @importFrom magclass add_columns mbind getNames
 
-calcValidProcessing <- function(datasource = "FAO", detail = TRUE, nutrient = "dm", indicator = "secondary_from_primary") {
+calcValidProcessing <- function(datasource = "FAO", detail = TRUE, nutrient = "dm", indicator = "primary_to_process") {
 
- if (indicator == "primary_to_process") {
+  if (indicator == "primary_to_process") {
 
-   if (datasource == "FAO") {
-    mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
+    if (datasource == "FAO") {
+      mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
 
-    processing <- setdiff(c(findset("processing20")), c("milling", "ginning", "breeding"))
+      processing <- setdiff(c(findset("processing20")), c("milling", "ginning", "breeding"))
+      mb2 <- mb[, , c(processing)]
+      getNames(mb2, dim = 2) <- reportingnames(getNames(mb2, dim = 2))
 
-    mb2 <- mb[, , c(processing)]
-    getNames(mb2, dim = 2) <- reportingnames(getNames(mb2, dim = 2))
+      mb3 <- dimOrder(mb2, c(2, 1))
 
-    mb3 <- dimOrder(mb2, c(2, 1))
+      out <- reporthelper(x = mb3, dim = 3.2, level_zero_name = "_", detail = detail)
+      getNames(out) <- gsub("[^[:alnum:][:blank:]\\|]", "", getNames(out))
+      getNames(out) <- sub("\\|$", "", getNames(out))
+      getNames(out) <- paste0("Demand|Processing|", getNames(out))
 
-    out <- reporthelper(x = mb3, dim = 3.2, level_zero_name = "_", detail = detail)
-    getNames(out) <- gsub("[^[:alnum:][:blank:]\\|]", "", getNames(out))
-    getNames(out) <- sub("\\|$", "", getNames(out))
-    getNames(out) <- paste0("Demand|Processing|", getNames(out))
+      out <- summationhelper(out, sep = "+")
 
-    out <- summationhelper(out, sep = "+")
+      getNames(out) <- sub(getNames(out), pattern = "Processing|+", replacement = "Processing|++", fixed = TRUE)
 
-    getNames(out) <- sub(getNames(out), pattern = "Processing|+", replacement = "Processing|++", fixed = TRUE)
+      out <- out[, , which(dimSums(out, dim = c(1, 2)) > 0)]
 
-    out <- out[, , which(dimSums(out, dim = c(1, 2)) > 0)]
+      out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+      out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
-    out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
-    out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+    } else {
 
-  } else stop("No data exist for the given datasource!")
+      stop("No data exist for the given datasource!")
 
-  names(dimnames(out))[3] <- "scenario.model.variable"
+    }
 
-  if (nutrient == "dm") {
-unit <- "Mt DM/yr"
-  } else if (nutrient == "nr") {
-unit <- "Mt Nr/yr"
-  } else if (nutrient == "p") {
-unit <- "Mt P/yr"
-  } else if (nutrient == "k") {
-unit <- "Mt K/yr"
-  } else if (nutrient == "ge") {
-unit <- "PJ/yr"
-  } else if (nutrient == "wm") {
-unit <- "Mt WM/yr"
-}
+    names(dimnames(out))[3] <- "scenario.model.variable"
 
-  getNames(out) <- paste0(getNames(out), " (", unit, ")")
- } else if (indicator == "secondary_from_primary") {
+    if (nutrient == "dm") {
+      unit <- "Mt DM/yr"
+    } else if (nutrient == "nr") {
+      unit <- "Mt Nr/yr"
+    } else if (nutrient == "p") {
+      unit <- "Mt P/yr"
+    } else if (nutrient == "k") {
+      unit <- "Mt K/yr"
+    } else if (nutrient == "ge") {
+      unit <- "PJ/yr"
+    } else if (nutrient == "wm") {
+      unit <- "Mt WM/yr"
+    }
+
+    getNames(out) <- paste0(getNames(out), " (", unit, ")")
+  } else if (indicator == "secondary_from_primary") {
 
     if (datasource == "FAO") {
       mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
@@ -85,38 +88,48 @@ unit <- "Mt WM/yr"
       getNames(out, dim = 1) <- substr(getNames(out, dim = 1), start = 1, stop = nchar(getNames(out, dim = 1)) - 1)
       getNames(out, dim = 1)[which(getNames(out, dim = 1) == "oil")] <- "oils"
       getNames(out, dim = 1) <- reportingnames(getNames(out, dim = 1))
-      getNames(out) <- sub(getNames(out), pattern = "\\.", replacement = "|+|")
-      getSets(out) <- c("region", "year", "data")
-      getNames(out) <- paste0("Production|Secondary Products|", getNames(out))
 
-      out <- out[, , which(dimSums(out, dim = c(1, 2)) > 0)]
+      getNames(out, dim = 1) <- paste0("Processing|Raw material|Processed into ", getNames(out, dim = 1))
+      out <- add_columns(out, addnm = "Processing|Raw material|Processed into Secondary products", dim = 3.1, fill = 0)
+      out[, , "Processing|Raw material|Processed into Secondary products"] <- dimSums(out, dim = 3.1)
+      out <- add_columns(out, addnm = "dummy", dim = 3.2, fill = 0)
+      out[, , "dummy"] <- dimSums(out, dim = 3.2)
+
+      getNames(out) <- sub(getNames(out), pattern = "\\.", replacement = "|")
+      out <- summationhelper(out)
+      getNames(out) <- sub(getNames(out), pattern = "\\|\\+\\|dummy", replacement = "")
+      getNames(out) <- paste(getNames(out), "(Mt DM/yr)", sep = " ")
+
+      out <- out[, , where(out != 0)$true$data]
 
       out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
       out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
-    } else stop("No data exist for the given datasource!")
+    } else {
+      stop("No data exist for the given datasource!")
+    }
 
     names(dimnames(out))[3] <- "scenario.model.variable"
 
     if (nutrient == "dm") {
-unit <- "Mt DM/yr"
+      unit <- "Mt DM/yr"
     } else if (nutrient == "nr") {
-unit <- "Mt Nr/yr"
+      unit <- "Mt Nr/yr"
     } else if (nutrient == "p") {
-unit <- "Mt P/yr"
+      unit <- "Mt P/yr"
     } else if (nutrient == "k") {
-unit <- "Mt K/yr"
+      unit <- "Mt K/yr"
     } else if (nutrient == "ge") {
-unit <- "PJ/yr"
+      unit <- "PJ/yr"
     } else if (nutrient == "wm") {
-unit <- "Mt WM/yr"
-}
+      unit <- "Mt WM/yr"
+    }
 
     getNames(out) <- paste0(getNames(out), " (", unit, ")")
-}
-    return(list(x = out,
-                weight = NULL,
-                unit = unit,
-                description = "Agricultural Demand")
-    )
+  }
+  return(list(x = out,
+              weight = NULL,
+              unit = unit,
+              description = "Agricultural Demand")
+  )
 }
