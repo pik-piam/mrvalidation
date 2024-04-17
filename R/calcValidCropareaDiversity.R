@@ -143,7 +143,14 @@ calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
     desc <- "Gini crop area diversity index based on historical FAO country-level crop area"
   }
 
-  out <- add_dimension(x, dim = 3.1, add = "scenario",
+  out <- dimSums(x * land, dim = c("x", "y")) / dimSums(land, dim = c("x", "y"))
+  out <- toolConditionalReplace(x = toolCountryFill(out),
+                                conditions = "is.na()", replaceby = 0)
+  land <- dimSums(land, dim = c("x", "y"))
+  land <- toolConditionalReplace(x = toolCountryFill(land),
+                                 conditions = "is.na()", replaceby = 0)
+
+  out <- add_dimension(out, dim = 3.1, add = "scenario",
                        nm = "historical")
   out <- add_dimension(out, dim = 3.2, add = "model",
                        nm = "based_on_ostberg2023")
