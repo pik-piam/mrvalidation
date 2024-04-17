@@ -4,7 +4,7 @@
 \alias{calcValidDemand}
 \title{calcValidDemand}
 \usage{
-calcValidDemand(datasource = "FAO", detail = T, nutrient = "dm")
+calcValidDemand(datasource = "FAO", detail = TRUE, nutrient = "dm")
 }
 \arguments{
 \item{datasource}{Datasource of validation data.}
@@ -17,11 +17,12 @@ calcValidDemand(datasource = "FAO", detail = T, nutrient = "dm")
 List of magpie objects with results on country level, weight on country level, unit and description.
 }
 \description{
-calculates the validation data for the utilization of agricultural products for food, feed, bioenergy, seed, material, processing, or waste
+calculates the validation data for the utilization of agricultural products
+for food, feed, bioenergy, seed, material, processing, or waste
 }
 \examples{
 
-\dontrun{ 
+\dontrun{
 calcOutput("ValidDemand")
 }
 

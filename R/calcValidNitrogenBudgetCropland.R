@@ -57,6 +57,7 @@ calcValidNitrogenBudgetCropland <- function(datasource = "Bodirsky") {
     )
 
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+    out <- add_dimension(out, dim = 3.1, add = "model", nm = "based on Bodirsky et al 2014")
   } else if (datasource == "ACCMIP") {
     dep <- calcOutput("AtmosphericDeposition", datasource = "ACCMIP",
                       scenario = c("rcp26", "rcp45", "rcp85"), aggregate = FALSE)
@@ -65,6 +66,7 @@ calcValidNitrogenBudgetCropland <- function(datasource = "Bodirsky") {
     out <- add_dimension(out, dim = 3.2, add = "indicator",
                          nm = "Resources|Nitrogen|Cropland Budget|Inputs|+|Atmospheric Deposition")
     getSets(out)[3] <- "scenario"
+    out <- add_dimension(out, dim = 3.1, add = "model", nm = datasource)
   } else if (datasource == "Lassaletta2014") {
     budget <- readSource("Lassaletta2014", subtype = "budget")
     out <- mbind(
@@ -75,6 +77,7 @@ calcValidNitrogenBudgetCropland <- function(datasource = "Bodirsky") {
                       reportingnames(getNames(budget[, , "harvest", invert = TRUE]))))
     )
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+    out <- add_dimension(out, dim = 3.1, add = "model", nm = "Lassaletta et al 2014")
   } else if (datasource == "FAO") {
     residues <- readSource("FAO_online", "EmisAgCropResid")
     ## New units are provided in kg by FAO so kg to Mt should be 1e9
@@ -123,10 +126,11 @@ calcValidNitrogenBudgetCropland <- function(datasource = "Bodirsky") {
     names(namesX) <- NULL
     getNames(out) <- paste0("Resources|Nitrogen|Cropland Budget|Inputs|+|", namesX)
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+    out <- add_dimension(out, dim = 3.1, add = "model", nm = "FAOSTAT GCE 2021")
   } else {
     stop("No data exist for the given datasource!")
   }
-  out <- add_dimension(out, dim = 3.1, add = "model", nm = datasource)
+
   getNames(out) <- paste0(getNames(out), " (Mt Nr/yr)")
 
   return(list(x = out,

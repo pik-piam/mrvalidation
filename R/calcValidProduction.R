@@ -28,7 +28,7 @@ calcValidProduction <- function(datasource = "FAO", detail = TRUE, nutrient = "d
 
   out <- summationhelper(out)
   out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
-  out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+  out <- add_dimension(out, dim = 3.2, add = "model", nm = "FAOSTAT CBS 2016")
   names(dimnames(out))[3] <- "scenario.model.variable"
   if (nutrient == "dm") {
     unit <- "Mt DM/yr"

@@ -15,7 +15,7 @@
 #' }
 #'
 calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
-  area <- calcOutput(type = "ValidCroparea", datasource = "FAO", detail = TRUE, aggregate = FALSE)
+  area <- calcOutput(type = "ValidCroparea", datasource = "ostberg2023", detail = TRUE, aggregate = FALSE)
   area <- collapseDim(area)
 
   ### honor to function dineq:::gini.wtd !
@@ -89,6 +89,7 @@ calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
         rep(cellvalue["Resources|Land Cover|Cropland|Crops|Other crops|+|Pulses (million ha)"] / 3, 3),
         rep(cellvalue["Resources|Land Cover|Cropland|Bioenergy crops|+|Short rotation trees (million ha)"] / 2, 2),
         rep(cellvalue["Resources|Land Cover|Cropland|Crops|Other crops|+|Tropical roots (million ha)"] / 2, 2),
+        rep(cellvalue["Resources|Land Cover|Cropland|+|Fallow Cropland (million ha)"] / 4, 4),
         rep(cellvalue["Resources|Land Cover|Cropland|Crops|Other crops|+|Fruits Vegetables Nuts (million ha)"] / 10, 10)
       )
     } else if (groupdiv == "agg2") {
@@ -111,6 +112,7 @@ calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
           cellvalue["Resources|Land Cover|Cropland|Crops|Oil crops|+|Sunflower (million ha)"] +
           cellvalue["Resources|Land Cover|Cropland|Crops|Oil crops|+|Cotton seed (million ha)"], # non-legume oil crops
         rep(cellvalue["Resources|Land Cover|Cropland|+|Forage (million ha)"] / 2, 2), # foddr
+        rep(cellvalue["Resources|Land Cover|Cropland|+|Fallow Cropland (million ha)"] / 4, 4), # fallow
         rep(cellvalue["Resources|Land Cover|Cropland|Crops|Other crops|+|Fruits Vegetables Nuts (million ha)"] / 5, 5)
         # fruits vegetables nuts
       )
@@ -150,9 +152,9 @@ calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
   }
 
   out <- add_dimension(x, dim = 3.1, add = "scenario",
-    nm = "historical")
+                       nm = "historical")
   out <- add_dimension(out, dim = 3.2, add = "model",
-    nm = "MAgPIEown")
+                       nm = "MAgPIEown")
 
   return(list(
     x = out,
