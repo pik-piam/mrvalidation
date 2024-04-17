@@ -15,8 +15,15 @@
 #' }
 #'
 calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
-  area <- calcOutput(type = "ValidCroparea", datasource = "ostberg2023", detail = TRUE, aggregate = FALSE)
-  area <- collapseDim(area)
+
+  area <- readSource("LandInG", subtype = "harvestedArea")
+  area <- area[, , c("pasture"), invert = TRUE]
+  area <- collapseNames(area[, , "irrigated"]) + collapseNames(area[, , "rainfed"])
+  fallow <- calcOutput("FallowLand", aggregate = FALSE, cellular = TRUE)
+  fallow <- setNames(fallow, "fallow")
+  area <- mbind(area, fallow)
+
+  land <- dimSums(area, dim = 3)
 
   ### honor to function dineq:::gini.wtd !
   gini <- function(x) {
@@ -67,58 +74,46 @@ calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
     names(cellvalue) <- cropnames
     # weights could be improved
     if (groupdiv == "agg1") {
-      single <- c(
-        "Resources|Land Cover|Cropland|Crops|Cereals|+|Maize (million ha)",
-        "Resources|Land Cover|Cropland|Crops|Cereals|+|Tropical cereals (million ha)",
-        "Resources|Land Cover|Cropland|Crops|Cereals|+|Rice (million ha)",
-        "Resources|Land Cover|Cropland|Crops|Oil crops|+|Soybean (million ha)",
-        "Resources|Land Cover|Cropland|Crops|Oil crops|+|Other oil crops incl rapeseed (million ha)",
-        "Resources|Land Cover|Cropland|Crops|Oil crops|+|Groundnuts (million ha)",
-        "Resources|Land Cover|Cropland|Crops|Oil crops|+|Sunflower (million ha)",
-        "Resources|Land Cover|Cropland|Crops|Oil crops|+|Oilpalms (million ha)",
-        "Resources|Land Cover|Cropland|Crops|Other crops|+|Potatoes (million ha)",
-        "Resources|Land Cover|Cropland|Crops|Sugar crops|+|Sugar cane (million ha)",
-        "Resources|Land Cover|Cropland|Crops|Sugar crops|+|Sugar beet (million ha)",
-        "Resources|Land Cover|Cropland|Crops|Oil crops|+|Cotton seed (million ha)",
-        "Resources|Land Cover|Cropland|Bioenergy crops|+|Short rotation grasses (million ha)"
-      )
+      single <- c("maiz", "trce", "rice_pro", "soybean", "rapeseed", "groundnut",
+                  "sunflower", "oilpalm", "potato", "sugr_cane", "sugr_beet",
+                  "cottn_pro", "begr")
       mix <- c(
         cellvalue[single],
-        rep(cellvalue["Resources|Land Cover|Cropland|+|Forage (million ha)"] / 4, 4),
-        rep(cellvalue["Resources|Land Cover|Cropland|Crops|Cereals|+|Temperate cereals (million ha)"] / 2, 2),
-        rep(cellvalue["Resources|Land Cover|Cropland|Crops|Other crops|+|Pulses (million ha)"] / 3, 3),
-        rep(cellvalue["Resources|Land Cover|Cropland|Bioenergy crops|+|Short rotation trees (million ha)"] / 2, 2),
-        rep(cellvalue["Resources|Land Cover|Cropland|Crops|Other crops|+|Tropical roots (million ha)"] / 2, 2),
-        rep(cellvalue["Resources|Land Cover|Cropland|+|Fallow Cropland (million ha)"] / 4, 4),
-        rep(cellvalue["Resources|Land Cover|Cropland|Crops|Other crops|+|Fruits Vegetables Nuts (million ha)"] / 10, 10)
+        rep(cellvalue["foddr"] / 4, 4),
+        rep(cellvalue["tece"] / 2, 2),
+        rep(cellvalue["puls_pro"] / 3, 3),
+        rep(cellvalue["betr"] / 2, 2),
+        rep(cellvalue["cassav_sp"] / 2, 2),
+        rep(cellvalue["fallow"] / 4, 4),
+        rep(cellvalue["others"] / 10, 10)
       )
     } else if (groupdiv == "agg2") {
       mix <- c(
-        cellvalue["Resources|Land Cover|Cropland|Crops|Cereals|+|Temperate cereals (million ha)"], # C3
-        cellvalue["Resources|Land Cover|Cropland|Crops|Cereals|+|Maize (million ha)"] +
-          cellvalue["Resources|Land Cover|Cropland|Crops|Cereals|+|Tropical cereals (million ha)"], # C4
-        cellvalue["Resources|Land Cover|Cropland|Crops|Cereals|+|Rice (million ha)"], # Rice
-        cellvalue["Resources|Land Cover|Cropland|Crops|Other crops|+|Pulses (million ha)"] +
-          cellvalue["Resources|Land Cover|Cropland|Crops|Oil crops|+|Soybean (million ha)"] +
-          cellvalue["Resources|Land Cover|Cropland|Crops|Oil crops|+|Groundnuts (million ha)"], # Legumes
-        cellvalue["Resources|Land Cover|Cropland|Bioenergy crops|+|Short rotation grasses (million ha)"] +
-          cellvalue["Resources|Land Cover|Cropland|Crops|Sugar crops|+|Sugar cane (million ha)"] +
-          cellvalue["Resources|Land Cover|Cropland|Bioenergy crops|+|Short rotation trees (million ha)"] +
-          cellvalue["Resources|Land Cover|Cropland|Crops|Oil crops|+|Oilpalms (million ha)"], # Plantations
-        cellvalue["Resources|Land Cover|Cropland|Crops|Other crops|+|Potatoes (million ha)"] +
-          cellvalue["Resources|Land Cover|Cropland|Crops|Other crops|+|Tropical roots (million ha)"] +
-          cellvalue["Resources|Land Cover|Cropland|Crops|Sugar crops|+|Sugar beet (million ha)"], # roots
-        cellvalue["Resources|Land Cover|Cropland|Crops|Oil crops|+|Other oil crops incl rapeseed (million ha)"] +
-          cellvalue["Resources|Land Cover|Cropland|Crops|Oil crops|+|Sunflower (million ha)"] +
-          cellvalue["Resources|Land Cover|Cropland|Crops|Oil crops|+|Cotton seed (million ha)"], # non-legume oil crops
-        rep(cellvalue["Resources|Land Cover|Cropland|+|Forage (million ha)"] / 2, 2), # foddr
-        rep(cellvalue["Resources|Land Cover|Cropland|+|Fallow Cropland (million ha)"] / 4, 4), # fallow
-        rep(cellvalue["Resources|Land Cover|Cropland|Crops|Other crops|+|Fruits Vegetables Nuts (million ha)"] / 5, 5)
-        # fruits vegetables nuts
+        cellvalue["tece"], #c3
+        cellvalue["maiz"] + cellvalue["trce"], #c4
+        cellvalue["rice_pro"], #rice
+        cellvalue["puls_pro"] + cellvalue["soybean"] + cellvalue["groundnut"], #legumes
+        cellvalue["begr"] + cellvalue["sugr_cane"] + cellvalue["betr"] + cellvalue["oilpalm"], #plantations
+        cellvalue["potato"] + cellvalue["cassav_sp"] + cellvalue["sugr_beet"], #roots
+        cellvalue["rapeseed"] + cellvalue["sunflower"] + cellvalue["cottn_pro"], #non-legume oil crops
+        rep(cellvalue["fallow"] / 2, 2), #fallow
+        rep(cellvalue["foddr"] / 2, 2), #foddr
+        rep(cellvalue["others"] / 5, 5) #fruits vegetables nuts
+      )
+    } else if (groupdiv == "agg3") {
+      mix <- c(
+        cellvalue["tece"] + cellvalue["maiz"] + cellvalue["trce"] + cellvalue["rice_pro"], #rice
+        cellvalue["puls_pro"] + cellvalue["soybean"] + cellvalue["groundnut"], #legumes
+        cellvalue["begr"] + cellvalue["sugr_cane"] + cellvalue["betr"] + cellvalue["oilpalm"], #plantations
+        cellvalue["potato"] + cellvalue["cassav_sp"] + cellvalue["sugr_beet"] +
+          cellvalue["rapeseed"] + cellvalue["sunflower"] + cellvalue["cottn_pro"] + cellvalue["foddr"], #other
+        cellvalue["others"], #fruits vegetables nuts
+        cellvalue["fallow"] #fallow
       )
     } else {
       mix <- cellvalue
     }
+
     div <- selectIndex(mix, index)
 
     return(div)
@@ -140,9 +135,6 @@ calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
     x <- setNames(x, "Biodiversity|Gini crop area diversity index (unitless)")
   }
 
-  land <- calcOutput("FAOLand", aggregate = FALSE)
-  croplandArea <- land[, , "6620|Cropland"]
-
   if (index == "shannon") {
     desc <- "Shannon crop area diversity index calculated based on historical FAO country-level crop area"
   } else if (index == "invsimpson") {
@@ -154,11 +146,11 @@ calcValidCropareaDiversity <- function(index = "shannon", groupdiv = "agg1") {
   out <- add_dimension(x, dim = 3.1, add = "scenario",
                        nm = "historical")
   out <- add_dimension(out, dim = 3.2, add = "model",
-                       nm = "MAgPIEown")
+                       nm = "based_on_ostberg2023")
 
   return(list(
     x = out,
-    weight = croplandArea,
+    weight = land,
     unit = "unitless",
     description = desc
   ))
