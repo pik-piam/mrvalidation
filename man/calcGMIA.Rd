@@ -13,9 +13,8 @@ list of magpie object with data and weight
 Filling gaps in the Historical area equipped for irrigation from GMIA.
 }
 \examples{
-
-\dontrun{ 
-a <- calcOutput("GMIA",aggregate="regglo")
+\dontrun{
+a <- calcOutput("GMIA", aggregate = "regglo")
 }
 }
 \author{

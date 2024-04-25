@@ -172,7 +172,7 @@ fullVALIDATION <- function(rev = 0.1) {
   # Area equipped for Irrigation
   calcOutput(type = "ValidAEI", datasource = "LUH2v2", aggregate = "REG+GLO",
              file = "validation.mif", append = TRUE, try = TRUE)
-  calcOutput(type = "ValidAEI", datasource = "Mehta2022", aggregate = "REG+GLO",
+  calcOutput(type = "ValidAEI", datasource = "Mehta2024_Siebert2013", aggregate = "REG+GLO",
              file = "validation.mif", append = TRUE, try = TRUE)
   calcOutput(type = "ValidAEI", datasource = "HID", aggregate = "REG+GLO",
              file = "validation.mif", append = TRUE, try = TRUE)
