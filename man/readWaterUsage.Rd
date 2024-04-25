@@ -34,12 +34,11 @@ magpie object containing data on water usage
 Read Historic and projcted Agricultural water consumption
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 a <- readSource("foley_2011")
 a <- readSource("aquastat_2008_12")
 }
-#'@importFrom reshape2 dcast
+#' @importFrom reshape2 dcast
 }
 \seealso{
 \code{\link{readSource}}
