@@ -15,7 +15,7 @@
 #'
 #' @importFrom magpiesets reporthelper summationhelper
 #' @importFrom magclass mbind getYears setYears nregions getCells
-#' @importFrom mrcommons toolCoord2Isocell
+#' @importFrom mstools toolCoord2Isocell
 
 calcValidSOCDensity <- function(datasource = "GSOC") {
 

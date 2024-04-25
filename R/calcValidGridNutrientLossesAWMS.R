@@ -11,14 +11,14 @@
 #'
 #' @importFrom magpiesets reportingnames
 #' @importFrom magclass getComment<-
-#' @importFrom mrcommons toolIso2CellCountries
+#' @importFrom mstools toolIso2CellCountries
 
 calcValidGridNutrientLossesAWMS <- function(nutrient = c("nr", "c")) {
 
   past               <- findset("past")
   excretion          <- collapseNames(calcOutput("Excretion", attributes = "npkc",
-                                              cellular = TRUE, cells = "lpjcell",
-                                              aggregate = FALSE)[, past, ])
+                                                 cellular = TRUE, cells = "lpjcell",
+                                                 aggregate = FALSE)[, past, ])
   emissionFactorsN   <- dimSums(calcOutput("EF3confinement", aggregate = FALSE), dim = 3.3)
   lossRatesC         <- calcOutput("ClossConfinement", aggregate = FALSE)
   awmsShare          <- collapseNames(calcOutput("AWMSconfShr",
@@ -32,7 +32,7 @@ calcValidGridNutrientLossesAWMS <- function(nutrient = c("nr", "c")) {
 
   manureNitrogen       <- dimSums(collapseNames(excretion[, , "confinement"])[, , "nr"] *
                                     awmsShare * emissionFactorsN,
-                                dim = c("Manure_Management_System_Usage"))
+                                  dim = c("Manure_Management_System_Usage"))
   vcat(verbosity = 2, "no P and K losses in manure management assumed")
   manurePhosphorKalium <- collapseNames(excretion[, , c("p", "k")][, , "confinement"])
   manureCarbon         <- dimSums(collapseNames(excretion[, , "confinement"])[, , "c"] *

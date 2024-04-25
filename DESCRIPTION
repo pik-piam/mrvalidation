@@ -34,14 +34,16 @@ Depends:
     R (>= 2.10.0),
     madrat (>= 2.11.3),
     magclass (>= 3.17),
-    mrcommons (>= 1.37.0),
+    mrcommons (>= 1.40.7),
     mrdrivers (>= 0.2.2),
+    mrfaocore,
     mrmagpie (>= 1.39.0),
     mrfactors
 Imports:
     GDPuc,
     dplyr,
     magpiesets,
+    mstools (>= 0.5.1),
     ncdf4,
     openxlsx,
     purrr,
