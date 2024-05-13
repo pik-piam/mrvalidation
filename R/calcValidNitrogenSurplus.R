@@ -25,7 +25,7 @@ calcValidNitrogenSurplus <- function() {
 
   # Cropland land nutrient surplus
   cropland <- calcOutput("ValidNitrogenBudgetCropland", aggregate = FALSE)
-  cropland <- cropland[, , "Bodirsky.historical.Resources|Nitrogen|Cropland Budget|Balance|+|Nutrient Surplus (Mt Nr/yr)"] # nolint
+  cropland <- cropland[, , "based on Bodirsky et al 2014.historical.Resources|Nitrogen|Cropland Budget|Balance|+|Nutrient Surplus (Mt Nr/yr)"] # nolint
 
   # Pasture land nutrient surplus
   pasture <- calcOutput("ValidNitrogenBudgetPasture", aggregate = FALSE)
