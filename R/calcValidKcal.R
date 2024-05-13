@@ -19,7 +19,7 @@
 #'
 #' @importFrom magpiesets reporthelper
 #' @importFrom magclass getSets dimOrder
-#' @importFrom mrcommons toolFAOcombine
+#' @importFrom mrfaocore toolFAOcombine
 
 calcValidKcal <- function(datasource = "FAO", nutrient = "kcal", detail = TRUE) {
   if (length(nutrient) > 1) {
@@ -36,14 +36,14 @@ calcValidKcal <- function(datasource = "FAO", nutrient = "kcal", detail = TRUE) 
       weight <- x2$weight
       total <- dimSums(value, dim = 3)
     } else if (datasource == "FAO") {
-      FSCrop <- readSource("FAO_online", "FSCrop")
-      FSLive <- readSource("FAO_online", "FSLive")
-      FS <- toolFAOcombine(FSLive, FSCrop, combine = "Item")
+      fsCrop <- readSource("FAO_online", "FSCrop")
+      fsLive <- readSource("FAO_online", "FSLive")
+      fs <- toolFAOcombine(fsLive, fsCrop, combine = "Item")
 
-      FS <- FS[, , c("food_supply_kcal", "protein_supply")]
-      getNames(FS, dim = 2) <- c("kcal", "protein")
-      FS <- collapseNames(FS[, , nutrient])
-      total <- FS[, , "2901|Grand Total"]
+      fs <- fs[, , c("food_supply_kcal", "protein_supply")]
+      getNames(fs, dim = 2) <- c("kcal", "protein")
+      fs <- collapseNames(fs[, , nutrient])
+      total <- fs[, , "2901|Grand Total"]
 
       relationmatrix <- toolGetMapping("FAOitems_online.rda", "sectoral", where = "mrvalidation")
       relationmatrix <- relationmatrix[, which(names(relationmatrix) %in% c("FoodBalanceItem", "k"))]
@@ -52,13 +52,13 @@ calcValidKcal <- function(datasource = "FAO", nutrient = "kcal", detail = TRUE) 
       ## Note:
       ## FAO_online now has sub-aggregate and processed equivalent reporting: rice (milled equivalent), sugar (raw eq)
       ## These get dropped automatically by the mapping
-      FS <- toolAggregate(x = FS, rel = relationmatrix, dim = 3.1, from = "FoodBalanceItem", to = "k", partrel = TRUE)
-      missing <- setdiff(findset("kall"), getNames(FS, dim = 1))
-      FS <- add_columns(FS, addnm = missing, dim = 3.1)
-      FS[, , missing] <- 0
-      value <- collapseNames(FS)
+      fs <- toolAggregate(x = fs, rel = relationmatrix, dim = 3.1, from = "FoodBalanceItem", to = "k", partrel = TRUE)
+      missing <- setdiff(findset("kall"), getNames(fs, dim = 1))
+      fs <- add_columns(fs, addnm = missing, dim = 3.1)
+      fs[, , missing] <- 0
+      value <- collapseNames(fs)
       population <- readSource(type = "FAO", subtype = "Pop", convert = TRUE)
-      weight <- collapseNames(population[, getYears(FS), "population"]) / 1000000
+      weight <- collapseNames(population[, getYears(fs), "population"]) / 1000000
     }
 
     if (nutrient == "kcal") {
@@ -96,7 +96,8 @@ calcValidKcal <- function(datasource = "FAO", nutrient = "kcal", detail = TRUE) 
   return(list(x = out,
               weight = weight,
               unit = unit,
-              description = "FAO datasource contains slight alterations of original data, e.g. historical divison of countries.",
+              description = "FAO datasource contains slight alterations of original
+                             data, e.g. historical divison of countries.",
               min = 0,
               max = 7000))
 }

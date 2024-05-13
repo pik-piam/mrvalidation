@@ -11,7 +11,7 @@
 #'
 #' @importFrom magclass as.magpie getNames getSets getCells
 #' @importFrom raster raster projectRaster area aggregate extract
-#' @importFrom mrcommons toolGetMappingCoord2Country
+#' @importFrom mstools toolGetMappingCoord2Country
 
 readSoilCarbonDebt <- function() {
 

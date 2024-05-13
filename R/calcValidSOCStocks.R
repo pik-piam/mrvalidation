@@ -16,7 +16,7 @@
 #'
 #' @importFrom magpiesets reporthelper summationhelper
 #' @importFrom magclass mbind getYears setYears nregions
-#' @importFrom mrcommons toolCoord2Isocell
+#' @importFrom mstools toolCoord2Isocell
 
 calcValidSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995) {
 

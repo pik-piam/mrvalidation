@@ -9,7 +9,7 @@
 #' \dontrun{
 #' calcOutput("ValidGrassLSUha")
 #' }
-#' @importFrom mrcommons toolCell2isoCell
+#' @importFrom mstools toolCell2isoCell
 
 calcValidGrassLSUha <- function(datasource = "MAgPIEown") {
 
@@ -26,8 +26,8 @@ calcValidGrassLSUha <- function(datasource = "MAgPIEown") {
     biomass   <- collapseNames(biomass)[countries, , ]
 
     land <- calcOutput("LanduseInitialisation", nclasses = "nine",
-                      cellular = TRUE, cells = "lpjcell",
-                      aggregate = FALSE)[, yearsPast, ]
+                       cellular = TRUE, cells = "lpjcell",
+                       aggregate = FALSE)[, yearsPast, ]
     grasslLand   <- land[, , c("past", "range")]
     grasslLand   <- setNames(grasslLand, c("pastr", "range"))
     grasslShares <- setNames(grasslLand[, , "pastr"] / dimSums(grasslLand, dim = 3), "pastr")
@@ -56,8 +56,8 @@ calcValidGrassLSUha <- function(datasource = "MAgPIEown") {
     lsuSplit[is.nan(lsuSplit) | is.na(lsuSplit) | is.infinite(lsuSplit)] <- 0
     lsuSplit <- setNames(lsuSplit,
                          paste0("Total lsu|+|Cattle|",
-                         reportingnames(getNames(lsuSplit, dim = 1)),
-                         " (millions)"))
+                                reportingnames(getNames(lsuSplit, dim = 1)),
+                                " (millions)"))
     lsuSplit <- add_dimension(lsuSplit, dim = 3.1, add = "scenario", nm = "historical")
     lsuSplit <- add_dimension(lsuSplit, dim = 3.2, add = "model", nm = datasource)
   }
