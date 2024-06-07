@@ -17,7 +17,8 @@ calcValidCroparea <- function(datasource = "FAO", detail = FALSE) {
 
   if (datasource == "FAO") {
     data <- calcOutput("Croparea", sectoral = "kcr", physical = TRUE, aggregate = FALSE)
-    out <- reporthelper(x = data, dim = 3.1, level_zero_name = "Resources|Land Cover|Cropland", detail = detail)
+    out <- reporthelper(x = data, dim = 3.1, level_zero_name = "Resources|Land Cover|Cropland|Croparea",
+                        detail = detail)
     out <- summationhelper(out)
     getNames(out) <- paste(getNames(out), "(million ha)", sep = " ")
 
@@ -33,7 +34,7 @@ calcValidCroparea <- function(datasource = "FAO", detail = FALSE) {
     fallow <- setNames(calcOutput("FallowLand",
                                   aggregate = FALSE,
                                   cellular = FALSE),
-                       paste("Resources|Land Cover|Cropland|+|", reportingnames("fallow"), sep = ""))
+                       paste("Resources|Land Cover|Cropland|+|", reportingnames("crop_fallow"), sep = ""))
     cropland <- setNames(dimSums(mbind(data, fallow), dim = 3.1),
                          "Resources|Land Cover|+|Cropland")
     cropareatotal <- setNames(dimSums(mbind(data), dim = 3.1),
@@ -46,7 +47,7 @@ calcValidCroparea <- function(datasource = "FAO", detail = FALSE) {
     fallow <- calcOutput("FAOLand", aggregate = FALSE)[, , "6640", pmatch = TRUE]
     # cut off incomplete data before 2001
     out <- fallow[, getYears(fallow, as.integer = TRUE)[which(getYears(fallow, as.integer = TRUE) > 2000)], ]
-    getNames(out) <- paste("Resources|Land Cover|Cropland|+|", reportingnames("fallow"), sep = "")
+    getNames(out) <- paste("Resources|Land Cover|Cropland|+|", reportingnames("crop_fallow"), sep = "")
 
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = "FAOSTAT")
