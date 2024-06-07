@@ -4,7 +4,7 @@
 \alias{calcValidIncome}
 \title{calcValidIncome}
 \usage{
-calcValidIncome(datasource = "James")
+calcValidIncome(datasource = "WDI-MI_SSPs-MI")
 }
 \arguments{
 \item{datasource}{To switch between historical values of James et al (default) or

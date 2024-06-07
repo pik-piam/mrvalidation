@@ -27,8 +27,6 @@ fullVALIDATION <- function(rev = 0.1) {
   # Population and Income
   calcOutput(type = "ValidPopulation", aggregate = "REG+GLO", file = valfile,
              append = FALSE, warnNA = FALSE, try = TRUE) # ready
-  calcOutput(type = "ValidIncome", datasource = "James", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidIncome", datasource = "WDI-MI_SSPs-MI",
              aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgFFGDP", datasource = "WDI", aggregate = "REG+GLO",

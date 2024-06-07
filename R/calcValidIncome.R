@@ -11,8 +11,7 @@
 #' @importFrom magclass mbind add_dimension getSets getSets<- collapseNames getYears
 #' @author Florian Humpenoeder, Abhijeet Mishra, Kristine Karstens
 
-calcValidIncome <- function(datasource = "James") {
-
+calcValidIncome <- function(datasource = "WDI-MI_SSPs-MI") {
 
   if (datasource == "WDI-MI_SSPs-MI") {
 
@@ -58,44 +57,6 @@ calcValidIncome <- function(datasource = "James") {
     weight <- mbind(weight, add_dimension(popWeights, dim = 3.3, add = "variable", nm = names[2]))
     weight <- mbind(weight, add_dimension(noWeights, dim = 3.3, add = "variable", nm = names[3]))
     weight <- mbind(weight, add_dimension(popWeights, dim = 3.3, add = "variable", nm = names[4]))
-
-
-  } else if (datasource == "James") {
-
-    mer   <- calcOutput("GDPPast", GDPPast = "IHME_USD05_MER_pc", aggregate = FALSE)
-    merpc <- readSource("James", subtype = "IHME_USD05_MER_pc")
-
-    ppp   <- calcOutput("GDPPast", GDPPast = "IHME_USD05_PPP_pc", aggregate = FALSE)
-    ppppc <- readSource("James", subtype = "IHME_USD05_PPP_pc")
-
-    years <- intersect(getYears(merpc), getYears(mer))
-
-    out   <- NULL
-    out   <- mbind(mer[, years, ], merpc[, years, ], ppp[, years, ], ppppc[, years, ])
-
-    names <- c("Income (million US$05 MER/yr)", "Income (US$05 MER/cap/yr)",
-               "Income (million US$05 PPP/yr)", "Income (US$05 PPP/cap/yr)")
-
-    getNames(out, dim = 1) <- names
-    out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
-    out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
-
-
-    # Setting weights correctly for intensive and extensive variables
-    popWeights  <- readSource("WDI", subtype = "SP.POP.TOTL") + 10^-10
-    noWeights   <- popWeights
-    noWeights[] <- 0
-
-    weight <- NULL
-    weight <- mbind(noWeights, popWeights, noWeights, popWeights)
-
-    getNames(weight) <- names
-    weight <- add_dimension(weight, dim = 3.1, add = "scenario", nm = "historical")
-    weight <- add_dimension(weight, dim = 3.2, add = "model", nm = datasource)
-
-    years <- intersect(getYears(out), getYears(weight))
-    out <- out[, years, ]
-    weight <- weight[, years, ]
 
   } else {
 
