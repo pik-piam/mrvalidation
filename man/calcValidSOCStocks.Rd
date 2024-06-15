@@ -4,7 +4,7 @@
 \alias{calcValidSOCStocks}
 \title{calcValidSOCStocks}
 \usage{
-calcValidSOCStocks(datasource = "LPJ_IPCC2006", baseyear = 1995)
+calcValidSOCStocks(datasource = "histSOCbudget", baseyear = 1995)
 }
 \arguments{
 \item{datasource}{Datasources for validation data, e.g. LPJ_IPCC2006, LPJmL_natural}

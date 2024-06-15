@@ -18,9 +18,55 @@
 #' @importFrom magclass mbind getYears setYears nregions
 #' @importFrom mstools toolCoord2Isocell
 
-calcValidSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995) {
+calcValidSOCStocks <- function(datasource = "histSOCbudget", baseyear = 1995) {
 
-  if (datasource == "LPJ_IPCC2006") {
+  if (datasource == "histSOCbudget") {
+
+    steadyState  <- calcOutput("SteadyState", aggregate = FALSE)
+    landuse      <- calcOutput("Landuse", aggregate = FALSE)[, getYears(steadyState), ]
+    somStock     <- calcOutput("SoilCarbon", aggregate = FALSE, output = "actualstate")[, getYears(steadyState), ]
+    natStock     <- calcOutput("SoilCarbon", aggregate = FALSE, output = "naturalstate")[, getYears(steadyState), ]
+
+    somStock  <- mstools::toolConv2CountryByCelltype(dimSums(somStock, dim = 3.1), cells = "lpjcell")
+    natStock  <- mstools::toolConv2CountryByCelltype(dimSums(natStock, dim = 3.1), cells = "lpjcell")
+    equStock  <- mstools::toolConv2CountryByCelltype(dimSums(steadyState * landuse, dim = 3.1), cells = "lpjcell")
+
+    somStock  <- mbind(somStock, add_dimension(dimSums(somStock, dim = 3.1), add = "landuse", nm = "total"))
+    natStock  <- mbind(natStock, add_dimension(dimSums(natStock, dim = 3.1), add = "landuse", nm = "total"))
+    equStock  <- mbind(equStock, add_dimension(dimSums(equStock, dim = 3.1), add = "landuse", nm = "total"))
+
+    unit          <- "(Mt C)"
+    zeroOrderName <- "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm"
+    out <- mbind(setNames(somStock[, , "total"],  paste0(zeroOrderName, " ", unit)),
+                 setNames(somStock[, , "crop"],   paste0(zeroOrderName, "|+|Cropland Soils ", unit)),
+                 setNames(somStock[, , "natveg"], paste0(zeroOrderName, "|+|Noncropland Soils ", unit)))
+
+    zeroOrderName <- "Resources|Soil Carbon|Target|Stock|SOC in top 30 cm"
+    out <- mbind(out,
+                 setNames(equStock[, , "total"],  paste0(zeroOrderName, " ", unit)),
+                 setNames(equStock[, , "crop"],   paste0(zeroOrderName, "|+|Cropland Soils ", unit)),
+                 setNames(equStock[, , "natveg"], paste0(zeroOrderName, "|+|Noncropland Soils ", unit)))
+
+    somChang <- somStock - setYears(somStock[, baseyear, ], NULL)
+    unit     <- paste0("Mt C wrt ", baseyear)
+    zeroOrderName <- "Resources|Soil Carbon|Actual|Stock Change|SOC in top 30 cm"
+    out <- mbind(out,
+                 setNames(somChang[, , "total"],  paste0(zeroOrderName, " ", unit)),
+                 setNames(somChang[, , "crop"],   paste0(zeroOrderName, "|+|Cropland Soils ", unit)),
+                 setNames(somChang[, , "natveg"], paste0(zeroOrderName, "|+|Noncropland Soils ", unit)))
+
+    somDebt <- natStock - somStock
+    unit          <- "(Mt C)"
+    zeroOrderName <- "Resources|Soil Carbon|Actual|Debt|SOC in top 30 cm"
+    out <- mbind(out,
+                 setNames(somDebt[, , "total"],  paste0(zeroOrderName, " ", unit)),
+                 setNames(somDebt[, , "crop"],   paste0(zeroOrderName, "|+|Cropland Soils ", unit)),
+                 setNames(somDebt[, , "natveg"], paste0(zeroOrderName, "|+|Noncropland Soils ", unit)))
+
+    out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+    out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+
+  } else if (datasource == "LPJ_IPCC2006") {
 
     mapping    <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     somStock  <- calcOutput("SOM", subtype = "stock",   aggregate = FALSE)
@@ -51,7 +97,6 @@ calcValidSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995) {
                paste0("Resources|Soil Carbon|Actual|Stock Change|",
                       "SOC in top 30 cm|+|Noncropland Soils (Mt C wrt ", baseyear, ")"))
     )
-
     out <- mbind(out,
       setNames(somStock[, , "total"][, , "target_soilc"],
                "Resources|Soil Carbon|Target|Stock|SOC in top 30 cm (Mt C)"),
