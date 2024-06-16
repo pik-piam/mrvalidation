@@ -34,9 +34,11 @@ calcValidSOCShare <- function(datasource = "histSOCbudget") {
     equStock  <- mbind(equStock, add_dimension(dimSums(equStock, dim = 3.1), add = "landuse", nm = "total"))
     pEquStock <- mbind(pEquStock, add_dimension(dimSums(pEquStock, dim = 3.1), add = "landuse", nm = "total"))
 
-    somShare <- somStock / natStock
     unit          <- "(tC/tC)"
     zeroOrderName <- "Resources|Soil Carbon|Actual|Carbon Share|SOC in top 30 cm"
+    somShare <- somStock / natStock
+    # replace NAs with 1, as the weights are zero for this country the value does not matter
+    somShare <- toolConditionalReplace(somShare, "is.na()", replaceby = 1)
     out <- mbind(setNames(somShare[, , "total"],  paste0(zeroOrderName, " ", unit)),
                  setNames(somShare[, , "crop"],   paste0(zeroOrderName, "|+|Cropland Soils ", unit)),
                  setNames(somShare[, , "natveg"], paste0(zeroOrderName, "|+|Noncropland Soils ", unit)))
@@ -47,6 +49,8 @@ calcValidSOCShare <- function(datasource = "histSOCbudget") {
 
     zeroOrderName <- "Resources|Soil Carbon|Target|Carbon Share|SOC in top 30 cm"
     equSomShare   <- equStock / pEquStock
+    # replace NAs with 1, as the weights are zero for this country the value does not matter
+    equSomShare <- toolConditionalReplace(equSomShare, "is.na()", replaceby = 1)
     out <- mbind(out,
                  setNames(equSomShare[, , "total"],  paste0(zeroOrderName, " ", unit)),
                  setNames(equSomShare[, , "crop"],   paste0(zeroOrderName, "|+|Cropland Soils ", unit)),
