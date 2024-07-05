@@ -50,7 +50,7 @@ calcValidIncome <- function(datasource = "WDI-MI_SSPs-MI") {
     popWeights <- add_dimension(popWeights, dim = 3.2, add = "model", nm = datasource)
 
     noWeights <- popWeights
-    noWeights[] <- 0
+    noWeights[] <- NA
 
     weight <- NULL
     weight <- mbind(weight, add_dimension(noWeights, dim = 3.3, add = "variable", nm = names[1]))
