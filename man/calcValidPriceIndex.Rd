@@ -27,8 +27,8 @@ List with a magpie object with global nominal and real price index.
 provides global producer price index from FAO
 }
 \examples{
-
-\dontrun{ a <- calcOutput("ValidPriceIndex", value="real", aggregate=FALSE)
+\dontrun{
+a <- calcOutput("ValidPriceIndex", value = "real", aggregate = FALSE)
 }
 
 }
