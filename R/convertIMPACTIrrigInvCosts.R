@@ -6,7 +6,7 @@
 #'
 #' @return magpie object containing average annual baseline water-related
 #'         investment cost on country-level
-#'         (in million 2005 USD per year)
+#'         (in million 2017 USD per year)
 #'
 #' @author Felicitas Beier
 #'

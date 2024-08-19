@@ -48,12 +48,12 @@ calcValidPriceAgriculture <- function(datasource="FAO"){
     getNames(weight) <- paste0(getNames(weight)," (US$05/tDM)")
   }
   
-  getNames(x) <- paste0(getNames(x)," (US$05/tDM)")
+  getNames(x) <- paste0(getNames(x)," (US$17/tDM)")
 
   
   return(list(x=x,
               weight=weight,
-              unit="US$05/tDM",
+              unit="US$17/tDM",
               description=description,
               isocountries=isocountries))
 }
