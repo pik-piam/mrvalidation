@@ -21,13 +21,13 @@ calcValidCostsLabor <- function(datasource = "Vittis") {
     labor_costs <- summationhelper(labor_costs)
     labor_costs <- labor_costs[,, reporting_names, pmatch = "right"]
     
-    getNames(labor_costs) <- paste0(getNames(labor_costs), " (million US$05/yr)")
+    getNames(labor_costs) <- paste0(getNames(labor_costs), " (million US$2017/yr)")
     getSets(labor_costs) <- c("region", "year", "variable")
     labor_costs <- add_dimension(labor_costs, dim = 3.1, add = "scenario", nm = "historical")
     labor_costs <- add_dimension(labor_costs, dim = 3.2, add = "model", nm = datasource)
     
     weight <- NULL
-    unit <- "million US$05/yr"
+    unit <- "million US$2017/yr"
   } else {
     stop("Datasource not valid")
   }

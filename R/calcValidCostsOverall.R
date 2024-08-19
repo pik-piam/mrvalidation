@@ -19,12 +19,12 @@ calcValidCostsOverall <- function(datasource = "FAO") {
   x <- dimSums(calcOutput("VoPAFF", aggregate = FALSE), dim = 3.1)
 
 
-  getNames(x) <- paste0("Costs|Gross value of production (million US$17/yr)")
+  getNames(x) <- paste0("Costs|Gross value of production (million US$2017/yr)")
   x <- add_dimension(x, dim = 3.1, add = "scenario", nm = "historical")
   x <- add_dimension(x, dim = 3.2, add = "model", nm = datasource)
 
   weight <- NULL
-  units <- "(million US$17/yr)"
+  units <- "(million US$2017/yr)"
 
   } else {
     warning("Only FAO datasource available")
@@ -32,6 +32,6 @@ calcValidCostsOverall <- function(datasource = "FAO") {
 
   return(list(x = x, weight = weight,
               unit = units,
-              description = "Validation for overall costs indicators(million US$17/yr)"))
+              description = "Validation for overall costs indicators(million US$2017/yr)"))
 
 }

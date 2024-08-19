@@ -15,7 +15,10 @@ calcValidAgFFGDP <- function(datasource = "WDI") {
   # This data is currently in constant 2015 US$MER.
   agffVA <- madrat::readSource("WDI", subtype = "NV.AGR.TOTL.KD")
   # Convert to constant 2017 US$MER.
-  agffVA17 <- GDPuc::convertGDP(agffVA, "constant 2015 US$MER", "constant 2017 US$MER", replace_NAs = c("linear", 0))
+  agffVA17 <- GDPuc::convertGDP(agffVA,
+                                "constant 2015 US$MER",
+                                "constant 2017 US$MER",
+                                replace_NAs = c("linear", 0))
 
   out <- agffVA17
   magclass::getNames(out) <- "Value|Agriculture, Forestry and Fisheries GDP (million US$17/yr)"

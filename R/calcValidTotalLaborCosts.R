@@ -20,8 +20,8 @@ calcValidTotalLaborCosts <- function(datasource = "USDA", dataVersionILO = "Aug2
   out <- calcOutput("LaborCosts", datasource = datasource, dataVersionILO = dataVersionILO,
                     subsectors = TRUE, otherLivst = FALSE, aggregate = FALSE)[, , c("Crops", "Livestock")]
 
-  out <- setNames(out, c("Costs Optimization|Input Factors|Labor costs|+|Crop products (million US$17/yr)",
-                         "Costs Optimization|Input Factors|Labor costs|+|Livestock products (million US$17/yr)"))
+  out <- setNames(out, c("Costs Optimization|Input Factors|Labor costs|+|Crop products (million US$2017/yr)",
+                         "Costs Optimization|Input Factors|Labor costs|+|Livestock products (million US$2017/yr)"))
 
   if (datasource == "USDA") datasource <- "USDA/FAO"
   if (dataVersionILO == "") dataVersionILO <- "Aug21"
@@ -31,6 +31,6 @@ calcValidTotalLaborCosts <- function(datasource = "USDA", dataVersionILO = "Aug2
 
   return(list(x = out,
               weight = NULL,
-              unit = "million US$17/yr",
+              unit = "million US$2017/yr",
               description = "labor costs in agriculture"))
 }

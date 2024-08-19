@@ -20,10 +20,10 @@ calcValidIncome <- function(datasource = "WDI-MI_SSPs-MI") {
       add_dimension(collapseNames(x), dim = 3.2, add = "variable", nm = nm)
     }
 
-    names <- c("Income (million US$17 MER/yr)",
-               "Income (US$17 MER/cap/yr)",
-               "Income (million US$17 PPP/yr)",
-               "Income (US$17 PPP/cap/yr)")
+    names <- c("Income (million US$2017 MER/yr)",
+               "Income (US$2017 MER/cap/yr)",
+               "Income (million US$2017 PPP/yr)",
+               "Income (US$2017 PPP/cap/yr)")
 
     mer   <- .tmp(calcOutput("GDP", unit = "constant 2017 US$MER", naming = "scenario", aggregate = FALSE), names[1])
     merpc <- .tmp(calcOutput("GDPpc", unit = "constant 2017 US$MER", naming = "scenario", aggregate = FALSE), names[2])

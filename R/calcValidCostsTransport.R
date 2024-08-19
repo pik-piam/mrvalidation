@@ -90,8 +90,8 @@ calcValidCostsTransport <- function(datasource = "GTAPtransport") {
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
-    getNames(out) <- paste(getNames(out), "(million US$17/yr)", sep = " ")
-    unit <- "million US$17/yr"
+    getNames(out) <- paste(getNames(out), "(million US$2017/yr)", sep = " ")
+    unit <- "million US$2017/yr"
 
   } else if (datasource == "MAgPIEcalc") {
 

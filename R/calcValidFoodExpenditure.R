@@ -30,6 +30,6 @@ calcValidFoodExpenditure <- function(detail=FALSE) {
 
   return(list(x=out2,
               weight=pop,
-              unit="USD/capita",
+              unit="US$2017/capita",
               description="Per-capita expenditure for food"))
 }

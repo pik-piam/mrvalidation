@@ -17,7 +17,11 @@ calcValidConsumptionValue<- function(datasource="FAO") {
     
     #Food and material demand
     kall<-findset("kall")
-    food_mat<-collapseNames(dimSums((calcOutput("FAOmassbalance",aggregate = FALSE)[,,kall][,,c("food","other_util")])[,,"dm"],dim=3.2))
+    food_mat <- collapseNames(
+                 dimSums((
+                  calcOutput("FAOmassbalance", aggregate = FALSE)[, , kall][
+                                                         , , c("food","other_util")])[, , "dm"], 
+                             dim=3.2))
 
     #Price consumers (World Prices)
     prices_kall_con<-setYears(calcOutput("IniFoodPrice",products = "kall",aggregate=FALSE),NULL)
