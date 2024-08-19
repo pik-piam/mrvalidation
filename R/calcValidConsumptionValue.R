@@ -33,7 +33,7 @@ calcValidConsumptionValue<- function(datasource="FAO") {
   }else{ 
     stop("unknown datasource")}
   
-  getNames(out) <- "Value|Consumption Value (million US$17/yr)"
+  getNames(out) <- "Value|Consumption Value (million US$2017/yr)"
   out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
   out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
   

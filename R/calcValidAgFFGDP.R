@@ -21,12 +21,12 @@ calcValidAgFFGDP <- function(datasource = "WDI") {
                                 replace_NAs = c("linear", 0))
 
   out <- agffVA17
-  magclass::getNames(out) <- "Value|Agriculture, Forestry and Fisheries GDP (million US$17/yr)"
+  magclass::getNames(out) <- "Value|Agriculture, Forestry and Fisheries GDP (million US$2017/yr)"
   out <- magclass::add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
   out <- magclass::add_dimension(out, dim = 3.2, add = "model", nm = "WDI")
 
   list(x = out,
        weight = NULL,
-       unit = "million US$17/yr",
+       unit = "million US$2017/yr",
        description = "Agriculture Fisheries Forestry Value added GDP")
 }

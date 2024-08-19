@@ -130,7 +130,7 @@ calcValidCostsTransport <- function(datasource = "GTAPtransport") {
                         detail = FALSE)
     out <- summationhelper(out)
 
-    getNames(out) <- paste(getNames(out), "(million US$17/yr)", sep = " ")
+    getNames(out) <- paste(getNames(out), "(million US$2017/yr)", sep = " ")
     unit <- "million US$17/yr"
 
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
