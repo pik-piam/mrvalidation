@@ -337,9 +337,7 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidCostsAEI", datasource = "IMPACT", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidTotalLaborCosts", datasource = "ILO", dataVersionILO = "Aug23", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidTotalLaborCosts", datasource = "ILO", dataVersionILO = "", aggregate = "REG+GLO",
+  calcOutput(type = "ValidTotalLaborCosts", datasource = "ILO", dataVersionILO = "Aug24", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidTotalLaborCosts", datasource = "USDA", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
