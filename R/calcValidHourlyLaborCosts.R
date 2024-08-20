@@ -19,7 +19,7 @@
 #' }
 #'
 
-calcValidHourlyLaborCosts <- function(datasource = "ILO_completed", dataVersionILO = "Aug23") {
+calcValidHourlyLaborCosts <- function(datasource = "ILO_completed", dataVersionILO = "Aug24") {
 
   if (datasource == "ILO_completed") {
     hourlyCosts <- calcOutput("HourlyLaborCosts", datasource = "ILO", dataVersionILO = dataVersionILO,

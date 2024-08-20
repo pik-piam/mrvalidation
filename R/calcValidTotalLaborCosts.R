@@ -15,7 +15,7 @@
 #' }
 #'
 
-calcValidTotalLaborCosts <- function(datasource = "USDA", dataVersionILO = "Aug23") {
+calcValidTotalLaborCosts <- function(datasource = "USDA", dataVersionILO = "Aug24") {
 
   out <- calcOutput("LaborCosts", datasource = datasource, dataVersionILO = dataVersionILO,
                     subsectors = TRUE, otherLivst = FALSE, aggregate = FALSE)[, , c("Crops", "Livestock")]
