@@ -17,7 +17,6 @@ calculates the validation data for labor and capital requirement shares in agric
 (currently the same shares for crop and livestock production based on USDA data)
 }
 \examples{
-
 \dontrun{
 calcOutput("ValidFactorReqShares")
 }
