@@ -7,12 +7,10 @@
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Debbora Leip
 #' @examples
-#'
 #' \dontrun{
 #' calcOutput("ValidFactorReqShares")
 #' }
 #'
-
 calcValidFactorReqShares <- function(subtype = "crop") {
 
   if (!(subtype %in% c("crop", "livestock"))) stop("subtype must be either 'crop' or 'livestock'")
@@ -51,6 +49,8 @@ calcValidFactorReqShares <- function(subtype = "crop") {
   weight <- weight[, years, ]
   out <- out[, years, ]
   weight[out[, , "Capital", pmatch = TRUE] == 0] <- 0
+  weight[weight == 0] <- 10^-10
+
 
   return(list(x = out,
               weight = weight,
