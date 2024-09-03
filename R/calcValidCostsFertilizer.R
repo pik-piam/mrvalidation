@@ -20,13 +20,13 @@ calcValidCostsFertilizer <- function(datasource = "FAO") {
     years <- intersect(getItems(totalUseNutrients, dim = 2), getItems(fertPriceNutrient, dim = 2))
 
     fertilizerCosts <- totalUseNutrients[, years, ] * fertPriceNutrient[, years, ] / 1e6
-    getNames(fertilizerCosts) <- paste0("Costs|Fertilizer (million US$05/yr)")
+    getNames(fertilizerCosts) <- paste0("Costs|Fertilizer (million US$2017/yr)")
     getSets(fertilizerCosts) <- c("region", "year", "variable")
 
     fertilizerCosts <- add_dimension(fertilizerCosts, dim = 3.1, add = "scenario", nm = "historical")
     fertilizerCosts <- add_dimension(fertilizerCosts, dim = 3.2, add = "model", nm = datasource)
     weight <- NULL
-    units <- "(million US$MER05/yr)"
+    units <- "(million US$2017/yr)"
   } else {
     stop("Datasource not valid")
   }

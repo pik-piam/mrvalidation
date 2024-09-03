@@ -90,8 +90,8 @@ calcValidCostsTransport <- function(datasource = "GTAPtransport") {
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
-    getNames(out) <- paste(getNames(out), "(million US$05/yr)", sep = " ")
-    unit <- "million US$05/yr"
+    getNames(out) <- paste(getNames(out), "(million US$2017/yr)", sep = " ")
+    unit <- "million US$2017/yr"
 
   } else if (datasource == "MAgPIEcalc") {
 
@@ -116,28 +116,16 @@ calcValidCostsTransport <- function(datasource = "GTAPtransport") {
     # total costs
     out <- costs[, , products] * productionDistance[, , products]
 
-<<<<<<< HEAD
-    # aggregate to country-level
-    out <- dimSums(out, dim = c(1.1, 1.2))
-    out <- toolCountryFill(out, fill = 0)
-
-    # add missing product groups, so that report and summation helper work properly.
-    # Note that forest, secondary, fish, bioenergy and  residues set to 0 currently
-    missingProducts <- setdiff(findset("kall"), products)
-    out <- add_columns(out, addnm = missingProducts, dim = 3.1)
-    out[, , missingProducts] <- 0
-=======
     mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     out   <- toolAggregate(out, rel = mapping, from = "celliso", to = "iso", dim = 1)
     out   <- toolCountryFill(out, fill = 0)
->>>>>>> master
 
     out <- reporthelper(out, dim = 3.1, level_zero_name = "Costs|Transport", partly = TRUE,
                         detail = FALSE)
     out <- summationhelper(out)
 
-    getNames(out) <- paste(getNames(out), "(million US$05/yr)", sep = " ")
-    unit <- "million US$05/yr"
+    getNames(out) <- paste(getNames(out), "(million US$2017/yr)", sep = " ")
+    unit <- "million US$2017/yr"
 
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)

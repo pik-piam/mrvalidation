@@ -6,7 +6,7 @@
 #'
 #' @return magpie object containing average annual baseline water-related
 #'         investment cost on country-level
-#'         (in million 2005 USD per year)
+#'         (in million 2017 USD per year)
 #'
 #' @author Felicitas Beier
 #'
@@ -45,8 +45,10 @@ convertIMPACTIrrigInvCosts <- function(x) {
 
   x <- toolAggregate(x, rel = mapping, weight = w, from = "region", to = "iso", dim = 1)
 
-  # convert 2000 to 2005 USD
-  tmp <- convertGDP(x, unit_in = "constant 2000 US$MER", unit_out = "constant 2005 US$MER",
+  # convert 2000 to 2017 USD
+  tmp <- convertGDP(x,
+                    unit_in = "constant 2000 US$MER",
+                    unit_out = "constant 2017 US$MER",
                     replace_NAs = "no_conversion")
 
   x <- tmp

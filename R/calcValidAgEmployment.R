@@ -16,7 +16,7 @@
 #' }
 #'
 
-calcValidAgEmployment <- function(datasource = "ILO", dataVersionILO = "Aug23") {
+calcValidAgEmployment <- function(datasource = "ILO", dataVersionILO = "Aug24") {
 
   if (datasource == "ILO") {
     agEmpl <- calcOutput("AgEmplILO", dataVersionILO = dataVersionILO, aggregate = FALSE)[, , c("Livestock", "Crops")]

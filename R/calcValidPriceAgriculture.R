@@ -1,7 +1,7 @@
 #' @title calcValidPriceAgriculture
 #'
 #' @description provides global prices from the IMPACT model projections, World Bank observations, and FAO 
-#' obersvations for MAgPIE commodities in $/tDM
+#' obersvations for MAgPIE commodities in $2017/tDM
 #' 
 #' @param datasource Options of the source of data:  \code{IMPACT3.2.2World_Price}, \code{FAO}, \code{FAOp} and \code{WBGEM}. 
 #'
@@ -45,15 +45,15 @@ calcValidPriceAgriculture <- function(datasource="FAO"){
   
   if(!is.null(weight)){
     dimnames(weight)[[3]] <- paste0("Prices|Agriculture|",reportingnames(dimnames(weight)[[3]]))
-    getNames(weight) <- paste0(getNames(weight)," (US$05/tDM)")
+    getNames(weight) <- paste0(getNames(weight)," (US$2017/tDM)")
   }
   
-  getNames(x) <- paste0(getNames(x)," (US$05/tDM)")
+  getNames(x) <- paste0(getNames(x)," (US$2017/tDM)")
 
   
   return(list(x=x,
               weight=weight,
-              unit="US$05/tDM",
+              unit="US$2017/tDM",
               description=description,
               isocountries=isocountries))
 }

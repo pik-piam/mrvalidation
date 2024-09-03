@@ -19,8 +19,8 @@ calcValidCostsTC<-function(datasource="Pardey"){
 
     out <- readSource("PardeyAgRD",convert=TRUE)
     getNames(out) <- "Costs|TC"
-    getNames(out) <- paste(getNames(out), "(million US$05/yr)", sep=" ")
-    unit <- "(million US$MER05/yr)"
+    getNames(out) <- paste(getNames(out), "(million US$2017/yr)", sep=" ")
+    unit <- "(million US$MER2017/yr)"
 
 
     out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
