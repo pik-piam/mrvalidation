@@ -4,7 +4,7 @@
 \alias{calcValidTotalLaborCosts}
 \title{calcValidTotalLaborCosts}
 \usage{
-calcValidTotalLaborCosts(datasource = "USDA", dataVersionILO = "Aug23")
+calcValidTotalLaborCosts(datasource = "USDA", dataVersionILO = "Aug24")
 }
 \arguments{
 \item{datasource}{"USDA" (which uses FAO VoP and USDA cost shares) or "ILO" (which is based on ILO datasets and

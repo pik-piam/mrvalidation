@@ -6,7 +6,7 @@
 \usage{
 calcValidHourlyLaborCosts(
   datasource = "ILO_completed",
-  dataVersionILO = "Aug23"
+  dataVersionILO = "Aug24"
 )
 }
 \arguments{

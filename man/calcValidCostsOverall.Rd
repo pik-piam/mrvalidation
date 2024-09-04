@@ -14,7 +14,7 @@ List of magpie object with results on country level, no weight, unit and descrip
 }
 \description{
 Returns historical values of the overall value of production for the Agricultural,
-Forestry sectors, and fisheries (mio.05USD)
+Forestry sectors, and fisheries (mio.17USD)
 }
 \examples{
 \dontrun{

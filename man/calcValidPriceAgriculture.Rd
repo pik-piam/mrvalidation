@@ -14,7 +14,7 @@ List with a magpie object with commodity prices on global and country level.
 }
 \description{
 provides global prices from the IMPACT model projections, World Bank observations, and FAO 
-obersvations for MAgPIE commodities in $/tDM
+obersvations for MAgPIE commodities in $2017/tDM
 }
 \examples{
 
