@@ -112,7 +112,7 @@ calcValidSOCStocks <- function(datasource = "histSOCbudget", baseyear = 1995) {
 
   } else if (datasource == "LPJmL4Paper") {
 
-    soilc <- calcOutput("LPJmL", version = "LPJmL4", climatetype = "LPJmL4Paper",
+    soilc <- calcOutput("LPJmL4", version = "LPJmL4", climatetype = "LPJmL4Paper",
                         subtype = "soilc_layer", aggregate = FALSE)
     soilc <- collapseNames(soilc[, , 1] + 1 / 3 * soilc[, , 2])
     area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE,
