@@ -115,8 +115,10 @@ readPardeyAgRD <- function() {
 
   pardey <- mbind(fullgerd, gerdy)
 
-  # convert PARDEY from 2009 PPP to 2005 USD MER
-  pardey <- convertGDP(pardey, unit_in = "constant 2009 Int$PPP", unit_out = "constant 2005 US$MER",
+  # convert PARDEY from 2009 PPP to 2017 USD MER
+  pardey <- convertGDP(pardey,
+                       unit_in = "constant 2009 Int$PPP",
+                       unit_out = "constant 2017 US$MER",
                        replace_NAs = "no_conversion")
 
   ### read in OECD data to get missing countries: REF missing from pardey data
@@ -143,7 +145,9 @@ readPardeyAgRD <- function() {
   # drop TWN which sneaked in there
   pastRus <- pastRus["TWN", , invert = TRUE]
 
-  pastRus <- convertGDP(pastRus, unit_in = "constant 2015 Int$PPP", unit_out = "constant 2005 US$MER",
+  pastRus <- convertGDP(pastRus,
+                        unit_in = "constant 2015 Int$PPP",
+                        unit_out = "constant 2017 US$MER",
                         replace_NAs = "no_conversion")
 
   out <- mbind(pardey, pastRus)

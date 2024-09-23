@@ -13,7 +13,7 @@ calcValidAgFFGDP(datasource = "WDI")
 List of magpie object with results on country level, no weight, unit and description.
 }
 \description{
-validation for agricultural, fisheries, forestry value added gdp (Million 05USD)
+validation for agricultural, fisheries, forestry value added gdp (Million 17USD)
 }
 \examples{
 \dontrun{

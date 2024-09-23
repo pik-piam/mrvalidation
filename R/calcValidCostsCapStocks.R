@@ -20,9 +20,9 @@ calcValidCostsCapStocks <- function(datasource="FAO") {
 
   
   getNames(CapitalStocks)<-"Costs|Capital Stocks"
-  getNames(CapitalStocks) <- paste0(getNames(CapitalStocks)," (million US$05)")
+  getNames(CapitalStocks) <- paste0(getNames(CapitalStocks)," (million US$2017)")
   
-  units = "million US$05/yr"
+  units = "million US$2017/yr"
   
   
   out<- add_dimension(CapitalStocks, dim=3.1, add="scenario", nm="historical")
@@ -33,6 +33,6 @@ calcValidCostsCapStocks <- function(datasource="FAO") {
   
   return(list(x=out,weight=weight,
               unit=units,
-              description="Validation for capital stocks (million US$05/yr)"))
+              description="Validation for capital stocks (million US$2017/yr)"))
   
 }

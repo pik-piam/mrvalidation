@@ -20,7 +20,7 @@
 #' }
 #'
 
-calcValidWageDevelopment <- function(datasource = "ILO_completed", baseYear = 2000, dataVersionILO = "Aug23") {
+calcValidWageDevelopment <- function(datasource = "ILO_completed", baseYear = 2000, dataVersionILO = "Aug24") {
 
   hourlyCosts <- setNames(calcOutput("ValidHourlyLaborCosts", datasource = datasource,
                                      dataVersionILO = dataVersionILO, aggregate = FALSE), NULL)

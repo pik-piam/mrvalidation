@@ -17,7 +17,11 @@ calcValidConsumptionValue<- function(datasource="FAO") {
     
     #Food and material demand
     kall<-findset("kall")
-    food_mat<-collapseNames(dimSums((calcOutput("FAOmassbalance",aggregate = FALSE)[,,kall][,,c("food","other_util")])[,,"dm"],dim=3.2))
+    food_mat <- collapseNames(
+                 dimSums((
+                  calcOutput("FAOmassbalance", aggregate = FALSE)[, , kall][
+                                                         , , c("food","other_util")])[, , "dm"], 
+                             dim=3.2))
 
     #Price consumers (World Prices)
     prices_kall_con<-setYears(calcOutput("IniFoodPrice",products = "kall",aggregate=FALSE),NULL)
@@ -29,12 +33,12 @@ calcValidConsumptionValue<- function(datasource="FAO") {
   }else{ 
     stop("unknown datasource")}
   
-  getNames(out) <- "Value|Consumption Value (million US$05/yr)"
+  getNames(out) <- "Value|Consumption Value (million US$2017/yr)"
   out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
   out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
   
   return(list(x=out,
               weight=NULL,
-              unit="million US$05/yr",
+              unit="million US$17/yr",
               description="Consumption Value"))
 }

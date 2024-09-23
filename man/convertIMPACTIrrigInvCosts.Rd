@@ -12,7 +12,7 @@ convertIMPACTIrrigInvCosts(x)
 \value{
 magpie object containing average annual baseline water-related
         investment cost on country-level
-        (in million 2005 USD per year)
+        (in million 2017 USD per year)
 }
 \description{
 converts units and dimensions of average annual baseline

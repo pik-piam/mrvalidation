@@ -19,7 +19,7 @@
 #' }
 #'
 
-calcValidHourlyLaborCosts <- function(datasource = "ILO_completed", dataVersionILO = "Aug23") {
+calcValidHourlyLaborCosts <- function(datasource = "ILO_completed", dataVersionILO = "Aug24") {
 
   if (datasource == "ILO_completed") {
     hourlyCosts <- calcOutput("HourlyLaborCosts", datasource = "ILO", dataVersionILO = dataVersionILO,
@@ -54,7 +54,7 @@ calcValidHourlyLaborCosts <- function(datasource = "ILO_completed", dataVersionI
     stop("Datsource not available")
   }
 
-  hourlyCosts <- setNames(hourlyCosts, "Labor|Wages|Hourly labor costs (USDMER05/h)")
+  hourlyCosts <- setNames(hourlyCosts, "Labor|Wages|Hourly labor costs (US$2017/h)")
 
   # total hours worked as weight for aggregation to world regions
   agEmpl <- calcOutput("AgEmplILO", dataVersionILO = dataVersionILO, aggregate = FALSE, subsectors = FALSE)
@@ -75,7 +75,7 @@ calcValidHourlyLaborCosts <- function(datasource = "ILO_completed", dataVersionI
 
   return(list(x = out,
               weight = weight,
-              unit = "USDMER05/h",
+              unit = "USD2017$MER/h",
               description = description))
 
 }

@@ -37,24 +37,22 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidConsumptionValue", datasource = "FAO", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
-  for (dvILO in c("", "Aug23")) {
-    calcOutput(type = "ValidAgEmployment", datasource = "ILO", dataVersionILO = dvILO, aggregate = "REG+GLO",
-               file = valfile, append = TRUE, try = TRUE)
-    calcOutput(type = "ValidAgEmployment", datasource = "ILO_FAO", dataVersionILO = dvILO, aggregate = "REG+GLO",
-               file = valfile, append = TRUE, try = TRUE)
-    calcOutput(type = "ValidHourlyLaborCosts", datasource = "ILO_completed", dataVersionILO = dvILO,
-               aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-    calcOutput(type = "ValidHourlyLaborCosts", datasource = "USDA_FAO_completed", dataVersionILO = dvILO,
-               aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-    calcOutput(type = "ValidWageDevelopment", datasource = "ILO_completed", dataVersionILO = dvILO, baseYear = 2000,
-               aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-    calcOutput(type = "ValidWageDevelopment", datasource = "ILO_completed", dataVersionILO = dvILO, baseYear = 2010,
-               aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-    calcOutput(type = "ValidWageDevelopment", datasource = "USDA_FAO_completed", dataVersionILO = dvILO,
-               baseYear = 2000, aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-    calcOutput(type = "ValidWageDevelopment", datasource = "USDA_FAO_completed", dataVersionILO = dvILO,
-               baseYear = 2010, aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  }
+  calcOutput(type = "ValidAgEmployment", datasource = "ILO", dataVersionILO = "Aug24", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidAgEmployment", datasource = "ILO_FAO", dataVersionILO = "Aug24", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidHourlyLaborCosts", datasource = "ILO_completed", dataVersionILO = "Aug24",
+             aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidHourlyLaborCosts", datasource = "USDA_FAO_completed", dataVersionILO = "Aug24",
+             aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidWageDevelopment", datasource = "ILO_completed", dataVersionILO = "Aug24", baseYear = 2000,
+             aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidWageDevelopment", datasource = "ILO_completed", dataVersionILO = "Aug24", baseYear = 2010,
+             aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidWageDevelopment", datasource = "USDA_FAO_completed", dataVersionILO = "Aug24",
+             baseYear = 2000, aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidWageDevelopment", datasource = "USDA_FAO_completed", dataVersionILO = "Aug24",
+             baseYear = 2010, aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidGini", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidPovertyLine", aggregate = "REG+GLO",
@@ -343,9 +341,7 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidCostsAEI", datasource = "IMPACT", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidTotalLaborCosts", datasource = "ILO", dataVersionILO = "Aug23", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidTotalLaborCosts", datasource = "ILO", dataVersionILO = "", aggregate = "REG+GLO",
+  calcOutput(type = "ValidTotalLaborCosts", datasource = "ILO", dataVersionILO = "Aug24", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidTotalLaborCosts", datasource = "USDA", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)

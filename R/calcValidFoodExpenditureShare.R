@@ -25,6 +25,6 @@ calcValidFoodExpenditureShare <- function(detail=FALSE) {
 
   return(list(x=expenditure_shr,
               weight=gdp*pop,
-              unit="USD/USD",
+              unit="US$2017/US$2017",
               description="Share of expenditure for different food items"))
 }

@@ -19,8 +19,8 @@ calcValidCostsAEI <- function(datasource = "IMPACT") {
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
     out <- add_dimension(out, dim = 3.3, add = "variable", nm = "Costs|AEI")
 
-    getNames(out) <- paste(getNames(out), "(million US$05/yr)", sep = " ")
-    unit          <- "million US$05/yr"
+    getNames(out) <- paste(getNames(out), "(million US$2017/yr)", sep = " ")
+    unit          <- "million US$2017/yr"
 
   } else {
     stop("So far only IMPACT irrigation investment costs available!")

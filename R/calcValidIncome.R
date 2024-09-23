@@ -20,13 +20,13 @@ calcValidIncome <- function(datasource = "WDI-MI_SSPs-MI") {
       add_dimension(collapseNames(x), dim = 3.2, add = "variable", nm = nm)
     }
 
-    names <- c("Income (million US$05 MER/yr)",
-               "Income (US$05 MER/cap/yr)",
-               "Income (million US$05 PPP/yr)",
-               "Income (US$05 PPP/cap/yr)")
+    names <- c("Income (million US$2017 MER/yr)",
+               "Income (US$2017 MER/cap/yr)",
+               "Income (million US$2017 PPP/yr)",
+               "Income (US$2017 PPP/cap/yr)")
 
-    mer   <- .tmp(calcOutput("GDP", unit = "constant 2005 US$MER", naming = "scenario", aggregate = FALSE), names[1])
-    merpc <- .tmp(calcOutput("GDPpc", unit = "constant 2005 US$MER", naming = "scenario", aggregate = FALSE), names[2])
+    mer   <- .tmp(calcOutput("GDP", unit = "constant 2017 US$MER", naming = "scenario", aggregate = FALSE), names[1])
+    merpc <- .tmp(calcOutput("GDPpc", unit = "constant 2017 US$MER", naming = "scenario", aggregate = FALSE), names[2])
     ppp   <- .tmp(calcOutput("GDP", naming = "scenario", aggregate = FALSE), names[3])
     ppppc <- .tmp(calcOutput("GDPpc", naming = "scenario", aggregate = FALSE), names[4])
 
@@ -41,7 +41,7 @@ calcValidIncome <- function(datasource = "WDI-MI_SSPs-MI") {
 
     # Setting weights correctly for intensive and extensive variables
     popWeights <- collapseNames(calcOutput(type = "GDPpc",
-                                           unit = "constant 2005 US$MER",
+                                           unit = "constant 2017 US$MER",
                                            naming = "scenario",
                                            supplementary = TRUE,
                                            aggregate = FALSE)$weight
@@ -67,7 +67,7 @@ calcValidIncome <- function(datasource = "WDI-MI_SSPs-MI") {
   return(list(x = out,
               weight = weight,
               mixed_aggregation = TRUE,
-              unit = "(million) US Dollar 2005 equivalents in MER/yr, MER/cap/yr, PPP/yr, PPP/cap/yr",
+              unit = "(million) US Dollar 2017 equivalents in MER/yr, MER/cap/yr, PPP/yr, PPP/cap/yr",
               description = "Income")
   )
 }
