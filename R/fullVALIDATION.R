@@ -273,6 +273,10 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidEmissionsPeatland", aggregate = FALSE,
              file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidGlobalCarbonBudget", aggregate = FALSE,
+             file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidGlobalCarbonBudget", aggregate = FALSE, cumulative = TRUE,
+             file = valfile, append = TRUE, try = TRUE) # ready
 
   # Yield
   calcOutput(type = "ValidYield", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
