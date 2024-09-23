@@ -7,7 +7,7 @@
 calcValidWageDevelopment(
   datasource = "ILO_completed",
   baseYear = 2000,
-  dataVersionILO = "Aug23"
+  dataVersionILO = "Aug24"
 )
 }
 \arguments{
