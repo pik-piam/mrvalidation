@@ -5,17 +5,14 @@
 \title{calcValidPopulation}
 \usage{
 calcValidPopulation(
-  PopulationPast = "WDI-UN_PopDiv-MI",
-  PopulationFuture = c("SSPs-UN_PopDiv-MI", "SDPs-UN_PopDiv-MI", "SSP2EU-UN_PopDiv-MI"),
-  TimeFromFindSet = TRUE
+  pastData = "WDI-UN_PopDiv-MI",
+  futureData = "SSPs-UN_PopDiv"
 )
 }
 \arguments{
-\item{PopulationPast}{population past data source}
+\item{pastData}{population past data source}
 
-\item{PopulationFuture}{population future data source}
-
-\item{TimeFromFindSet}{boolean deciding something}
+\item{futureData}{population future data source}
 }
 \value{
 list of magpie object with data and weight
