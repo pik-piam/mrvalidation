@@ -22,8 +22,8 @@ calcValidSelfsuff <- function(datasource = "FAO", detail = TRUE) {
     mb2 <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , kTrade][, , "dm"])
 
     # self sufficiency
-    tmp1 <- collapseNames(mb2[, , c("production")])
-    tmp2 <- collapseNames(mb2[, , "domestic_supply"])
+    tmp1 <- round(collapseNames(mb2[, , c("production")]), 8)
+    tmp2 <- round(collapseNames(mb2[, , "domestic_supply"]), 8)
     tmp1 <- reporthelper(x = tmp1, dim = 3.1, level_zero_name = "Trade|Self-sufficiency", detail = detail)
     tmp2 <- reporthelper(x = tmp2, dim = 3.1, level_zero_name = "Trade|Self-sufficiency", detail = detail)
     out <- tmp1 / tmp2
