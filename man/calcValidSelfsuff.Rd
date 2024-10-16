@@ -9,7 +9,8 @@ calcValidSelfsuff(datasource = "FAO", detail = TRUE)
 \arguments{
 \item{datasource}{Options of the source of data:  \code{FAO}.}
 
-\item{detail}{Default is \code{TRU}. If \code{FALSE}, the subcategories of groups are not reported (e.g. "soybean" within "oilcrops")}
+\item{detail}{Default is \code{TRU}. If \code{FALSE}, the subcategories of
+groups are not reported (e.g. "soybean" within "oilcrops")}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.
@@ -18,8 +19,7 @@ List of magpie objects with results on country level, weight on country level, u
 Validates self-sufficiency ration
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("ValidSelfsuff")
 }
 
