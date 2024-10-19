@@ -44,9 +44,9 @@ calcValidLand <- function(datasource = "MAgPIEown") {
 
     fraForest2020   <- readSource("FRA2020", "forest_area")[, , c("plantedForest", "plantationForest",
                                                                   "otherPlantedForest")]
-    getNames(fraForest2020, dim = 1) <- c("Resources|Land Cover|Forest|Managed Forest",
-                                          "Resources|Land Cover|Forest|Managed Forest|+|Plantations",
-                                          "Resources|Land Cover|Forest|Managed Forest|+|NPI/NDC")
+    getNames(fraForest2020, dim = 1) <- c("Resources|Land Cover|Forest|Planted Forest",
+                                          "Resources|Land Cover|Forest|Planted Forest|Plantations|+|Timber",
+                                          "Resources|Land Cover|Forest|Planted Forest|Natural|+|NPI_NDC AR")
     yPast <- magpiesets::findset("past", noset = "original")
     yPast <- as.integer(substring(yPast, 2, 5))
     yData <- getYears(fraForest2020, as.integer = TRUE)
@@ -96,42 +96,41 @@ calcValidLand <- function(datasource = "MAgPIEown") {
     out <- mbind(main, forest, natrforest, grassland)
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
-   } else if (datasource == "SSPResults") {
+  } else if (datasource == "SSPResults") {
+    # Pick out Land Cover categories in SSPResults
+    out <- calcOutput("ValidSSPResults", warnNA = FALSE, aggregate = FALSE)
 
-     # Pick out Land Cover categories in SSPResults
-     out <- calcOutput("ValidSSPResults", warnNA = FALSE, aggregate = FALSE)
+    # for some unknown reason MESSAGE-GLOBIOM repots negative other land
+    # which is why we have to lower the minimum value check to -100
+    minValue <- -100
 
-     # for some unknown reason MESSAGE-GLOBIOM repots negative other land
-     # which is why we have to lower the minimum value check to -100
-     minValue <- -100
+    selection <- c(
+      "Land Cover (million ha)",
+      "Land Cover|Built-up Area (million ha)",
+      "Land Cover|Cropland (million ha)",
+      "Land Cover|Cropland|Energy Crops (million ha)",
+      "Land Cover|Forest (million ha)",
+      "Land Cover|Forest|Forestry (million ha)",
+      "Land Cover|Forest|Forestry|Harvested Area (million ha)",
+      "Land Cover|Forest|Natural Forest (million ha)",
+      "Land Cover|Other Arable Land (million ha)",
+      "Land Cover|Other Land (million ha)",
+      "Land Cover|Other Natural Land (million ha)",
+      "Land Cover|Pasture (million ha)"
+    )
 
-     selection <- c(
-       "Land Cover (million ha)",
-       "Land Cover|Built-up Area (million ha)",
-       "Land Cover|Cropland (million ha)",
-       "Land Cover|Cropland|Energy Crops (million ha)",
-       "Land Cover|Forest (million ha)",
-       "Land Cover|Forest|Forestry (million ha)",
-       "Land Cover|Forest|Forestry|Harvested Area (million ha)",
-       "Land Cover|Forest|Natural Forest (million ha)",
-       "Land Cover|Other Arable Land (million ha)",
-       "Land Cover|Other Land (million ha)",
-       "Land Cover|Other Natural Land (million ha)",
-       "Land Cover|Pasture (million ha)"
-     )
+    out <- out[, , selection]
 
-     out <- out[, , selection]
+    # Renaming reporting categories from SSPResults to MAgPie validation names
+    # (not all SSP-categories have MAgPIE-equivalents)
 
-     # Renaming reporting categories from SSPResults to MAgPie validation names
-     # (not all SSP-categories have MAgPIE-equivalents)
-
-     mapping <- toolGetMapping(type = "sectoral", name = "mappingSSPResultsToMAgPIEValid.csv", where = "mappingfolder")
-     mappingFrom <- as.vector(mapping[, "SSPResults"])
-     mappingTo <- as.vector(mapping[, "MAgPIEValid"])
-     names(mappingTo) <- mappingFrom
-     aNames <- getNames(out, dim = 3)
-     getNames(out, dim = 3) <- mappingTo[aNames]
-     getNames(out, dim = 3) <- paste0("Resources|", getNames(out, dim = 3))
+    mapping <- toolGetMapping(type = "sectoral", name = "mappingSSPResultsToMAgPIEValid.csv", where = "mappingfolder")
+    mappingFrom <- as.vector(mapping[, "SSPResults"])
+    mappingTo <- as.vector(mapping[, "MAgPIEValid"])
+    names(mappingTo) <- mappingFrom
+    aNames <- getNames(out, dim = 3)
+    getNames(out, dim = 3) <- mappingTo[aNames]
+    getNames(out, dim = 3) <- paste0("Resources|", getNames(out, dim = 3))
 
   } else {
     stop("Given datasource currently not supported!")
@@ -141,15 +140,15 @@ calcValidLand <- function(datasource = "MAgPIEown") {
   names(dimnames(out))[1] <- "ISO"
 
   desc <- paste0("Cropland, pasture, urban, other land and forest area from FAO, LUH2v2, MAgPIE-Input and SSPresults.",
-          "\n Cropland: is the land under temporary agricultural crops (multiple-cropped areas are counted only",
-          "\n           once), temporary meadows for mowing or pasture, land under market and kitchen gardens",
-          "\n           and land temporarily fallow, and cultivated with long-term crops which do not have to",
-          "\n           be replanted for several years (such as cocoa and coffee); land under trees and shrubs",
-          "\n           producing flowers, such as roses and jasmine;",
-          "\n Pasture: is the land used permanently (for a period of five years or more) for herbaceous forage crops,",
-          "\n          either cultivated or naturally growing.",
-          "\n Forest: is the land spanning more than 0.5 hectares with trees higher than 5 metres and a canopy cover",
-          "\n         of more than 10 percent (includes temporarily unstocked areas)")
+                 "\n Cropland: is the land under temporary agricultural crops (multiple-cropped areas are counted only",
+                 "\n           once), temporary meadows for mowing or pasture, land under market and kitchen gardens",
+                 "\n           and land temporarily fallow, and cultivated with long-term crops which do not have to",
+                 "\n           be replanted for several years (such as cocoa and coffee); land under trees and shrubs",
+                 "\n           producing flowers, such as roses and jasmine;",
+                 "\n Pasture: is the land used permanently (for a period of five years or more) for herbaceous,",
+                 "\n          forage crops either cultivated or naturally growing.",
+                 "\n Forest: is the land spanning more than 0.5 hectares with trees higher than 5 metres and a",
+                 "\n         canopy cover of more than 10 percent (includes temporarily unstocked areas)")
 
   return(list(x = out,
               weight = NULL,
