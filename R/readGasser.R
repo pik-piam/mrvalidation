@@ -117,7 +117,8 @@ readGasser <- function(subtype = "bookkeeping") {
                               rel = mappingGasser,
                               weight = weight[isoList, getYears(eluc), ],
                               from = "GasserReg",
-                              to = "ISO.Alpha3")
+                              to = "ISO.Alpha3",
+                              zeroWeight = "allow")
 
     weight <- collapseNames(readSource("FRA2020", "forest_area")[, , "landArea"])
     missingWeightYears <- setdiff(getYears(eluc), getYears(weight))
