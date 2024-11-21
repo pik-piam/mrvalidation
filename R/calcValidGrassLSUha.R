@@ -9,8 +9,6 @@
 #' \dontrun{
 #' calcOutput("ValidGrassLSUha")
 #' }
-#' @importFrom mstools toolCell2isoCell
-
 calcValidGrassLSUha <- function(datasource = "MAgPIEown") {
 
   if (datasource == "MAgPIEown") {
