@@ -69,7 +69,8 @@ calcValidAgGDP <- function(datasource = "FAO") {
 
     # Consumption value and production value should be the same at global level. Not a regional level.
     out <- dimSums(dimSums(foodMat * pricesKallCon, dim = 3), dim = 1)
-    out <- setCells(out, "World")
+    out <- setCells(out, "GLO")
+    names(dimnames(out))[1] <- "region"
 
   } else {
     stop("unknown datasource")
@@ -78,6 +79,7 @@ calcValidAgGDP <- function(datasource = "FAO") {
   getNames(out) <- "Value|Agriculture GDP (million US$2017/yr)"
   out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
   out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+  names(dimnames(out))[3] <- "scenario.model.variable"
 
   return(list(x = out,
               weight = NULL,
