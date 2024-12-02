@@ -27,7 +27,15 @@ calcValidLand <- function(datasource = "MAgPIEown") {
     getNames(out, dim = 3) <- paste0("Resources|Land Cover|+|", reportingnames(getNames(out, dim = 3)), " (million ha)")
   } else if (datasource == "FRA2015") {
 
-    fraForest   <- readSource("FAO_FRA2015", "fac")[, , c("Forest", "NatFor", "PrimFor", "NatRegFor")]
+    fraForest   <- readSource("FAO_FRA2015", "fac")[, , c("Forest",
+                                                          "NatFor",
+                                                          "PrimFor",
+                                                          "NatRegFor")]
+    getNames(fraForest, dim = 1) <- c("Resources|Land Cover|+|Forest",
+                                      "Resources|Land Cover|Forest|+|Natural Forest",
+                                      "Resources|Land Cover|Forest|Natural Forest|+|Primary Forest",
+                                      "Resources|Land Cover|Forest|Natural Forest|+|Secondary Forest")
+
     yPast <- magpiesets::findset("past", noset = "original")
     yPast <- as.integer(substring(yPast, 2, 5))
     yData <- getYears(fraForest, as.integer = TRUE)
@@ -35,11 +43,10 @@ calcValidLand <- function(datasource = "MAgPIEown") {
     fraForest <- time_interpolate(fraForest, interpolated_year = yInterpolate,
                                   integrate_interpolated_years = TRUE, extrapolation_type = "constant")
 
-    out <- setNames(fraForest, c("forest", "natrforest", "primforest", "secdforest"))
+    out <- fraForest
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
-    getNames(out, dim = 3) <- paste0("Resources|Land Cover|+|", reportingnames(getNames(out, dim = 3)),
-                                     " (million ha)")
+    getNames(out, dim = 3) <- paste0(getNames(out, dim = 3), " (million ha)")
   } else if (datasource == "FRA2020") {
 
     fraForest2020   <- readSource("FRA2020", "forest_area")[, , c("forestArea",
