@@ -115,7 +115,7 @@ fullVALIDATION <- function(rev = 0.1) {
   # Land Cover
   calcOutput(type = "ValidLand", datasource = "FAO_crop_past", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidLand", datasource = "FAO_forest", aggregate = "REG+GLO",
+  calcOutput(type = "ValidLand", datasource = "FRA2015", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLand", datasource = "LUH2v2", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
