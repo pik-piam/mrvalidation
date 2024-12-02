@@ -49,14 +49,24 @@ calcValidLand <- function(datasource = "MAgPIEown") {
     getNames(out, dim = 3) <- paste0(getNames(out, dim = 3), " (million ha)")
   } else if (datasource == "FRA2020") {
 
-    fraForest2020   <- readSource("FRA2020", "forest_area")[, , c("forestArea",
-                                                                  "primary",
-                                                                  "naturallyRegeneratingForest",
-                                                                  "agroforestry",
-                                                                  "plantedForest",
-                                                                  "plantationForest",
-                                                                  "otherPlantedForest")]
+    fraForest2020   <- readSource("FRA2020", "forest_area")
+
+    # add secondary forest as difference between naturallyRegeneratingForest and primary forest
+    fraForest2020 <- mbind(fraForest2020,
+                           setNames(collapseNames(fraForest2020[, , "naturallyRegeneratingForest"]) -
+                                      collapseNames(fraForest2020[, , "primary"]), "secondary"))
+
+    fraForest2020 <- fraForest2020[, , c("forestArea",
+                                         "naturallyRegeneratingForest",
+                                         "primary",
+                                         "secondary",
+                                         "agroforestry",
+                                         "plantedForest",
+                                         "plantationForest",
+                                         "otherPlantedForest")]
+
     getNames(fraForest2020, dim = 1) <- c("Resources|Land Cover|+|Forest",
+                                          "Resources|Land Cover|Forest|+|Natural Forest",
                                           "Resources|Land Cover|Forest|Natural Forest|+|Primary Forest",
                                           "Resources|Land Cover|Forest|Natural Forest|+|Secondary Forest",
                                           "Resources|Land Cover|Cropland|+|Tree Cover",

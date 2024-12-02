@@ -241,16 +241,6 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidEmissions", datasource = "Nsurplus2", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidEmisLucGlo", subtype = "Canadell_2007", aggregate = FALSE,
-             file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidEmisLucGlo", subtype = "Friedlingstein_2010", aggregate = FALSE,
-             file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidEmisLucGlo", subtype = "Harris_2013", aggregate = FALSE,
-             file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidEmisLucGlo", subtype = "Houghton_2012", aggregate = FALSE,
-             file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidEmisLucGlo", subtype = "RCP", aggregate = FALSE,
-             file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidAnnualCarbonLTS", datasource = "Lauk_et_al", aggregate = FALSE,
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidAnnualCarbonLTS", datasource = "Johnston_Radeloff", aggregate = FALSE,
