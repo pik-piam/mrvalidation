@@ -30,11 +30,13 @@ calcValidLand <- function(datasource = "MAgPIEown") {
     fraForest   <- readSource("FAO_FRA2015", "fac")[, , c("Forest",
                                                           "NatFor",
                                                           "PrimFor",
-                                                          "NatRegFor")]
+                                                          "NatRegFor",
+                                                          "PlantFor")]
     getNames(fraForest, dim = 1) <- c("Resources|Land Cover|+|Forest",
                                       "Resources|Land Cover|Forest|+|Natural Forest",
                                       "Resources|Land Cover|Forest|Natural Forest|+|Primary Forest",
-                                      "Resources|Land Cover|Forest|Natural Forest|+|Secondary Forest")
+                                      "Resources|Land Cover|Forest|Natural Forest|+|Secondary Forest",
+                                      "Resources|Land Cover|Forest|+|Planted Forest")
 
     yPast <- magpiesets::findset("past", noset = "original")
     yPast <- as.integer(substring(yPast, 2, 5))
@@ -70,7 +72,7 @@ calcValidLand <- function(datasource = "MAgPIEown") {
                                           "Resources|Land Cover|Forest|Natural Forest|+|Primary Forest",
                                           "Resources|Land Cover|Forest|Natural Forest|+|Secondary Forest",
                                           "Resources|Land Cover|Cropland|+|Tree Cover",
-                                          "Resources|Land Cover|Forest|Planted Forest",
+                                          "Resources|Land Cover|Forest|+|Planted Forest",
                                           "Resources|Land Cover|Forest|Planted Forest|Plantations|+|Timber",
                                           "Resources|Land Cover|Forest|Planted Forest|Natural|+|NPI_NDC AR")
     yPast <- magpiesets::findset("past", noset = "original")
