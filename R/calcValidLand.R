@@ -57,7 +57,7 @@ calcValidLand <- function(datasource = "MAgPIEown") {
     fraForest2020 <- mbind(fraForest2020,
                            setNames(collapseNames(fraForest2020[, , "naturallyRegeneratingForest"]) -
                                       collapseNames(fraForest2020[, , "primary"]), "secondary"))
-
+    fraForest2020[fraForest2020 < 0] <- 0
     fraForest2020 <- fraForest2020[, , c("forestArea",
                                          "naturallyRegeneratingForest",
                                          "primary",
