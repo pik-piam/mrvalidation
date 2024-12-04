@@ -275,8 +275,6 @@ fullVALIDATION <- function(rev = 0.1) {
 
   # Productivity
   calcOutput(type = "ValidTau", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidTau", datasource = "FAOonline", aggregate = "REG+GLO", file = valfile,
-             append = TRUE, try = TRUE)
   calcOutput(type = "ValidTauPastr", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidLSUdensity", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgriResearchIntensity", aggregate = "REG+GLO", datasource = "Pardey",
