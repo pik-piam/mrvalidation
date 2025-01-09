@@ -88,7 +88,7 @@ calcValidLand <- function(datasource = "MAgPIEown") {
   } else if (datasource == "LUH2v2") {
 
     data <- calcOutput("LUH2v2", landuse_types = "magpie", irrigation = FALSE,
-                       cellular = FALSE, selectyears = "past", aggregate = FALSE)
+                       cellular = FALSE, selectyears = seq(1965, 2025, by = 5), aggregate = FALSE)
     out <- data[, , c("crop", "past", "urban", "other", "forest")]
     getNames(out, dim = 1) <- paste0("Resources|Land Cover|+|", reportingnames(getNames(out, dim = 1)), " (million ha)")
     out <- mbind(out, setNames(dimSums(out, dim = 3), "Resources|Land Cover (million ha)"))
@@ -97,7 +97,8 @@ calcValidLand <- function(datasource = "MAgPIEown") {
 
   } else if (datasource == "MAgPIEown") {
 
-    x <- calcOutput("LanduseInitialisation", nclasses = "seven", aggregate = FALSE)
+    x <- calcOutput("LanduseInitialisation", nclasses = "seven", selectyears = seq(1965, 2025, by = 5),
+                    aggregate = FALSE)
     x <- mbind(x, setNames(dimSums(x[, , c("primforest", "secdforest", "forestry")], dim = 3), "forest"))
 
     mainCat <- c("crop", "past", "urban", "other", "forest")
