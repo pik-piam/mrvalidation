@@ -22,6 +22,12 @@ calcValidProduction <- function(datasource = "FAO", detail = TRUE, nutrient = "d
   if (datasource == "FAO") {
     mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient][, , "production"])
     out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
+  } else if (datasource == "FAOpre2010"){
+    mb <- collapseNames(calcOutput("FAOmassbalance_pre", version = "pre2010", aggregate = FALSE)[, , nutrient][, , "production"])
+    out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
+  } else if (datasource == "FAOpost2010"){
+    mb <- collapseNames(calcOutput("FAOmassbalance_pre", version = "post2010", aggregate = FALSE)[, , nutrient][, , "production"])
+    out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
   } else {
     stop("No data exist for the given datasource!")
   }

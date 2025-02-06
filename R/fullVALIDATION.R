@@ -82,6 +82,12 @@ fullVALIDATION <- function(rev = 0.1) {
              append = TRUE, warnNA = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidProduction", aggregate = "REG+GLO", file = valfile,
              append = TRUE, detail = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidProduction", aggregate = "REG+GLO", file = valfile,
+             datasource = "FAOpre2010",
+             append = TRUE, detail = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidProduction", aggregate = "REG+GLO", file = valfile,
+             datasource = "FAOpost2010",
+             append = TRUE, detail = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidTrade", aggregate = "REG+GLO", file = valfile,
              append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidTrade", aggregate = "REG+GLO", file = valfile,
