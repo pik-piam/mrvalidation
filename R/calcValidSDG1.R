@@ -11,7 +11,7 @@
 calcValidSDG1 <- function(datasource="James") {
   
   if(datasource=="James"){
-    a <- readSource(type="James2019",subtype="IHME_USD05_PPP_pc")
+    a <- readSource(type="James",subtype="IHME_USD05_PPP_pc")
     pop_weights  <- readSource("WDI",subtype = "SP.POP.TOTL") + 10^-10
     com_years<-intersect(getYears(a),getYears(pop_weights))
     

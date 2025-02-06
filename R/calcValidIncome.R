@@ -3,27 +3,23 @@
 #' Returns historical development of income and future projections of income dynamics
 #'
 #'
-#' @param datasource To switch between historical values of James et al (default) or
-#' with future projections for different scenarios (James_OECD_Nakicenovic)
+#' @param datasource "WDI_SSPs", the only one option at the moment.
 #' @return list of magpie object with data and weight. Since intensive and extensive variables
 #' are mixed please keep the mixed_aggregation
-#' @importFrom madrat vcat calcOutput
-#' @importFrom magclass mbind add_dimension getSets getSets<- collapseNames getYears
 #' @author Florian Humpenoeder, Abhijeet Mishra, Kristine Karstens
+calcValidIncome <- function(datasource = "WDI_SSPs") {
 
-calcValidIncome <- function(datasource = "WDI-MI_SSPs-MI") {
-
-  if (datasource == "WDI-MI_SSPs-MI") {
+  if (datasource == "WDI_SSPs") {
 
     .tmp <- function(x, nm) {
       getSets(x)[3] <- "scenario"
       add_dimension(collapseNames(x), dim = 3.2, add = "variable", nm = nm)
     }
 
-    names <- c("Income (million US$2017 MER/yr)",
-               "Income (US$2017 MER/cap/yr)",
-               "Income (million US$2017 PPP/yr)",
-               "Income (US$2017 PPP/cap/yr)")
+    names <- c("Income MER (million US$2017 MER/yr)",
+               "Income per capita MER (US$2017 MER/cap/yr)",
+               "Income PPP (million US$2017 PPP/yr)",
+               "Income per capita (US$2017 PPP/cap/yr)")
 
     mer   <- .tmp(calcOutput("GDP", unit = "constant 2017 US$MER", naming = "scenario", aggregate = FALSE), names[1])
     merpc <- .tmp(calcOutput("GDPpc", unit = "constant 2017 US$MER", naming = "scenario", aggregate = FALSE), names[2])
@@ -64,10 +60,9 @@ calcValidIncome <- function(datasource = "WDI-MI_SSPs-MI") {
     stop("Given datasource currently not supported!")
   }
 
-  return(list(x = out,
-              weight = weight,
-              mixed_aggregation = TRUE,
-              unit = "(million) US Dollar 2017 equivalents in MER/yr, MER/cap/yr, PPP/yr, PPP/cap/yr",
-              description = "Income")
-  )
+  list(x = out,
+       weight = weight,
+       mixed_aggregation = TRUE,
+       unit = "(million) US Dollar 2017 equivalents in MER/yr, MER/cap/yr, PPP/yr, PPP/cap/yr",
+       description = "Income")
 }

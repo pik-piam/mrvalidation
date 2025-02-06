@@ -18,7 +18,7 @@
 #'
 #' @importFrom madrat toolAggregate toolCountryFill
 #' @importFrom magclass getYears getNames getRegions setYears new.magpie mbind where
-#' @importFrom GDPuc convertGDP
+#' @importFrom GDPuc toolConvertGDP
 
 convertIMPACTIrrigInvCosts <- function(x) {
 
@@ -46,10 +46,10 @@ convertIMPACTIrrigInvCosts <- function(x) {
   x <- toolAggregate(x, rel = mapping, weight = w, from = "region", to = "iso", dim = 1)
 
   # convert 2000 to 2017 USD
-  tmp <- convertGDP(x,
-                    unit_in = "constant 2000 US$MER",
-                    unit_out = "constant 2017 US$MER",
-                    replace_NAs = "no_conversion")
+  tmp <- toolConvertGDP(x,
+                        unit_in = "constant 2000 US$MER",
+                        unit_out = "constant 2017 US$MER",
+                        replace_NAs = "no_conversion")
 
   x <- tmp
   ### for missing countries use DEU rate for now ###

@@ -12,15 +12,15 @@
 #'
 calcValidAgGDP <- function(datasource = "FAO") {
 
-   if (datasource == "FAO") {
+  if (datasource == "FAO") {
 
     prodCrops <- collapseNames(calcOutput("Production", products = "kcr", aggregate = FALSE, attributes = "dm"))
     prodLivst <- collapseNames(calcOutput("Production", products = "kli", aggregate = FALSE, attributes = "dm"))
 
     pricesCrops <- setYears(calcOutput("PricesProducer", products = "kcr",
-                                      calculation = "VoP", aggregate = FALSE)[, 2005, ], NULL)
+                                       calculation = "VoP", aggregate = FALSE)[, 2005, ], NULL)
     pricesLivst <- setYears(calcOutput("PricesProducer", products = "kli",
-                                      calculation = "FAO", aggregate = FALSE)[, 2005, ], NULL)
+                                       calculation = "FAO", aggregate = FALSE)[, 2005, ], NULL)
 
     namesCrops <- intersect(getNames(prodCrops), getNames(pricesCrops))
     namesLivst <- intersect(getNames(prodLivst), getNames(pricesLivst))
@@ -48,7 +48,7 @@ calcValidAgGDP <- function(datasource = "FAO") {
     pricesLivstCon <- setYears(calcOutput("IniFoodPrice", products = "kli", aggregate = FALSE), NULL)
 
     years <- intersect(getYears(seedCrops),
-                     intersect(getYears(feedCrops), getYears(vopAll)))
+                       intersect(getYears(feedCrops), getYears(vopAll)))
 
     valueDemand <- dimSums((seedCrops[, years, ] + feedCrops[, years, ]) * pricesCropsCon, dim = 3) +
       dimSums((seedLivst[, years, ] + feedLivst[, years, ]) * pricesLivstCon, dim = 3)
@@ -57,26 +57,29 @@ calcValidAgGDP <- function(datasource = "FAO") {
     out[out < 0] <- 0
 
 
-   } else if (datasource == "FAO_consum") {
+  } else if (datasource == "FAO_consum") {
+    # Food and material demand
+    kall <- findset("kall")
+    foodMat <- collapseNames(dimSums((calcOutput("FAOmassbalance",
+                                                 aggregate = FALSE)[, , kall][, , c("food", "other_util")])[, , "dm"],
+                                     dim = 3.2))
 
-     # Food and material demand
-     kall <- findset("kall")
-     foodMat <- collapseNames(dimSums((calcOutput("FAOmassbalance",
-                   aggregate = FALSE)[, , kall][, , c("food", "other_util")])[, , "dm"], dim = 3.2))
+    # Price consumers (World Prices)
+    pricesKallCon <- setYears(calcOutput("IniFoodPrice", products = "kall", aggregate = FALSE), NULL)
 
-     # Price consumers (World Prices)
-     pricesKallCon <- setYears(calcOutput("IniFoodPrice", products = "kall", aggregate = FALSE), NULL)
+    # Consumption value and production value should be the same at global level. Not a regional level.
+    out <- dimSums(dimSums(foodMat * pricesKallCon, dim = 3), dim = 1)
+    out <- setCells(out, "GLO")
+    names(dimnames(out))[1] <- "region"
 
-     # Consumption value and production value should be the same at global level
-     out <- dimSums(dimSums(foodMat * pricesKallCon, dim = 3), dim = 1)
-
-   } else {
+  } else {
     stop("unknown datasource")
-     }
+  }
 
   getNames(out) <- "Value|Agriculture GDP (million US$2017/yr)"
   out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
   out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+  names(dimnames(out))[3] <- "scenario.model.variable"
 
   return(list(x = out,
               weight = NULL,

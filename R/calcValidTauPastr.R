@@ -51,7 +51,7 @@ calcValidTauPastr <- function() {
                             aggregate = FALSE)[, past, "pastr"]
   cell2iso <- data.frame(cell = getItems(yref, 1, full = TRUE),
                          iso = getItems(yref, if (dimExists("iso", yref)) "iso" else 1.1, full = TRUE))
-  yref <- toolAggregate(yref, rel = cell2iso, from = "cell", to = "iso", weight = yrefWeights)
+  yref <- toolAggregate(yref, rel = cell2iso, from = "cell", to = "iso", weight = yrefWeights + 10^(-10))
   yref <- toolCountryFill(yref, fill = 0)
 
   # tau calculation
@@ -61,10 +61,7 @@ calcValidTauPastr <- function() {
 
   # replacing unrealistic high tau values by regional averages
   regMap <- toolGetMapping("regionmappingH12.csv", type = "regional", where = "madrat")
-  tReg <- toolAggregate(t,
-    rel = regMap, weight = area,
-    from = "CountryCode", to = "RegionCode"
-  )
+  tReg <- toolAggregate(t, rel = regMap, weight = area, from = "CountryCode", to = "RegionCode")
   regions <- regMap$RegionCode
   names(regions) <- regMap[, "CountryCode"]
 
