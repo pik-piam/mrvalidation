@@ -92,6 +92,12 @@ fullVALIDATION <- function(rev = 0.1) {
              append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidTrade", aggregate = "REG+GLO", file = valfile,
              append = TRUE,  net_trade = FALSE, equalized = FALSE, try = TRUE) # ready
+  calcOutput(type = "ValidTrade", aggregate = "REG+GLO", file = valfile,
+             datasource = "FAOpre2010",
+             append = TRUE,  net_trade = FALSE, equalized = FALSE, try = TRUE) # ready
+  calcOutput(type = "ValidTrade", aggregate = "REG+GLO", file = valfile,
+             datasource = "FAOpost2010",
+             append = TRUE,  net_trade = FALSE, equalized = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidTrade", aggregate = "REG+GLO",
              datasource = "FAOBilateral", file = valfile,
              append = TRUE, try = TRUE) # ready
