@@ -11,7 +11,7 @@ calcValidGini <- function() {
   getSets(out)[3] <- "scenario"
   getItems(out, dim = 3) <- "historical"
 
-  weight <- calcOutput("Population", aggregate = FALSE)[, , "pop_SSP2"]
+  weight <- calcOutput("Population", scenario = "SSP2", aggregate = FALSE)[, , ]
   weight <- time_interpolate(weight, interpolated_year = getYears(out),
                              integrate_interpolated_years = TRUE)
 

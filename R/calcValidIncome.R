@@ -21,10 +21,28 @@ calcValidIncome <- function(datasource = "WDI_SSPs") {
                "Income PPP (million US$2017 PPP/yr)",
                "Income per capita (US$2017 PPP/cap/yr)")
 
-    mer   <- .tmp(calcOutput("GDP", unit = "constant 2017 US$MER", naming = "scenario", aggregate = FALSE), names[1])
-    merpc <- .tmp(calcOutput("GDPpc", unit = "constant 2017 US$MER", naming = "scenario", aggregate = FALSE), names[2])
-    ppp   <- .tmp(calcOutput("GDP", naming = "scenario", aggregate = FALSE), names[3])
-    ppppc <- .tmp(calcOutput("GDPpc", naming = "scenario", aggregate = FALSE), names[4])
+    mer   <- .tmp(calcOutput("GDP",
+                             scenario = "SSPs",
+                             unit = "constant 2017 US$MER",
+                             naming = "scenario",
+                             aggregate = FALSE),
+                  names[1])
+    merpc <- .tmp(calcOutput("GDPpc",
+                             scenario = "SSPs",
+                             unit = "constant 2017 US$MER",
+                             naming = "scenario",
+                             aggregate = FALSE),
+                  names[2])
+    ppp   <- .tmp(calcOutput("GDP",
+                             scenario = "SSPs",
+                             naming = "scenario",
+                             aggregate = FALSE),
+                  names[3])
+    ppppc <- .tmp(calcOutput("GDPpc",
+                             scenario = "SSPs",
+                             naming = "scenario",
+                             aggregate = FALSE),
+                  names[4])
 
     years <- getYears(mer)
 
@@ -37,8 +55,8 @@ calcValidIncome <- function(datasource = "WDI_SSPs") {
 
     # Setting weights correctly for intensive and extensive variables
     popWeights <- collapseNames(calcOutput(type = "GDPpc",
+                                           scenario = "SSPs",
                                            unit = "constant 2017 US$MER",
-                                           naming = "scenario",
                                            supplementary = TRUE,
                                            aggregate = FALSE)$weight
                                 + 10^-10)
