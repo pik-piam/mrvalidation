@@ -16,7 +16,6 @@ List of magpie objects with results on country level, weight on country level, u
 calculates the validation data for TC as Ag R&D investments
 }
 \examples{
-
 \dontrun{
 calcOutput("calcValidAgriResearchIntensity")
 }

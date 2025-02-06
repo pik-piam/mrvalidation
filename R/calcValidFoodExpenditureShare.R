@@ -17,12 +17,14 @@ calcValidFoodExpenditureShare <- function(detail = FALSE) {
   pop <- collapseNames(calcOutput("Population", scenario = "SSP2", aggregate = FALSE)[, , ])
   pop <- pop[, getYears(expenditure), ]
 
-  expenditure_shr <- expenditure / gdp
-  expenditure_shr[is.nan(expenditure_shr)] <- 0
-  getNames(expenditure_shr) <- sub(pattern = "\\|Expenditure", replacement = "|Expenditure Share", x = getNames(expenditure_shr))
+  expenditureShr <- expenditure / gdp
+  expenditureShr[is.nan(expenditureShr)] <- 0
+  getNames(expenditureShr) <- sub(pattern = "\\|Expenditure",
+                                  replacement = "|Expenditure Share",
+                                  x = getNames(expenditureShr))
 
   return(list(
-    x = expenditure_shr,
+    x = expenditureShr,
     weight = gdp * pop,
     unit = "US$2017/US$2017",
     description = "Share of expenditure for different food items"
