@@ -16,8 +16,7 @@ List of magpie object with results on country level, weight on country level, un
 validation for foode expenditure
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("ValidFoodExpenditure")
 }
 }
