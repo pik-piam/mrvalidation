@@ -223,9 +223,6 @@ fullVALIDATION <- function(rev = 0.1) {
   # Carbon Stocks
   calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_44ac93de:GSWP3-W5E5:historical", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
-  # calcOutput("ValidGrassSoilCarbon", datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100", model = "c7491e",
-  #           lpjml = "lpjml5p2_pasture", aggregate = FALSE, file = valfile, append = TRUE, try = TRUE)
-  # Temporaraly swiched off for debugging
 
 
   # Growing Stocks
