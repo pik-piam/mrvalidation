@@ -17,13 +17,32 @@
 
 calcValidSelfsuff <- function(datasource = "FAO", detail = TRUE) {
 
-  if (datasource == "FAO") {
     kTrade <- findset("k_trade")
-    mb2 <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , kTrade][, , "dm"])
+
+  if (datasource == "FAO") {
+    mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , kTrade][, , "dm"])
+  } else if (datasource == "FAOpre2010") {
+    mb <- collapseNames(calcOutput("FAOmassbalance_pre",
+                                   version = "pre2010",
+                                   aggregate = FALSE)[, , "dm"])
+
+    citems <- intersect(kTrade, getNames(mb, dim = 1))
+    mb <- mb[, , citems]
+    mb <- add_columns(mb, addnm = "scp", dim = 3.1, fill = 0)
+  } else if (datasource == "FAOpost2010") {
+    mb <- collapseNames(calcOutput("FAOmassbalance_pre",
+                                   version = "post2010",
+                                   aggregate = FALSE)[, , "dm"])
+    citems <- intersect(kTrade, getNames(mb, dim = 1))
+    mb <- mb[, , citems]
+    mb <- add_columns(mb, addnm = "scp", dim = 3.1, fill = 0)
+  } else {
+    stop("No data exist for the given datasource!")
+  }
 
     # self sufficiency
-    tmp1 <- round(collapseNames(mb2[, , c("production")]), 8)
-    tmp2 <- round(collapseNames(mb2[, , "domestic_supply"]), 8)
+    tmp1 <- round(collapseNames(mb[, , c("production")]), 8)
+    tmp2 <- round(collapseNames(mb[, , "domestic_supply"]), 8)
     tmp1 <- reporthelper(x = tmp1, dim = 3.1, level_zero_name = "Trade|Self-sufficiency", detail = detail)
     tmp2 <- reporthelper(x = tmp2, dim = 3.1, level_zero_name = "Trade|Self-sufficiency", detail = detail)
     out <- tmp1 / tmp2
@@ -31,9 +50,7 @@ calcValidSelfsuff <- function(datasource = "FAO", detail = TRUE) {
     # infinite values come from zero domestic supply and positive production, also set to 1.
     out[is.na(out)] <- 1
     out[is.infinite(out)] <- 1
-  } else {
-    stop("No data exist for the given datasource!")
-  }
+
 
   out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
   out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
