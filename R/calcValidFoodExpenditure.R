@@ -2,7 +2,7 @@
 #' @description validation for foode expenditure
 #'
 #' @param detail if FALSE, only major food commoditiy groups are shown.
-#' @param datasource Datasource for deman (FAO, FAOpre2010, FAOpost2010)
+#' @param datasource Datasource for demand (FAO, FAOpre2010, FAOpost2010)
 #'
 #' @return List of magpie object with results on country level, weight on country level, unit and description.
 #' @author Benjamin Leon Bodirsky

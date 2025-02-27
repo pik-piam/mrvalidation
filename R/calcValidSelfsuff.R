@@ -1,7 +1,7 @@
 #' @title calcValidSelfsuff
 #' @description Validates self-sufficiency ration
 #'
-#' @param datasource Options of the source of data:  \code{FAO}.
+#' @param datasource Options of the source of data:  \code{FAO, FAOpre2010, FAOpost2010}.
 #' @param detail Default is \code{TRU}. If \code{FALSE}, the subcategories of
 #' groups are not reported (e.g. "soybean" within "oilcrops")
 #'
