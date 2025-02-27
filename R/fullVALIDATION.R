@@ -37,6 +37,10 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidConsumptionValue", datasource = "FAO", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidConsumptionValue", datasource = "FAOpre2010", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidConsumptionValue", datasource = "FAOpost2010", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgEmployment", datasource = "ILO", dataVersionILO = "Aug24", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgEmployment", datasource = "ILO_FAO", dataVersionILO = "Aug24", aggregate = "REG+GLO",
