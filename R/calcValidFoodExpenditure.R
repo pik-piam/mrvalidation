@@ -2,6 +2,7 @@
 #' @description validation for foode expenditure
 #'
 #' @param detail if FALSE, only major food commoditiy groups are shown.
+#' @param datasource Datasource for deman (FAO, FAOpre2010, FAOpost2010)
 #'
 #' @return List of magpie object with results on country level, weight on country level, unit and description.
 #' @author Benjamin Leon Bodirsky
@@ -11,13 +12,25 @@
 #' calcOutput("ValidFoodExpenditure")
 #' }
 #' @importFrom  magpiesets findset
-calcValidFoodExpenditure <- function(detail=FALSE) {
+calcValidFoodExpenditure <- function(detail=FALSE, datasource="FAO") {
   
   price<-calcOutput("IniFoodPrice", datasource="FAO",aggregate = FALSE)
-  pop<-collapseNames(calcOutput("Population",aggregate = FALSE)[,,"pop_SSP2"])
+  pop<-collapseNames(calcOutput("Population",scenario="SSPs",aggregate = FALSE)[,,"SSP2"])
   
-  demand<-dimSums(calcOutput("FAOmassbalance",aggregate = FALSE)[,,c("food","flour1")][,,"dm"],dim=c(3.2,3.3))
-  demand<-demand[,,getNames(price)]
+    if (datasource == "FAO"){    
+      demand<-dimSums(calcOutput("FAOmassbalance",aggregate = FALSE)[,,c("food","flour1")][,,"dm"],dim=c(3.2,3.3))
+      demand<-demand[,,getNames(price)]   
+    }else if(datasource == "FAOpre2010"){
+      demand<-dimSums(calcOutput("FAOmassbalance",aggregate = FALSE,  version = "pre2010")[,,c("food","flour1")][,,"dm"],dim=c(3.2,3.3))
+      demand<-demand[,,getNames(price)]  
+     }else if(datasource == "FAOpost2010"){
+      demand<-dimSums(calcOutput("FAOmassbalance",aggregate = FALSE,  version = "post2010")[,,c("food","flour1")][,,"dm"],dim=c(3.2,3.3))
+      demand<-demand[,,getNames(price)]  
+    } else {
+      stop("unknown datasource")
+      }
+
+
   pop<-pop[,getYears(demand),]
   demand_pc<-demand/pop[,getYears(demand),]
   
@@ -26,7 +39,7 @@ calcValidFoodExpenditure <- function(detail=FALSE) {
   out2<-reporthelper(x=out,level_zero_name = "Household Expenditure|Food|Expenditure",detail = detail,partly=TRUE)  
   out2[is.nan(out2)]=0
   out2 <- add_dimension(out2, dim=3.1, add="scenario", nm="historical")
-  out2 <- add_dimension(out2, dim=3.2, add="model", nm="FAO")
+  out2 <- add_dimension(out2, dim=3.2, add="model", nm=datasource)
 
   return(list(x=out2,
               weight=pop,
