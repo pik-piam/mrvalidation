@@ -29,7 +29,7 @@ calcValidLSUdensity <- function() {
   # aggregate cells to iso country level
   cell2iso <- data.frame(cell = getItems(yref, 1, full = TRUE),
                          iso = getItems(yref, if (dimExists("iso", yref)) "iso" else 1.1, full = TRUE))
-  yref <- toolAggregate(yref, rel = cell2iso, from = "cell", to = "iso", weight = yrefWeights)
+  yref <- toolAggregate(yref, rel = cell2iso, from = "cell", to = "iso", weight = yrefWeights + 10^(-10))
 
   yref <- toolCountryFill(yref, fill = 0)
 

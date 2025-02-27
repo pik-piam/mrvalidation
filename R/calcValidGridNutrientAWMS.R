@@ -12,10 +12,7 @@
 #' }
 #'
 #' @importFrom magpiesets reportingnames
-#' @importFrom mstools toolIso2CellCountries
-
 calcValidGridNutrientAWMS <- function(nutrient = c("nr", "c")) {
-
   past  <- findset("past")
   out   <- collapseNames(calcOutput("Excretion", cellular = TRUE, attributes = "npkc",
                                     aggregate = FALSE)[, past, ])[, , nutrient]

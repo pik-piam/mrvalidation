@@ -27,7 +27,7 @@ fullVALIDATION <- function(rev = 0.1) {
   # Population and Income
   calcOutput(type = "ValidPopulation", aggregate = "REG+GLO", file = valfile,
              append = FALSE, warnNA = FALSE, try = TRUE) # ready
-  calcOutput(type = "ValidIncome", datasource = "WDI-MI_SSPs-MI",
+  calcOutput(type = "ValidIncome", datasource = "WDI_SSPs",
              aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgFFGDP", datasource = "WDI", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
@@ -82,9 +82,21 @@ fullVALIDATION <- function(rev = 0.1) {
              append = TRUE, warnNA = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidProduction", aggregate = "REG+GLO", file = valfile,
              append = TRUE, detail = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidProduction", aggregate = "REG+GLO", file = valfile,
+             datasource = "FAOpre2010",
+             append = TRUE, detail = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidProduction", aggregate = "REG+GLO", file = valfile,
+             datasource = "FAOpost2010",
+             append = TRUE, detail = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidTrade", aggregate = "REG+GLO", file = valfile,
              append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidTrade", aggregate = "REG+GLO", file = valfile,
+             append = TRUE,  net_trade = FALSE, equalized = FALSE, try = TRUE) # ready
+  calcOutput(type = "ValidTrade", aggregate = "REG+GLO", file = valfile,
+             datasource = "FAOpre2010",
+             append = TRUE,  net_trade = FALSE, equalized = FALSE, try = TRUE) # ready
+  calcOutput(type = "ValidTrade", aggregate = "REG+GLO", file = valfile,
+             datasource = "FAOpost2010",
              append = TRUE,  net_trade = FALSE, equalized = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidTrade", aggregate = "REG+GLO",
              datasource = "FAOBilateral", file = valfile,
@@ -115,7 +127,7 @@ fullVALIDATION <- function(rev = 0.1) {
   # Land Cover
   calcOutput(type = "ValidLand", datasource = "FAO_crop_past", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidLand", datasource = "FAO_forest", aggregate = "REG+GLO",
+  calcOutput(type = "ValidLand", datasource = "FRA2015", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLand", datasource = "LUH2v2", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
@@ -129,7 +141,7 @@ fullVALIDATION <- function(rev = 0.1) {
   # Land Cover Change
   calcOutput(type = "ValidLandChange", datasource = "FAO_crop_past", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidLandChange", datasource = "FAO_forest", aggregate = "REG+GLO",
+  calcOutput(type = "ValidLandChange", datasource = "FRA2015", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLandChange", datasource = "LUH2v2", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
@@ -211,9 +223,6 @@ fullVALIDATION <- function(rev = 0.1) {
   # Carbon Stocks
   calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_44ac93de:GSWP3-W5E5:historical", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
-  # calcOutput("ValidGrassSoilCarbon", datasource = "ISIMIP3b:IPSL-CM6A-LR:ssp126:1965-2100", model = "c7491e",
-  #           lpjml = "lpjml5p2_pasture", aggregate = FALSE, file = valfile, append = TRUE, try = TRUE)
-  # Temporaraly swiched off for debugging
 
 
   # Growing Stocks
@@ -241,16 +250,6 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidEmissions", datasource = "Nsurplus2", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidEmisLucGlo", subtype = "Canadell_2007", aggregate = FALSE,
-             file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidEmisLucGlo", subtype = "Friedlingstein_2010", aggregate = FALSE,
-             file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidEmisLucGlo", subtype = "Harris_2013", aggregate = FALSE,
-             file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidEmisLucGlo", subtype = "Houghton_2012", aggregate = FALSE,
-             file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidEmisLucGlo", subtype = "RCP", aggregate = FALSE,
-             file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidAnnualCarbonLTS", datasource = "Lauk_et_al", aggregate = FALSE,
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidAnnualCarbonLTS", datasource = "Johnston_Radeloff", aggregate = FALSE,
@@ -273,6 +272,10 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidEmissionsPeatland", aggregate = FALSE,
              file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidGlobalCarbonBudget", aggregate = FALSE,
+             file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidGlobalCarbonBudget", aggregate = FALSE, cumulative = TRUE,
+             file = valfile, append = TRUE, try = TRUE) # ready
 
   # Yield
   calcOutput(type = "ValidYield", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
@@ -281,8 +284,6 @@ fullVALIDATION <- function(rev = 0.1) {
 
   # Productivity
   calcOutput(type = "ValidTau", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidTau", datasource = "FAOonline", aggregate = "REG+GLO", file = valfile,
-             append = TRUE, try = TRUE)
   calcOutput(type = "ValidTauPastr", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidLSUdensity", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgriResearchIntensity", aggregate = "REG+GLO", datasource = "Pardey",

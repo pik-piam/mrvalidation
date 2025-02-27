@@ -20,7 +20,6 @@
 #' @importFrom magpiesets reporthelper
 #' @importFrom magclass getSets dimOrder
 #' @importFrom mrfaocore toolFAOcombine
-
 calcValidKcal <- function(datasource = "FAO", nutrient = "kcal", detail = TRUE) {
   if (length(nutrient) > 1) {
     stop("select only one nutrient")
