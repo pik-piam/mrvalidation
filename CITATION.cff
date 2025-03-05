@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: If you use this software, please cite it using the metadata from this file.
 type: software
 title: 'mrvalidation: madrat data preparation for validation purposes'
-version: 2.61.24
+version: 2.61.25
 date-released: '2025-03-05'
 abstract: Package contains routines to prepare data for validation exercises.
 authors:

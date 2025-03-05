@@ -43,7 +43,7 @@ calcValidGlobalCarbonBudget <- function(cumulative = FALSE) {
   magclass::getNames(allOut, dim = 3) <- reportingNames
 
   allOut2 <- allOut
-  magclass::getNames(allOut2, dim = 3) <- gsub("\\|Land\\|", "\\|Land RAW\\|", reportingNames)
+  magclass::getNames(allOut2, dim = 3) <- sub("\\|Land", "\\|Land RAW", reportingNames)
   allOut <- mbind(allOut, allOut2)
 
   return(list(

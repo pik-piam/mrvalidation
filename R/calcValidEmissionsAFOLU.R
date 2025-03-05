@@ -48,10 +48,6 @@ calcValidEmissionsAFOLU <- function(datasource = "FAO", cumulative = FALSE) {
 
     ag <- n2o + ch4 # these emissions now have the same names (i.e., in CO2e), and can thus be simply summed
 
-    co2Raw <- co2
-    getNames(co2Raw) <- "Emissions|CO2|Land RAW|+|Land-use Change (Mt CO2/yr)"
-    co2 <- mbind(co2, co2Raw)
-
     total <- mbind(ag, co2)
 
   } else if (datasource == "EDGAR_LU") {
@@ -63,10 +59,6 @@ calcValidEmissionsAFOLU <- function(datasource = "FAO", cumulative = FALSE) {
     co2 <- .convertGWP100AR6(edgar[, , "Emissions|CO2|Land|+|Land-use Change (Mt CO2/yr)"], "CO2", 1)
 
     ag <- n2o + ch4
-
-    co2Raw <- co2
-    getNames(co2Raw) <- "Emissions|CO2|Land RAW|+|Land-use Change (Mt CO2/yr)"
-    co2 <- mbind(co2, co2Raw)
 
     total <- mbind(ag, co2)
 
