@@ -24,23 +24,19 @@ calcValidIncome <- function(datasource = "WDI_SSPs") {
     mer   <- .tmp(calcOutput("GDP",
                              scenario = "SSPs",
                              unit = "constant 2017 US$MER",
-                             naming = "scenario",
                              aggregate = FALSE),
                   names[1])
     merpc <- .tmp(calcOutput("GDPpc",
                              scenario = "SSPs",
                              unit = "constant 2017 US$MER",
-                             naming = "scenario",
                              aggregate = FALSE),
                   names[2])
     ppp   <- .tmp(calcOutput("GDP",
                              scenario = "SSPs",
-                             naming = "scenario",
                              aggregate = FALSE),
                   names[3])
     ppppc <- .tmp(calcOutput("GDPpc",
                              scenario = "SSPs",
-                             naming = "scenario",
                              aggregate = FALSE),
                   names[4])
 
