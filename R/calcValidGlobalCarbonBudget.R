@@ -11,7 +11,6 @@
 #' \dontrun{
 #' calcOutput("ValidGlobalCarbonBudget")
 #' }
-
 calcValidGlobalCarbonBudget <- function(cumulative = FALSE) {
 
   allOut <- readSource("GlobalCarbonBudget")
@@ -42,6 +41,10 @@ calcValidGlobalCarbonBudget <- function(cumulative = FALSE) {
     reportingNames <- paste0(reportingNames, " (Mt CO2/yr)")
   }
   magclass::getNames(allOut, dim = 3) <- reportingNames
+
+  allOut2 <- allOut
+  magclass::getNames(allOut2, dim = 3) <- sub("\\|Land", "\\|Land RAW", reportingNames)
+  allOut <- mbind(allOut, allOut2)
 
   return(list(
     x           = allOut,

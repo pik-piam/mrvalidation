@@ -27,7 +27,7 @@ convertIMPACTIrrigInvCosts <- function(x) {
 
   # Disaggregate to iso-countries
   # weight for disaggregation: GDP
-  w <- collapseNames(setYears(calcOutput("GDP", aggregate = FALSE)[, "y2020", "gdp_SSP2"], NULL))
+  w <- collapseNames(setYears(calcOutput("GDP", scenario = "SSP2", aggregate = FALSE)[, "y2020", ], NULL))
 
   # IMPACT country-region-mapping
   mapping <- read.csv("regionmapping_IMPACT.csv")

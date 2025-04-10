@@ -32,8 +32,10 @@ calcValidWageDevelopment <- function(datasource = "ILO_completed", baseYear = 20
 
   # population in 2000 as weight for aggregation to world regions and globally
   weight <- wageIndex
-  weight[, , ] <- calcOutput("Population", naming = "scenario",
-                             aggregate = FALSE, years = c(baseYear))[, , "SSP2", drop = TRUE]
+  weight[, , ] <- calcOutput("Population",
+                             scenario = "SSP2",
+                             aggregate = FALSE,
+                             years = c(baseYear))[, , , drop = TRUE]
 
   description <- paste("Wage index calculated as hourly labor costs in agriculture relative to 2000")
 

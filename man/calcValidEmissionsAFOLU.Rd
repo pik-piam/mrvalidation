@@ -19,7 +19,7 @@ validation for total and cumulative AFOLU emissions in CO2eq
 }
 \examples{
 \dontrun{
-   calcOutput("ValidEmissionsAFOLU")
+calcOutput("ValidEmissionsAFOLU")
 }
 }
 \author{
