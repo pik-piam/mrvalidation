@@ -25,7 +25,7 @@ readSoilCarbonDebt <- function() {
 
   map        <- toolGetMappingCoord2Country(pretty = TRUE)
   area       <- raster::raster("landmask_10km.tif")
-  r5min      <- raster::raster(res = 0.5 / 6)
+  r5min      <- raster::raster(resolution = 0.5 / 6)
   area5min   <- raster::area(r5min) / 10^4 * area
   area30min  <- raster::aggregate(area5min, fact = 6, fun = sum, na.rm = TRUE)
 

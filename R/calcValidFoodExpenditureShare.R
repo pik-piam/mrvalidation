@@ -6,25 +6,27 @@
 #' @return List of magpie object with results on country level, weight on country level, unit and description.
 #' @author Benjamin Leon Bodirsky
 #' @examples
-#' 
-#' \dontrun{ 
+#' \dontrun{
 #' calcOutput("ValidFoodExpenditureShare")
 #' }
-#' 
-calcValidFoodExpenditureShare <- function(detail=FALSE) {
-  
-  expenditure<-calcOutput("ValidFoodExpenditure",aggregate = FALSE)
-  gdp<-collapseNames(calcOutput("GDPpc", naming = "scenario", aggregate = FALSE)[,,"SSP2"])
-  gdp<-gdp[,getYears(expenditure),]
-  pop<-collapseNames(calcOutput("Population",aggregate = FALSE)[,,"pop_SSP2"])
-  pop<-pop[,getYears(expenditure),]
-  
-  expenditure_shr=expenditure/gdp
-  expenditure_shr[is.nan(expenditure_shr)]=0
-  getNames(expenditure_shr)<-sub(pattern = "\\|Expenditure",replacement = "|Expenditure Share",x = getNames(expenditure_shr))
+#'
+calcValidFoodExpenditureShare <- function(detail = FALSE) {
+  expenditure <- calcOutput("ValidFoodExpenditure", aggregate = FALSE)
+  gdp <- collapseNames(calcOutput("GDPpc", scenario = "SSP2", aggregate = FALSE)[, , ])
+  gdp <- gdp[, getYears(expenditure), ]
+  pop <- collapseNames(calcOutput("Population", scenario = "SSP2", aggregate = FALSE)[, , ])
+  pop <- pop[, getYears(expenditure), ]
 
-  return(list(x=expenditure_shr,
-              weight=gdp*pop,
-              unit="US$2017/US$2017",
-              description="Share of expenditure for different food items"))
+  expenditureShr <- expenditure / gdp
+  expenditureShr[is.nan(expenditureShr)] <- 0
+  getNames(expenditureShr) <- sub(pattern = "\\|Expenditure",
+                                  replacement = "|Expenditure Share",
+                                  x = getNames(expenditureShr))
+
+  return(list(
+    x = expenditureShr,
+    weight = gdp * pop,
+    unit = "US$2017/US$2017",
+    description = "Share of expenditure for different food items"
+  ))
 }

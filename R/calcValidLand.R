@@ -92,6 +92,15 @@ calcValidLand <- function(datasource = "MAgPIEown") {
     out <- data[, , c("crop", "past", "urban", "other", "forest")]
     getNames(out, dim = 1) <- paste0("Resources|Land Cover|+|", reportingnames(getNames(out, dim = 1)), " (million ha)")
     out <- mbind(out, setNames(dimSums(out, dim = 3), "Resources|Land Cover (million ha)"))
+
+    forest <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE,
+                         cellular = FALSE, selectyears = seq(1965, 2015, by = 5), aggregate = FALSE)
+    forest <- forest[, , c("primf", "secdf")]
+    getNames(forest) <- c("primforest", "secdforest")
+    getNames(forest, dim = 1) <- paste0("Resources|Land Cover|Forest|Natural Forest|+|",
+                                        reportingnames(getNames(forest, dim = 1)), " (million ha)")
+
+    out <- mbind(out, forest)
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
