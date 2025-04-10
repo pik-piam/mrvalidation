@@ -24,7 +24,7 @@ calcValidFeed <- function(datasource = "FAO", detail = TRUE, nutrient = "dm") {
 
 
     mb2 <- mb[, , c("feed_fish", "feed_livst_chick", "feed_livst_egg",
-                "feed_livst_milk", "feed_livst_pig", "feed_livst_rum")]
+                    "feed_livst_milk", "feed_livst_pig", "feed_livst_rum")]
 
     getNames(mb2, dim = 2) <- reportingnames(getNames(mb2, dim = 2))
 
@@ -36,11 +36,11 @@ calcValidFeed <- function(datasource = "FAO", detail = TRUE, nutrient = "dm") {
     out <- summationhelper(out, sep = "+")
 
     lvl1 <- c("+|Feed for Aquaculture",
-    "+|Feed for Poultry meat",
-    "+|Feed for Eggs",
-    "+|Feed for Dairy",
-    "+|Feed for Monogastric meat",
-    "+|Feed for Ruminant meat")
+              "+|Feed for Poultry meat",
+              "+|Feed for Eggs",
+              "+|Feed for Dairy",
+              "+|Feed for Pig meat",
+              "+|Feed for Ruminant meat")
     tmp <- out[, , lvl1]
     getNames(tmp) <- paste0("+", getNames(tmp))
     out <- mbind(tmp, out[, , lvl1, invert = TRUE])
@@ -50,23 +50,25 @@ calcValidFeed <- function(datasource = "FAO", detail = TRUE, nutrient = "dm") {
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
-  } else stop("No data exist for the given datasource!")
+  } else {
+    stop("No data exist for the given datasource!")
+  }
 
   names(dimnames(out))[3] <- "scenario.model.variable"
 
   if (nutrient == "dm") {
-unit <- "Mt DM/yr"
+    unit <- "Mt DM/yr"
   } else if (nutrient == "nr") {
-unit <- "Mt Nr/yr"
+    unit <- "Mt Nr/yr"
   } else if (nutrient == "p") {
-unit <- "Mt P/yr"
+    unit <- "Mt P/yr"
   } else if (nutrient == "k") {
-unit <- "Mt K/yr"
+    unit <- "Mt K/yr"
   } else if (nutrient == "ge") {
-unit <- "PJ/yr"
+    unit <- "PJ/yr"
   } else if (nutrient == "wm") {
-unit <- "Mt WM/yr"
-}
+    unit <- "Mt WM/yr"
+  }
 
   getNames(out) <- sub("\\|$", "", getNames(out))
   getNames(out) <- paste0(getNames(out), " (", unit, ")")
@@ -75,5 +77,5 @@ unit <- "Mt WM/yr"
               weight = NULL,
               unit = unit,
               description = "Agricultural Demand")
-         )
+  )
 }
