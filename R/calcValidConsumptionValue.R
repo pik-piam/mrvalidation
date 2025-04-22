@@ -11,10 +11,9 @@
 #' }
 
 calcValidConsumptionValue<- function(datasource="FAO") {
-  
+    kall<-findset("kall")
   if (datasource == "FAO"){    
     #Food and material demand
-    kall<-findset("kall")
     food_mat <- collapseNames(
                  dimSums((
                   calcOutput("FAOmassbalance", aggregate = FALSE)[, , kall][
