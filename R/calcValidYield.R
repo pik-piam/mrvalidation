@@ -32,11 +32,9 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
 
     if (!is.null(future)) stop("Future options is not available for source type 'FAO'.")
 
-    past <- findset("past")
-
     # Calculate areas of individual crops and pasture
     croparea  <-  collapseNames(calcOutput("Croparea", sectoral = "kcr",
-                                           physical = TRUE, aggregate = FALSE)[, past, ])
+                                           physical = TRUE, aggregate = FALSE))
     pastarea  <-  setNames(calcOutput("LanduseInitialisation", aggregate = FALSE)[, , "past"],
                            "pasture")
     area <- mbind(croparea, pastarea)
@@ -60,7 +58,8 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
     production <- summationhelper(reporthelper(production,
                                                level_zero_name = "Productivity|Yield"),
                                   sep = NULL)
-    yield      <-  production / area
+    cyears <- intersect(getYears(production), getYears(area))
+    yield      <-  production[, cyears, ] / area[, cyears, ]
 
     # Check for NaN values
     indexNaN  <-  which(is.nan(yield))
@@ -107,8 +106,6 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
 
     if (!is.null(future)) stop("Future options is not available for source type 'FAO'.")
 
-    past <- findset("past")
-
     # Calculate areas of individual crops and pasture
     croparea <- calcOutput("CropareaLandInG", aggregate = FALSE)
     pastarea  <-  setNames(calcOutput("LanduseInitialisation", aggregate = FALSE)[, , "past"],
@@ -134,7 +131,8 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
     production <- summationhelper(reporthelper(production,
                                                level_zero_name = "Productivity|Yield by physical area"),
                                   sep = NULL)
-    yield      <-  production / area
+    cyears <- intersect(getYears(production), getYears(area))
+    yield      <-  production[, cyears, ] / area[, cyears, ]
 
     # Check for NaN values
     indexNaN  <-  which(is.nan(yield))
