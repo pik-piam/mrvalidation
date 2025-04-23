@@ -37,7 +37,8 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
                                            physical = TRUE, aggregate = FALSE))
     pastarea  <-  setNames(calcOutput("LanduseInitialisation", aggregate = FALSE)[, , "past"],
                            "pasture")
-    area <- mbind(croparea, pastarea)
+    cyears <- intersect(getYears(croparea), getYears(pastarea))
+    area <- mbind(croparea[, cyears, ], pastarea[, cyears, ])
     area <- summationhelper(reporthelper(area,
                                          level_zero_name = "Productivity|Yield"),
                             sep = NULL)
