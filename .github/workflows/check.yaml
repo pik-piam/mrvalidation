@@ -42,13 +42,6 @@ jobs:
           python -m pip freeze --local
           pre-commit run --show-diff-on-failure --color=always --all-files
 
-      - name: Run pre-commit checks
-        shell: bash
-        run: |
-          python -m pip install pre-commit
-          python -m pip freeze --local
-          pre-commit run --show-diff-on-failure --color=always --all-files
-
       - name: Verify validation key
         shell: Rscript {0}
         run: lucode2:::validkey(stopIfInvalid = TRUE)

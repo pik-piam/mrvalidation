@@ -17,7 +17,7 @@
 
 calcValidSelfsuff <- function(datasource = "FAO", detail = TRUE) {
 
-    kTrade <- findset("k_trade")
+  kTrade <- findset("k_trade")
 
   if (datasource == "FAO") {
     mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , kTrade][, , "dm"])
@@ -40,16 +40,16 @@ calcValidSelfsuff <- function(datasource = "FAO", detail = TRUE) {
     stop("No data exist for the given datasource!")
   }
 
-    # self sufficiency
-    tmp1 <- round(collapseNames(mb[, , c("production")]), 8)
-    tmp2 <- round(collapseNames(mb[, , "domestic_supply"]), 8)
-    tmp1 <- reporthelper(x = tmp1, dim = 3.1, level_zero_name = "Trade|Self-sufficiency", detail = detail)
-    tmp2 <- reporthelper(x = tmp2, dim = 3.1, level_zero_name = "Trade|Self-sufficiency", detail = detail)
-    out <- tmp1 / tmp2
-    # NaN comes from both production and domestic supply being zero. By convention, we set it to 1.
-    # infinite values come from zero domestic supply and positive production, also set to 1.
-    out[is.na(out)] <- 1
-    out[is.infinite(out)] <- 1
+  # self sufficiency
+  tmp1 <- round(collapseNames(mb[, , c("production")]), 8)
+  tmp2 <- round(collapseNames(mb[, , "domestic_supply"]), 8)
+  tmp1 <- reporthelper(x = tmp1, dim = 3.1, level_zero_name = "Trade|Self-sufficiency", detail = detail)
+  tmp2 <- reporthelper(x = tmp2, dim = 3.1, level_zero_name = "Trade|Self-sufficiency", detail = detail)
+  out <- tmp1 / tmp2
+  # NaN comes from both production and domestic supply being zero. By convention, we set it to 1.
+  # infinite values come from zero domestic supply and positive production, also set to 1.
+  out[is.na(out)] <- 1
+  out[is.infinite(out)] <- 1
 
 
   out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")

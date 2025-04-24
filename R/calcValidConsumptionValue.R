@@ -1,6 +1,6 @@
 #' @title calcValidConsumptionValue
 #' @description Validation for consumption Value
-#' @param datasource datasource for validation (FAO, FAOpre2010, FAOpost2010) 
+#' @param datasource datasource for validation (FAO, FAOpre2010, FAOpost2010)
 #' @return List of magpie object with results on country level, no weight, unit and description.
 #' @author Edna J. Molina Bacca
 #' @importFrom magclass collapseNames
@@ -9,45 +9,46 @@
 #' \dontrun{
 #' calcOutput("ValidConsumptionValue")
 #' }
+calcValidConsumptionValue <- function(datasource = "FAO") {
+  kall <- findset("kall")
+  if (datasource == "FAO") {
+    # Food and material demand
+    foodMat <- collapseNames(
+                             dimSums((
+                                      calcOutput("FAOmassbalance",
+                                                 aggregate = FALSE)[, , kall][, , c("food", "other_util")])[, , "dm"],
+                             dim = 3.2))
+  } else if (datasource == "FAOpre2010") {
+    foodMat <- collapseNames(
+                             dimSums((
+                                      calcOutput("FAOmassbalance",
+                                                 version = "pre2010",
+                                                 aggregate = FALSE)[, , kall][, , c("food", "other_util")])[, , "dm"],
+                             dim = 3.2))
+  } else if (datasource == "FAOpost2010") {
+    foodMat <- collapseNames(
+                             dimSums((
+                                      calcOutput("FAOmassbalance",
+                                                 version = "FAOpost2010",
+                                                 aggregate = FALSE)[, , kall][, , c("food", "other_util")])[, , "dm"],
+                             dim = 3.2))
 
-calcValidConsumptionValue<- function(datasource="FAO") {
-    kall<-findset("kall")
-  if (datasource == "FAO"){    
-    #Food and material demand
-    food_mat <- collapseNames(
-                 dimSums((
-                  calcOutput("FAOmassbalance", aggregate = FALSE)[, , kall][
-                                                         , , c("food","other_util")])[, , "dm"], 
-                             dim=3.2))
-    }else if(datasource == "FAOpre2010"){
-      food_mat <- collapseNames(
-                 dimSums((
-                  calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE)[, , kall][
-                                                         , , c("food","other_util")])[, , "dm"], 
-                             dim=3.2))
-     }else if(datasource == "FAOpost2010"){
-      food_mat <- collapseNames(
-                 dimSums((
-                  calcOutput("FAOmassbalance", version = "FAOpost2010", aggregate = FALSE)[, , kall][
-                                                         , , c("food","other_util")])[, , "dm"], 
-                             dim=3.2))
+  } else {
+    stop("unknown datasource")
+  }
 
-    } else {
-      stop("unknown datasource")
-      }
+  # Price consumers (World Prices)
+  pricesKallCon <- setYears(calcOutput("IniFoodPrice", products = "kall", aggregate = FALSE), NULL)
 
-  #Price consumers (World Prices)
-  prices_kall_con<-setYears(calcOutput("IniFoodPrice",products = "kall",aggregate=FALSE),NULL)
+  out <- dimSums(foodMat * pricesKallCon, dim = 3)
 
-  out<-dimSums(food_mat*prices_kall_con,dim=3)
-    
-  
+
   getNames(out) <- "Value|Consumption Value (million US$2017/yr)"
-  out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
-  out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
-  
-  return(list(x=out,
-              weight=NULL,
-              unit="million US$17/yr",
-              description="Consumption Value"))
+  out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+  out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+
+  return(list(x = out,
+              weight = NULL,
+              unit = "million US$17/yr",
+              description = "Consumption Value"))
 }

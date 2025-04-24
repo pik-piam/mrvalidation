@@ -1,7 +1,6 @@
 #' @title calcValidGrassLSUha
 #' @description calculates the validation data for production of grass from managed pastures and rangelands separetely
 #' @param datasource Currently available: \code{"MAgPIEown"}
-#' @param faoversion Currently available: \code{"FAO", "FAOpre2010", "FAOpost2010"}
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Marcos Alves
 #' @seealso
