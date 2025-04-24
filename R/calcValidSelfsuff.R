@@ -60,7 +60,6 @@ calcValidSelfsuff <- function(datasource = "FAO", detail = TRUE) {
   return(list(x = out,
               weight = tmp2 + 10^-10,
               min = 0,
-              max = 99999,
               unit = "1",
               description = "Agricultural trade Selfsufficiency")
   )
