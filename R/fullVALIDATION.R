@@ -269,8 +269,13 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE) # ready
 
   # Yield
-  calcOutput(type = "ValidYield", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidYield", datasource = "Ostberg2023_FAO_LUH2v2",
+  calcOutput(type = "ValidYield", datasource = "FAO", physical = TRUE, aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidYield", datasource = "FAO", physical = FALSE, aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidYield", datasource = "Ostberg2023_FAO_LUH2v2", physical = TRUE,
+             aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidYield", datasource = "Ostberg2023_FAO_LUH2v2", physical = FALSE,
              aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
 
   # Productivity
