@@ -21,14 +21,14 @@ calcValidConsumptionValue <- function(datasource = "FAO") {
   } else if (datasource == "FAOpre2010") {
     foodMat <- collapseNames(
                              dimSums((
-                                      calcOutput("FAOmassbalance",
+                                      calcOutput("FAOmassbalance_pre",
                                                  version = "pre2010",
                                                  aggregate = FALSE)[, , kall][, , c("food", "other_util")])[, , "dm"],
                              dim = 3.2))
   } else if (datasource == "FAOpost2010") {
     foodMat <- collapseNames(
                              dimSums((
-                                      calcOutput("FAOmassbalance",
+                                      calcOutput("FAOmassbalance_pre",
                                                  version = "FAOpost2010",
                                                  aggregate = FALSE)[, , kall][, , c("food", "other_util")])[, , "dm"],
                              dim = 3.2))
