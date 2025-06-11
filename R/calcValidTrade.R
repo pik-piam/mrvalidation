@@ -28,24 +28,23 @@ calcValidTrade <- function(datasource = "FAO", detail = TRUE, nutrient = "dm",
 
     kTrade <- findset("k_trade")
     if (datasource == "FAO") {
-      mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient][, , "production"])
+      mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
       out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
     } else if (datasource == "FAOpre2010") {
       mb <- collapseNames(calcOutput(
-                                     "FAOmassbalance_pre",
+                                     "FAOmassbalance",
                                      version = "pre2010",
-                                     aggregate = FALSE)[, , nutrient][, , "production"])
+                                     aggregate = FALSE)[, , nutrient])
       out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
     } else if (datasource == "FAOpost2010") {
       mb <- collapseNames(calcOutput(
-                                     "FAOmassbalance_pre",
+                                     "FAOmassbalance",
                                      version = "post2010",
-                                     aggregate = FALSE)[, , nutrient][, , "production"])
+                                     aggregate = FALSE)[, , nutrient])
       out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
     } else {
       stop("No data exist for the given datasource!")
     }
-    mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient][, , kTrade])
 
     if (net_trade) {
       # exports

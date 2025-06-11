@@ -37,10 +37,6 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidConsumptionValue", datasource = "FAO", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidConsumptionValue", datasource = "FAOpre2010", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidConsumptionValue", datasource = "FAOpost2010", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgEmployment", datasource = "ILO", dataVersionILO = "Aug24", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgEmployment", datasource = "ILO_FAO", dataVersionILO = "Aug24", aggregate = "REG+GLO",
@@ -67,6 +63,10 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidKcal", datasource = "FAOmassbalance", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidKcal", datasource = "FAOmassbalancepre2010", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidKcal", datasource = "FAOmassbalancepost2010", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLivestockShare", aggregate = "REG+GLO", file = valfile,
              append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidVegfruitShare", aggregate = "REG+GLO", file = valfile,
@@ -77,11 +77,18 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidFoodExpenditure", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
-
+  calcOutput(type = "ValidFoodExpenditure", aggregate = "REG+GLO",
+             datasource = "FAOpre2010", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidFoodExpenditure", aggregate = "REG+GLO",
+             datasource =="FAOpost2010", file = valfile, append = TRUE, try = TRUE)
 
   # Demand, Production, Trade, Self-Sufficiency
   calcOutput(type = "ValidDemand", aggregate = "REG+GLO", file = valfile,
              append = TRUE, detail = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidDemand", aggregate = "REG+GLO", file = valfile,
+             append = TRUE, datasource = "FAOpre2010", detail = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidDemand", aggregate = "REG+GLO", file = valfile,
+             append = TRUE, datasource = "FAOpre2010", detail = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidDemandBioenergy", aggregate = "REG+GLO", file = valfile,
              append = TRUE, warnNA = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidProduction", aggregate = "REG+GLO", file = valfile,
@@ -110,11 +117,29 @@ fullVALIDATION <- function(rev = 0.1) {
              append = TRUE,  net_trade = FALSE, equalized = FALSE, try = TRUE) # ready
   calcOutput(type = "ValidSelfsuff", aggregate = "REG+GLO", file = valfile,
              append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidSelfsuff", aggregate = "REG+GLO", file = valfile,
+             datasource = "FAOpre2010", append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidSelfsuff", aggregate = "REG+GLO", file = valfile,
+             datasource = "FAOpost2010", append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidFeed", datasource = "FAO", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidFeed", datasource = "FAOpre2010", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE) # ready
+  calcOutput(type = "ValidFeed", datasource = "FAOpost2010", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidProcessing", datasource = "FAO", nutrient = "dm", detail = TRUE,
              indicator = "primary_to_process", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidProcessing", datasource = "FAO", nutrient = "dm", detail = TRUE,
+             datasource = "FAOpre2010", indicator = "primary_to_process", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidProcessing", datasource = "FAOpre2010", nutrient = "dm", detail = TRUE,
+             indicator = "primary_to_process", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidProcessing", datasource = "FAOpost2010", nutrient = "dm", detail = TRUE,
+             file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidProcessing", datasource = "FAO", nutrient = "dm", detail = TRUE,
+             indicator = "secondary_from_primary", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidProcessing", datasource = "FAOpre2010", nutrient = "dm", detail = TRUE,
+             indicator = "secondary_from_primary", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidProcessing", datasource = "FAOpost2010", nutrient = "dm", detail = TRUE,
              indicator = "secondary_from_primary", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidGrassLSUha", aggregate = "REG+GLO", datasource = "MAgPIEown",
              file = valfile, append = TRUE, try = TRUE)
@@ -282,9 +307,18 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE) # ready
 
   # Yield
-  calcOutput(type = "ValidYield", datasource = "FAO", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidYield", datasource = "FAO", aggregate = "REG+GLO",
+             file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidYield", datasource = "FAO", aggregate = "REG+GLO",
+             FAOversion = "FAOpre2010", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidYield", datasource = "FAO", aggregate = "REG+GLO",
+             FAOversion = "FAOpost2010", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidYield", datasource = "Ostberg2023_FAO_LUH2v2",
              aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidYield", datasource = "Ostberg2023_FAO_LUH2v2",
+             FAOversion = "pre2010", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidYield", datasource = "Ostberg2023_FAO_LUH2v2",
+             FAOversion = "post2010", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
 
   # Productivity
   calcOutput(type = "ValidTau", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)

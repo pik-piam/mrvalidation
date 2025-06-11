@@ -136,6 +136,6 @@ calcValidProcessing <- function(datasource = "FAO", detail = TRUE, nutrient = "d
   return(list(x = out,
               weight = NULL,
               unit = unit,
-              description = "Agricultural Demand")
+              description = "Agricultural Processing Demand")
   )
 }

@@ -28,10 +28,10 @@ calcValidDemand <-
       mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
       out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
     } else if (datasource == "FAOpre2010") {
-      mb <- collapseNames(calcOutput("FAOmassbalance_pre", version = "pre2010", aggregate = FALSE)[, , nutrient])
+      mb <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE)[, , nutrient])
       out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
     } else if (datasource == "FAOpost2010") {
-      mb <- collapseNames(calcOutput("FAOmassbalance_pre", version = "post2010", aggregate = FALSE)[, , nutrient])
+      mb <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE)[, , nutrient])
       out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
     } else {
       stop("No data exist for the given datasource!")
@@ -95,13 +95,20 @@ calcValidDemand <-
                     dim = 3.1,
                     add = "scenario",
                     nm = "historical")
+    
+      if (version == "join2010") {
+  modelname <- "FAO joined 2010"
+  } else if (version == "pre2010") {
+  modelname <- "FAOSTAT CBS 2016"
+  } else if (version == "post2010") {
+  modelname <- "FAOSTAT CBS 2022"
+  }
+
     out <-
       add_dimension(out,
                     dim = 3.2,
                     add = "model",
-                    nm = "FAOSTAT CBS 2016")
-
-
+                    nm = modelname)
 
     names(dimnames(out))[3] <- "scenario.model.variable"
 

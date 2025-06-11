@@ -21,6 +21,13 @@ calcValidFeed <- function(datasource = "FAO", detail = TRUE, nutrient = "dm") {
 
   if (datasource == "FAO") {
     mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
+    } else if (datasource == "FAOpre2010") {
+      mb <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE)[, , nutrient])
+    } else if (datasource == "FAOpost2010") {
+      mb <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE)[, , nutrient])
+    } else {
+      stop("No data exist for the given datasource!")
+    }
 
 
     mb2 <- mb[, , c("feed_fish", "feed_livst_chick", "feed_livst_egg",

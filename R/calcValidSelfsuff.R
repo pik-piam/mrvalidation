@@ -22,7 +22,7 @@ calcValidSelfsuff <- function(datasource = "FAO", detail = TRUE) {
   if (datasource == "FAO") {
     mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , kTrade][, , "dm"])
   } else if (datasource == "FAOpre2010") {
-    mb <- collapseNames(calcOutput("FAOmassbalance_pre",
+    mb <- collapseNames(calcOutput("FAOmassbalance",
                                    version = "pre2010",
                                    aggregate = FALSE)[, , "dm"])
 
@@ -30,7 +30,7 @@ calcValidSelfsuff <- function(datasource = "FAO", detail = TRUE) {
     mb <- mb[, , citems]
     mb <- add_columns(mb, addnm = "scp", dim = 3.1, fill = 0)
   } else if (datasource == "FAOpost2010") {
-    mb <- collapseNames(calcOutput("FAOmassbalance_pre",
+    mb <- collapseNames(calcOutput("FAOmassbalance",
                                    version = "post2010",
                                    aggregate = FALSE)[, , "dm"])
     citems <- intersect(kTrade, getNames(mb, dim = 1))

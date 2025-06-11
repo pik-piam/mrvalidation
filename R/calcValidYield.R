@@ -26,7 +26,7 @@
 #' @importFrom magclass getNames<- as.magpie
 #' @importFrom magpiesets reporthelper summationhelper findset
 
-calcValidYield  <-  function(datasource = "FAO", future = NULL) {
+calcValidYield  <-  function(datasource = "FAO", FAOversion = "join2010", future = NULL) {
 
   if (datasource == "FAO") {
 
@@ -44,7 +44,14 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
                             sep = NULL)
 
     # Calculate production
-    histproduction <- calcOutput("FAOmassbalance", aggregate = FALSE)
+    if (FAOversion == "FAO") {
+    histproduction <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE))
+    } else if (FAOversion == "FAOpre2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE))
+    } else if (FAOversion == "FAOpost2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE))
+    } 
+
     # extract DryMatter(dm) from production data
     # Extract Production from subsetted production data containing only DryMatter(dm)
     histproduction  <-  collapseNames(histproduction[, , "dm"][, , "production"])
@@ -117,7 +124,14 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
                             sep = NULL)
 
     # Calculate production
-    histproduction <- calcOutput("FAOmassbalance", aggregate = FALSE)
+    if (FAOversion == "FAO") {
+    histproduction <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE))
+    } else if (FAOversion == "FAOpre2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE))
+    } else if (FAOversion == "FAOpost2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE))
+    }
+    
     # extract DryMatter(dm) from production data
     # Extract Production from subsetted production data containing only DryMatter(dm)
     histproduction  <-  collapseNames(histproduction[, , "dm"][, , "production"])

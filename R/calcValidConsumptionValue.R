@@ -10,29 +10,20 @@
 #' calcOutput("ValidConsumptionValue")
 #' }
 calcValidConsumptionValue <- function(datasource = "FAO") {
-  kall <- findset("kall")
+  
   if (datasource == "FAO") {
+    # Set
+    kall <- findset("kall")
+
     # Food and material demand
     foodMat <- collapseNames(
                              dimSums((
                                       calcOutput("FAOmassbalance",
                                                  aggregate = FALSE)[, , kall][, , c("food", "other_util")])[, , "dm"],
                              dim = 3.2))
-  } else if (datasource == "FAOpre2010") {
-    foodMat <- collapseNames(
-                             dimSums((
-                                      calcOutput("FAOmassbalance_pre",
-                                                 version = "pre2010",
-                                                 aggregate = FALSE)[, , kall][, , c("food", "other_util")])[, , "dm"],
-                             dim = 3.2))
-  } else if (datasource == "FAOpost2010") {
-    foodMat <- collapseNames(
-                             dimSums((
-                                      calcOutput("FAOmassbalance_pre",
-                                                 version = "FAOpost2010",
-                                                 aggregate = FALSE)[, , kall][, , c("food", "other_util")])[, , "dm"],
-                             dim = 3.2))
-
+  } else if(datasource %in% c("FAOpost2010","FAOpre2010")) { 
+    stop("FAOpre2010 and FAOpost2010 are not supported since they don't report all products in kall")
+     
   } else {
     stop("unknown datasource")
   }
