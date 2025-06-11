@@ -42,7 +42,7 @@ calcValidKcal <- function(datasource = "FAO", nutrient = "kcal", detail = TRUE) 
       value <- x * 1000000
       weight <- x2$weight
       total <- dimSums(value, dim = 3)
-    } else if (datasource == "FAO") {
+  if (datasource == "FAO") {
       fsCrop <- readSource("FAO_online", "FSCrop")
       fsLive <- readSource("FAO_online", "FSLive")
       fs <- toolFAOcombine(fsLive, fsCrop, combine = "Item")
