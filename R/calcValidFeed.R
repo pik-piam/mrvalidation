@@ -57,10 +57,6 @@ calcValidFeed <- function(datasource = "FAO", detail = TRUE, nutrient = "dm") {
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
-  } else {
-    stop("No data exist for the given datasource!")
-  }
-
   names(dimnames(out))[3] <- "scenario.model.variable"
 
   if (nutrient == "dm") {
