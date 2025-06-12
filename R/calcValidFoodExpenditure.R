@@ -20,10 +20,10 @@ calcValidFoodExpenditure <- function(detail=FALSE, datasource = "FAO") {
       demand<-dimSums(calcOutput("FAOmassbalance",aggregate = FALSE)[,,c("food","flour1")][,,"dm"],dim=c(3.2,3.3))
       demand<-demand[,,getNames(price)]   
     }else if(datasource == "FAOpre2010"){
-      demand<-dimSums(calcOutput("FAOmassbalance",aggregate = FALSE,  version = "pre2010")[,,c("food","flour1")][,,"dm"],dim=c(3.2,3.3))
+      demand<-dimSums(calcOutput("FAOmassbalance",aggregate = FALSE, version = "pre2010")[,,c("food","flour1")][,,"dm"],dim=c(3.2,3.3))
       demand<-demand[,,getNames(price)]  
      }else if(datasource == "FAOpost2010"){
-      demand<-dimSums(calcOutput("FAOmassbalance",aggregate = FALSE,  version = "post2010")[,,c("food","flour1")][,,"dm"],dim=c(3.2,3.3))
+      demand<-dimSums(calcOutput("FAOmassbalance",aggregate = FALSE, version = "post2010")[,,c("food","flour1")][,,"dm"],dim=c(3.2,3.3))
       demand<-demand[,,getNames(price)]  
     } else {
       stop("unknown datasource")

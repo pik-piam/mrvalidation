@@ -80,7 +80,7 @@ fullVALIDATION <- function(rev = 0.1) {
   calcOutput(type = "ValidFoodExpenditure", aggregate = "REG+GLO",
              datasource = "FAOpre2010", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidFoodExpenditure", aggregate = "REG+GLO",
-             datasource =="FAOpost2010", file = valfile, append = TRUE, try = TRUE)
+             datasource ="FAOpost2010", file = valfile, append = TRUE, try = TRUE)
 
   # Demand, Production, Trade, Self-Sufficiency
   calcOutput(type = "ValidDemand", aggregate = "REG+GLO", file = valfile,
