@@ -305,19 +305,14 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE) # ready
 
   # Yield
-  calcOutput(type = "ValidYield", datasource = "FAO", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidYield", datasource = "FAO", aggregate = "REG+GLO",
-             FAOversion = "FAOpre2010", file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidYield", datasource = "FAO", aggregate = "REG+GLO",
-             FAOversion = "FAOpost2010", file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidYield", datasource = "Ostberg2023_FAO_LUH2v2",
-             aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidYield", datasource = "Ostberg2023_FAO_LUH2v2",
-             FAOversion = "FAOpre2010", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidYield", datasource = "Ostberg2023_FAO_LUH2v2",
-             FAOversion = "FAOpost2010", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-
+  for (datasource in c("FAO", Ostberg2023_FAO_LUH2v2)) {
+    for (FAOversion in c("join2010", "FAOpre2010", "FAOpost2010")) {
+     for (physical in c(TRUE, FALSE)) {
+  calcOutput(type = "ValidYield", datasource = datasource, physical = physical,
+            FAOversion = FAOversion, aggregate = "REG+GLO",
+            file = valfile, append = TRUE, try = TRUE)
+     }}}
+  
   # Productivity
   calcOutput(type = "ValidTau", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidTauPastr", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
