@@ -242,7 +242,7 @@ calcValidYield  <-  function(datasource = "FAO", FAOversion = "join2010", future
   names(dimnames(yield))[3]  <-  "scenario.model.variable"
 
   return(list(x = yield,
-              weight = weight,
+              weight = weight[, getYears(yield), ],
               unit = "t DM/ha",
               max = 200,
               min = 0,
