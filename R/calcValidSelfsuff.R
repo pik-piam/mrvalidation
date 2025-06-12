@@ -24,18 +24,11 @@ calcValidSelfsuff <- function(datasource = "FAO", detail = TRUE) {
   } else if (datasource == "FAOpre2010") {
     mb <- collapseNames(calcOutput("FAOmassbalance",
                                    version = "pre2010",
-                                   aggregate = FALSE)[, , "dm"])
-
-    citems <- intersect(kTrade, getNames(mb, dim = 1))
-    mb <- mb[, , citems]
-    mb <- add_columns(mb, addnm = "scp", dim = 3.1, fill = 0)
+                                   aggregate = FALSE)[, , kTrade][, , "dm"])
   } else if (datasource == "FAOpost2010") {
     mb <- collapseNames(calcOutput("FAOmassbalance",
                                    version = "post2010",
-                                   aggregate = FALSE)[, , "dm"])
-    citems <- intersect(kTrade, getNames(mb, dim = 1))
-    mb <- mb[, , citems]
-    mb <- add_columns(mb, addnm = "scp", dim = 3.1, fill = 0)
+                                   aggregate = FALSE)[, , kTrade][, , "dm"])
   } else {
     stop("No data exist for the given datasource!")
   }
