@@ -46,7 +46,7 @@ calcValidFeed <- function(datasource = "FAO", detail = TRUE, nutrient = "dm") {
               "+|Feed for Poultry meat",
               "+|Feed for Eggs",
               "+|Feed for Dairy",
-              "+|Feed for Pig meat",
+              "+|Feed for Monogastric meat",
               "+|Feed for Ruminant meat")
     tmp <- out[, , lvl1]
     getNames(tmp) <- paste0("+", getNames(tmp))

@@ -129,8 +129,6 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidProcessing", datasource = "FAO", nutrient = "dm", detail = TRUE,
              indicator = "primary_to_process", file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidProcessing", datasource = "FAO", nutrient = "dm", detail = TRUE,
-             datasource = "FAOpre2010", indicator = "primary_to_process", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidProcessing", datasource = "FAOpre2010", nutrient = "dm", detail = TRUE,
              indicator = "primary_to_process", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidProcessing", datasource = "FAOpost2010", nutrient = "dm", detail = TRUE,
