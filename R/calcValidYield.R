@@ -124,7 +124,7 @@ calcValidYield  <-  function(datasource = "FAO", FAOversion = "join2010", future
                             sep = NULL)
 
     # Calculate production
-    if (FAOversion == "FAO") {
+    if (FAOversion == "join2010") {
     histproduction <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE))
     } else if (FAOversion == "FAOpre2010") {
       histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE))

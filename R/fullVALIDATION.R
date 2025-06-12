@@ -314,9 +314,9 @@ fullVALIDATION <- function(rev = 0.1) {
   calcOutput(type = "ValidYield", datasource = "Ostberg2023_FAO_LUH2v2",
              aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidYield", datasource = "Ostberg2023_FAO_LUH2v2",
-             FAOversion = "pre2010", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+             FAOversion = "FAOpre2010", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidYield", datasource = "Ostberg2023_FAO_LUH2v2",
-             FAOversion = "post2010", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
+             FAOversion = "FAOpost2010", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
 
   # Productivity
   calcOutput(type = "ValidTau", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
