@@ -96,11 +96,11 @@ calcValidDemand <-
                     add = "scenario",
                     nm = "historical")
     
-      if (version == "join2010") {
+      if (datasource == "FAO") {
   modelname <- "FAO joined 2010"
-  } else if (version == "pre2010") {
+  } else if (datasource == "FAOpre2010") {
   modelname <- "FAOSTAT CBS 2016"
-  } else if (version == "post2010") {
+  } else if (datasource == "FAOpost2010") {
   modelname <- "FAOSTAT CBS 2022"
   }
 
