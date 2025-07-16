@@ -34,7 +34,7 @@ a <- readSource("EmisLucGlo",subtype="Friedlingstein_2010")
 #'@importFrom reshape2 dcast
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Florian Humpenoeder

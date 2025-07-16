@@ -25,7 +25,7 @@ a <- readSource("IMPACTIrrigInvCosts", convert = TRUE)
 
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Felicitas Beier

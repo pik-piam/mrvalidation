@@ -10,7 +10,7 @@
 #' @return Global Map on Irrigation data as MAgPIE object on country level Missing values are added as NA
 #'
 #' @author Stephen Wirth
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' \dontrun{
 #' a <- readSource("GlobalIrrigationMap", "all_data_national")

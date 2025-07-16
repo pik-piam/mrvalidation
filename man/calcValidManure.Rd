@@ -23,8 +23,8 @@ calcOutput("ValidManure")
 
 }
 \seealso{
-\code{\link{calcExcretion}},
-\code{\link{calcExcretionIPCC}}
+\code{\link[mrcommons]{calcExcretion}},
+\code{\link[mrcommons]{calcExcretionIPCC}}
 }
 \author{
 Benjamin Leon Bodirsky

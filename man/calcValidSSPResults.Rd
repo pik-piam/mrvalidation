@@ -20,7 +20,7 @@ Convert SSPResults to reporting format
 
 }
 \seealso{
-\code{\link{convertSSPResults}}
+\code{\link[mrcommons]{convertSSPResults}}
 }
 \author{
 Kristine Karstens

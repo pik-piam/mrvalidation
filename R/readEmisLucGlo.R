@@ -15,7 +15,7 @@
 #'  }
 #' @return magpie object containing data land-use change CO2 emissions
 #' @author Florian Humpenoeder
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' 
 #' \dontrun{ 

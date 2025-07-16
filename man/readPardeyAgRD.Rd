@@ -23,7 +23,7 @@ a <- readSource("PardeyAgRD")
 }
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 David Chen

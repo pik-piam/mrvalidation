@@ -6,7 +6,7 @@
 #' @param subtype : No subtype needed
 #' @return Data on water use as MAgPIE object on country level Missing values are added as NA
 #' @author Stephen Wirth
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' \dontrun{
 #' a <- readSource("WaterUsage", "aquastat_2008_12")
