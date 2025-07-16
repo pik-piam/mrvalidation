@@ -34,8 +34,8 @@ calcOutput("ValidYield")
 }
 }
 \seealso{
-\code{\link{calcFAOmassbalance}},
-\code{\link{calcCroparea}}
+\code{\link[mrcommons]{calcFAOmassbalance}},
+\code{\link[mrlandcore]{calcCroparea}}
 }
 \author{
 Abhijeet Mishra, Isabelle Weindl, Florian Humpenoeder

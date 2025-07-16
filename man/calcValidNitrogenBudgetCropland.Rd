@@ -27,7 +27,7 @@ calcOutput("ValidNitrogenBudgetCropland")
 
 }
 \seealso{
-\code{\link{calcNitrogenBudgetCropland}}
+\code{\link[mrcommons]{calcNitrogenBudgetCropland}}
 }
 \author{
 Benjamin Leon Bodirsky

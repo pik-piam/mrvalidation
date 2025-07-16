@@ -5,7 +5,7 @@
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Kristine Karstens
 #' @seealso
-#' \code{\link{convertSSPResults}}
+#' \code{\link[mrcommons]{convertSSPResults}}
 #' @examples
 #' 
 #' \dontrun{ 

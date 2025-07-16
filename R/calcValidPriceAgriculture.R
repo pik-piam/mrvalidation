@@ -8,7 +8,7 @@
 #' @return List with a magpie object with commodity prices on global and country level.
 #' @author Mishko Stevanovic
 #' @seealso
-#' \code{\link{readIMPACT3.2.2World_Price}}
+#' \code{\link[mrcommons]{readIMPACT3.2.2World_Price}}
 #' @examples
 #' 
 #' \dontrun{ 

@@ -8,7 +8,7 @@
 #' @param x MAgPIE object containing Gasser emissions data
 #' @return Historical LUC emission data
 #' @author Abhijeet Mishra
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' 
 #' @importFrom madrat toolCountryFill
 

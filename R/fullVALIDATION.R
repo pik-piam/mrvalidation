@@ -6,7 +6,7 @@
 #' \code{\link[base]{numeric_version}} when called via \code{\link[madrat]{retrieveData}}.
 #' @author Jan Philipp Dietrich, Benjamin Leon Bodirsky
 #' @seealso
-#' \code{\link{readSource}},\code{\link{getCalculations}},\code{\link{calcOutput}}
+#' \code{\link[madrat]{readSource}},\code{\link[madrat]{getCalculations}},\code{\link[madrat]{calcOutput}}
 #' @examples
 #' \dontrun{
 #' retrieveData("Validation")

@@ -19,7 +19,7 @@ Convert subtypes on ISO country level.
 Convert Gasser Data
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Abhijeet Mishra
