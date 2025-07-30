@@ -1,6 +1,6 @@
 #' @title calcValidConsumptionValue
 #' @description Validation for consumption Value
-#' @param datasource datasource for validation (FAO)
+#' @param datasource datasource for validation (FAO, FAOpre2010, FAOpost2010)
 #' @return List of magpie object with results on country level, no weight, unit and description.
 #' @author Edna J. Molina Bacca
 #' @importFrom magclass collapseNames
@@ -9,36 +9,37 @@
 #' \dontrun{
 #' calcOutput("ValidConsumptionValue")
 #' }
-
-calcValidConsumptionValue<- function(datasource="FAO") {
+calcValidConsumptionValue <- function(datasource = "FAO") {
   
-  if (datasource == "FAO"){
-    
-    
-    #Food and material demand
-    kall<-findset("kall")
-    food_mat <- collapseNames(
-                 dimSums((
-                  calcOutput("FAOmassbalance", aggregate = FALSE)[, , kall][
-                                                         , , c("food","other_util")])[, , "dm"], 
-                             dim=3.2))
+  if (datasource == "FAO") {
+    # Set
+    kall <- findset("kall")
 
-    #Price consumers (World Prices)
-    prices_kall_con<-setYears(calcOutput("IniFoodPrice",products = "kall",aggregate=FALSE),NULL)
+    # Food and material demand
+    foodMat <- collapseNames(
+                             dimSums((
+                                      calcOutput("FAOmassbalance",
+                                                 aggregate = FALSE)[, , kall][, , c("food", "other_util")])[, , "dm"],
+                             dim = 3.2))
+  } else if(datasource %in% c("FAOpost2010","FAOpre2010")) { 
+    stop("FAOpre2010 and FAOpost2010 are not supported since they don't report all products in kall")
+     
+  } else {
+    stop("unknown datasource")
+  }
 
-    out<-dimSums(food_mat*prices_kall_con,dim=3)
-    
-    
-    
-  }else{ 
-    stop("unknown datasource")}
-  
+  # Price consumers (World Prices)
+  pricesKallCon <- setYears(calcOutput("IniFoodPrice", products = "kall", aggregate = FALSE), NULL)
+
+  out <- dimSums(foodMat * pricesKallCon, dim = 3)
+
+
   getNames(out) <- "Value|Consumption Value (million US$2017/yr)"
-  out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
-  out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
-  
-  return(list(x=out,
-              weight=NULL,
-              unit="million US$17/yr",
-              description="Consumption Value"))
+  out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+  out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+
+  return(list(x = out,
+              weight = NULL,
+              unit = "million US$17/yr",
+              description = "Consumption Value"))
 }

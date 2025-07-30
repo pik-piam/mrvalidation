@@ -22,6 +22,16 @@ calcValidProduction <- function(datasource = "FAO", detail = TRUE, nutrient = "d
   if (datasource == "FAO") {
     mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient][, , "production"])
     out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
+  } else if (datasource == "FAOpre2010") {
+    mb <- collapseNames(calcOutput("FAOmassbalance",
+                                   version = "pre2010",
+                                   aggregate = FALSE)[, , nutrient][, , "production"])
+    out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
+  } else if (datasource == "FAOpost2010") {
+    mb <- collapseNames(calcOutput("FAOmassbalance",
+                                   version = "post2010",
+                                   aggregate = FALSE)[, , nutrient][, , "production"])
+    out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
   } else {
     stop("No data exist for the given datasource!")
   }
@@ -30,7 +40,16 @@ calcValidProduction <- function(datasource = "FAO", detail = TRUE, nutrient = "d
   getNames(out)[which(getNames(out) == "+|Production")] <- "Production"
 
   out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
-  out <- add_dimension(out, dim = 3.2, add = "model", nm = "FAOSTAT CBS 2016")
+
+
+  if (datasource == "FAO") {
+  modelname <- "FAO joined 2010"
+  } else if (datasource == "FAOpre2010") {
+  modelname <- "FAOSTAT CBS 2016"
+  } else if (datasource == "FAOpost2010") {
+  modelname <- "FAOSTAT CBS 2022"
+  }
+  out <- add_dimension(out, dim = 3.2, add = "model", nm = modelname)
   names(dimnames(out))[3] <- "scenario.model.variable"
   if (nutrient == "dm") {
     unit <- "Mt DM/yr"

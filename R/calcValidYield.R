@@ -28,7 +28,7 @@
 #' @importFrom magclass getNames<- as.magpie
 #' @importFrom magpiesets reporthelper summationhelper findset
 
-calcValidYield  <-  function(datasource = "FAO", future = NULL, physical = TRUE) {
+calcValidYield  <-  function(datasource = "FAO", FAOversion = "join2010", future = NULL,  physical = TRUE) {
 
   if (physical) {
     indicatorName <- "Productivity|Yield"
@@ -42,20 +42,26 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL, physical = TRUE)
 
     if (!is.null(future)) stop("Future options is not available for source type 'FAO'.")
 
-    past <- findset("past")
-
     # Calculate areas of individual crops and pasture
     croparea  <-  collapseNames(calcOutput("Croparea", sectoral = "kcr",
-                                           physical = physical, aggregate = FALSE)[, past, ])
+                                           physical = TRUE, aggregate = FALSE))
     pastarea  <-  setNames(calcOutput("LanduseInitialisation", aggregate = FALSE)[, , "past"],
                            "pasture")
-    area <- mbind(croparea, pastarea)
+    cyears <- intersect(getYears(croparea), getYears(pastarea))
+    area <- mbind(croparea[, cyears, ], pastarea[, cyears, ])
     area <- summationhelper(reporthelper(area,
                                          level_zero_name = indicatorName),
                             sep = NULL)
 
     # Calculate production
-    histproduction <- calcOutput("FAOmassbalance", aggregate = FALSE)
+    if (FAOversion == "join2010") {
+    histproduction <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE))
+    } else if (FAOversion == "FAOpre2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE))
+    } else if (FAOversion == "FAOpost2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE))
+    } 
+
     # extract DryMatter(dm) from production data
     # Extract Production from subsetted production data containing only DryMatter(dm)
     histproduction  <-  collapseNames(histproduction[, , "dm"][, , "production"])
@@ -70,7 +76,8 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL, physical = TRUE)
     production <- summationhelper(reporthelper(production,
                                                level_zero_name = indicatorName),
                                   sep = NULL)
-    yield      <-  production / area
+    cyears <- intersect(getYears(production), getYears(area))
+    yield      <-  production[, cyears, ] / area[, cyears, ]
 
     # Check for NaN values
     indexNaN  <-  which(is.nan(yield))
@@ -117,8 +124,6 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL, physical = TRUE)
 
     if (!is.null(future)) stop("Future options is not available for source type 'FAO'.")
 
-    past <- findset("past")
-
     # Calculate areas of individual crops and pasture
     croparea <- calcOutput("CropareaLandInG", aggregate = FALSE, physical = physical)
     pastarea  <-  setNames(calcOutput("LanduseInitialisation", aggregate = FALSE)[, , "past"],
@@ -129,7 +134,14 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL, physical = TRUE)
                             sep = NULL)
 
     # Calculate production
-    histproduction <- calcOutput("FAOmassbalance", aggregate = FALSE)
+    if (FAOversion == "join2010") {
+    histproduction <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE))
+    } else if (FAOversion == "FAOpre2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE))
+    } else if (FAOversion == "FAOpost2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE))
+    }
+    
     # extract DryMatter(dm) from production data
     # Extract Production from subsetted production data containing only DryMatter(dm)
     histproduction  <-  collapseNames(histproduction[, , "dm"][, , "production"])
@@ -144,7 +156,8 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL, physical = TRUE)
     production <- summationhelper(reporthelper(production,
                                                level_zero_name = indicatorName),
                                   sep = NULL)
-    yield      <-  production / area
+    cyears <- intersect(getYears(production), getYears(area))
+    yield      <-  production[, cyears, ] / area[, cyears, ]
 
     # Check for NaN values
     indexNaN  <-  which(is.nan(yield))
@@ -241,7 +254,7 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL, physical = TRUE)
   names(dimnames(yield))[3]  <-  "scenario.model.variable"
 
   return(list(x = yield,
-              weight = weight,
+              weight = weight[, getYears(yield), ],
               unit = "t DM/ha",
               max = 200,
               min = 0,

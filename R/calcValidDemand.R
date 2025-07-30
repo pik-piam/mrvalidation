@@ -25,77 +25,90 @@ calcValidDemand <-
            nutrient = "dm") {
 
     if (datasource == "FAO") {
-      mb <-
-        collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
-
-
-      processing <-
-        setdiff(c(findset("processing20")), c("milling", "ginning", "breeding"))
-
-      mb2 <-
-        mb[, , c("food", "feed", "seed", "waste", "other_util", "bioenergy")]
-      # for cereals, flour, brans and branoil are counted as fooduse,
-      # even though later being processed (FAO method)
-      mb2[, , "food"] <-
-        mb2[, , "food"] + dimSums(mb[, , c("flour1", "brans1", "branoil1")],
-                                  dim = 3.2)
-      mb2 <- add_columns(mb2, addnm = "processed", dim = 3.2)
-      mb2[, , "processed"] <- dimSums(mb[, , processing], dim = 3.2)
-
-      balanceflow <-
-        mb[, , "domestic_supply"] - dimSums(mb2[, , ], dim = c(3.2))
-      getNames(balanceflow, dim = 2) <- "dom_balanceflow"
-      mb2 <- mbind(mb2, balanceflow)
-
-      getNames(mb2, dim = 2) <- reportingnames(getNames(mb2, dim = 2))
-
-      mb3 <- dimOrder(mb2, c(2, 1))
-      sum <- dimSums(mb3, dim = 3.1)
-      sum <-
-        reporthelper(
-          x = sum,
-          dim = 3.1,
-          level_zero_name = "Demand",
-          detail = detail
-        )
-      sum <- summationhelper(sum)
-      getNames(sum)[1] <- "Demand"
-      getNames(sum) <-
-        gsub(pattern = "Demand\\|\\+",
-             replacement = "Demand|++",
-             x = getNames(sum))
-
-      out <- NULL
-      for (type in getNames(mb3, dim = 1)) {
-        tmp <- collapseNames(mb3[, , type], collapsedim = 1)
-        # demand.R renamed dim=3.1
-        tmp <-
-          reporthelper(
-            x = tmp,
-            level_zero_name = paste0("Demand|", type),
-            detail = detail,
-            dim = 3.1
-          )
-        out <- mbind(out, tmp)
-      }
-      out <- summationhelper(out)
-
-      out <- mbind(out, sum)
-      out <-
-        add_dimension(out,
-                      dim = 3.1,
-                      add = "scenario",
-                      nm = "historical")
-      out <-
-        add_dimension(out,
-                      dim = 3.2,
-                      add = "model",
-                      nm = "FAOSTAT CBS 2016")
-
+      mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
+      out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
+    } else if (datasource == "FAOpre2010") {
+      mb <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE)[, , nutrient])
+      out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
+    } else if (datasource == "FAOpost2010") {
+      mb <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE)[, , nutrient])
+      out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
     } else {
       stop("No data exist for the given datasource!")
     }
 
+
+    processing <-
+      setdiff(c(findset("processing20")), c("milling", "ginning", "breeding"))
+
+    mb2 <-
+      mb[, , c("food", "feed", "seed", "waste", "other_util", "bioenergy")]
+    # for cereals, flour, brans and branoil are counted as fooduse,
+    # even though later being processed (FAO method)
+    mb2[, , "food"] <-
+      mb2[, , "food"] + dimSums(mb[, , c("flour1", "brans1", "branoil1")],
+                                dim = 3.2)
+    mb2 <- add_columns(mb2, addnm = "processed", dim = 3.2)
+    mb2[, , "processed"] <- dimSums(mb[, , processing], dim = 3.2)
+
+    balanceflow <-
+      mb[, , "domestic_supply"] - dimSums(mb2[, , ], dim = c(3.2))
+    getNames(balanceflow, dim = 2) <- "dom_balanceflow"
+    mb2 <- mbind(mb2, balanceflow)
+
+    getNames(mb2, dim = 2) <- reportingnames(getNames(mb2, dim = 2))
+
+    mb3 <- dimOrder(mb2, c(2, 1))
+    sum <- dimSums(mb3, dim = 3.1)
+    sum <-
+      reporthelper(
+        x = sum,
+        dim = 3.1,
+        level_zero_name = "Demand",
+        detail = detail
+      )
+    sum <- summationhelper(sum)
+    getNames(sum)[1] <- "Demand"
+    getNames(sum) <-
+      gsub(pattern = "Demand\\|\\+",
+           replacement = "Demand|++",
+           x = getNames(sum))
+
+    out <- NULL
+    for (type in getNames(mb3, dim = 1)) {
+      tmp <- collapseNames(mb3[, , type], collapsedim = 1)
+      # demand.R renamed dim=3.1
+      tmp <-
+        reporthelper(
+          x = tmp,
+          level_zero_name = paste0("Demand|", type),
+          detail = detail,
+          dim = 3.1
+        )
+      out <- mbind(out, tmp)
+    }
+    out <- summationhelper(out)
+
+    out <- mbind(out, sum)
+    out <-
+      add_dimension(out,
+                    dim = 3.1,
+                    add = "scenario",
+                    nm = "historical")
+    
+      if (datasource == "FAO") {
+  modelname <- "FAO joined 2010"
+  } else if (datasource == "FAOpre2010") {
+  modelname <- "FAOSTAT CBS 2016"
+  } else if (datasource == "FAOpost2010") {
+  modelname <- "FAOSTAT CBS 2022"
+  }
+
+    out <-
+      add_dimension(out,
+                    dim = 3.2,
+                    add = "model",
+                    nm = modelname)
 
     names(dimnames(out))[3] <- "scenario.model.variable"
 

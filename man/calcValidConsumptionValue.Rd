@@ -7,7 +7,7 @@
 calcValidConsumptionValue(datasource = "FAO")
 }
 \arguments{
-\item{datasource}{datasource for validation (FAO)}
+\item{datasource}{datasource for validation (FAO, FAOpre2010, FAOpost2010)}
 }
 \value{
 List of magpie object with results on country level, no weight, unit and description.

@@ -23,9 +23,29 @@
 calcValidTrade <- function(datasource = "FAO", detail = TRUE, nutrient = "dm",
                            net_trade = TRUE, # nolint: object_name_linter.
                            equalized = TRUE) {
-  if (datasource == "FAO") {
+
+  if (datasource %in% c("FAO", "FAOpre2010", "FAOpost2010")) {
+
     kTrade <- findset("k_trade")
-    mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient][, , kTrade])
+    if (datasource == "FAO") {
+      mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
+      out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
+    } else if (datasource == "FAOpre2010") {
+      mb <- collapseNames(calcOutput(
+                                     "FAOmassbalance",
+                                     version = "pre2010",
+                                     aggregate = FALSE)[, , nutrient])
+      out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
+    } else if (datasource == "FAOpost2010") {
+      mb <- collapseNames(calcOutput(
+                                     "FAOmassbalance",
+                                     version = "post2010",
+                                     aggregate = FALSE)[, , nutrient])
+      out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
+    } else {
+      stop("No data exist for the given datasource!")
+    }
+
     if (net_trade) {
       # exports
       mb <- collapseNames(mb[, , c("production")]) - collapseNames(mb[, , "domestic_supply"])
@@ -61,7 +81,11 @@ calcValidTrade <- function(datasource = "FAO", detail = TRUE, nutrient = "dm",
 
       check <- exports - imports - netTrade
       message("inconsistencies in massbalances exist before year 2000")
+      if (datasource %in% c("FAO", "FAOpre2010")) {
       checkYears <- c("y2000", "y2005", "y2010")
+      } else if (datasource == "FAOpost2010") {
+      checkYears <- c("y2010", "y2015", "y2020")
+      }
       mismatch <- unique(magclass::where(abs(check[, checkYears, ]) > 0.1)$true$individual[, 3])
       if (length(mismatch > 0)) {
         message(paste(c("larger mismatch between absolute trade and net-trade for the products:", mismatch),

@@ -21,6 +21,13 @@ calcValidFeed <- function(datasource = "FAO", detail = TRUE, nutrient = "dm") {
 
   if (datasource == "FAO") {
     mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
+    } else if (datasource == "FAOpre2010") {
+      mb <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE)[, , nutrient])
+    } else if (datasource == "FAOpost2010") {
+      mb <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE)[, , nutrient])
+    } else {
+      stop("No data exist for the given datasource!")
+    }
 
 
     mb2 <- mb[, , c("feed_fish", "feed_livst_chick", "feed_livst_egg",
@@ -39,7 +46,7 @@ calcValidFeed <- function(datasource = "FAO", detail = TRUE, nutrient = "dm") {
               "+|Feed for Poultry meat",
               "+|Feed for Eggs",
               "+|Feed for Dairy",
-              "+|Feed for Pig meat",
+              "+|Feed for Monogastric meat",
               "+|Feed for Ruminant meat")
     tmp <- out[, , lvl1]
     getNames(tmp) <- paste0("+", getNames(tmp))
@@ -49,10 +56,6 @@ calcValidFeed <- function(datasource = "FAO", detail = TRUE, nutrient = "dm") {
 
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
-
-  } else {
-    stop("No data exist for the given datasource!")
-  }
 
   names(dimnames(out))[3] <- "scenario.model.variable"
 
