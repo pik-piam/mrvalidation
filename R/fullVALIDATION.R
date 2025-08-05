@@ -305,7 +305,7 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE) # ready
 
   # Yield
-  for (datasource in c("FAO", Ostberg2023_FAO_LUH2v2)) {
+  for (datasource in c("FAO", "Ostberg2023_FAO_LUH2v2")) {
     for (FAOversion in c("join2010", "FAOpre2010", "FAOpost2010")) {
      for (physical in c(TRUE, FALSE)) {
   calcOutput(type = "ValidYield", datasource = datasource, physical = physical,
