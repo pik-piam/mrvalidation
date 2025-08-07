@@ -1,6 +1,7 @@
 #' @title calcValidLSUdensity
 #' @description Calculates historical rangelands intensity use.
 #'
+#' @param luhversion The LUH version to be used (\code{"LUH3"} or \code{"LUH2v2"})
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Marcos Alves
 #' @examples
@@ -8,23 +9,31 @@
 #' calcOutput("ValidLSUdensity")
 #' }
 #'
-calcValidLSUdensity <- function() {
+calcValidLSUdensity <- function(luhversion = "LUH3") {
 
   past <- findset("past")
   prod <- calcOutput("GrasslandBiomass", aggregate = FALSE)[, past, "range"]
   prod <- toolCountryFill(prod, fill = 0)
 
   # pasture areas
-  area <- calcOutput("LUH2v2", landuse_types = "LUH2v2", cellular = FALSE, aggregate = FALSE)[, past, "range"]
+  if (luhversion == "LUH2v2") {
+    area <- calcOutput("LUH2v2", landuse_types = "LUH2v2", cellular = FALSE, aggregate = FALSE)
+    yrefWeights <- calcOutput("LUH2v2", landuse_types = "LUH2v2", cellular = TRUE, aggregate = FALSE)
+  } else if (luhversion == "LUH3") {
+    area <- calcOutput("LUH3", landuseTypes = "LUH3", cellular = FALSE, aggregate = FALSE)
+    yrefWeights <- calcOutput("LUH3", landuseTypes = "LUH3", cellular = TRUE, aggregate = FALSE)
+  } else {
+    stop(luhversion, " is not a valid LUH version for calcValidLSUdensity")
+  }
+  area <- area[, past, "range"]
   area <- toolCountryFill(area, fill = 0)
+  yrefWeights <- yrefWeights[, past, "range"]
 
   yref <- calcOutput("GrasslandsYields", lpjml = "lpjml5p2_pasture", climatetype = "MRI-ESM2-0:ssp245",
                      subtype = "/co2/Nreturn0p5", # nolint
                      lsu_levels = c(seq(0, 2.2, 0.2), 2.5), past_mngmt = "mdef",
                      aggregate = FALSE)[, past, "range.rainfed"]
   yref <- collapseNames(yref)
-
-  yrefWeights <- calcOutput("LUH2v2", landuse_types = "LUH2v2", cellular = TRUE, aggregate = FALSE)[, past, "range"]
 
   # aggregate cells to iso country level
   cell2iso <- data.frame(cell = getItems(yref, 1, full = TRUE),
