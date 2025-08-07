@@ -3,7 +3,7 @@
 #' @description Returns historical cropland, pasture and forest area from FAOSTAT that can
 #' be used for model validation.
 #'
-#' @param datasource Currently available: \code{"FAO"}, \code{"LUH2v2"}, \code{"LUH3"}, \code{"MAgPIEown"} 
+#' @param datasource Currently available: \code{"FAO"}, \code{"LUH2v2"}, \code{"LUH3"}, \code{"MAgPIEown"}
 #' and \code{"SSPResults"}
 #' @return list of magpie object with data and weight
 #' @author Ulrich Kreidenweis, Benjamin Bodirsky, Abhijeet Mishra, Mishko Stevanovic, Kristine Karstens
