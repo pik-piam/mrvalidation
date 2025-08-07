@@ -102,9 +102,7 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
                    setNames(setYears(out[, , "SOCS_2010"], "y2010"), "SOC"))
     }
 
-    area  <- calcOutput("LUH3", landuseTypes = "LUH3", irrigation = FALSE, cellular = TRUE,
-                        yrs = 2010, aggregate = FALSE)
-    area  <- setYears(dimSums(area, dim = 3), NULL)
+    area <- calcOutput("LUHTotalLandArea", aggregate = FALSE)
     if (intensive) {
       weight <- area
     } else {
@@ -134,9 +132,7 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
-    area  <- calcOutput("LUH3", landuseTypes = "LUH3", irrigation = FALSE, cellular = TRUE,
-                        yrs = 2010, aggregate = FALSE)
-    area  <- setYears(dimSums(area, dim = 3), NULL)
+    area <- calcOutput("LUHTotalLandArea", aggregate = FALSE)
 
     if (intensive) {
       weight <- area

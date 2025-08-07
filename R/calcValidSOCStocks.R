@@ -115,9 +115,7 @@ calcValidSOCStocks <- function(datasource = "histSOCbudget", baseyear = 1995) {
     soilc <- calcOutput("LPJmL4", version = "LPJmL4", climatetype = "LPJmL4Paper",
                         subtype = "soilc_layer", aggregate = FALSE)
     soilc <- collapseNames(soilc[, , 1] + 1 / 3 * soilc[, , 2])
-    area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE,
-                        cellular = TRUE, selectyears = "past_all", aggregate = FALSE)
-    area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
+    area <- calcOutput("LUHTotalLandArea", aggregate = FALSE)
     stock <- soilc * area
 
     mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
@@ -131,9 +129,7 @@ calcValidSOCStocks <- function(datasource = "histSOCbudget", baseyear = 1995) {
   } else if (datasource == "GSOC") {
 
     soilc <- readSource("GSOC",  convert = "onlycorrect")
-    area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE,
-                        cellular = TRUE, selectyears = "past_all", aggregate = FALSE)
-    area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
+    area <- calcOutput("LUHTotalLandArea", aggregate = FALSE)
     stock <- soilc * area
 
     mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
@@ -148,9 +144,7 @@ calcValidSOCStocks <- function(datasource = "histSOCbudget", baseyear = 1995) {
   } else if (datasource == "WISE") {
 
     soilc <- readSource("WISE",  convert = "onlycorrect")
-    area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE,
-                        cellular = TRUE, selectyears = "past_all", aggregate = FALSE)
-    area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
+    area <- calcOutput("LUHTotalLandArea", aggregate = FALSE)
     stock <- soilc * area
 
     mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
@@ -166,9 +160,7 @@ calcValidSOCStocks <- function(datasource = "histSOCbudget", baseyear = 1995) {
   } else if (datasource == "SoilGrids") {
 
     soilc <- toolCoord2Isocell(readSource("SoilGrids", subtype = "cstock_0_30", convert = "onlycorrect"))
-    area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE,
-                        cellular = TRUE, selectyears = "past_all", aggregate = FALSE)
-    area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
+    area <- calcOutput("LUHTotalLandArea", aggregate = FALSE)
     stock <- soilc * area
 
     mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")

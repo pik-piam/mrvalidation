@@ -22,9 +22,7 @@ calcValidSOCDensity <- function(datasource = "GSOC") {
   if (datasource == "GSOC") {
 
     soilc <- readSource("GSOC",  convert = "onlycorrect")
-    area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE,
-                        cellular = TRUE, selectyears = "past_all", aggregate = FALSE)
-    area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
+    area <- calcOutput("LUHTotalLandArea", aggregate = FALSE)
 
     mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     soilc   <- toolAggregate(soilc, weight = area, rel = mapping, from = "celliso", to = "iso", dim = 1)
@@ -44,9 +42,7 @@ calcValidSOCDensity <- function(datasource = "GSOC") {
   } else if (datasource == "WISE") {
 
     soilc <- readSource("WISE",  convert = "onlycorrect")
-    area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE,
-                        cellular = TRUE, selectyears = "past_all", aggregate = FALSE)
-    area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
+    area <- calcOutput("LUHTotalLandArea", aggregate = FALSE)
 
     mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     soilc   <- toolAggregate(soilc, weight = area, rel = mapping, from = "celliso", to = "iso", dim = 1)
@@ -66,9 +62,7 @@ calcValidSOCDensity <- function(datasource = "GSOC") {
   } else if (datasource == "SoilGrids") {
 
     soilc <- toolCoord2Isocell(readSource("SoilGrids", subtype = "cstock_0_30", convert = "onlycorrect"))
-    area  <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE,
-                        cellular = TRUE, selectyears = "past_all", aggregate = FALSE)
-    area  <- setYears(dimSums(area[, 2010, ], dim = 3), NULL)
+    area <- calcOutput("LUHTotalLandArea", aggregate = FALSE)
 
     mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     soilc   <- toolAggregate(soilc, weight = area, rel = mapping, from = "celliso", to = "iso", dim = 1)
