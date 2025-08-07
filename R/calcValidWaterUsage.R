@@ -104,13 +104,11 @@ calcValidWaterUsage <- function(datasource = "shiklomanov_2000") {
       # Conversion from liter/m^2/year -> liter/year: multiply with landarea
       # landarea (given in Mha) -> m^2 (multiply 1e10)
       # liter -> km^3 (multiply with 1e-12)
-      landarea <- dimSums(calcOutput("LUH2v2", landuse_types = "magpie",
-                                     cellular = TRUE, cells = "lpjcell",
-                                     irrigation = FALSE, years = "y1995",
-                                     aggregate = FALSE), dim = 3)
-      landarea                     <- dimSums(landarea, dim = c("x", "y"))
-      landarea                     <- toolCountryFill(landarea, fill = 0)
-      out                          <- out * landarea * 1e-02
+      landarea <- dimSums(calcOutput("LUH3", landuseTypes = "magpie", cellular = TRUE, irrigation = FALSE,
+                             years = "y1995", aggregate = FALSE), dim = 3)
+      landarea <- dimSums(landarea, dim = c("x", "y"))
+      landarea <- toolCountryFill(landarea, fill = 0)
+      out      <- out * landarea * 1e-02
 
       out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
       out <- add_dimension(out, dim = 3.2, add = "model",    nm = datasource)
