@@ -2,16 +2,15 @@
 #'
 #' @description Returns historical area equipped for irrigation.
 #'
-#' @param datasource Currently available: \code{"LUH2v2"}, \code{"HID"},
-#'                   \code{"GMIA"} and \code{"Mehta2022"}
+#' @param datasource Currently available: \code{"LUH3"}, \code{"HID"}, \code{"GMIA"}, and \code{"Mehta2022"}
 #' @return list of magpie object with data and weight
 #' @author Stephen Wirth, Anne Biewald, Felicitas Beier
 #' @importFrom magpiesets reportingnames
 #' @importFrom magclass collapseNames
 
-calcValidAEI <- function(datasource = "LUH2v2") {
+calcValidAEI <- function(datasource = "LUH3") {
 
-  if (datasource == "LUH2v2" || datasource == "Mehta2024_Siebert2013" || datasource == "Mehta2024_Meier2018") {
+  if (datasource %in% c("LUH3", "Mehta2024_Siebert2013", "Mehta2024_Meier2018")) {
     out <- collapseNames(calcOutput("AreaEquippedForIrrigation", cells = "lpjcell",
                                     cellular = FALSE, aggregate = FALSE)[, , datasource])
   } else if (datasource == "HID") {
