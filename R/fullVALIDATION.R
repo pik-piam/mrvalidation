@@ -156,7 +156,7 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLand", datasource = "FRA2015", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidLand", datasource = "LUH2v2", aggregate = "REG+GLO",
+  calcOutput(type = "ValidLand", datasource = "LUH3", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLand", datasource = "MAgPIEown", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
@@ -170,7 +170,7 @@ fullVALIDATION <- function(rev = 0.1) {
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLandChange", datasource = "FRA2015", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidLandChange", datasource = "LUH2v2", aggregate = "REG+GLO",
+  calcOutput(type = "ValidLandChange", datasource = "LUH3", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLandChange", datasource = "MAgPIEown", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE) # ready
@@ -205,7 +205,7 @@ fullVALIDATION <- function(rev = 0.1) {
              file = "validation.mif", append = TRUE, try = TRUE)
 
   # Area equipped for Irrigation
-  calcOutput(type = "ValidAEI", datasource = "LUH2v2", aggregate = "REG+GLO",
+  calcOutput(type = "ValidAEI", datasource = "LUH3", aggregate = "REG+GLO",
              file = "validation.mif", append = TRUE, try = TRUE)
   calcOutput(type = "ValidAEI", datasource = "Mehta2024_Siebert2013", aggregate = "REG+GLO",
              file = "validation.mif", append = TRUE, try = TRUE)
@@ -215,7 +215,7 @@ fullVALIDATION <- function(rev = 0.1) {
              file = "validation.mif", append = TRUE, try = TRUE)
 
   # Area actually irrigated
-  calcOutput(type = "ValidAAI", datasource = "LUH2v2", aggregate = "REG+GLO",
+  calcOutput(type = "ValidAAI", datasource = "LUH3", aggregate = "REG+GLO",
              file = "validation.mif", append = TRUE, try = TRUE)
   calcOutput(type = "ValidAAI", datasource = "GMIA", aggregate = "REG+GLO",
              file = "validation.mif", append = TRUE, try = TRUE)
