@@ -10,7 +10,7 @@
 #' calcOutput("ValidConsumptionValue")
 #' }
 calcValidConsumptionValue <- function(datasource = "FAO") {
-  
+
   if (datasource == "FAO") {
     # Set
     kall <- findset("kall")
@@ -21,9 +21,9 @@ calcValidConsumptionValue <- function(datasource = "FAO") {
                                       calcOutput("FAOmassbalance",
                                                  aggregate = FALSE)[, , kall][, , c("food", "other_util")])[, , "dm"],
                              dim = 3.2))
-  } else if(datasource %in% c("FAOpost2010","FAOpre2010")) { 
+  } else if (datasource %in% c("FAOpost2010", "FAOpre2010")) {
     stop("FAOpre2010 and FAOpost2010 are not supported since they don't report all products in kall")
-     
+
   } else {
     stop("unknown datasource")
   }

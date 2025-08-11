@@ -26,24 +26,24 @@ calcValidKcal <- function(datasource = "FAO", nutrient = "kcal", detail = TRUE) 
   }
   if (datasource %in% c("FAO", "FAOmassbalance", "FAOmassbalancepre2010", "FAOmassbalancepost2010")) {
     if (datasource %in% c("FAOmassbalance", "FAOmassbalancepre2010", "FAOmassbalancepost2010")) {
-    if (datasource == "FAOmassbalance") {
-       FAOversion <- "join2010"
-    } else if (datasource == "FAOmassbalancepre2010") {
-      FAOversion <- "pre2010"
-    } else if (datasource == "FAOmassbalancepost2010") {
-      FAOversion <- "post2010"
-    }
+      if (datasource == "FAOmassbalance") {
+        faoVersion <- "join2010"
+      } else if (datasource == "FAOmassbalancepre2010") {
+        faoVersion <- "pre2010"
+      } else if (datasource == "FAOmassbalancepost2010") {
+        faoVersion <- "post2010"
+      }
       x <- calcOutput("FoodSupplyPast", products = "kall",
-                      per_capita = FALSE, FAOversion = FAOversion,
+                      per_capita = FALSE, faoVersion = faoVersion,
                       aggregate = FALSE, attributes = nutrient)
       x2 <- calcOutput("FoodSupplyPast",
-        products = "kall", per_capita = TRUE, aggregate = FALSE,
-        supplementary = TRUE, FAOversion = FAOversion,
-        attributes = nutrient, populationweight = "PopulationPast")
+                       products = "kall", per_capita = TRUE, aggregate = FALSE,
+                       supplementary = TRUE, faoVersion = faoVersion,
+                       attributes = nutrient, populationweight = "PopulationPast")
       value <- x * 1000000
       weight <- x2$weight
       total <- dimSums(value, dim = 3)
-   } else if (datasource == "FAO") {
+    } else if (datasource == "FAO") {
       fsCrop <- readSource("FAO_online", "FSCrop")
       fsLive <- readSource("FAO_online", "FSLive")
       fs <- toolFAOcombine(fsLive, fsCrop, combine = "Item")

@@ -80,7 +80,7 @@ fullVALIDATION <- function(rev = 0.1) {
   calcOutput(type = "ValidFoodExpenditure", aggregate = "REG+GLO",
              datasource = "FAOpre2010", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidFoodExpenditure", aggregate = "REG+GLO",
-             datasource ="FAOpost2010", file = valfile, append = TRUE, try = TRUE)
+             datasource = "FAOpost2010", file = valfile, append = TRUE, try = TRUE)
 
   # Demand, Production, Trade, Self-Sufficiency
   calcOutput(type = "ValidDemand", aggregate = "REG+GLO", file = valfile,
@@ -307,12 +307,15 @@ fullVALIDATION <- function(rev = 0.1) {
   # Yield
   for (datasource in c("FAO", "Ostberg2023_FAO_LUH2v2")) {
     for (FAOversion in c("join2010", "FAOpre2010", "FAOpost2010")) {
-     for (physical in c(TRUE, FALSE)) {
-  calcOutput(type = "ValidYield", datasource = datasource, physical = physical,
-            FAOversion = FAOversion, aggregate = "REG+GLO",
-            file = valfile, append = TRUE, try = TRUE)
-     }}}
-  
+      for (physical in c(TRUE, FALSE)) {
+        calcOutput(type = "ValidYield", datasource = datasource, physical = physical,
+                   FAOversion = FAOversion, aggregate = "REG+GLO", file = valfile,
+                   append = TRUE,
+                   try = TRUE)
+      }
+    }
+  }
+
   # Productivity
   calcOutput(type = "ValidTau", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidTauPastr", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)

@@ -21,41 +21,41 @@ calcValidFeed <- function(datasource = "FAO", detail = TRUE, nutrient = "dm") {
 
   if (datasource == "FAO") {
     mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
-    } else if (datasource == "FAOpre2010") {
-      mb <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE)[, , nutrient])
-    } else if (datasource == "FAOpost2010") {
-      mb <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE)[, , nutrient])
-    } else {
-      stop("No data exist for the given datasource!")
-    }
+  } else if (datasource == "FAOpre2010") {
+    mb <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE)[, , nutrient])
+  } else if (datasource == "FAOpost2010") {
+    mb <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE)[, , nutrient])
+  } else {
+    stop("No data exist for the given datasource!")
+  }
 
 
-    mb2 <- mb[, , c("feed_fish", "feed_livst_chick", "feed_livst_egg",
-                    "feed_livst_milk", "feed_livst_pig", "feed_livst_rum")]
+  mb2 <- mb[, , c("feed_fish", "feed_livst_chick", "feed_livst_egg",
+                  "feed_livst_milk", "feed_livst_pig", "feed_livst_rum")]
 
-    getNames(mb2, dim = 2) <- reportingnames(getNames(mb2, dim = 2))
+  getNames(mb2, dim = 2) <- reportingnames(getNames(mb2, dim = 2))
 
 
-    mb3 <- dimOrder(mb2, c(2, 1))
-    out <- reporthelper(x = mb3, dim = 3.2, level_zero_name = "_", detail = detail)
-    dimnames(out)[[3]] <- gsub("[^[:alnum:][:blank:]\\|]", "", getNames(out))
+  mb3 <- dimOrder(mb2, c(2, 1))
+  out <- reporthelper(x = mb3, dim = 3.2, level_zero_name = "_", detail = detail)
+  dimnames(out)[[3]] <- gsub("[^[:alnum:][:blank:]\\|]", "", getNames(out))
 
-    out <- summationhelper(out, sep = "+")
+  out <- summationhelper(out, sep = "+")
 
-    lvl1 <- c("+|Feed for Aquaculture",
-              "+|Feed for Poultry meat",
-              "+|Feed for Eggs",
-              "+|Feed for Dairy",
-              "+|Feed for Monogastric meat",
-              "+|Feed for Ruminant meat")
-    tmp <- out[, , lvl1]
-    getNames(tmp) <- paste0("+", getNames(tmp))
-    out <- mbind(tmp, out[, , lvl1, invert = TRUE])
+  lvl1 <- c("+|Feed for Aquaculture",
+            "+|Feed for Poultry meat",
+            "+|Feed for Eggs",
+            "+|Feed for Dairy",
+            "+|Feed for Monogastric meat",
+            "+|Feed for Ruminant meat")
+  tmp <- out[, , lvl1]
+  getNames(tmp) <- paste0("+", getNames(tmp))
+  out <- mbind(tmp, out[, , lvl1, invert = TRUE])
 
-    dimnames(out)[[3]] <- paste0("Demand|Feed|", dimnames(out)[[3]])
+  dimnames(out)[[3]] <- paste0("Demand|Feed|", dimnames(out)[[3]])
 
-    out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
-    out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+  out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+  out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
   names(dimnames(out))[3] <- "scenario.model.variable"
 

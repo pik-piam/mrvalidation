@@ -12,7 +12,6 @@
 #' \code{\link[mrcommons]{calcFoodSupplyPast}},
 #' \code{\link{calcValidLivestockShare}}
 #' @examples
-#'
 #' \dontrun{
 #' calcOutput("ValidDemand")
 #' }
@@ -95,14 +94,14 @@ calcValidDemand <-
                     dim = 3.1,
                     add = "scenario",
                     nm = "historical")
-    
-      if (datasource == "FAO") {
-  modelname <- "FAO joined 2010"
-  } else if (datasource == "FAOpre2010") {
-  modelname <- "FAOSTAT CBS 2016"
-  } else if (datasource == "FAOpost2010") {
-  modelname <- "FAOSTAT CBS 2022"
-  }
+
+    if (datasource == "FAO") {
+      modelname <- "FAO joined 2010"
+    } else if (datasource == "FAOpre2010") {
+      modelname <- "FAOSTAT CBS 2016"
+    } else if (datasource == "FAOpost2010") {
+      modelname <- "FAOSTAT CBS 2022"
+    }
 
     out <-
       add_dimension(out,
