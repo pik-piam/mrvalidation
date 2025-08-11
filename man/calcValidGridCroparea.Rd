@@ -4,7 +4,10 @@
 \alias{calcValidGridCroparea}
 \title{calcValidGridCroparea}
 \usage{
-calcValidGridCroparea()
+calcValidGridCroparea(physical = TRUE)
+}
+\arguments{
+\item{physical}{if true (default) physical area; if false harvested area}
 }
 \value{
 List of magpie objects with results on cellular level, weight on cellular level, unit and description.
@@ -13,8 +16,7 @@ List of magpie objects with results on cellular level, weight on cellular level,
 reports Croparea by crops on 0.5 degree grid in physical area
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("ValidGridCroparea")
 }
 

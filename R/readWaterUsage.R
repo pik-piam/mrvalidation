@@ -23,7 +23,7 @@
 #'  }
 #' @return magpie object containing data on water usage
 #' @author Stephen Wirth
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' \dontrun{
 #' a <- readSource("foley_2011")

@@ -8,7 +8,7 @@
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Benjamin Leon Bodirsky
 #' @seealso
-#' \code{\link{calcFAOmassbalance}},
+#' \code{\link[mrcommons]{calcFAOmassbalance}},
 #' \code{\link{calcValidDemand}}
 #' @examples
 #' \dontrun{

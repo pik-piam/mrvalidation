@@ -9,7 +9,7 @@
 #' @param subtype : No subtype needed
 #' @return Irrigated Area data as MAgPIE object on country level Missing values are added as NA
 #' @author Stephen Wirth
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @importFrom madrat getISOlist
 #' @examples
 #' 

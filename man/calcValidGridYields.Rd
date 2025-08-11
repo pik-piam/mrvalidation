@@ -4,13 +4,20 @@
 \alias{calcValidGridYields}
 \title{calcValidGridYields}
 \usage{
-calcValidGridYields(datasource = "downscaledFAO", future = NULL)
+calcValidGridYields(
+  datasource = "downscaledFAO",
+  future = NULL,
+  physical = TRUE
+)
 }
 \arguments{
 \item{datasource}{downscaledFAO or calibratedFAO}
 
 \item{future}{if NULL no future values are returned (default).
 specify climate scenario (gcm:rcp), if future is needed}
+
+\item{physical}{if true (default) physical area (croparea) used for yield calculation;
+if false harvested area used for yield calculation}
 }
 \value{
 List of magpie objects with results on cellular level, weight on cellular level, unit and description.

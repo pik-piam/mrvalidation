@@ -41,7 +41,7 @@ a <- readSource("aquastat_2008_12")
 #' @importFrom reshape2 dcast
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Stephen Wirth

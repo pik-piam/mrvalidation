@@ -9,7 +9,7 @@
 #' @param subtype : subtypes are the same as in readGMIA
 #' @return Global Map on Irrigation data as MAgPIE object at a 0.5 Degree resolution.
 #' @author Stephen Wirth
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' \dontrun{
 #' a <- readSource("IrrigatedArea")
