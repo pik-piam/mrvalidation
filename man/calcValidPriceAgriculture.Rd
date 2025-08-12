@@ -25,7 +25,7 @@ calcOutput("ValidPriceAgriculture", datasource="FAO")
 
 }
 \seealso{
-\code{\link{readIMPACT3.2.2World_Price}}
+\code{\link[mrcommons]{readIMPACT3.2.2World_Price}}
 }
 \author{
 Mishko Stevanovic

@@ -36,7 +36,7 @@
 #' }
 #' @return magpie object of the Irrigated Area  data
 #' @author Stephen Wirth
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' \dontrun{
 #' a <- readSource("GlobalIrrigationMap", "all_data_national")

@@ -18,8 +18,8 @@
 #'         Max.&Min. values alongwith description.
 #' @author Abhijeet Mishra, Isabelle Weindl, Florian Humpenoeder
 #' @seealso
-#' \code{\link{calcFAOmassbalance}},
-#' \code{\link{calcCroparea}}
+#' \code{\link[mrcommons]{calcFAOmassbalance}},
+#' \code{\link[mrlandcore]{calcCroparea}}
 #'
 #' @examples
 #' \dontrun{
