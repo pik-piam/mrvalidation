@@ -250,7 +250,10 @@ fullVALIDATION <- function(rev = 0.1) {
   # Carbon Stocks
   calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_44ac93de:GSWP3-W5E5:historical", aggregate = "REG+GLO",
              file = valfile, append = TRUE, try = TRUE)
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 
   # Growing Stocks
   calcOutput("ValidGS", datasource = "FAO", aggregate = "REG+GLO", indicator = "relative",
@@ -315,7 +318,7 @@ fullVALIDATION <- function(rev = 0.1) {
       }
     }
   }
-
+  
   # Productivity
   calcOutput(type = "ValidTau", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidTauPastr", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
