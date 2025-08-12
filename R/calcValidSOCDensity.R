@@ -6,7 +6,7 @@
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Kristine Karstens
 #' @seealso
-#' \code{\link{calcSOM}}
+#' \code{\link[mrcommons]{calcSOM}}
 #' \code{\link{calcValidSOCStocks}}
 #' @examples
 #' \dontrun{

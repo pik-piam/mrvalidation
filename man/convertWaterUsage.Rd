@@ -25,7 +25,7 @@ a <- readSource("WaterUsage", "aquastat_2008_12")
 
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Stephen Wirth

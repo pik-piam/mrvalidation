@@ -24,7 +24,7 @@ calcOutput("ValidSOCStocks")
 
 }
 \seealso{
-\code{\link{calcFoodSupplyPast}},
+\code{\link[mrcommons]{calcFoodSupplyPast}},
 \code{\link{calcValidLivestockShare}}
 }
 \author{

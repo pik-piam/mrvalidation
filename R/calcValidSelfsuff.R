@@ -18,8 +18,7 @@
 calcValidSelfsuff <- function(datasource = "FAO", detail = TRUE) {
 
   if (datasource == "FAO") {
-    kTrade <- findset("k_trade")
-    mb2 <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , kTrade][, , "dm"])
+    mb2 <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , "dm"])
 
     # self sufficiency
     tmp1 <- round(collapseNames(mb2[, , c("production")]), 8)

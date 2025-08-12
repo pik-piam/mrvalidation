@@ -7,7 +7,7 @@
 #' but more years
 #' @return magpie object containing expenditure in Ag R&D, 2009 USD PPP
 #' @author David Chen
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' \dontrun{
 #' a <- readSource("PardeyAgRD")

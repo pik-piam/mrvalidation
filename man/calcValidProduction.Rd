@@ -26,7 +26,7 @@ calcOutput("ValidProduction")
 
 }
 \seealso{
-\code{\link{calcFAOmassbalance}},
+\code{\link[mrcommons]{calcFAOmassbalance}},
 \code{\link{calcValidDemand}}
 }
 \author{

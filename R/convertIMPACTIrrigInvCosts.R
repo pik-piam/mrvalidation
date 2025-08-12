@@ -10,7 +10,7 @@
 #'
 #' @author Felicitas Beier
 #'
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' \dontrun{
 #' a <- readSource("IMPACTIrrigInvCosts", convert = TRUE)
