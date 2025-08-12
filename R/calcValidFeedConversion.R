@@ -192,7 +192,7 @@ calcValidFeedConversion <- function(livestockSystem = TRUE, subtractBalanceflow 
 
 
   return(list(x = x,
-              weight = weight,
+              weight = weight + 1e-10,
               unit = "GE feed per GE product",
               description = "Agricultural Demand")
   )

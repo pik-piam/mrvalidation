@@ -4,10 +4,12 @@
 \alias{calcValidFoodExpenditure}
 \title{calcValidFoodExpenditure}
 \usage{
-calcValidFoodExpenditure(detail = FALSE)
+calcValidFoodExpenditure(detail = FALSE, datasource = "FAO")
 }
 \arguments{
 \item{detail}{if FALSE, only major food commoditiy groups are shown.}
+
+\item{datasource}{Datasource for demand (FAO, FAOpre2010, FAOpost2010)}
 }
 \value{
 List of magpie object with results on country level, weight on country level, unit and description.
