@@ -22,7 +22,7 @@ calcValidSOCDensity <- function(datasource = "GSOC") {
   if (datasource == "GSOC") {
 
     soilc <- readSource("GSOC",  convert = "onlycorrect")
-    area <- calcOutput("LUHTotalLandArea", aggregate = FALSE)
+    area <- calcOutput("LandArea", aggregate = FALSE)
 
     mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     soilc   <- toolAggregate(soilc, weight = area, rel = mapping, from = "celliso", to = "iso", dim = 1)
@@ -42,7 +42,7 @@ calcValidSOCDensity <- function(datasource = "GSOC") {
   } else if (datasource == "WISE") {
 
     soilc <- readSource("WISE",  convert = "onlycorrect")
-    area <- calcOutput("LUHTotalLandArea", aggregate = FALSE)
+    area <- calcOutput("LandArea", aggregate = FALSE)
 
     mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     soilc   <- toolAggregate(soilc, weight = area, rel = mapping, from = "celliso", to = "iso", dim = 1)
@@ -62,7 +62,7 @@ calcValidSOCDensity <- function(datasource = "GSOC") {
   } else if (datasource == "SoilGrids") {
 
     soilc <- toolCoord2Isocell(readSource("SoilGrids", subtype = "cstock_0_30", convert = "onlycorrect"))
-    area <- calcOutput("LUHTotalLandArea", aggregate = FALSE)
+    area <- calcOutput("LandArea", aggregate = FALSE)
 
     mapping <- toolGetMapping(name = "CountryToCellMapping.csv", type = "cell", where = "mappingfolder")
     soilc   <- toolAggregate(soilc, weight = area, rel = mapping, from = "celliso", to = "iso", dim = 1)

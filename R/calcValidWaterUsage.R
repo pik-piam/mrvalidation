@@ -51,7 +51,7 @@
 #' @importFrom magclass collapseDim dimSums add_dimension as.magpie getItems getNames getCells
 #' @importFrom madrat calcOutput readSource toolAggregate toolCountryFill
 
-calcValidWaterUsage <- function(datasource = "shiklomanov_2000") {
+calcValidWaterUsage <- function(datasource = "shiklomanov_2000", rev = 0) {
 
   if (datasource %in% c("foley_2011", "shiklomanov_2000", "wada_2011",
                         "wisser_2008", "fischer_IIASA", "hejazi_2013",
@@ -104,7 +104,7 @@ calcValidWaterUsage <- function(datasource = "shiklomanov_2000") {
       # Conversion from liter/m^2/year -> liter/year: multiply with landarea
       # landarea (given in Mha) -> m^2 (multiply 1e10)
       # liter -> km^3 (multiply with 1e-12)
-      landarea <- calcOutput("LUHTotalLandArea", aggregate = FALSE)
+      landarea <- calcOutput("LandArea", aggregate = FALSE)
       landarea <- dimSums(landarea, dim = c("x", "y"))
       landarea <- toolCountryFill(landarea, fill = 0)
       out      <- out * landarea * 1e-02
