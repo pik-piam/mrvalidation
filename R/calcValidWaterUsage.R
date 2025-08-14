@@ -51,7 +51,7 @@
 #' @importFrom magclass collapseDim dimSums add_dimension as.magpie getItems getNames getCells
 #' @importFrom madrat calcOutput readSource toolAggregate toolCountryFill
 
-calcValidWaterUsage <- function(datasource = "shiklomanov_2000", rev = 0) {
+calcValidWaterUsage <- function(datasource = "shiklomanov_2000") {
 
   if (datasource %in% c("foley_2011", "shiklomanov_2000", "wada_2011",
                         "wisser_2008", "fischer_IIASA", "hejazi_2013",
