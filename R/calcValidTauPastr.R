@@ -15,16 +15,13 @@ calcValidTauPastr <- function() {
   prod <- toolCountryFill(prod, fill = 0)
 
   # pasture areas
-  area <- calcOutput("LUH2v2", landuse_types = "LUH2v2", cellular = FALSE, aggregate = FALSE)[, past, "pastr"]
+  luh <- calcOutput("LUH3", landuseTypes = "LUH3", cellular = FALSE, aggregate = FALSE)
+  area <- luh[, past, "pastr"]
   area <- toolCountryFill(area, fill = 0)
 
   # Adding 'otherland' as an extra source of grass biomass comparable
   # to managed pastures in India, Pakistan and Bangladesh.
-  otherland <-
-    calcOutput("LUH2v2",
-      landuse_types = "LUH2v2",
-      cellular = FALSE, aggregate = FALSE
-    )[, past, c("secdn", "primn")]
+  otherland <- luh[, past, c("secdn", "primn")]
   area["IND", , "pastr"] <-
     area["IND", , "pastr"] +
     setNames(dimSums(otherland["IND", , ], dim = 3), "pastr")
@@ -47,7 +44,7 @@ calcValidTauPastr <- function() {
                      lsu_levels = c(seq(0, 2.2, 0.2), 2.5), past_mngmt = "mdef",
                      aggregate = FALSE)[, past, "pastr.rainfed"]
 
-  yrefWeights <- calcOutput("LUH2v2", landuse_types = "LUH2v2", cellular = TRUE,
+  yrefWeights <- calcOutput("LUH3", landuseTypes = "LUH3", cellular = TRUE,
                             aggregate = FALSE)[, past, "pastr"]
   cell2iso <- data.frame(cell = getItems(yref, 1, full = TRUE),
                          iso = getItems(yref, if (dimExists("iso", yref)) "iso" else 1.1, full = TRUE))
