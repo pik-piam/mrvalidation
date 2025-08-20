@@ -305,20 +305,12 @@ fullVALIDATION <- function(rev = 0.1) {
 
   # Yield
   for (datasource in c("FAO", "Ostberg2023_FAO_LUH2v2")) {
-<<<<<<< HEAD
-    for (FAOversion in c("join2010", "FAOpre2010", "FAOpost2010")) {
-      for (physical in c(TRUE, FALSE)) {
-        calcOutput(type = "ValidYield", datasource = datasource, physical = physical,
-                   FAOversion = FAOversion, aggregate = "REG+GLO",
-                   file = valfile, append = TRUE, try = TRUE)
-=======
     for (faoVersion in c("join2010", "FAOpre2010", "FAOpost2010")) {
       for (physical in c(TRUE, FALSE)) {
         calcOutput(type = "ValidYield", datasource = datasource, physical = physical,
                    faoVersion = faoVersion, aggregate = "REG+GLO", file = valfile,
                    append = TRUE,
                    try = TRUE)
->>>>>>> 2a4282bee63b208699836158193599b6523392ed
       }
     }
   }
