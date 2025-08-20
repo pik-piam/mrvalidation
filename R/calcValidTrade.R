@@ -26,7 +26,6 @@ calcValidTrade <- function(datasource = "FAO", detail = TRUE, nutrient = "dm",
 
   if (datasource %in% c("FAO", "FAOpre2010", "FAOpost2010")) {
 
-    kTrade <- findset("k_trade")
     if (datasource == "FAO") {
       mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
       out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
@@ -82,9 +81,9 @@ calcValidTrade <- function(datasource = "FAO", detail = TRUE, nutrient = "dm",
       check <- exports - imports - netTrade
       message("inconsistencies in massbalances exist before year 2000")
       if (datasource %in% c("FAO", "FAOpre2010")) {
-      checkYears <- c("y2000", "y2005", "y2010")
+        checkYears <- c("y2000", "y2005", "y2010")
       } else if (datasource == "FAOpost2010") {
-      checkYears <- c("y2010", "y2015", "y2020")
+        checkYears <- c("y2010", "y2015", "y2020")
       }
       mismatch <- unique(magclass::where(abs(check[, checkYears, ]) > 0.1)$true$individual[, 3])
       if (length(mismatch > 0)) {

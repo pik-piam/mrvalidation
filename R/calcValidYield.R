@@ -12,7 +12,7 @@
 #'                   specify climate scenario (gcm:rcp), if future is needed
 #' @param physical if true (default) physical area (croparea) used for yield calculation;
 #'                 if false harvested area used for yield calculation
-#'
+#' @param faoVersion which FAO version to use (pre, post or joined 2010 data)
 #' @return List of magpie objects with results on country level,
 #'         weight on country level, unit,
 #'         Max.&Min. values alongwith description.
@@ -28,7 +28,7 @@
 #' @importFrom magclass getNames<- as.magpie
 #' @importFrom magpiesets reporthelper summationhelper findset
 
-calcValidYield  <-  function(datasource = "FAO", FAOversion = "join2010", future = NULL,  physical = TRUE) {
+calcValidYield  <-  function(datasource = "FAO", faoVersion = "join2010", future = NULL,  physical = TRUE) {
 
   if (physical) {
     indicatorName <- "Productivity|Yield"
@@ -54,13 +54,13 @@ calcValidYield  <-  function(datasource = "FAO", FAOversion = "join2010", future
                             sep = NULL)
 
     # Calculate production
-    if (FAOversion == "join2010") {
-    histproduction <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE))
-    } else if (FAOversion == "FAOpre2010") {
+    if (faoVersion == "join2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE))
+    } else if (faoVersion == "FAOpre2010") {
       histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE))
-    } else if (FAOversion == "FAOpost2010") {
+    } else if (faoVersion == "FAOpost2010") {
       histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE))
-    } 
+    }
 
     # extract DryMatter(dm) from production data
     # Extract Production from subsetted production data containing only DryMatter(dm)
@@ -134,14 +134,14 @@ calcValidYield  <-  function(datasource = "FAO", FAOversion = "join2010", future
                             sep = NULL)
 
     # Calculate production
-    if (FAOversion == "join2010") {
-    histproduction <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE))
-    } else if (FAOversion == "FAOpre2010") {
+    if (faoVersion == "join2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE))
+    } else if (faoVersion == "FAOpre2010") {
       histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE))
-    } else if (FAOversion == "FAOpost2010") {
+    } else if (faoVersion == "FAOpost2010") {
       histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE))
     }
-    
+
     # extract DryMatter(dm) from production data
     # Extract Production from subsetted production data containing only DryMatter(dm)
     histproduction  <-  collapseNames(histproduction[, , "dm"][, , "production"])
