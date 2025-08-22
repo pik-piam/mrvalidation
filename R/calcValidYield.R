@@ -28,7 +28,7 @@
 #' @importFrom magclass getNames<- as.magpie
 #' @importFrom magpiesets reporthelper summationhelper findset
 
-calcValidYield  <-  function(datasource = "FAO", faoVersion = "join2010", future = NULL,  physical = TRUE) {
+calcValidYield  <-  function(datasource = "FAO", faoVersion = "join2010", future = NULL, physical = TRUE) {
 
   if (physical) {
     indicatorName <- "Productivity|Yield"
@@ -44,7 +44,7 @@ calcValidYield  <-  function(datasource = "FAO", faoVersion = "join2010", future
 
     # Calculate areas of individual crops and pasture
     croparea  <-  collapseNames(calcOutput("Croparea", sectoral = "kcr",
-                                           physical = TRUE, aggregate = FALSE))
+                                           physical = physical, aggregate = FALSE))
     pastarea  <-  setNames(calcOutput("LanduseInitialisation", aggregate = FALSE)[, , "past"],
                            "pasture")
     cyears <- intersect(getYears(croparea), getYears(pastarea))
@@ -77,7 +77,7 @@ calcValidYield  <-  function(datasource = "FAO", faoVersion = "join2010", future
                                                level_zero_name = indicatorName),
                                   sep = NULL)
     cyears <- intersect(getYears(production), getYears(area))
-    yield      <-  production[, cyears, ] / area[, cyears, ]
+    yield <- production[, cyears, ] / area[, cyears, ]
 
     # Check for NaN values
     indexNaN  <-  which(is.nan(yield))
@@ -157,7 +157,7 @@ calcValidYield  <-  function(datasource = "FAO", faoVersion = "join2010", future
                                                level_zero_name = indicatorName),
                                   sep = NULL)
     cyears <- intersect(getYears(production), getYears(area))
-    yield      <-  production[, cyears, ] / area[, cyears, ]
+    yield <- production[, cyears, ] / area[, cyears, ]
 
     # Check for NaN values
     indexNaN  <-  which(is.nan(yield))

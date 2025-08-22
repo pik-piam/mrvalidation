@@ -36,8 +36,7 @@ calcValidTrade <- function(datasource = "FAO", detail = TRUE, nutrient = "dm",
                                      aggregate = FALSE)[, , nutrient])
       out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
     } else if (datasource == "FAOpost2010") {
-      mb <- collapseNames(calcOutput(
-                                     "FAOmassbalance",
+      mb <- collapseNames(calcOutput("FAOmassbalance",
                                      version = "post2010",
                                      aggregate = FALSE)[, , nutrient])
       out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
