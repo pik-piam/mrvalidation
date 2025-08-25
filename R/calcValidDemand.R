@@ -37,21 +37,16 @@ calcValidDemand <-
     }
 
 
-    processing <-
-      setdiff(c(findset("processing20")), c("milling", "ginning", "breeding"))
+    processing <- setdiff(findset("processing20"), c("milling", "ginning", "breeding"))
 
-    mb2 <-
-      mb[, , c("food", "feed", "seed", "waste", "other_util", "bioenergy")]
+    mb2 <- mb[, , c("food", "feed", "seed", "waste", "other_util", "bioenergy")]
     # for cereals, flour, brans and branoil are counted as fooduse,
     # even though later being processed (FAO method)
-    mb2[, , "food"] <-
-      mb2[, , "food"] + dimSums(mb[, , c("flour1", "brans1", "branoil1")],
-                                dim = 3.2)
+    mb2[, , "food"] <- mb2[, , "food"] + dimSums(mb[, , c("flour1", "brans1", "branoil1")], dim = 3.2)
     mb2 <- add_columns(mb2, addnm = "processed", dim = 3.2)
     mb2[, , "processed"] <- dimSums(mb[, , processing], dim = 3.2)
 
-    balanceflow <-
-      mb[, , "domestic_supply"] - dimSums(mb2[, , ], dim = c(3.2))
+    balanceflow <- mb[, , "domestic_supply"] - dimSums(mb2[, , ], dim = 3.2)
     getNames(balanceflow, dim = 2) <- "dom_balanceflow"
     mb2 <- mbind(mb2, balanceflow)
 

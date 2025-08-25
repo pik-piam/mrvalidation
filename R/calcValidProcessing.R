@@ -34,8 +34,8 @@ calcValidProcessing <- function(datasource = "FAO", detail = TRUE, nutrient = "d
       stop("No data exist for the given datasource!")
     }
 
-    processing <- setdiff(c(findset("processing20")), c("milling", "ginning", "breeding"))
-    mb2 <- mb[, , c(processing)]
+    processing <- setdiff(findset("processing20"), c("milling", "ginning", "breeding"))
+    mb2 <- mb[, , processing]
     getNames(mb2, dim = 2) <- reportingnames(getNames(mb2, dim = 2))
 
     mb3 <- dimOrder(mb2, c(2, 1))
