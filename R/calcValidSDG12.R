@@ -65,7 +65,7 @@ calcValidSDG12 <- function(datasource = "FAO") {
     commonYrs <- intersect(getYears(x), getYears(out))
     x <- mbind(x[, commonYrs, ], out[, commonYrs, ])
     unitsX <- c(unitsX, unit)
-    popul <- popul[, comYears, ]
+    popul <- popul[, commonYrs, ]
 
   } else {
     stop("No data exist for the given datasource!")

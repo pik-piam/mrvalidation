@@ -7,7 +7,7 @@
 calcValidSelfsuff(datasource = "FAO", detail = TRUE)
 }
 \arguments{
-\item{datasource}{Options of the source of data:  \code{FAO}.}
+\item{datasource}{Options of the source of data:  \code{FAO, FAOpre2010, FAOpost2010}.}
 
 \item{detail}{Default is \code{TRU}. If \code{FALSE}, the subcategories of
 groups are not reported (e.g. "soybean" within "oilcrops")}
