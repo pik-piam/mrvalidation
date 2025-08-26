@@ -242,10 +242,6 @@ fullVALIDATION <- function(rev = 0.1) {
 
   # Carbon
   calcOutput("ValidResidues", aggregate = "REG+GLO", file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidSOCStocks", datasource = "histSOCbudget", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidSOCShare", datasource = "histSOCbudget", aggregate = "REG+GLO",
-             file = valfile, append = TRUE, try = TRUE)
 
   # Carbon Stocks
   calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_44ac93de:GSWP3-W5E5:historical", aggregate = "REG+GLO",
