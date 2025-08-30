@@ -4,11 +4,18 @@
 \alias{calcValidYield}
 \title{calcValidYield}
 \usage{
-calcValidYield(datasource = "FAO", future = NULL, physical = TRUE)
+calcValidYield(
+  datasource = "FAO",
+  faoVersion = "join2010",
+  future = NULL,
+  physical = TRUE
+)
 }
 \arguments{
 \item{datasource}{Specify which datasource needs to be used.
 Currently only "FAO" and "calibratedLPJmL" is available.}
+
+\item{faoVersion}{which FAO version to use (pre, post or joined 2010 data)}
 
 \item{future}{if NULL no future values are returned (default).
 specify climate scenario (gcm:rcp), if future is needed}

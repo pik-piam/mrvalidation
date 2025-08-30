@@ -24,13 +24,22 @@ calcValidKcal <- function(datasource = "FAO", nutrient = "kcal", detail = TRUE) 
   if (length(nutrient) > 1) {
     stop("select only one nutrient")
   }
-  if (datasource %in% c("FAO", "FAOmassbalance")) {
-    if (datasource == "FAOmassbalance") {
-      x <- calcOutput("FoodSupplyPast", products = "kall", per_capita = FALSE, aggregate = FALSE, attributes = nutrient)
+  if (datasource %in% c("FAO", "FAOmassbalance", "FAOmassbalancepre2010", "FAOmassbalancepost2010")) {
+    if (datasource %in% c("FAOmassbalance", "FAOmassbalancepre2010", "FAOmassbalancepost2010")) {
+      if (datasource == "FAOmassbalance") {
+        faoVersion <- "join2010"
+      } else if (datasource == "FAOmassbalancepre2010") {
+        faoVersion <- "pre2010"
+      } else if (datasource == "FAOmassbalancepost2010") {
+        faoVersion <- "post2010"
+      }
+      x <- calcOutput("FoodSupplyPast", products = "kall",
+                      per_capita = FALSE, faoVersion = faoVersion,
+                      aggregate = FALSE, attributes = nutrient)
       x2 <- calcOutput("FoodSupplyPast",
-        products = "kall", per_capita = TRUE, aggregate = FALSE, supplementary = TRUE,
-        attributes = nutrient, populationweight = "PopulationPast"
-      )
+                       products = "kall", per_capita = TRUE, aggregate = FALSE,
+                       supplementary = TRUE, faoVersion = faoVersion,
+                       attributes = nutrient, populationweight = "PopulationPast")
       value <- x * 1000000
       weight <- x2$weight
       total <- dimSums(value, dim = 3)

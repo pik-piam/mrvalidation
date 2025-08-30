@@ -19,14 +19,16 @@ calcValidGrassLSUha <- function(datasource = "MAgPIEown") {
                                   mappingCtry$iso,
                                   sep = ".")
 
-    yearsPast <- findset("past")
-    biomass   <- calcOutput("FAOmassbalance", aggregate = FALSE)[, yearsPast, "production.dm"][, , "pasture"]
+    biomass   <- calcOutput("FAOmassbalance", aggregate = FALSE)[, , "production.dm"][, , "pasture"]
     biomass   <- collapseNames(biomass)[countries, , ]
 
     land <- calcOutput("LanduseInitialisation", nclasses = "nine",
                        cellular = TRUE, cells = "lpjcell",
-                       aggregate = FALSE)[, yearsPast, ]
-    grasslLand   <- land[, , c("past", "range")]
+                       aggregate = FALSE)
+
+    years <- intersect(getYears(biomass), getYears(land))
+
+    grasslLand   <- land[, years, c("past", "range")]
     grasslLand   <- setNames(grasslLand, c("pastr", "range"))
     grasslShares <- setNames(grasslLand[, , "pastr"] / dimSums(grasslLand, dim = 3), "pastr")
     grasslShares <- add_columns(grasslShares, addnm = "range", dim = 3.1)
@@ -49,7 +51,7 @@ calcValidGrassLSUha <- function(datasource = "MAgPIEown") {
     # derived by the fact that the feedbaskets assume the same productivity (feed ingreedients shares)
     # within a country.
 
-    lsuSplit <- biomass * livstShareCtry / (8.9 * 365 / 1000)
+    lsuSplit <- biomass[, years, ] * livstShareCtry / (8.9 * 365 / 1000)
     lsuSplit <- toolCountryFill(lsuSplit)
     lsuSplit[is.nan(lsuSplit) | is.na(lsuSplit) | is.infinite(lsuSplit)] <- 0
     lsuSplit <- setNames(lsuSplit,
