@@ -4,10 +4,10 @@
 \alias{calcValidAAI}
 \title{calcValidAAI}
 \usage{
-calcValidAAI(datasource = "LUH2v2")
+calcValidAAI(datasource = "LUH3")
 }
 \arguments{
-\item{datasource}{Currently available: \code{"LUH2v2"} and \code{"GMIA"}}
+\item{datasource}{Currently available: \code{"LUH3"}, \code{"LUH2v2"}, and \code{"GMIA"}}
 }
 \value{
 list of magpie object with data and weight

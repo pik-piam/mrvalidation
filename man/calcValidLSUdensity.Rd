@@ -4,7 +4,10 @@
 \alias{calcValidLSUdensity}
 \title{calcValidLSUdensity}
 \usage{
-calcValidLSUdensity()
+calcValidLSUdensity(luhversion = "LUH3")
+}
+\arguments{
+\item{luhversion}{The LUH version to be used (\code{"LUH3"} or \code{"LUH2v2"})}
 }
 \value{
 List of magpie objects with results on country level, weight on country level, unit and description.

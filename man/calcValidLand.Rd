@@ -7,7 +7,8 @@
 calcValidLand(datasource = "MAgPIEown")
 }
 \arguments{
-\item{datasource}{Currently available: \code{"FAO"}, \code{"LUH2v2"}, \code{"MAgPIEown"} and \code{"SSPResults"}}
+\item{datasource}{Currently available: \code{"FAO"}, \code{"LUH2v2"}, \code{"LUH3"}, \code{"MAgPIEown"}
+and \code{"SSPResults"}}
 }
 \value{
 list of magpie object with data and weight

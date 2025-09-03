@@ -9,7 +9,8 @@ calcValidLandChange(baseyear = 1995, datasource = "MAgPIEown")
 \arguments{
 \item{baseyear}{baseyear for calculating land-use change}
 
-\item{datasource}{Currently available: \code{"FAO"}, \code{"LUH2v2"}, \code{"MAgPIEown"} and \code{"SSPResults"}}
+\item{datasource}{Currently available: \code{"FAO"}, \code{"LUH2v2"}, \code{"LUH3"}, \code{"MAgPIEown"}
+and \code{"SSPResults"}}
 }
 \value{
 list of magpie object with data and weight
