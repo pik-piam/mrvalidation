@@ -63,61 +63,58 @@ calcValidWaterUsage <- function(datasource = "shiklomanov_2000") {
       out <- out[, , "data"]
     }
 
-      if (datasource %in% c("foley_2011", "shiklomanov_2000", "wada_2011", "wisser_2008")) {
+    if (datasource %in% c("foley_2011", "shiklomanov_2000", "wada_2011", "wisser_2008")) {
 
       out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
       out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
-      } else if (datasource %in% c("fischer_IIASA", "hejazi_2013", "molden_IWMI",
+    } else if (datasource %in% c("fischer_IIASA", "hejazi_2013", "molden_IWMI",
                                  "seckler_IWMI", "shiklomanov", "aquastat_2008_12")) {
 
       out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "projection")
       out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
-      }
-
-    } else if (datasource %in% c("CWatM:ipsl-cm5a-lr",      "CWatM:gfdl-esm2m",
-                                 "CWatM:miroc5",            "CWatM:hadgem2-es",
-                                 "H08:ipsl-cm5a-lr",        "H08:gfdl-esm2m",
-                                 "H08:miroc5",              "H08:hadgem2-es",
-                                 "LPJmL:ipsl-cm5a-lr",      "LPJmL:gfdl-esm2m",
-                                 "LPJmL:miroc5",            "LPJmL:hadgem2-es",
-                                 "MATSIRO:ipsl-cm5a-lr",    "MATSIRO:gfdl-esm2m",
-                                 "MATSIRO:miroc5",          "MATSIRO:hadgem2-es",
-                                 "MPI-HM:ipsl-cm5a-lr",     "MPI-HM:gfdl-esm2m",
-                                 "MPI-HM:miroc5",
-                                 "PCR-GLOBWB:ipsl-cm5a-lr", "PCR-GLOBWB:gfdl-esm2m",
-                                 "PCR-GLOBWB:miroc5",       "PCR-GLOBWB:hadgem2-es")) {
-
-      out <- readSource("ISIMIP", subtype = paste("airww", datasource, "2b", sep = ":"), convert = TRUE)
-
-      # unit transformation: from: kg m-2 s-1 is equal to mm/second, to: mm/month
-      # (Note: 1 day = 60*60*24 = 86400 seconds)
-      dayofmonths <- as.magpie(c(jan = 31, feb = 28, mar = 31, apr = 30,
-                                 may = 31, jun = 30, jul = 31, aug = 31,
-                                 sep = 30, oct = 31, nov = 30, dec = 31), temporal = 1)
-      out      <- out * dayofmonths * 86400
-      # transform mm/month to mm/year
-      out      <- collapseDim(toolAggregate(out, data.frame(getItems(out, "month"), "year"),
-                              dim = "month"))
-      # Note: mm/year is equal to liter/m^2/year -> liter/year
-      # Conversion from liter/m^2/year -> liter/year: multiply with landarea
-      # landarea (given in Mha) -> m^2 (multiply 1e10)
-      # liter -> km^3 (multiply with 1e-12)
-      landarea <- dimSums(calcOutput("LUH2v2", landuse_types = "magpie",
-                                     cellular = TRUE, cells = "lpjcell",
-                                     irrigation = FALSE, years = "y1995",
-                                     aggregate = FALSE), dim = 3)
-      landarea                     <- dimSums(landarea, dim = c("x", "y"))
-      landarea                     <- toolCountryFill(landarea, fill = 0)
-      out                          <- out * landarea * 1e-02
-
-      out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
-      out <- add_dimension(out, dim = 3.2, add = "model",    nm = datasource)
-
-    } else {
-      stop("Given datasource currently not supported!")
     }
+
+  } else if (datasource %in% c("CWatM:ipsl-cm5a-lr",      "CWatM:gfdl-esm2m",
+                               "CWatM:miroc5",            "CWatM:hadgem2-es",
+                               "H08:ipsl-cm5a-lr",        "H08:gfdl-esm2m",
+                               "H08:miroc5",              "H08:hadgem2-es",
+                               "LPJmL:ipsl-cm5a-lr",      "LPJmL:gfdl-esm2m",
+                               "LPJmL:miroc5",            "LPJmL:hadgem2-es",
+                               "MATSIRO:ipsl-cm5a-lr",    "MATSIRO:gfdl-esm2m",
+                               "MATSIRO:miroc5",          "MATSIRO:hadgem2-es",
+                               "MPI-HM:ipsl-cm5a-lr",     "MPI-HM:gfdl-esm2m",
+                               "MPI-HM:miroc5",
+                               "PCR-GLOBWB:ipsl-cm5a-lr", "PCR-GLOBWB:gfdl-esm2m",
+                               "PCR-GLOBWB:miroc5",       "PCR-GLOBWB:hadgem2-es")) {
+
+    out <- readSource("ISIMIP", subtype = paste("airww", datasource, "2b", sep = ":"), convert = TRUE)
+
+    # unit transformation: from: kg m-2 s-1 is equal to mm/second, to: mm/month
+    # (Note: 1 day = 60*60*24 = 86400 seconds)
+    dayofmonths <- as.magpie(c(jan = 31, feb = 28, mar = 31, apr = 30,
+                               may = 31, jun = 30, jul = 31, aug = 31,
+                               sep = 30, oct = 31, nov = 30, dec = 31), temporal = 1)
+    out      <- out * dayofmonths * 86400
+    # transform mm/month to mm/year
+    out      <- collapseDim(toolAggregate(out, data.frame(getItems(out, "month"), "year"),
+                                          dim = "month"))
+    # Note: mm/year is equal to liter/m^2/year -> liter/year
+    # Conversion from liter/m^2/year -> liter/year: multiply with landarea
+    # landarea (given in Mha) -> m^2 (multiply 1e10)
+    # liter -> km^3 (multiply with 1e-12)
+    landarea <- calcOutput("LandArea", aggregate = FALSE)
+    landarea <- dimSums(landarea, dim = c("x", "y"))
+    landarea <- toolCountryFill(landarea, fill = 0)
+    out      <- out * landarea * 1e-02
+
+    out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+    out <- add_dimension(out, dim = 3.2, add = "model",    nm = datasource)
+
+  } else {
+    stop("Given datasource currently not supported!")
+  }
 
   getNames(out, dim = 3)  <- "Resources|Water|Withdrawal|Agriculture (km3/yr)"
   names(dimnames(out))[3] <- "scenario.model.variable"
