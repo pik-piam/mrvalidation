@@ -4,6 +4,8 @@
 #'
 #' @param rev data revision which should be used as input. Will be converted to
 #' \code{\link[base]{numeric_version}} when called via \code{\link[madrat]{retrieveData}}.
+#' @param aggregate an aggregation level, such as "region+global", to be used for all outputs
+#' that are being aggregated.
 #' @author Jan Philipp Dietrich, Benjamin Leon Bodirsky
 #' @seealso
 #' \code{\link[madrat]{readSource}},\code{\link[madrat]{getCalculations}},\code{\link[madrat]{calcOutput}}
