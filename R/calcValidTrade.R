@@ -22,23 +22,20 @@
 
 calcValidTrade <- function(datasource = "FAO", detail = TRUE, nutrient = "dm",
                            net_trade = TRUE, # nolint: object_name_linter.
-                           equalized = TRUE) {
+                           equalized = FALSE) {
 
   if (datasource %in% c("FAO", "FAOpre2010", "FAOpost2010")) {
 
     if (datasource == "FAO") {
       mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
-      out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
     } else if (datasource == "FAOpre2010") {
       mb <- collapseNames(calcOutput("FAOmassbalance",
                                      version = "pre2010",
                                      aggregate = FALSE)[, , nutrient])
-      out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
     } else if (datasource == "FAOpost2010") {
       mb <- collapseNames(calcOutput("FAOmassbalance",
                                      version = "post2010",
                                      aggregate = FALSE)[, , nutrient])
-      out <- reporthelper(x = mb, dim = 3.1, level_zero_name = "Production", detail = detail)
     } else {
       stop("No data exist for the given datasource!")
     }

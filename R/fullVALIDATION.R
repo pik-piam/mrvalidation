@@ -75,14 +75,18 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
              append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLivestockDemStructure", aggregate = aggregate,
              file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidFoodExpenditureShare", aggregate = aggregate,
+  calcOutput(type = "ValidFoodExpenditureShare", aggregate = aggregate, expenditureType = "agPrimary",
              file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidFoodExpenditure", aggregate = aggregate,
+  calcOutput(type = "ValidFoodExpenditure", aggregate = aggregate, expenditureType = "agPrimary",
              file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidFoodExpenditure", aggregate = aggregate,
+  calcOutput(type = "ValidFoodExpenditure", aggregate = aggregate, expenditureType = "agPrimary",
              datasource = "FAOpre2010", file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidFoodExpenditure", aggregate = aggregate,
+  calcOutput(type = "ValidFoodExpenditure", aggregate = aggregate, expenditureType = "agPrimary",
              datasource = "FAOpost2010", file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidFoodExpenditureShare", aggregate = aggregate, expenditureType = "food",
+             file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidFoodExpenditure", aggregate = aggregate, expenditureType = "food",
+             file = valfile, append = TRUE, try = TRUE)
 
   # Demand, Production, Trade, Self-Sufficiency
   calcOutput(type = "ValidDemand", aggregate = aggregate, file = valfile,
