@@ -3,7 +3,8 @@
 #' @description Returns historical cropland, pasture and forest area from FAOSTAT that can
 #' be used for model validation.
 #'
-#' @param datasource Currently available: \code{"FAO"}, \code{"LUH2v2"}, \code{"MAgPIEown"} and \code{"SSPResults"}
+#' @param datasource Currently available: \code{"FAO"}, \code{"LUH2v2"}, \code{"LUH3"}, \code{"MAgPIEown"}
+#' and \code{"SSPResults"}
 #' @return list of magpie object with data and weight
 #' @author Ulrich Kreidenweis, Benjamin Bodirsky, Abhijeet Mishra, Mishko Stevanovic, Kristine Karstens
 #' @importFrom utils read.csv
@@ -85,13 +86,30 @@ calcValidLand <- function(datasource = "MAgPIEown") {
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
     getNames(out, dim = 3) <- paste0(getNames(out, dim = 3), " (million ha)")
-  } else if (datasource == "LUH2v2") {
+  } else if (datasource %in% c("LUH2v2", "LUH3")) {
 
-    data <- calcOutput("LUH2v2", landuse_types = "magpie", irrigation = FALSE,
-                       cellular = FALSE, selectyears = seq(1965, 2015, by = 5), aggregate = FALSE)
+    if (datasource == "LUH2v2") {
+      data <- calcOutput("LUH2v2", landuse_types = "magpie", irrigation = FALSE,
+                         cellular = FALSE, selectyears = seq(1965, 2015, by = 5), aggregate = FALSE)
+      forest <- calcOutput("LUH2v2", landuse_types = "LUH2v2", irrigation = FALSE,
+                           cellular = FALSE, selectyears = seq(1965, 2015, by = 5), aggregate = FALSE)
+    } else if (datasource == "LUH3") {
+      data <- calcOutput("LUH3", landuseTypes = "magpie", irrigation = FALSE,
+                         cellular = FALSE, aggregate = FALSE)
+      forest <- calcOutput("LUH3", landuseTypes = "LUH3", irrigation = FALSE,
+                           cellular = FALSE, aggregate = FALSE)
+    }
+
     out <- data[, , c("crop", "past", "urban", "other", "forest")]
     getNames(out, dim = 1) <- paste0("Resources|Land Cover|+|", reportingnames(getNames(out, dim = 1)), " (million ha)")
     out <- mbind(out, setNames(dimSums(out, dim = 3), "Resources|Land Cover (million ha)"))
+
+    forest <- forest[, , c("primf", "secdf")]
+    getNames(forest) <- c("primforest", "secdforest")
+    getNames(forest, dim = 1) <- paste0("Resources|Land Cover|Forest|Natural Forest|+|",
+                                        reportingnames(getNames(forest, dim = 1)), " (million ha)")
+
+    out <- mbind(out, forest)
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 

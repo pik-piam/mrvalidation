@@ -27,7 +27,7 @@ a <- readSource("IrrigatedArea")
 }
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Stephen Wirth

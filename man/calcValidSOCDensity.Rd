@@ -22,7 +22,7 @@ calcOutput("ValidSOCDensity")
 
 }
 \seealso{
-\code{\link{calcSOM}}
+\code{\link[mrcommons]{calcSOM}}
 \code{\link{calcValidSOCStocks}}
 }
 \author{

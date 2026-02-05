@@ -4,11 +4,14 @@
 \alias{fullVALIDATION}
 \title{fullValidation}
 \usage{
-fullVALIDATION(rev = 0.1)
+fullVALIDATION(rev = 0.1, aggregate = "region+global")
 }
 \arguments{
 \item{rev}{data revision which should be used as input. Will be converted to
 \code{\link[base]{numeric_version}} when called via \code{\link[madrat]{retrieveData}}.}
+
+\item{aggregate}{an aggregation level, such as "region+global", to be used for all outputs
+that are being aggregated.}
 }
 \description{
 Function that produces the complete validation data set used for evaluation of MAgPIE outputs
@@ -20,7 +23,7 @@ retrieveData("Validation")
 
 }
 \seealso{
-\code{\link{readSource}},\code{\link{getCalculations}},\code{\link{calcOutput}}
+\code{\link[madrat]{readSource}},\code{\link[madrat]{getCalculations}},\code{\link[madrat]{calcOutput}}
 }
 \author{
 Jan Philipp Dietrich, Benjamin Leon Bodirsky

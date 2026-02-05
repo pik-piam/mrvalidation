@@ -23,7 +23,7 @@ calcOutput("ValidVegfruitShare")
 
 }
 \seealso{
-\code{\link{calcFoodSupplyPast}},
+\code{\link[mrcommons]{calcFoodSupplyPast}},
 \code{\link{calcValidKcal}}
 }
 \author{

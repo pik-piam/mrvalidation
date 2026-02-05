@@ -21,7 +21,7 @@ calcOutput("ValidGrassLSUha")
 }
 }
 \seealso{
-\code{\link{calcFAOmassbalance}},
+\code{\link[mrcommons]{calcFAOmassbalance}},
 }
 \author{
 Marcos Alves

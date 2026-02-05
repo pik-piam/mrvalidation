@@ -4,7 +4,7 @@
 #' @param subtype subtype - only FAO supported
 #' @return magpie object containing rotation length data
 #' @author Abhijeet Mishra
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' \dontrun{
 #' a <- readSource("FAOrotation")

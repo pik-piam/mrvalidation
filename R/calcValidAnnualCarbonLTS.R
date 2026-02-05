@@ -1,68 +1,88 @@
 #' calcValidAnnualCarbonLTS
-#' 
-#' Returns historical Emissions stored in wood products 
-#' 
-#' @param datasource Currently available \code{"Lauk_et_al"} or \code{"Johnston_Radeloff"} or \code{"Johnston_Radeloff_P"} (p = projection)
+#'
+#' Returns historical Emissions stored in wood products
+#'
+#' @param datasource Currently available \code{"Lauk_et_al"} or \code{"Johnston_Radeloff"}
+#' or \code{"Johnston_Radeloff_P"} (p = projection)
 #' @return List of magpie object with Emissions in wood products
 #' @author Abhijeet Mishra
-#' @import magpiesets 
+#' @import magpiesets
 #' @importFrom magclass getNames collapseNames
 
-calcValidAnnualCarbonLTS <- function(datasource="Lauk_et_al") {
-  
-  if(datasource=="Lauk_et_al"){
-    emis <- collapseNames(readSource("CarbonLTS",subtype = datasource))
-    
-    indicatorname="Emissions|CO2|Land|Land-use Change|Wood products|+|Storage"
-    unit="Mt CO2/yr"
+calcValidAnnualCarbonLTS <- function(datasource = "Lauk_et_al") {
+
+  if (datasource == "Lauk_et_al") {
+    emis <- collapseNames(readSource("CarbonLTS", subtype = datasource))
+    names(dimnames(emis)) <- c("region", "year", "variable")
+
+    indicatorname <- "Emissions|CO2|Land|Land-use Change|Wood products|+|Storage"
+    unit <- "Mt CO2/yr"
     out <- emis
-    getNames(out) <- paste0(indicatorname, getNames(out)," (",unit,")")
-    
-    
-    out <- add_dimension(out, dim=3.1, add="scenario", nm="historical")
-    out <- add_dimension(out, dim=3.2, add="model", nm=datasource)
-    
-  } else if(datasource=="Johnston_Radeloff"){
-    emis       <- readSource("CarbonLTS",subtype = datasource)
-    
-    annual     <- collapseNames(emis[,,"Annual (MtCO2/yr)"][,,"SSP2"])
-    indicatorname="Emissions|CO2|Land|Land-use Change|Wood products|+|Storage"
-    unit="Mt CO2/yr"
-    getNames(annual) <- paste0(indicatorname, getNames(annual)," (",unit,")")
-    
-    future <- tail(getYears(annual),10)
-    
-    out_historical <- annual[,future,,invert=TRUE]
+    getNames(out) <- paste0(indicatorname, " (", unit, ")")
 
-    out_historical <- add_dimension(out_historical, dim=3.1, add="scenario", nm="historical")
-    out_historical <- add_dimension(out_historical, dim=3.2, add="model", nm=datasource)
-    
-    out <- out_historical
-    
+    indicatornameRaw <- "Emissions|CO2|Land RAW|Land-use Change|Wood products|+|Storage"
+    raw <- emis
+    getNames(raw) <- paste0(indicatornameRaw, " (", unit, ")")
+    out <- mbind(out, raw)
 
-  } else if(datasource=="Johnston_Radeloff_P"){
-    emis       <- readSource("CarbonLTS",subtype = "Johnston_Radeloff") ## original data also contains future projections
-    
-    annual     <- collapseNames(emis[,,"Annual (MtCO2/yr)"][,,"SSP2"])
-    indicatorname="Emissions|CO2|Land|Land-use Change|Wood products|+|Storage"
-    unit="Mt CO2/yr"
-    getNames(annual) <- paste0(indicatorname, getNames(annual)," (",unit,")")
-    
-    future <- tail(getYears(annual),10)
-    
-    out_projection <- annual[,future,]
-    
-    out_projection <- add_dimension(out_projection, dim=3.1, add="scenario", nm="projection")
-    out_projection <- add_dimension(out_projection, dim=3.2, add="model", nm=datasource)
-    
-    out <- out_projection
-    
-    } else stop("No validation data exists from the given datasource!")
-  
-  return(list(x=out*-1, ## Sequestartion is reported as negative
-              weight=NULL,
-              unit=unit,
-              description="Annual sequestration from carbon stored in harvested wood.")
+    out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+    out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+
+  } else if (datasource == "Johnston_Radeloff") {
+    emis       <- readSource("CarbonLTS", subtype = datasource)
+    annual     <- collapseNames(emis[, , "Annual (MtCO2/yr)"][, , "SSP2"])
+    names(dimnames(annual)) <- c("region", "year", "variable")
+
+    indicatorname <- "Emissions|CO2|Land|Land-use Change|Wood products|+|Storage"
+    unit <- "Mt CO2/yr"
+    getNames(annual) <- paste0(indicatorname, " (", unit, ")")
+
+    future <- tail(getYears(annual), 10)
+
+    outHistorical <- annual[, future, , invert = TRUE]
+
+    indicatornameRaw <- "Emissions|CO2|Land RAW|Land-use Change|Wood products|+|Storage"
+    raw <- outHistorical
+    getNames(raw) <- paste0(indicatornameRaw, " (", unit, ")")
+    outHistorical <- mbind(outHistorical, raw)
+
+    outHistorical <- add_dimension(outHistorical, dim = 3.1, add = "scenario", nm = "historical")
+    outHistorical <- add_dimension(outHistorical, dim = 3.2, add = "model", nm = datasource)
+
+    out <- outHistorical
+
+
+  } else if (datasource == "Johnston_Radeloff_P") {
+    ## original data also contains future projections
+    emis       <- readSource("CarbonLTS", subtype = "Johnston_Radeloff")
+    annual     <- collapseNames(emis[, , "Annual (MtCO2/yr)"][, , "SSP2"])
+    names(dimnames(annual)) <- c("region", "year", "variable")
+
+    indicatorname <- "Emissions|CO2|Land|Land-use Change|Wood products|+|Storage"
+    unit <- "Mt CO2/yr"
+    getNames(annual) <- paste0(indicatorname, " (", unit, ")")
+
+    future <- tail(getYears(annual), 10)
+
+    outProjection <- annual[, future, ]
+
+    indicatornameRaw <- "Emissions|CO2|Land RAW|Land-use Change|Wood products|+|Storage"
+    raw <- outProjection
+    getNames(raw) <- paste0(indicatornameRaw, " (", unit, ")")
+    outProjection <- mbind(outProjection, raw)
+
+    outProjection <- add_dimension(outProjection, dim = 3.1, add = "scenario", nm = "projection")
+    outProjection <- add_dimension(outProjection, dim = 3.2, add = "model", nm = datasource)
+
+    out <- outProjection
+
+  } else {
+    stop("No validation data exists from the given datasource!")
+  }
+
+  return(list(x = out * -1, ## Sequestartion is reported as negative
+              weight = NULL,
+              unit = unit,
+              description = "Annual sequestration from carbon stored in harvested wood.")
   )
 }
-

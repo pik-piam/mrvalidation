@@ -4,6 +4,8 @@
 #' @param datasource downscaledFAO or calibratedFAO
 #' @param future if NULL no future values are returned (default).
 #'               specify climate scenario (gcm:rcp), if future is needed
+#' @param physical if true (default) physical area (croparea) used for yield calculation;
+#'                 if false harvested area used for yield calculation
 #'
 #' @return List of magpie objects with results on cellular level, weight on cellular level, unit and description.
 #' @author Benjamin Leon Bodirsky
@@ -19,13 +21,15 @@
 #' @importFrom madrat toolConditionalReplace
 #' @importFrom stringr str_split
 
-calcValidGridYields <- function(datasource = "downscaledFAO", future = NULL) {
+calcValidGridYields <- function(datasource = "downscaledFAO", future = NULL, physical = TRUE) {
 
   if (datasource == "downscaledFAO") {
 
-    if (!is.null(future)) stop("Future options is not available for source type 'downscaledFAO'.")
+    if (!is.null(future)) {
+      stop("Future options is not available for source type 'downscaledFAO'.")
+    }
 
-    out <- calcOutput("FAOYield", cellular = TRUE, aggregate = FALSE, irrigation = TRUE)
+    out <- calcOutput("FAOYield", cellular = TRUE, aggregate = FALSE, irrigation = TRUE, physical = physical)
     getNames(out, dim = 1) <- reportingnames(getNames(out, dim = 1))
     getNames(out, dim = 2) <- reportingnames(getNames(out, dim = 2))
     out <- clean_magpie(out)
@@ -35,50 +39,52 @@ calcValidGridYields <- function(datasource = "downscaledFAO", future = NULL) {
   } else if (datasource == "calibratedLPJmL") {
 
     sizelimit <- getOption("magclass_sizeLimit")
-    options(magclass_sizeLimit = 1e+12)
-    on.exit(options(magclass_sizeLimit = sizelimit))
+    withr::with_options(magclass_sizeLimit = 1e+12)
+    withr::defer(withr::with_options(magclass_sizeLimit = sizelimit))
 
     lpjml       <- "ggcmi_phase3_nchecks_bft_6277d36e"
     isimip      <- NULL
     climatetype <- "GSWP3-W5E5:historical"
-    
-    if (!is.null(future)){
-      
+
+    if (!is.null(future)) {
+
       if (grepl("\\+", future)) {
-        
+
         tmp         <- unlist(str_split(future, "\\+"))
         climatetype <- tmp[1]
-        
+
         if (any(grepl("lpjml:", tmp))) {
           i <- grep("lpjml:", tmp)
           lpjml  <- gsub("lpjml:", "", tmp[i])
-        } 
-        
+        }
+
         if (any(grepl("isimip:", tmp))) {
           i <- grep("isimip:", tmp)
           isimip  <- gsub("isimip:", "", tmp[i])
-        } 
-        
-        
+        }
+
+
       } else {
-        
+
         climatetype <- future
-        
+
       }
     }
-    
+
     refYear        <- "y2010"
 
     out <- calcOutput("YieldsCalibrated", source = c(lpjml = lpjml, isimip = isimip),
-                      climatetype = climatetype, refYear = refYear, cells = "magpiecell", 
-                      aggregate = FALSE)[, , findset("kcr")]
+                      climatetype = climatetype, refYear = refYear, cells = "magpiecell",
+                      multicropping = physical, aggregate = FALSE)[, , findset("kcr")]
 
     getNames(out, dim = 1) <- reportingnames(getNames(out, dim = 1))
     getNames(out, dim = 2) <- reportingnames(getNames(out, dim = 2))
     out <- clean_magpie(out)
     getComment(out) <- NULL
 
-  } else stop("Source not available.")
+  } else {
+    stop("Source not available.")
+  }
 
   return(list(x = out,
               weight = NULL,

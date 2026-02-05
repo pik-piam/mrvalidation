@@ -26,8 +26,8 @@ calcOutput("ValidFeed")
 
 }
 \seealso{
-\code{\link{calcFoodSupplyPast}},
-\code{\link{calcValidLivestockShare}}
+\code{\link[mrcommons]{calcFoodSupplyPast}},
+\code{\link[mrvalidation]{calcValidLivestockShare}}
 }
 \author{
 Benjamin Leon Bodirsky

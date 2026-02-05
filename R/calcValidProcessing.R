@@ -9,7 +9,7 @@
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author David Chen, Benjamin Leon Bodirsky
 #' @seealso
-#' \code{\link{calcFoodSupplyPast}},
+#' \code{\link[mrcommons]{calcFoodSupplyPast}},
 #' \code{\link{calcValidLivestockShare}}
 #' @examples
 #' \dontrun{
@@ -23,34 +23,35 @@ calcValidProcessing <- function(datasource = "FAO", detail = TRUE, nutrient = "d
 
   if (indicator == "primary_to_process") {
 
+
     if (datasource == "FAO") {
       mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
-
-      processing <- setdiff(c(findset("processing20")), c("milling", "ginning", "breeding"))
-      mb2 <- mb[, , c(processing)]
-      getNames(mb2, dim = 2) <- reportingnames(getNames(mb2, dim = 2))
-
-      mb3 <- dimOrder(mb2, c(2, 1))
-
-      out <- reporthelper(x = mb3, dim = 3.2, level_zero_name = "_", detail = detail)
-      getNames(out) <- gsub("[^[:alnum:][:blank:]\\|]", "", getNames(out))
-      getNames(out) <- sub("\\|$", "", getNames(out))
-      getNames(out) <- paste0("Demand|Processing|", getNames(out))
-
-      out <- summationhelper(out, sep = "+")
-
-      getNames(out) <- sub(getNames(out), pattern = "Processing|+", replacement = "Processing|++", fixed = TRUE)
-
-      out <- out[, , which(dimSums(out, dim = c(1, 2)) > 0)]
-
-      out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
-      out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
-
+    } else if (datasource == "FAOpre2010") {
+      mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE, version = "pre2010")[, , nutrient])
+    } else if (datasource == "FAOpost2010") {
+      mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE, version = "post2010")[, , nutrient])
     } else {
-
       stop("No data exist for the given datasource!")
-
     }
+
+    processing <- setdiff(findset("processing20"), c("milling", "ginning", "breeding"))
+    mb2 <- mb[, , processing]
+    getNames(mb2, dim = 2) <- reportingnames(getNames(mb2, dim = 2))
+
+    mb3 <- dimOrder(mb2, c(2, 1))
+    out <- reporthelper(x = mb3, dim = 3.2, level_zero_name = "_", detail = detail)
+    getNames(out) <- gsub("[^[:alnum:][:blank:]\\|]", "", getNames(out))
+    getNames(out) <- sub("\\|$", "", getNames(out))
+    getNames(out) <- paste0("Demand|Processing|", getNames(out))
+
+    out <- summationhelper(out, sep = "+")
+
+    getNames(out) <- sub(getNames(out), pattern = "Processing|+", replacement = "Processing|++", fixed = TRUE)
+
+    out <- out[, , which(dimSums(out, dim = c(1, 2)) > 0)]
+
+    out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+    out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
     names(dimnames(out))[3] <- "scenario.model.variable"
 
@@ -73,41 +74,46 @@ calcValidProcessing <- function(datasource = "FAO", detail = TRUE, nutrient = "d
 
     if (datasource == "FAO") {
       mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
-
-      mb2 <- mb[, , c("alcohol1", "alcohol2", "alcohol3", "alcohol4", "brans1", "branoil1", "oil1",
-                      "oil2", "oilcakes1", "ethanol1", "molasses1", "sugar1", "distillers_grain1")]
-      mb2[, , "alcohol1"] <- dimSums(mb2[, , c("alcohol1", "alcohol2", "alcohol3", "alcohol4")], dim = 3.2)
-      mb2[, , "oil1"] <- dimSums(mb2[, , c("oil1", "oil2", "branoil1")], dim = 3.2)
-
-      mb3 <- mb2[, , c("alcohol1", "brans1", "oil1", "oilcakes1", "ethanol1", "molasses1", "sugar1",
-                       "distillers_grain1")]
-
-      out <- dimOrder(mb3, c(2, 1))
-
-      getNames(out, dim = 2) <- reportingnames(getNames(out, dim = 2))
-      getNames(out, dim = 1) <- substr(getNames(out, dim = 1), start = 1, stop = nchar(getNames(out, dim = 1)) - 1)
-      getNames(out, dim = 1)[which(getNames(out, dim = 1) == "oil")] <- "oils"
-      getNames(out, dim = 1) <- reportingnames(getNames(out, dim = 1))
-
-      getNames(out, dim = 1) <- paste0("Processing|Raw material|Processed into ", getNames(out, dim = 1))
-      out <- add_columns(out, addnm = "Processing|Raw material|Processed into Secondary products", dim = 3.1, fill = 0)
-      out[, , "Processing|Raw material|Processed into Secondary products"] <- dimSums(out, dim = 3.1)
-      out <- add_columns(out, addnm = "dummy", dim = 3.2, fill = 0)
-      out[, , "dummy"] <- dimSums(out, dim = 3.2)
-
-      getNames(out) <- sub(getNames(out), pattern = "\\.", replacement = "|")
-      out <- summationhelper(out)
-      getNames(out) <- sub(getNames(out), pattern = "\\|\\+\\|dummy", replacement = "")
-      getNames(out) <- paste(getNames(out), "(Mt DM/yr)", sep = " ")
-
-      out <- out[, , where(out != 0)$true$data]
-
-      out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
-      out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
-
+    } else if (datasource == "FAOpre2010") {
+      mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE, version = "pre2010")[, , nutrient])
+    } else if (datasource == "FAOpost2010") {
+      mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE, version = "post2010")[, , nutrient])
     } else {
       stop("No data exist for the given datasource!")
     }
+
+    mb2 <- mb[, , c("alcohol1", "alcohol2", "alcohol3", "alcohol4", "brans1", "branoil1", "oil1",
+                    "oil2", "oilcakes1", "ethanol1", "molasses1", "sugar1", "distillers_grain1")]
+    mb2[, , "alcohol1"] <- dimSums(mb2[, , c("alcohol1", "alcohol2", "alcohol3", "alcohol4")], dim = 3.2)
+    mb2[, , "oil1"] <- dimSums(mb2[, , c("oil1", "oil2", "branoil1")], dim = 3.2)
+
+    mb3 <- mb2[, , c("alcohol1", "brans1", "oil1", "oilcakes1", "ethanol1", "molasses1", "sugar1",
+                     "distillers_grain1")]
+
+    out <- dimOrder(mb3, c(2, 1))
+
+    getNames(out, dim = 2) <- reportingnames(getNames(out, dim = 2))
+    getNames(out, dim = 1) <- substr(getNames(out, dim = 1), start = 1, stop = nchar(getNames(out, dim = 1)) - 1)
+    getNames(out, dim = 1)[which(getNames(out, dim = 1) == "oil")] <- "oils"
+    getNames(out, dim = 1) <- reportingnames(getNames(out, dim = 1))
+
+    getNames(out, dim = 1) <- paste0("Processing|Raw material|Processed into ", getNames(out, dim = 1))
+    out <- add_columns(out, addnm = "Processing|Raw material|Processed into Secondary products", dim = 3.1, fill = 0)
+    out[, , "Processing|Raw material|Processed into Secondary products"] <- dimSums(out, dim = 3.1)
+    out <- add_columns(out, addnm = "dummy", dim = 3.2, fill = 0)
+    out[, , "dummy"] <- dimSums(out, dim = 3.2)
+
+    getNames(out) <- sub(getNames(out), pattern = "\\.", replacement = "|")
+    out <- summationhelper(out)
+    getNames(out) <- sub(getNames(out), pattern = "\\|\\+\\|dummy", replacement = "")
+    getNames(out) <- paste(getNames(out), "(Mt DM/yr)", sep = " ")
+
+    out <- out[, , where(out != 0)$true$data]
+
+    out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
+    out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
+
+
 
     names(dimnames(out))[3] <- "scenario.model.variable"
 
@@ -130,6 +136,6 @@ calcValidProcessing <- function(datasource = "FAO", detail = TRUE, nutrient = "d
   return(list(x = out,
               weight = NULL,
               unit = unit,
-              description = "Agricultural Demand")
+              description = "Agricultural Processing Demand")
   )
 }

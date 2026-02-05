@@ -28,7 +28,7 @@ readGSOC <- function() {
   }
 
   # Change longitude and latitude
-  r50     <- raster(res = 0.5)
+  r50     <- raster(resolution = 0.5)
   toMag   <- raster::brick(raster::projectRaster(toMag, r50, over = TRUE)) # re-project to regular grid
 
   # Convert to magpie object and rename set

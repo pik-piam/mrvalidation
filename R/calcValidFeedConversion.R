@@ -9,7 +9,7 @@
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Benjamin Leon Bodirsky, github Copilot
 #' @seealso
-#' \code{\link{calcFoodSupplyPast}},
+#' \code{\link[mrcommons]{calcFoodSupplyPast}},
 #' \code{\link{calcValidLivestockShare}}
 #' @examples
 #' \dontrun{
@@ -89,7 +89,7 @@ calcValidFeedConversion <- function(livestockSystem = TRUE, subtractBalanceflow 
                     dim = 3.2, add = "ElementShort", nm = "Poultry meat and eggs"),
       add_dimension(
                     dimSums(feedProductspecific[, , c("livst_pig")], dim = c("ElementShort")),
-                    dim = 3.2, add = "ElementShort", nm = "Monogastric meat")
+                    dim = 3.2, add = "ElementShort", nm = "Pig meat")
     )
     quotientProductspecfic <- mbind(
       add_dimension(
@@ -100,7 +100,7 @@ calcValidFeedConversion <- function(livestockSystem = TRUE, subtractBalanceflow 
                     dim = 3.1, add = "ItemCodeItem", nm = "Poultry meat and eggs"),
       add_dimension(
                     dimSums(quotientProductspecfic[, , c("livst_pig")], dim = c("ItemCodeItem")),
-                    dim = 3.1, add = "ItemCodeItem", nm = "Monogastric meat")
+                    dim = 3.1, add = "ItemCodeItem", nm = "Pig meat")
     )
   } else {
     getNames(feedProductspecific, dim = 2) <- reportingnames(getNames(feedProductspecific, dim = 2))
@@ -192,7 +192,7 @@ calcValidFeedConversion <- function(livestockSystem = TRUE, subtractBalanceflow 
 
 
   return(list(x = x,
-              weight = weight,
+              weight = weight + 1e-10,
               unit = "GE feed per GE product",
               description = "Agricultural Demand")
   )

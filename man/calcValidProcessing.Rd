@@ -35,7 +35,7 @@ calcOutput("ValidProcessing", indicator = "secondary_from_primary")
 
 }
 \seealso{
-\code{\link{calcFoodSupplyPast}},
+\code{\link[mrcommons]{calcFoodSupplyPast}},
 \code{\link{calcValidLivestockShare}}
 }
 \author{

@@ -4,14 +4,24 @@
 \alias{calcValidYield}
 \title{calcValidYield}
 \usage{
-calcValidYield(datasource = "FAO", future = NULL)
+calcValidYield(
+  datasource = "FAO",
+  faoVersion = "join2010",
+  future = NULL,
+  physical = TRUE
+)
 }
 \arguments{
 \item{datasource}{Specify which datasource needs to be used.
 Currently only "FAO" and "calibratedLPJmL" is available.}
 
+\item{faoVersion}{which FAO version to use (pre, post or joined 2010 data)}
+
 \item{future}{if NULL no future values are returned (default).
 specify climate scenario (gcm:rcp), if future is needed}
+
+\item{physical}{if true (default) physical area (croparea) used for yield calculation;
+if false harvested area used for yield calculation}
 }
 \value{
 List of magpie objects with results on country level,
@@ -31,9 +41,9 @@ calcOutput("ValidYield")
 }
 }
 \seealso{
-\code{\link{calcFAOmassbalance}},
-\code{\link{calcCroparea}}
+\code{\link[mrcommons]{calcFAOmassbalance}},
+\code{\link[mrlandcore]{calcCroparea}}
 }
 \author{
-Abhijeet Mishra, Isabelle Weindl
+Abhijeet Mishra, Isabelle Weindl, Florian Humpenoeder
 }

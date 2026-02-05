@@ -19,7 +19,7 @@ Read-in world producer price index as magclass object
 
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Mishko Stevanovic

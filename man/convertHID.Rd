@@ -28,7 +28,7 @@ a <- readSource("HID", "national_1900_2005")
 
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Stephen Wirth

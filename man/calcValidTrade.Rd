@@ -9,7 +9,7 @@ calcValidTrade(
   detail = TRUE,
   nutrient = "dm",
   net_trade = TRUE,
-  equalized = TRUE
+  equalized = FALSE
 )
 }
 \arguments{
@@ -37,7 +37,7 @@ calcOutput("ValidTrade")
 
 }
 \seealso{
-\code{\link{calcFAOmassbalance}},
+\code{\link[mrcommons]{calcFAOmassbalance}},
 \code{\link{calcValidDemand}}
 }
 \author{

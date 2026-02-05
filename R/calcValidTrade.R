@@ -11,7 +11,7 @@
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Benjamin Leon Bodirsky, Xiaoxi Wang, David M Chen
 #' @seealso
-#' \code{\link{calcFAOmassbalance}},
+#' \code{\link[mrcommons]{calcFAOmassbalance}},
 #' \code{\link{calcValidDemand}}
 #' @examples
 #' \dontrun{
@@ -22,10 +22,24 @@
 
 calcValidTrade <- function(datasource = "FAO", detail = TRUE, nutrient = "dm",
                            net_trade = TRUE, # nolint: object_name_linter.
-                           equalized = TRUE) {
-  if (datasource == "FAO") {
-    kTrade <- findset("k_trade")
-    mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient][, , kTrade])
+                           equalized = FALSE) {
+
+  if (datasource %in% c("FAO", "FAOpre2010", "FAOpost2010")) {
+
+    if (datasource == "FAO") {
+      mb <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , nutrient])
+    } else if (datasource == "FAOpre2010") {
+      mb <- collapseNames(calcOutput("FAOmassbalance",
+                                     version = "pre2010",
+                                     aggregate = FALSE)[, , nutrient])
+    } else if (datasource == "FAOpost2010") {
+      mb <- collapseNames(calcOutput("FAOmassbalance",
+                                     version = "post2010",
+                                     aggregate = FALSE)[, , nutrient])
+    } else {
+      stop("No data exist for the given datasource!")
+    }
+
     if (net_trade) {
       # exports
       mb <- collapseNames(mb[, , c("production")]) - collapseNames(mb[, , "domestic_supply"])
@@ -61,7 +75,11 @@ calcValidTrade <- function(datasource = "FAO", detail = TRUE, nutrient = "dm",
 
       check <- exports - imports - netTrade
       message("inconsistencies in massbalances exist before year 2000")
-      checkYears <- c("y2000", "y2005", "y2010")
+      if (datasource %in% c("FAO", "FAOpre2010")) {
+        checkYears <- c("y2000", "y2005", "y2010")
+      } else if (datasource == "FAOpost2010") {
+        checkYears <- c("y2010", "y2015", "y2020")
+      }
       mismatch <- unique(magclass::where(abs(check[, checkYears, ]) > 0.1)$true$individual[, 3])
       if (length(mismatch > 0)) {
         message(paste(c("larger mismatch between absolute trade and net-trade for the products:", mismatch),
@@ -88,15 +106,6 @@ calcValidTrade <- function(datasource = "FAO", detail = TRUE, nutrient = "dm",
     trade <- mbind(tkcr, tkli, to)
     rm(tkcr, tkli, to)
 
-    # set within region trade to 0
-    # NOTE THIS IS ASSUMING H12 regions!!!!
-    h12 <- toolGetMapping("regionmappingH12.csv", type = "regional", where = "madrat")
-
-    for (i in unique(h12$RegionCode)) {
-      trade[list("im" = h12[(h12$RegionCode == i), "CountryCode"],
-                 "ex" = h12[(h12$RegionCode == i), "CountryCode"]), , ] <- 0
-    }
-
     imports <- dimSums(trade, dim = 1.2)
     exports <- dimSums(trade, dim = 1.1)
 
@@ -105,7 +114,8 @@ calcValidTrade <- function(datasource = "FAO", detail = TRUE, nutrient = "dm",
       out <- reporthelper(x = net, dim = 3.1, level_zero_name = "Trade|Net-Trade",
                           detail = detail, partly = TRUE)
     } else {
-      out1 <- reporthelper(exports, dim = 3.1, level_zero_name = "Trade|Exports", detail = detail, partly = TRUE)
+      out1 <- reporthelper(exports, dim = 3.1, level_zero_name = "Trade|Exports excl export balanceflow",
+                           detail = detail, partly = TRUE)
       out2 <- reporthelper(imports, dim = 3.1, level_zero_name = "Trade|Imports", detail = detail, partly = TRUE)
       out <- mbind(out1, out2)
     }

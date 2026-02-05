@@ -28,9 +28,9 @@ calcValidPriceIndex <- function(datasource = "FAO", value = "real", baseyear = "
     pT <- collapseNames(pT)
 
     # FAO production
-    qT <- calcOutput("FAOharmonized", aggregate = FALSE)
-    aggregation <- toolGetMapping("FAOitems.rda", "sectoral", where = "mrvalidation")
-    qT <- toolAggregate(qT[, , "production"], rel = aggregation, from = "FoodBalanceItem",
+    qT <- calcOutput("FAOharmonized", src = "join2010", aggregate = FALSE)
+    aggregation <- toolGetMapping("FAOitems_online_2010update.csv", "sectoral", where = "mrfaocore")
+    qT <- toolAggregate(qT[, , "production"], rel = aggregation, from = "post2010_FoodBalanceItem",
                         to = "k", dim = 3.1, partrel = TRUE, verbosity = 2)
     qT <- collapseNames(qT)
     ## convert FAO production to DM tonnes

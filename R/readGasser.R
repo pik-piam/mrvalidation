@@ -4,7 +4,7 @@
 #' @param subtype subtype
 #' @return magpie object containing data land-use change CARBON emissions
 #' @author Abhijeet Mishra
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' \dontrun{
 #' a <- readSource("Gasser")

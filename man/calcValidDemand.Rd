@@ -21,14 +21,13 @@ calculates the validation data for the utilization of agricultural products
 for food, feed, bioenergy, seed, material, processing, or waste
 }
 \examples{
-
 \dontrun{
 calcOutput("ValidDemand")
 }
 
 }
 \seealso{
-\code{\link{calcFoodSupplyPast}},
+\code{\link[mrcommons]{calcFoodSupplyPast}},
 \code{\link{calcValidLivestockShare}}
 }
 \author{

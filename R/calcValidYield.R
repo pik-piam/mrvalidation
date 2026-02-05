@@ -10,14 +10,16 @@
 #'                   Currently only "FAO" and "calibratedLPJmL" is available.
 #' @param future     if NULL no future values are returned (default).
 #'                   specify climate scenario (gcm:rcp), if future is needed
-#'
+#' @param physical if true (default) physical area (croparea) used for yield calculation;
+#'                 if false harvested area used for yield calculation
+#' @param faoVersion which FAO version to use (pre, post or joined 2010 data)
 #' @return List of magpie objects with results on country level,
 #'         weight on country level, unit,
 #'         Max.&Min. values alongwith description.
-#' @author Abhijeet Mishra, Isabelle Weindl
+#' @author Abhijeet Mishra, Isabelle Weindl, Florian Humpenoeder
 #' @seealso
-#' \code{\link{calcFAOmassbalance}},
-#' \code{\link{calcCroparea}}
+#' \code{\link[mrcommons]{calcFAOmassbalance}},
+#' \code{\link[mrlandcore]{calcCroparea}}
 #'
 #' @examples
 #' \dontrun{
@@ -26,26 +28,41 @@
 #' @importFrom magclass getNames<- as.magpie
 #' @importFrom magpiesets reporthelper summationhelper findset
 
-calcValidYield  <-  function(datasource = "FAO", future = NULL) {
+calcValidYield  <-  function(datasource = "FAO", faoVersion = "join2010", future = NULL, physical = TRUE) {
+
+  if (physical) {
+    indicatorName <- "Productivity|Yield"
+    descName <- "physical area"
+  } else {
+    indicatorName <- "Productivity|Yield by harvested area"
+    descName <- "harvested area"
+  }
 
   if (datasource == "FAO") {
 
     if (!is.null(future)) stop("Future options is not available for source type 'FAO'.")
 
-    past <- findset("past")
-
     # Calculate areas of individual crops and pasture
     croparea  <-  collapseNames(calcOutput("Croparea", sectoral = "kcr",
-                                           physical = TRUE, aggregate = FALSE)[, past, ])
+                                           physical = physical, aggregate = FALSE))
     pastarea  <-  setNames(calcOutput("LanduseInitialisation", aggregate = FALSE)[, , "past"],
                            "pasture")
-    area <- mbind(croparea, pastarea)
+
+    cyears <- intersect(getYears(croparea), getYears(pastarea))
+    area <- mbind(croparea[, cyears, ], pastarea[, cyears, ])
     area <- summationhelper(reporthelper(area,
-                                         level_zero_name = "Productivity|Yield"),
+                                         level_zero_name = indicatorName),
                             sep = NULL)
 
     # Calculate production
-    histproduction <- calcOutput("FAOmassbalance", aggregate = FALSE)
+    if (faoVersion == "join2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE))
+    } else if (faoVersion == "FAOpre2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE))
+    } else if (faoVersion == "FAOpost2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE))
+    }
+
     # extract DryMatter(dm) from production data
     # Extract Production from subsetted production data containing only DryMatter(dm)
     histproduction  <-  collapseNames(histproduction[, , "dm"][, , "production"])
@@ -58,9 +75,10 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
 
     # Calculate Yields
     production <- summationhelper(reporthelper(production,
-                                               level_zero_name = "Productivity|Yield"),
+                                               level_zero_name = indicatorName),
                                   sep = NULL)
-    yield      <-  production / area
+    cyears <- intersect(getYears(production), getYears(area))
+    yield <- production[, cyears, ] / area[, cyears, ]
 
     # Check for NaN values
     indexNaN  <-  which(is.nan(yield))
@@ -101,25 +119,32 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
                                "when area and production values were ambiguous"))
 
     scenario    <- "historical"
-    description <- "CalcValidYield calculates the historical yield from FAO database."
+    description <- paste("FAO massbalance production divided by", descName, " from FAO.")
 
   } else if (datasource == "Ostberg2023_FAO_LUH2v2") {
 
     if (!is.null(future)) stop("Future options is not available for source type 'FAO'.")
 
-    past <- findset("past")
-
     # Calculate areas of individual crops and pasture
-    croparea <- calcOutput("CropareaLandInG", aggregate = FALSE)
+    croparea <- calcOutput("CropareaLandInG", aggregate = FALSE, physical = physical)
     pastarea  <-  setNames(calcOutput("LanduseInitialisation", aggregate = FALSE)[, , "past"],
                            "pasture")
-    area <- mbind(croparea[, getYears(pastarea), ], pastarea)
+
+    cyears <- intersect(getYears(croparea), getYears(pastarea))
+    area <- mbind(croparea[, cyears, ], pastarea[, cyears, ])
     area <- summationhelper(reporthelper(area,
-                                         level_zero_name = "Productivity|Yield by physical area"),
+                                         level_zero_name = indicatorName),
                             sep = NULL)
 
     # Calculate production
-    histproduction <- calcOutput("FAOmassbalance", aggregate = FALSE)
+    if (faoVersion == "join2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE))
+    } else if (faoVersion == "FAOpre2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "pre2010", aggregate = FALSE))
+    } else if (faoVersion == "FAOpost2010") {
+      histproduction <- collapseNames(calcOutput("FAOmassbalance", version = "post2010", aggregate = FALSE))
+    }
+
     # extract DryMatter(dm) from production data
     # Extract Production from subsetted production data containing only DryMatter(dm)
     histproduction  <-  collapseNames(histproduction[, , "dm"][, , "production"])
@@ -132,9 +157,10 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
 
     # Calculate Yields
     production <- summationhelper(reporthelper(production,
-                                               level_zero_name = "Productivity|Yield by physical area"),
+                                               level_zero_name = indicatorName),
                                   sep = NULL)
-    yield      <-  production / area
+    cyears <- intersect(getYears(production), getYears(area))
+    yield <- production[, cyears, ] / area[, cyears, ]
 
     # Check for NaN values
     indexNaN  <-  which(is.nan(yield))
@@ -175,14 +201,16 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
                                "when area and production values were ambiguous"))
 
     scenario    <- "historical"
-    description <- "FAO massbalance yields divided by physical area excluding fallow from Ostberg"
+    description <- paste("FAO massbalance production divided by", descName,
+                         " from Ostberg et al 2023 (excluding fallow land)")
 
   } else if (datasource == "calibratedLPJmL") {
 
     irrigation <- FALSE # can be made function argument if needed
     yieldLPJmLgrid <- calcOutput("ValidGridYields", datasource = "calibratedLPJmL",
-                                 future = future, aggregate = FALSE)
-    areaMAGgrid    <- setYears(calcOutput("ValidGridCroparea", aggregate = FALSE)[, "y2010", ], NULL)
+                                 future = future, aggregate = FALSE, physical = physical)
+    areaMAGgrid    <- setYears(calcOutput("ValidGridCroparea", aggregate = FALSE,
+                                          physical = physical)[, "y2010", ], NULL)
 
     cell2iso <- data.frame(cell = getItems(yieldLPJmLgrid, 1, full = TRUE),
                            iso = getItems(yieldLPJmLgrid,
@@ -203,11 +231,11 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
 
     yield <- toolCountryFill(yield, 0)
     area <- toolCountryFill(area, 0)
-    yield <- setNames(yield, paste0("Productivity|Yield|", gsub("\\.", "|", getNames(yield))))
-    area <- setNames(area, paste0("Productivity|Yield|", gsub("\\.", "|", getNames(area))))
+    yield <- setNames(yield, paste0(indicatorName, "|", gsub("\\.", "|", getNames(yield))))
+    area <- setNames(area, paste0(indicatorName, "|", gsub("\\.", "|", getNames(area))))
 
     scenario    <- "projection"
-    description <- "CalcValidYield calculates the projected yields from LPJmL calibrated to FAO."
+    description <- paste("Projected yields from LPJmL calibrated to FAO based on", descName)
 
   } else {
     stop("specified datasource doesn't exist")
@@ -229,7 +257,7 @@ calcValidYield  <-  function(datasource = "FAO", future = NULL) {
   names(dimnames(yield))[3]  <-  "scenario.model.variable"
 
   return(list(x = yield,
-              weight = weight,
+              weight = weight[, getYears(yield), ],
               unit = "t DM/ha",
               max = 200,
               min = 0,
