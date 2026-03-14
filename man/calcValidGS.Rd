@@ -15,7 +15,7 @@ calcValidGS(datasource = "FAO", indicator = "relative")
 List of magpie object with growing stock
 }
 \description{
-Returns historical FRA 2020 growing stock in million m3
+Returns historical FRA 2025 growing stock in million m3
 }
 \author{
 Abhijeet Mishra

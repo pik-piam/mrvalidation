@@ -168,7 +168,7 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLand", datasource = "SSPResults", aggregate = aggregate,
              file = valfile, append = TRUE, warnNA = FALSE, try = TRUE) # ready
-  calcOutput(type = "ValidLand", datasource = "FRA2020", aggregate = aggregate,
+  calcOutput(type = "ValidLand", datasource = "FRA2025", aggregate = aggregate,
              file = valfile, append = TRUE, warnNA = FALSE, try = TRUE) # ready
 
   # Land Cover Change
