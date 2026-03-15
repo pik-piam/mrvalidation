@@ -7,14 +7,16 @@
 calcValidTimber(datasource = "FAO")
 }
 \arguments{
-\item{datasource}{Currently only  available for the "FAO" source}
+\item{datasource}{Currently only available for the "FAO" source}
 }
 \value{
 List of magpie object with data and population
 }
 \description{
-Returns historical timber demand in mio m3 per yr
+Returns historical timber demand and production from FAO in both
+volumetric (Mm3/yr) and mass (mio tDM) units.
+Variable names match reportTimber (Mm3) and reportTimberDemand (tDM).
 }
 \author{
-Abhijeet Mishra
+Abhijeet Mishra, Florian Humpenoeder
 }
