@@ -17,6 +17,12 @@ calcValidTimber <- function(datasource = "FAO") {
     dem <- collapseNames(timberDemand[, , "domestic_supply"])[, , products]
     prod <- collapseNames(timberDemand[, , "production"])[, , products]
 
+    # FAO woodfuel stacking correction: FAO woodfuel volumes are in stacked m3 (stere),
+    # not solid m3. Apply 0.65 to match MAgPIE's reportTimber which reports in solid m3.
+    # Sources: FAO (2004) UWET Section 5.1.3; FAO/ITTO/UNECE (2020) Table 2.2.
+    dem[, , "Wood fuel"] <- dem[, , "Wood fuel"] * 0.65
+    prod[, , "Wood fuel"] <- prod[, , "Wood fuel"] * 0.65
+
     unit <- "Mm3/yr"
 
     # Demand: product-level and total
