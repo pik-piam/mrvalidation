@@ -4,7 +4,7 @@
 \alias{calcValidGS}
 \title{calcValidGS}
 \usage{
-calcValidGS(datasource = "FAO", indicator = "relative")
+calcValidGS(datasource = "FRA2025", indicator = "relative")
 }
 \arguments{
 \item{datasource}{Currently only  available for the "FAO" source}

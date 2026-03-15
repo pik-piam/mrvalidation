@@ -10,9 +10,9 @@
 #' @importFrom magclass getNames
 #' @importFrom magpiesets FRAnames
 #'
-calcValidGS <- function(datasource = "FAO", indicator = "relative") {
+calcValidGS <- function(datasource = "FRA2025", indicator = "relative") {
 
-  if (datasource == "FAO") {
+  if (datasource == "FRA2025") {
     a <- collapseNames(readSource("FRA2025", subtype = "growing_stock", convert = TRUE))
     indicatorname  <- "Resources|Growing Stock|"
 

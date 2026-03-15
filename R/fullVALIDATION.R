@@ -160,8 +160,6 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
   # Land Cover
   calcOutput(type = "ValidLand", datasource = "FAO_crop_past", aggregate = aggregate,
              file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidLand", datasource = "FRA2015", aggregate = aggregate,
-             file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLand", datasource = "LUH3", aggregate = aggregate,
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLand", datasource = "MAgPIEown", aggregate = aggregate,
@@ -174,7 +172,7 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
   # Land Cover Change
   calcOutput(type = "ValidLandChange", datasource = "FAO_crop_past", aggregate = aggregate,
              file = valfile, append = TRUE, try = TRUE) # ready
-  calcOutput(type = "ValidLandChange", datasource = "FRA2015", aggregate = aggregate,
+  calcOutput(type = "ValidLandChange", datasource = "FRA2025", aggregate = aggregate,
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLandChange", datasource = "LUH3", aggregate = aggregate,
              file = valfile, append = TRUE, try = TRUE) # ready
@@ -254,9 +252,9 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
              file = valfile, append = TRUE, try = TRUE)
 
   # Growing Stocks
-  calcOutput("ValidGS", datasource = "FAO", aggregate = aggregate, indicator = "relative",
+  calcOutput("ValidGS", datasource = "FRA2025", aggregate = aggregate, indicator = "relative",
              file = valfile, append = TRUE, try = TRUE)
-  calcOutput("ValidGS", datasource = "FAO", aggregate = aggregate, indicator = "absolute",
+  calcOutput("ValidGS", datasource = "FRA2025", aggregate = aggregate, indicator = "absolute",
              file = valfile, append = TRUE, try = TRUE)
 
   # GHG emissions
