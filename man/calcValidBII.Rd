@@ -7,10 +7,34 @@
 calcValidBII()
 }
 \value{
-Country-level MAgPIE object
+Country-level MAgPIE object: "Phillips et al" + "De Palma et al 2024"
+  under variable "Biodiversity|BII".
 }
 \description{
-validation for the Biodiversity Intactness Index (BII)
+Validation for the Biodiversity Intactness Index (BII), side-by-side
+from two NHM sources:
+  * Phillips et al. 2021 (BII-BTE, DOI 10.5519/he1eqmg1), country-level
+    1970-2014.
+  * De Palma et al. 2024 NHM v2.1.1 (DOI 10.5519/k33reyb6), cellular
+    5-yearly 2000-2020, aggregated to ISO here.
+v2 differs from v1 in three steps: stricter primary-vegetation baseline
+(minimally/lightly-used primary only, vs v1's all-primary including
+intensely-used sites), logit (not log) transform, and balanced Bray-Curtis
+(abundance-weighted) compositional similarity in place of v1's asymmetric
+Jaccard (species-identity only). v2 absolute BII is markedly lower than v1,
+with a non-uniform gap that depends on land-use intensity, so the two
+series are NOT splice-compatible and are kept as separate model labels.
+
+MAgPIE's own BII output (modules/44_biodiversity, coefficients from
+Leclère et al. 2020 "Bending the Curve" via PREDICTS) is on the v1 scale,
+so it aligns with Phillips et al. 2021 in absolute terms but sits markedly
+above De Palma et al. 2024 v2 (gap depends on land-use intensity). For
+absolute-level validation use Phillips; for harmonized (change-from-baseline)
+plots either series works, but mixing MAgPIE projections with v2 historical
+on a non-harmonized axis is misleading.
+Note: v2.1.1's land-use driver is also LUH2 (CSIRO-downscaled via Hoskins
+et al. 2016), so MAgPIE and v2.1.1 share the LU framework -- only the
+PREDICTS coefficient version differs.
 }
 \examples{
 
@@ -19,6 +43,9 @@ validation for the Biodiversity Intactness Index (BII)
 }
 
 }
+\seealso{
+\code{\link{readBII}}, \code{\link{readBIIv2}}, \code{\link{downloadBIIv2}}
+}
 \author{
-Michael Crawford
+Michael Crawford, Florian Humpenoeder
 }
