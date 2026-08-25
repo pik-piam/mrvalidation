@@ -150,7 +150,7 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
 
   # Resources:
   # Croparea
-  calcOutput(type = "ValidCroparea", datasource = "FAO", aggregate = aggregate,
+  calcOutput(type = "ValidCroparea", datasource = "MadratLandInGLUH", aggregate = aggregate,
              file = valfile, append = TRUE, detail = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidCroparea", datasource = "ostberg2023", aggregate = aggregate,
              file = valfile, append = TRUE, detail = TRUE, try = TRUE) # ready
@@ -304,7 +304,7 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
              file = valfile, append = TRUE, try = TRUE) # ready
 
   # Yield
-  for (datasource in c("FAO", "Ostberg2023_FAO_LUH2v2")) {
+  for (datasource in c("MadratLandInGFAOLUH")) {
     for (faoVersion in c("join2010", "FAOpre2010", "FAOpost2010")) {
       for (physical in c(TRUE, FALSE)) {
         calcOutput(type = "ValidYield", datasource = datasource, physical = physical,
@@ -317,7 +317,6 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
 
   # Productivity
   calcOutput(type = "ValidTau", aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidTauPastr", aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidLSUdensity", aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgriResearchIntensity", aggregate = aggregate, datasource = "Pardey",
              file = valfile, append = TRUE, try = TRUE)
