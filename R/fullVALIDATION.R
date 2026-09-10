@@ -248,7 +248,8 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
   calcOutput("ValidResidues", aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
 
   # Carbon Stocks
-  calcOutput("ValidCarbon", datasource = "LPJmL4_for_MAgPIE_44ac93de:GSWP3-W5E5:historical", aggregate = aggregate,
+  calcOutput("ValidCarbon", datasource = "LPJmL5:GSWP3-W5E5:historical",
+             aggregate = aggregate,
              file = valfile, append = TRUE, try = TRUE)
 
   # Growing Stocks
@@ -319,10 +320,11 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
     }
   }
 
+  calcOutput(type = "ValidBEYield", aggregate = aggregate, file = valfile,
+             append = TRUE, try = TRUE)
+
   # Productivity
   calcOutput(type = "ValidTau", aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidTauPastr", aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
-  calcOutput(type = "ValidLSUdensity", aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidAgriResearchIntensity", aggregate = aggregate, datasource = "Pardey",
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidFeedConversion", aggregate = aggregate,

@@ -1,7 +1,7 @@
 #' @title calcValidGridSOCStocks
 #' @description calculates the validation data for the gridded soil carbon pools
 #'
-#' @param datasource Datasources for validation data, e.g. LPJ_IPCC2006, LPJmL_natural, ...
+#' @param datasource Datasources for validation data, e.g. LPJ_IPCC2006, SoilGrids, ...
 #' @param baseyear baseyear for calculating soil carbon stock change (for LPJ_IPCC2006 only)
 #' @param intensive If FALSE (default) total stocks will be returned; otherwise (TRUE) carbon densities.
 #'
@@ -62,18 +62,11 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
     weight <- NULL
 
-  } else if (datasource %in% c("LPJmL4Paper",
-                               "SoilGrids", "GSOC", "WISE", "SoilGrids2:new",
+  } else if (datasource %in% c("SoilGrids", "GSOC", "WISE", "SoilGrids2:new",
                                "SoilGrids2:q05_new", "SoilGrids2:q95_new",
                                "SOCDebtPaper")) {
 
-    if (datasource == "LPJmL4Paper") {
-
-      out <- calcOutput("LPJmL4", version = "LPJmL4", climatetype = "LPJmL4Paper",
-                        subtype = "soilc_layer", aggregate = FALSE)
-      out <- collapseNames(out[, , 1] + 1 / 3 * out[, , 2])
-
-    } else if (datasource == "GSOC") {
+    if (datasource == "GSOC") {
 
       out <- readSource("GSOC",  convert = "onlycorrect")
       out <- mbind(setYears(out, "y2015"), setYears(out, "y2016"), setYears(out, "y2017"))
@@ -114,19 +107,32 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
-  } else if (grepl("LPJmL4", datasource)) {
+  } else if (grepl("LPJmL5", datasource)) {
+    # extract default arguments for LPJmL
+    cfg <- toolLPJmLDefault()
+    # extract user arguments
     ds <- toolSplitSubtype(datasource,
                            list(version = NULL,
                                 climatemodel = NULL,
                                 scenario = NULL))
 
-    lpjml4soilc <- calcOutput("LPJmL_new", version = ds$version,
+    lpjml5soilc <- calcOutput("LPJmLTransform",
+                              lpjmlversion = cfg$defaultLPJmLVersion,
                               climatetype = paste(ds$climatemodel, ds$scenario, sep = ":"),
-                              subtype = "soilc_layer", stage = "raw", aggregate = FALSE)
-    lpjml4litc <- calcOutput("LPJmL_new", version = ds$version,
+                              subtype     = "pnv:soilc_layer", subdata = NULL,
+                              stage       = "raw",
+                              monthly     = FALSE,
+                              aggregate   = FALSE)
+
+    lpjml5litc <- calcOutput("LPJmLTransform",
+                             lpjmlversion = cfg$defaultLPJmLVersion,
                              climatetype = paste(ds$climatemodel, ds$scenario, sep = ":"),
-                             subtype = "litc", stage = "raw", aggregate = FALSE)
-    out <- setNames(lpjml4soilc[, , "layer1"] + 1 / 3 * lpjml4soilc[, , "layer2"] + lpjml4litc,
+                             subtype     = "pnv:litc", subdata = NULL,
+                             stage       = "raw",
+                             monthly     = FALSE,
+                             aggregate   = FALSE)
+
+    out <- setNames(lpjml5soilc[, , "layer1"] + 1 / 3 * lpjml5soilc[, , "layer2"] + lpjml5litc,
                     "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
 
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
