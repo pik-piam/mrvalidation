@@ -132,7 +132,7 @@ calcValidGridSOCStocks <- function(datasource = "LPJ_IPCC2006", baseyear = 1995,
                              monthly     = FALSE,
                              aggregate   = FALSE)
 
-    out <- setNames(lpjml5soilc[, , "layer1"] + 1 / 3 * lpjml5soilc[, , "layer2"] + lpjml5litc,
+    out <- setNames(lpjml5soilc[, , 1] + 1 / 3 * lpjml5soilc[, , 2] + lpjml5litc,
                     "Resources|Soil Carbon|Actual|Stock|SOC in top 30 cm (Mt C)")
 
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
