@@ -34,7 +34,8 @@ calcValidBEYield <- function(cellular = FALSE) {
 
   out <- NULL
   for (crop in names(crops)) {
-    layer <- setNames(x[, , crop], paste0("Productivity|Yield|", crops[crop], " (t DM/ha)"))
+    layer <- setNames(x[, , crop],
+                      paste0("Productivity|Yields|Yield by physical area|", crops[crop], " (t DM/ha)"))
     layer <- add_dimension(layer, dim = 3.1, add = "scenario", nm = "historical")
     layer <- add_dimension(layer, dim = 3.2, add = "model",    nm = paste0("Li2020-", crop))
     out   <- mbind(out, layer)
