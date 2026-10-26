@@ -37,7 +37,7 @@ calcValidWageDevelopment <- function(datasource = "ILO_completed", baseYear = 20
                              aggregate = FALSE,
                              years = c(baseYear))[, , , drop = TRUE]
 
-  description <- paste("Wage index calculated as hourly labor costs in agriculture relative to 2000")
+  description <- paste("Wage index calculated as hourly labor costs in agriculture relative to", baseYear)
 
   # USDA_FAO still depends on ILO employment
   if (dataVersionILO == "") dataVersionILO <- "Aug21"

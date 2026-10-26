@@ -51,10 +51,14 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
              aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidWageDevelopment", datasource = "ILO_completed", dataVersionILO = "Aug24", baseYear = 2010,
              aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidWageDevelopment", datasource = "ILO_completed", dataVersionILO = "Aug24", baseYear = 2015,
+             aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidWageDevelopment", datasource = "USDA_FAO_completed", dataVersionILO = "Aug24",
              baseYear = 2000, aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidWageDevelopment", datasource = "USDA_FAO_completed", dataVersionILO = "Aug24",
              baseYear = 2010, aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidWageDevelopment", datasource = "USDA_FAO_completed", dataVersionILO = "Aug24",
+             baseYear = 2015, aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidGini", aggregate = aggregate,
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidPovertyLine", aggregate = aggregate,
