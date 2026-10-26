@@ -1,6 +1,6 @@
 # madrat data preparation for validation purposes
 
-R package **mrvalidation**, version **2.73.0**
+R package **mrvalidation**, version **2.74.0**
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4317826.svg)](https://doi.org/10.5281/zenodo.4317826)
 [![R build
@@ -53,7 +53,7 @@ Biewald A, Weindl I, Beier F, Chen D, Crawford M, Leip D, Molina Bacca
 E, Kreidenweis U, W. Yalew A, von Jeetze P, Wang X, Dietrich J, Alves M
 (2026). “mrvalidation: madrat data preparation for validation purposes.”
 <doi:10.5281/zenodo.4317826> <https://doi.org/10.5281/zenodo.4317826>,
-Version: 2.73.0, <https://github.com/pik-piam/mrvalidation>.
+Version: 2.74.0, <https://github.com/pik-piam/mrvalidation>.
 
 A BibTeX entry for LaTeX users is
 
@@ -65,6 +65,6 @@ A BibTeX entry for LaTeX users is
  date = {2026-10-26},
  year = {2026},
  url = {https://github.com/pik-piam/mrvalidation},
- note = {Version: 2.73.0},
+ note = {Version: 2.74.0},
 }
 ```
