@@ -4,13 +4,10 @@
 #' data of calcFAOharmonized(). Covers dry matter (DM) production.
 #' Also returns areas of individual crops from FAOSTAT.
 #' Total area can be lower or higher than arable land because of multicropping or fallow land.
-#' Returns yield as calculated from area area and production.
+#' Returns yield as calculated from area and production.
 #'
 #' @param datasource Specify which datasource needs to be used.
-#'                   Currently only "FAO", "Ostberg2023_FAO_LUH2v2" and
-#'                   "calibratedLPJmL" is available.
-#' @param future     if NULL no future values are returned (default).
-#'                   specify climate scenario (gcm:rcp), if future is needed
+#'                   Currently only "FAO" and "Ostberg2023_FAO_LUH2v2" are available.
 #' @param physical if true (default) physical area (croparea) used for yield calculation;
 #'                 if false harvested area used for yield calculation
 #' @param faoVersion which FAO version to use (pre, post or joined 2010 data)
@@ -29,7 +26,7 @@
 #' @importFrom magclass getNames<- as.magpie
 #' @importFrom magpiesets reporthelper summationhelper findset
 
-calcValidYield  <-  function(datasource = "FAO", faoVersion = "join2010", future = NULL, physical = TRUE) {
+calcValidYield  <-  function(datasource = "FAO", faoVersion = "join2010", physical = TRUE) {
 
   if (physical) {
     indicatorName <- "Productivity|Yields|Yield by physical area"
@@ -40,8 +37,6 @@ calcValidYield  <-  function(datasource = "FAO", faoVersion = "join2010", future
   }
 
   if (datasource == "FAO") {
-
-    if (!is.null(future)) stop("Future options is not available for source type 'FAO'.")
 
     # Calculate areas of individual crops and pasture
     croparea  <-  collapseNames(calcOutput("Croparea", sectoral = "kcr",
@@ -124,8 +119,6 @@ calcValidYield  <-  function(datasource = "FAO", faoVersion = "join2010", future
 
   } else if (datasource == "Ostberg2023_FAO_LUH2v2") {
 
-    if (!is.null(future)) stop("Future options is not available for source type 'FAO'.")
-
     # Calculate areas of individual crops and pasture
     croparea <- calcOutput("CropareaLandInG", aggregate = FALSE, physical = physical)
     pastarea  <-  setNames(calcOutput("LanduseInitialisation", aggregate = FALSE)[, , "past"],
@@ -204,40 +197,6 @@ calcValidYield  <-  function(datasource = "FAO", faoVersion = "join2010", future
     scenario    <- "historical"
     description <- paste("FAO massbalance production divided by", descName,
                          " from Ostberg et al 2023 (excluding fallow land)")
-
-  } else if (datasource == "calibratedLPJmL") {
-
-    irrigation <- FALSE # can be made function argument if needed
-    yieldLPJmLgrid <- calcOutput("ValidGridYields", datasource = "calibratedLPJmL",
-                                 future = future, aggregate = FALSE, physical = physical)
-    areaMAGgrid    <- setYears(calcOutput("ValidGridCroparea", aggregate = FALSE,
-                                          physical = physical)[, "y2010", ], NULL)
-
-    cell2iso <- data.frame(cell = getItems(yieldLPJmLgrid, 1, full = TRUE),
-                           iso = getItems(yieldLPJmLgrid,
-                                          if (dimExists("iso", yieldLPJmLgrid)) "iso" else 1.1, full = TRUE))
-
-    yield <- toolAggregate(yieldLPJmLgrid, weight = areaMAGgrid, rel = cell2iso,
-                           from = "celliso", to = "iso", dim = 1)
-    area <- toolAggregate(areaMAGgrid, weight = NULL, rel = cell2iso,
-                          from = "celliso", to = "iso", dim = 1)
-
-
-    rm(yieldLPJmLgrid, areaMAGgrid)
-
-    if (irrigation == FALSE) {
-      yield <- dimSums(yield * area, dim = "data1") / (dimSums(area, dim = "irrigation") + 10^-10)
-      area <- dimSums(area, dim = "irrigation")
-    }
-
-    yield <- toolCountryFill(yield, 0)
-    area <- toolCountryFill(area, 0)
-    yield <- setNames(yield, paste0(indicatorName, "|", gsub("\\.", "|", getNames(yield))))
-    area <- setNames(area, paste0(indicatorName, "|", gsub("\\.", "|", getNames(area))))
-
-    scenario    <- "projection"
-    description <- paste("Projected yields from LPJmL calibrated to FAO based on", descName)
-
   } else {
     stop("specified datasource doesn't exist")
   }
