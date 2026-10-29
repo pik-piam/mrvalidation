@@ -38,9 +38,7 @@ calcValidGridYields <- function(datasource = "downscaledFAO", future = NULL, phy
 
   } else if (datasource == "calibratedLPJmL") {
 
-    sizelimit <- getOption("magclass_sizeLimit")
-    withr::with_options(magclass_sizeLimit = 1e+12)
-    withr::defer(withr::with_options(magclass_sizeLimit = sizelimit))
+    withr::local_options(list(magclass_sizeLimit = 1e+12))
 
     lpjml       <- "ggcmi_phase3_nchecks_bft_6277d36e"
     isimip      <- NULL
