@@ -38,9 +38,7 @@ calcValidGridYields <- function(datasource = "downscaledFAO", future = NULL, phy
 
   } else if (datasource == "calibratedLPJmL") {
 
-    sizelimit <- getOption("magclass_sizeLimit")
-    withr::with_options(magclass_sizeLimit = 1e+12)
-    withr::defer(withr::with_options(magclass_sizeLimit = sizelimit))
+    withr::local_options(list(magclass_sizeLimit = 1e+12))
 
     lpjml       <- "ggcmi_phase3_nchecks_bft_6277d36e"
     isimip      <- NULL
@@ -74,8 +72,8 @@ calcValidGridYields <- function(datasource = "downscaledFAO", future = NULL, phy
     refYear        <- "y2010"
 
     out <- calcOutput("YieldsCalibrated", source = c(lpjml = lpjml, isimip = isimip),
-                      climatetype = climatetype, refYear = refYear, cells = "magpiecell",
-                      multicropping = physical, aggregate = FALSE)[, , findset("kcr")]
+                      climatetype = climatetype, refYear = refYear, cells = "lpjcell",
+                      multicropping = FALSE, aggregate = FALSE)[, , findset("kcr")]
 
     getNames(out, dim = 1) <- reportingnames(getNames(out, dim = 1))
     getNames(out, dim = 2) <- reportingnames(getNames(out, dim = 2))
