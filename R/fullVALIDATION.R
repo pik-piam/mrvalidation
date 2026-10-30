@@ -51,10 +51,14 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
              aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidWageDevelopment", datasource = "ILO_completed", dataVersionILO = "Aug24", baseYear = 2010,
              aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidWageDevelopment", datasource = "ILO_completed", dataVersionILO = "Aug24", baseYear = 2015,
+             aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidWageDevelopment", datasource = "USDA_FAO_completed", dataVersionILO = "Aug24",
              baseYear = 2000, aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidWageDevelopment", datasource = "USDA_FAO_completed", dataVersionILO = "Aug24",
              baseYear = 2010, aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
+  calcOutput(type = "ValidWageDevelopment", datasource = "USDA_FAO_completed", dataVersionILO = "Aug24",
+             baseYear = 2015, aggregate = aggregate, file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidGini", aggregate = aggregate,
              file = valfile, append = TRUE, try = TRUE)
   calcOutput(type = "ValidPovertyLine", aggregate = aggregate,
@@ -150,7 +154,7 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
 
   # Resources:
   # Croparea
-  calcOutput(type = "ValidCroparea", datasource = "FAO", aggregate = aggregate,
+  calcOutput(type = "ValidCroparea", datasource = "MadratLandInGLUH", aggregate = aggregate,
              file = valfile, append = TRUE, detail = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidCroparea", datasource = "ostberg2023", aggregate = aggregate,
              file = valfile, append = TRUE, detail = TRUE, try = TRUE) # ready
@@ -180,6 +184,10 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
              file = valfile, append = TRUE, try = TRUE) # ready
   calcOutput(type = "ValidLandChange", datasource = "SSPResults", baseyear = 2005, # 1995 not available as baseyear
              aggregate = aggregate, file = valfile, append = TRUE, warnNA = FALSE, try = TRUE) # ready
+
+  # Tree Cover Loss by driver
+  calcOutput(type = "ValidTreeCoverLoss", datasource = "GFW", aggregate = aggregate,
+             file = valfile, append = TRUE, warnNA = FALSE, try = TRUE) # ready
 
   # WaterUsage
   calcOutput(type = "ValidWaterUsage", datasource = "foley_2011", aggregate = FALSE,
@@ -309,7 +317,7 @@ fullVALIDATION <- function(rev = 0.1, aggregate = "region+global") {
              file = valfile, append = TRUE, try = TRUE) # ready
 
   # Yield
-  for (datasource in c("FAO", "Ostberg2023_FAO_LUH2v2")) {
+  for (datasource in c("MadratLandInGFAOLUH")) {
     for (faoVersion in c("join2010", "FAOpre2010", "FAOpost2010")) {
       for (physical in c(TRUE, FALSE)) {
         calcOutput(type = "ValidYield", datasource = datasource, physical = physical,
