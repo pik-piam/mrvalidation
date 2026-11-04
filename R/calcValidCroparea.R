@@ -1,15 +1,19 @@
 #' @title calcValidCroparea
 #'
-#' @description Returns historical areas of individual crops. These are derived by
-#' correcting harvested areas to match to physical cropland areas. Both these
-#' datasets are from FAO. Output is meant to be used for model validation.
+#' @description Returns historical areas of individual crops, meant to be used for
+#' model validation. The default source is the madrat croparea preprocessing, which
+#' harmonises LandInG against LUH and calibrates it to LanduseInitialisation cropland;
+#' it is no longer FAOSTAT, so the series is labelled accordingly rather than as "FAO".
 #' Ostberg2023 is a slightly modified version of
 #' https://gmd.copernicus.org/articles/16/3375/2023/gmd-16-3375-2023-assets.html
 #'
-#' @param datasource "FAO": croparea according to FAOSTAT,
+#' @param datasource "MadratLandInGLUH": cropland, croparea and fallow as returned by
+#'                                       calcCroparea (default datasource "LandInG"),
+#'                                       i.e. LandInG harmonised against LUH and
+#'                                       calibrated to LanduseInitialisation cropland
 #'                   "ostberg2023": croparea according to LandInG data harmonization
-#'                                  by Ostberg et al. (2023)
-#'                    "FAOfallow": fallow land according to FAOSTAT
+#'                                  by Ostberg et al. (2023), uncorrected
+#'                   "FAOfallow": fallow land according to FAOSTAT
 #' @param detail TRUE: data provided for different crop types, FALSE: aggregated data
 #'
 #' @return magpie object
@@ -18,26 +22,45 @@
 #' @importFrom magclass getNames
 #'
 
-calcValidCroparea <- function(datasource = "FAO", detail = FALSE) {
+calcValidCroparea <- function(datasource = "MadratLandInGLUH", detail = FALSE) {
 
-  if (datasource == "FAO") {
-    data <- calcOutput("Croparea", sectoral = "kcr", physical = TRUE, aggregate = FALSE)
-    out <- reporthelper(x = data, dim = 3.1,
-                        level_zero_name = "Resources|Land Cover|Cropland|Croparea",
-                        detail = detail)
-    out <- summationhelper(out)
+  if (datasource == "MadratLandInGLUH") {
+    # cropland, croparea (by crop) and fallow from calcCroparea's default LandInG
+    # data source: LandInG harmonised against LUH and calibrated to
+    # LanduseInitialisation cropland
+    data <- calcOutput("Croparea", sectoral = "kcr", physical = TRUE, fallow = TRUE,
+                       cellular = FALSE, irrigation = FALSE, datasource = "LandInG",
+                       aggregate = FALSE)
+
+    fallow <- setNames(collapseNames(data[, , "fallow"]),
+                       paste("Resources|Land Cover|Cropland|+|",
+                             reportingnames("crop_fallow"), sep = ""))
+
+    cropareaByCrop <- data[, , "fallow", invert = TRUE]
+    croparea <- reporthelper(x = cropareaByCrop, dim = 3.1,
+                             level_zero_name = "Resources|Land Cover|Cropland|Croparea",
+                             detail = detail)
+    croparea <- summationhelper(croparea, sep = "+")
+
+    cropland <- setNames(dimSums(data, dim = 3.1), "Resources|Land Cover|+|Cropland")
+    cropareatotal <- setNames(dimSums(cropareaByCrop, dim = 3.1),
+                              "Resources|Land Cover|Cropland|+|Croparea")
+
+    out <- mbind(cropland, cropareatotal, fallow, croparea)
     getNames(out) <- paste(getNames(out), "(million ha)", sep = " ")
 
     out <- add_dimension(out, dim = 3.1, add = "scenario", nm = "historical")
     out <- add_dimension(out, dim = 3.2, add = "model", nm = datasource)
 
   } else if (datasource == "ostberg2023") {
+    # read in uncorrected/raw data from LandInG toolbox by Sebastian Ostberg
+    # based on FAO-LUH2v2
     data <- calcOutput("CropareaLandInG", aggregate = FALSE)
     croparea <- reporthelper(x = data, dim = 3.1,
                              level_zero_name = "Resources|Land Cover|Cropland|Croparea",
                              detail = detail)
     croparea <- summationhelper(croparea, sep = "+")
-    fallow <- setNames(calcOutput("FallowLand",
+    fallow <- setNames(calcOutput("Fallow",
                                   aggregate = FALSE,
                                   cellular = FALSE),
                        paste("Resources|Land Cover|Cropland|+|",
